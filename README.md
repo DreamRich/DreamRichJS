@@ -1,6 +1,7 @@
 # DreamRich - Frontend
 
 [![Build Status](https://travis-ci.org/DreamRich/DreamRichJS.svg?branch=master)](https://travis-ci.org/DreamRich/DreamRichJS)
+[![Coverage Status](https://coveralls.io/repos/github/DreamRich/DreamRichJS/badge.svg?branch=master)](https://coveralls.io/github/DreamRich/DreamRichJS?branch=master)
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
