@@ -1,11 +1,23 @@
 import React, {Component} from 'react';
+import {Auth} from './Auth';
 
 export default class LoginForm extends Component{
 
   handleForm(event){
     event.preventDefault();
-    console.log(event.target.username.value);
-    console.log(event.target.password.value);
+    fetch('/api/auth/',{
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        username: event.target.username.value,
+        password: event.target.password.value
+      })
+    })
+    .then((e) => e.json())
+    .then(Auth.authenticate);
   }
 
   render(){

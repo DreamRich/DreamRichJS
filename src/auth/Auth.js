@@ -1,11 +1,20 @@
-class Auth{
-  authenticate(token){
-    localStorage.setItem('token', token);
+export class Auth{
+
+  static authenticate(token){
+    const timeout =1000 * 60; // 1000 (ms) * 60 (s) = 1 minute
+    localStorage.setItem('token', token.token);
+    setTimeout(Auth.deauthenticate, timeout);
   }
-  isAuthenticated(){
-    return localStorage.getItem('token') !== undefined;
+
+  static isAuthenticated(){
+    return localStorage.getItem('token') !== undefined && localStorage.getItem('token') !== null;
   }
-  deauthenticate(){
-    localStorage.removeItem('token');
+
+  static getAuth(){
+    return localStorage.getItem('token');
+  }
+
+  static deauthenticate(){
+    return localStorage.removeItem('token');
   }
 }
