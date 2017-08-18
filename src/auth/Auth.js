@@ -2,7 +2,6 @@ export class Auth{
 
   static authenticate(token){
     console.log('activate');
-    const timeout =1000 * 60; // 1000 (ms) * 60 (s) = 1 minute
     localStorage.setItem('token', token.token);
   }
 
@@ -12,6 +11,17 @@ export class Auth{
 
   static getAuth(){
     return localStorage.getItem('token');
+  }
+  static getHeader(additional={}){
+    let header;
+    if (additional !== undefined && additional !== null){
+       header = additional;
+    }
+    header['Accept'] = 'application/json';
+    header['Content-type'] = 'application/json';
+    header['Authenticate'] = 'Token ' + Auth.getAuth();
+    return header;
+
   }
 
   static deauthenticate(){

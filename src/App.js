@@ -4,6 +4,7 @@ import './App.css';
 import LoginForm from './auth/LoginForm';
 import LogoutButton from './auth/LogoutButton';
 import {Auth} from './auth/Auth';
+import PasswordForm from './auth/PasswordForm';
 
 class App extends Component {
 
@@ -48,7 +49,9 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <LoginForm />
-      <LogoutButton />
+        <LogoutButton />
+      <h2>Change forms</h2>
+      <PasswordForm userid={3} username="Marcelo"/>
       </div>
     );
   }
