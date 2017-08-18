@@ -1,9 +1,9 @@
 export class Auth{
 
   static authenticate(token){
+    console.log('activate');
     const timeout =1000 * 60; // 1000 (ms) * 60 (s) = 1 minute
     localStorage.setItem('token', token.token);
-    setTimeout(Auth.deauthenticate, timeout);
   }
 
   static isAuthenticated(){
@@ -15,6 +15,7 @@ export class Auth{
   }
 
   static deauthenticate(){
+    console.log('deactivate');
     return localStorage.removeItem('token');
   }
 }

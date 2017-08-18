@@ -17,7 +17,8 @@ export default class LoginForm extends Component{
       })
     })
     .then((e) => e.json())
-    .then(Auth.authenticate);
+    .then(Auth.authenticate)
+    .catch((e) => {console.log(e)});
   }
 
   render(){
