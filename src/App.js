@@ -5,6 +5,7 @@ import LoginForm from './auth/LoginForm';
 import LogoutButton from './auth/LogoutButton';
 import {Auth} from './auth/Auth';
 import PasswordForm from './auth/PasswordForm';
+import ResetForm from './auth/ResetForm';
 
 class App extends Component {
 
@@ -52,6 +53,8 @@ class App extends Component {
         <LogoutButton />
       <h2>Change forms</h2>
       <PasswordForm userid={3} username="Marcelo"/>
+      <h2>Reset password</h2>
+      <ResetForm email="marcelohpf@hotmail.com" />
       </div>
     );
   }
