@@ -1,17 +1,25 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {Route,
+  Link,
+  Switch,
+  Redirect
+} from 'react-router-dom'
+
 import LoginForm from './auth/LoginForm';
 import LogoutButton from './auth/LogoutButton';
 import {Auth} from './auth/Auth';
 import PasswordForm from './auth/PasswordForm';
 import ResetForm from './auth/ResetForm';
+import NotFound from './NotFound';
+import {AuthorizedRoute, AuthorizedLink} from './routes/Router';
 
 class App extends Component {
 
   constructor(props){
     super(props);
-    this.state = {'auth': false, 'begin': Date.now() };
+    this.state = {'auth': false, 'begin': Date.now(), 'teste': true };
     this.updateDate = this.updateDate.bind(this);
     this.logOutHandle = this.logOutHandle.bind(this);
   }
@@ -42,19 +50,26 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
+            <button onClick={(e) => {this.setState({'teste': !this.state.teste }); Auth.authenticate({token: 'ok'}); }} > {this.state.teste ? '1': '2'} </button>
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
           { this.state.auth && <div>{Auth.getAuth()}</div>}
+            <Link to="/">/ </Link>
+            <Link to="/login">login </Link>
+            <AuthorizedLink to="/logout">logout </AuthorizedLink>
+            <AuthorizedLink to="/login/changepassword">change </AuthorizedLink>
+            <Link to="/login/resetpassword">reset </Link>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <LoginForm />
-        <LogoutButton />
-      <h2>Change forms</h2>
-      <PasswordForm userid={3} username="Marcelo"/>
-      <h2>Reset password</h2>
-      <ResetForm email="marcelohpf@hotmail.com" />
+        <Switch>
+          <Route exact path="/" render={(e) => (
+            this.state.teste ?  ( null ) : ( <Redirect to="/login" /> )
+          )
+          } />
+          <Route exact path="/login" component={ LoginForm } />
+          <AuthorizedRoute path="/logout" component={ LogoutButton } />
+          <AuthorizedRoute path="/login/changepassword" render={ () => <PasswordForm userid={3} username="Marcelo" /> } />
+          <Route path="/login/resetpassword" render={ () => <ResetForm email="marcelohpf@hotmail.com" /> } />
+          <Route component={ NotFound } />
+        </Switch>
       </div>
     );
   }
