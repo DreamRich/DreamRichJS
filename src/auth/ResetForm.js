@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 export default class ResetForm extends Component{
   constructor(props){
@@ -8,8 +9,8 @@ export default class ResetForm extends Component{
 
   handleSubmit(){
     fetch('/api/auth/password/?email='+this.props.email)
-    .then((e) => {console.log('email send')})
-    .catch((e) => {console.log('problem in email sending', e)});
+    .then(() => {console.log('email send');})
+    .catch((e) => {console.log('problem in email sending', e);});
   }
   render(){
     return (
@@ -17,3 +18,6 @@ export default class ResetForm extends Component{
     );
   }
 }
+ResetForm.propTypes = {
+  email: PropTypes.string,
+};

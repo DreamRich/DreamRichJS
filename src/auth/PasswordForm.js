@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Auth} from './Auth';
+import PropTypes from 'prop-types';
 
 export default class PasswordForm extends Component{
   constructor(props){
@@ -10,18 +11,18 @@ export default class PasswordForm extends Component{
     event.preventDefault();
     console.log(Auth.getHeader(), this.props.userid);
     const data = JSON.stringify({
-        userid: this.props.userid,
-        password: event.target.password.value,
-        new_password: event.target.new_password.value,
-        new_password_confirmation: event.target.new_password_confirmation.value
-      });
+      userid: this.props.userid,
+      password: event.target.password.value,
+      new_password: event.target.new_password.value,
+      new_password_confirmation: event.target.new_password_confirmation.value
+    });
     fetch('/api/auth/password/', {
       method: 'post',
       headers: Auth.getHeader(),
       body: data
     })
-    .then((e) => {console.log('ok');})
-    .catch((e) => {console.log('treta');});
+    .then(() => {console.log('ok');})
+    .catch(() => {console.log('treta');});
   }
   render(){
     return (
@@ -36,3 +37,7 @@ export default class PasswordForm extends Component{
     );
   }
 }
+PasswordForm.propTypes = {
+  userid: PropTypes.string,
+  username: PropTypes.string
+};

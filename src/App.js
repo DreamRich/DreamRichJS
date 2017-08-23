@@ -24,25 +24,25 @@ class App extends Component {
     this.logOutHandle = this.logOutHandle.bind(this);
   }
 
-  updateDate(e){
+  updateDate(){
     this.setState({'begin': Date.now()});
   }
 
   logOutHandle(time){
-    console.log(Date.now() - this.state.begin, time)
+    console.log(Date.now() - this.state.begin, time);
     if(Auth.isAuthenticated() && Date.now() - this.state.begin > time) {
       Auth.deauthenticate();
     }
   }
 
   componentDidMount(){
-    setInterval(()=>{ this.setState({'auth': Auth.isAuthenticated()})}, 1000);
+    setInterval(()=>{ this.setState({'auth': Auth.isAuthenticated()});}, 1000);
 
     /* Add validation to logout when user don not make some moviment */
     const body = document.getElementsByTagName('body')[0];
     body.onmousemove = this.updateDate;
     body.onkeyup = this.updateDate;
-    const oneMinute = 1000*60 // 1000 ms * 60 s = 1 min
+    const oneMinute = 1000*60; // 1000 ms * 60 s = 1 min
     setInterval(this.logOutHandle, oneMinute, oneMinute*15);
   }
 
@@ -50,7 +50,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-            <button onClick={(e) => {this.setState({'teste': !this.state.teste }); Auth.authenticate({token: 'ok'}); }} > {this.state.teste ? '1': '2'} </button>
+            <button onClick={() => {this.setState({'teste': !this.state.teste }); Auth.authenticate({token: 'ok'}); }} > {this.state.teste ? '1': '2'} </button>
           <img src={logo} className="App-logo" alt="logo" />
           { this.state.auth && <div>{Auth.getAuth()}</div>}
             <Link to="/">/ </Link>
@@ -60,7 +60,7 @@ class App extends Component {
             <Link to="/login/resetpassword">reset </Link>
         </div>
         <Switch>
-          <Route exact path="/" render={(e) => (
+          <Route exact path="/" render={() => (
             this.state.teste ?  ( null ) : ( <Redirect to="/login" /> )
           )
           } />

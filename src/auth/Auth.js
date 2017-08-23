@@ -15,7 +15,7 @@ export class Auth{
   static getHeader(additional={}){
     let header;
     if (additional !== undefined && additional !== null){
-       header = additional;
+      header = additional;
     }
     header['Accept'] = 'application/json';
     header['Content-type'] = 'application/json';
