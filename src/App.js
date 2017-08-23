@@ -55,7 +55,6 @@ class App extends Component {
             <Link to="/login">login </Link>
             <AuthorizedLink to="/logout">logout </AuthorizedLink>
             <AuthorizedLink to="/login/changepassword">change </AuthorizedLink>
-            <Link to="/login/resetpassword">reset </Link>
         </div>
         <Switch>
           <Route exact path="/" render={() => (

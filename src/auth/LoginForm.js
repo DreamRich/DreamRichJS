@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import {Auth} from './Auth';
 import '../stylesheet/LoginForm.sass';
+import {Link} from 'react-router-dom';
+
+// import {AuthorizedRoute, AuthorizedLink} from './routes/Router';
 
 export default class LoginForm extends Component{
 
@@ -24,17 +27,18 @@ export default class LoginForm extends Component{
 
   render(){
     return (
-    <form onSubmit={this.handleForm} >
-      <p className="iRich_login">iRich</p>
-      <p className="do-login">Faça login</p>
-      <input type="text" className='input-text' name='username'/>
-      <br />
-      <br />
-      <input className='input-text' name='password'/>
-      <br />
-      <br />
-      <button className='highlight-btn'>ENTRAR</button>
-    </form>
+      <div>
+        <form onSubmit={this.handleForm} >
+          <p className="iRich_login">DreamRich</p>
+          <p className="do-login">Faça login</p>
+          <input type="text" className="input-text" name="username"/>
+          <br/>
+          <input type="password" className="input-text" name="password"/>
+          <br/>
+          <button className="highlight-btn">ENTRAR</button>
+        </form>
+        <Link to="/login/resetpassword" className="forgot-password">Esqueceu a senha?</Link>
+    </div>
     );
   }
 }
