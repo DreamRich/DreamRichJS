@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Auth} from './Auth';
+import '../stylesheet/LoginForm.sass';
 
 export default class LoginForm extends Component{
 
@@ -24,12 +25,15 @@ export default class LoginForm extends Component{
   render(){
     return (
     <form onSubmit={this.handleForm} >
-      <label>Login</label>
-      <input type="text" name='username'/>
+      <p className="iRich_login">iRich</p>
+      <p className="do-login">Faça login</p>
+      <input type="text" className='input-text' name='username'/>
       <br />
-      <label>Password</label>
-      <input type="password" name='password'/>
-      <button>Submit</button>
+      <br />
+      <input className='input-text' name='password'/>
+      <br />
+      <br />
+      <button className='highlight-btn'>ENTRAR</button>
     </form>
     );
   }

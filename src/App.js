@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './stylesheet/App.sass';
 import {Route,
   Link,
   Switch,
   Redirect
-} from 'react-router-dom'
+} from 'react-router-dom';
 
 import LoginForm from './auth/LoginForm';
 import LogoutButton from './auth/LogoutButton';
@@ -51,7 +50,6 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
             <button onClick={() => {this.setState({'teste': !this.state.teste }); Auth.authenticate({token: 'ok'}); }} > {this.state.teste ? '1': '2'} </button>
-          <img src={logo} className="App-logo" alt="logo" />
           { this.state.auth && <div>{Auth.getAuth()}</div>}
             <Link to="/">/ </Link>
             <Link to="/login">login </Link>
