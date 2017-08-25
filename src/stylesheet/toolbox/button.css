@@ -1,0 +1,15 @@
+@value buttonPrimaryColor, buttonPrimaryBackgroundColor, buttonPrimaryDisabledBackgroundColor from "./variables.css";
+
+@value button-border-radius: 4px;
+@value button-squared-min-width: 12em;
+
+.primary {
+  font-weight: bold;
+  background-color: buttonPrimaryBackgroundColor !important;
+  /*color: buttonPrimaryColor !important;
+
+  &.flat {
+   background-color: buttonPrimaryDisabledBackgroundColor !important;
+ }*/
+}
+.button{}

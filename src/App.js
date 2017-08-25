@@ -13,6 +13,7 @@ import PasswordForm from './auth/PasswordForm';
 import ResetForm from './auth/ResetForm';
 import NotFound from './NotFound';
 import {AuthorizedRoute, AuthorizedLink} from './routes/Router';
+import {Button} from 'react-toolbox/lib/button';
 
 class App extends Component {
 
@@ -49,7 +50,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-            <button onClick={() => {this.setState({'teste': !this.state.teste }); Auth.authenticate({token: 'ok'}); }} > {this.state.teste ? '1': '2'} </button>
+            <Button raised primary onClick={() => {this.setState({'teste': !this.state.teste }); Auth.authenticate({token: 'ok'}); }} > {this.state.teste ? '1': '2'} </Button>
           { this.state.auth && <div>{Auth.getAuth()}</div>}
             <Link to="/">/ </Link>
             <Link to="/login">login </Link>
