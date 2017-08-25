@@ -57,17 +57,19 @@ class App extends Component {
             <AuthorizedLink to="/logout">logout </AuthorizedLink>
             <AuthorizedLink to="/login/changepassword">change </AuthorizedLink>
         </div>
-        <Switch>
-          <Route exact path="/" render={() => (
-            this.state.teste ?  ( null ) : ( <Redirect to="/login" /> )
-          )
-          } />
-          <Route exact path="/login" component={ LoginForm } />
-          <AuthorizedRoute path="/logout" component={ LogoutButton } />
-          <AuthorizedRoute path="/login/changepassword" render={ () => <PasswordForm userid={3} username="Marcelo" /> } />
-          <Route path="/login/resetpassword" render={ () => <ResetForm email="marcelohpf@hotmail.com" /> } />
-          <Route component={ NotFound } />
-        </Switch>
+        <div className="conteiner">
+          <Switch>
+            <Route exact path="/" render={() => (
+              this.state.teste ?  ( null ) : ( <Redirect to="/login" /> )
+            )
+            } />
+            <Route exact path="/login" component={ LoginForm } />
+            <AuthorizedRoute path="/logout" component={ LogoutButton } />
+            <AuthorizedRoute path="/login/changepassword" render={ () => <PasswordForm userid={3} username="Marcelo" /> } />
+            <Route path="/login/resetpassword" render={ () => <ResetForm email="marcelohpf@hotmail.com" /> } />
+            <Route component={ NotFound } />
+          </Switch>
+        </div>
       </div>
     );
   }
