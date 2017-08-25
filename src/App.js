@@ -13,7 +13,7 @@ import PasswordForm from './auth/PasswordForm';
 import ResetForm from './auth/ResetForm';
 import NotFound from './NotFound';
 import {AuthorizedRoute, AuthorizedLink} from './routes/Router';
-import {Button} from 'react-toolbox/lib/button';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class App extends Component {
 
@@ -50,7 +50,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-            <Button raised primary onClick={() => {this.setState({'teste': !this.state.teste }); Auth.authenticate({token: 'ok'}); }} > {this.state.teste ? '1': '2'} </Button>
+            <RaisedButton primary onClick={() => {this.setState({'teste': !this.state.teste }); Auth.authenticate({token: 'ok'}); }} label={this.state.teste ? '1': '2'}>  </RaisedButton>
           { this.state.auth && <div>{Auth.getAuth()}</div>}
             <Link to="/">/ </Link>
             <Link to="/login">login </Link>

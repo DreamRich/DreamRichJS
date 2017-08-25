@@ -183,18 +183,34 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          "style-loader",
+          require.resolve('style-loader'),
           {
-            loader: "css-loader",
+            loader: require.resolve('css-loader'),
             options: {
-              modules: true,
-              sourceMap: true,
               importLoaders: 1,
-              localIdentName: "[name]--[local]--[hash:base64:8]"
-            }
+            },
           },
-          "postcss-loader" // has separate config, see postcss.config.js nearby
-],
+          {
+            loader: require.resolve('postcss-loader'),
+            options: {
+              // Necessary for external CSS imports to work
+              // https://github.com/facebookincubator/create-react-app/issues/2677
+              ident: 'postcss',
+              plugins: () => [
+                require('postcss-flexbugs-fixes'),
+                autoprefixer({
+                  browsers: [
+                    '>1%',
+                    'last 4 versions',
+                    'Firefox ESR',
+                    'not ie < 9', // React doesn't support IE8 anyway
+                  ],
+                  flexbox: 'no-2009',
+                }),
+              ],
+            },
+          },
+        ],
       },
       {
         // "sass loader resolves paths in sass and add into styles

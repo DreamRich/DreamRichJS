@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {Auth} from './Auth';
 import PropTypes from 'prop-types';
-import Input from 'react-toolbox/lib/input';
-import Button from 'react-toolbox/lib/button';
 
 export default class PasswordForm extends Component{
   constructor(props){
@@ -37,26 +35,26 @@ export default class PasswordForm extends Component{
     return (
       <section>
         <form onSubmit={this.handleForm}>
-          <Input label="Usuário" disabled value={this.props.username} />
-          <Input type="password"
+          <input label="Usuário" disabled value={this.props.username} />
+          <input type="password"
             label="Senha"
             name="password"
             hint="Digite sua senha antiga"
             value={this.state.password}
             onChange={this.handleChange.bind(this, 'password')}/>
-          <Input
+          <input
             label="Nova senha"
             name="new_password"
             hint="Digite sua nova senha"
             value={this.state.new_password}
             onChange={this.handleChange.bind(this, 'new_password')}/>
-          <Input
+          <input
             label="Confirmação"
             name="new_password_confirmation"
             hint="Confirme sua nova senha"
             value={this.state.new_password_confirmation}
             onChange={this.handleChange.bind(this, 'new_password_confirmation')}/>
-          <Button raised primary label="ALTERAR" />
+          <button raised primary label="ALTERAR" />
         </form>
       </section>
     );

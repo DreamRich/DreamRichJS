@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Input from 'react-toolbox/lib/input';
-import Button from 'react-toolbox/lib/button';
 import Title from '../layout/Title';
 import Subtitle from '../layout/Subtitle';
 
@@ -25,8 +23,8 @@ export default class ResetForm extends Component{
       <section>
         <Title label="Recuperação de senha"/>
         <Subtitle label="Informe o endereço de e-mail associado à sua conta e enviaremos instruções para a recuperação de sua senha." />
-        <Input text="E-MAIL" label="E-MAIL" name="email" hint="Seu e-mail cadastrado" value={this.state.email} onChange={this.handleChange.bind(this, 'email')}/>
-      <Button primary raised label="RECUPERAR" onClick={this.handleSubmit} />
+        <input text="E-MAIL" label="E-MAIL" name="email" hint="Seu e-mail cadastrado" value={this.state.email} onChange={this.handleChange.bind(this, 'email')}/>
+      <button primary raised label="RECUPERAR" onClick={this.handleSubmit} />
       </section>
     );
   }

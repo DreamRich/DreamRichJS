@@ -1,5 +1,6 @@
-import RTButton from './toolbox/button.css';
-
 export default {
-  RTButton,
+  raisedButton: {
+    primaryColor: '#00D0A7',
+    primaryTextColor: '#fff',
+  },
 };
