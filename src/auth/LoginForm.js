@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Auth} from './Auth';
 import '../stylesheet/LoginForm.sass';
 import {Link} from 'react-router-dom';
+import Title from '../layout/Title';
+import Button from 'react-toolbox/lib/button';
 
 // import {AuthorizedRoute, AuthorizedLink} from './routes/Router';
 
@@ -30,12 +32,12 @@ export default class LoginForm extends Component{
       <div>
         <form onSubmit={this.handleForm} >
           <p className="iRich_login">DreamRich</p>
-          <p className="do-login">Faça login</p>
+          <Title title="Faça login" />
           <input type="text" className="input-text" name="username"/>
           <br/>
           <input type="password" className="input-text" name="password"/>
           <br/>
-          <button className="highlight-btn">ENTRAR</button>
+          <Button primary raised label="ENTRAR" />
         </form>
         <Link to="/login/resetpassword" className="forgot-password">Esqueceu a senha?</Link>
     </div>

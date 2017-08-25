@@ -5,9 +5,11 @@
 
 .primary {
   font-weight: bold;
-  background-color: buttonPrimaryBackgroundColor !important;
-  /*color: buttonPrimaryColor !important;
+  margin-top: 20px;
+  margin-bottom: 20px;
 
+  /*color: buttonPrimaryColor !important;
+  background-color: buttonPrimaryBackgroundColor !important;
   &.flat {
    background-color: buttonPrimaryDisabledBackgroundColor !important;
  }*/
