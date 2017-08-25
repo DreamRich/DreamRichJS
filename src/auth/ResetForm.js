@@ -26,7 +26,7 @@ export default class ResetForm extends Component{
         <Title label="Recuperação de senha"/>
         <Subtitle label="Informe o endereço de e-mail associado à sua conta e enviaremos instruções para a recuperação de sua senha." />
         <Input text="E-MAIL" label="E-MAIL" name="email" hint="Seu e-mail cadastrado" value={this.state.email} onChange={this.handleChange.bind(this, 'email')}/>
-      <Button primary raised label="RECUPERAR" />
+      <Button primary raised label="RECUPERAR" onClick={this.handleSubmit} />
       </section>
     );
   }

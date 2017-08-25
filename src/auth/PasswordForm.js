@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
 import {Auth} from './Auth';
 import PropTypes from 'prop-types';
+import Input from 'react-toolbox/lib/input';
+import Button from 'react-toolbox/lib/button';
 
 export default class PasswordForm extends Component{
   constructor(props){
     super(props);
+    this.state={password: '', new_password: '', new_password_confirmation: ''};
     this.handleForm = this.handleForm.bind(this);
   }
+
   handleForm(event){
     event.preventDefault();
     console.log(Auth.getHeader(), this.props.userid);
@@ -24,16 +28,37 @@ export default class PasswordForm extends Component{
     .then(() => {console.log('ok');})
     .catch(() => {console.log('treta');});
   }
+
+  handleChange(field, value){
+    this.setState({[field]: value});
+  }
+
   render(){
     return (
-      <form onSubmit={this.handleForm}>
-        <label>Username</label>
-        <input disabled value={this.props.username} />
-        <input type="text" name="password" />
-        <input type="text" name="new_password" />
-        <input type="text" name="new_password_confirmation" />
-        <button />
-      </form>
+      <section>
+        <form onSubmit={this.handleForm}>
+          <Input label="Usuário" disabled value={this.props.username} />
+          <Input type="password"
+            label="Senha"
+            name="password"
+            hint="Digite sua senha antiga"
+            value={this.state.password}
+            onChange={this.handleChange.bind(this, 'password')}/>
+          <Input
+            label="Nova senha"
+            name="new_password"
+            hint="Digite sua nova senha"
+            value={this.state.new_password}
+            onChange={this.handleChange.bind(this, 'new_password')}/>
+          <Input
+            label="Confirmação"
+            name="new_password_confirmation"
+            hint="Confirme sua nova senha"
+            value={this.state.new_password_confirmation}
+            onChange={this.handleChange.bind(this, 'new_password_confirmation')}/>
+          <Button raised primary label="ALTERAR" />
+        </form>
+      </section>
     );
   }
 }
