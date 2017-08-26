@@ -1,25 +1,17 @@
 import React, { Component } from 'react';
 import './stylesheet/App.sass';
-import {Route,
-  Link,
-  Switch,
-  Redirect
-} from 'react-router-dom';
-
-import LoginForm from './auth/LoginForm';
-import LogoutButton from './auth/LogoutButton';
 import {Auth} from './auth/Auth';
-import PasswordForm from './auth/PasswordForm';
-import ResetForm from './auth/ResetForm';
-import NotFound from './NotFound';
-import {AuthorizedRoute, AuthorizedLink} from './routes/Router';
+
+import {Link} from 'react-router-dom';
+import {AuthorizedLink} from './routes/Router';
+import Routers from './routes/Routers';
 import RaisedButton from 'material-ui/RaisedButton';
 
 class App extends Component {
 
   constructor(props){
     super(props);
-    this.state = {'auth': false, 'begin': Date.now(), 'teste': true };
+    this.state = {'auth': false, 'begin': Date.now()};
     this.updateDate = this.updateDate.bind(this);
     this.logOutHandle = this.logOutHandle.bind(this);
   }
@@ -49,26 +41,17 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+
         <div className="App-header">
-            <RaisedButton primary onClick={() => {this.setState({'teste': !this.state.teste }); Auth.authenticate({token: 'ok'}); }} label={this.state.teste ? '1': '2'}>  </RaisedButton>
+            <RaisedButton primary onClick={() => {Auth.authenticate({token: 'ok'}); }} label="simulate login" />
           { this.state.auth && <div>{Auth.getAuth()}</div>}
-            <Link to="/">/ </Link>
+            <Link to="/">home </Link>
             <Link to="/login">login </Link>
             <AuthorizedLink to="/logout">logout </AuthorizedLink>
             <AuthorizedLink to="/login/changepassword">change </AuthorizedLink>
         </div>
         <div className="conteiner">
-          <Switch>
-            <Route exact path="/" render={() => (
-              this.state.teste ?  ( null ) : ( <Redirect to="/login" /> )
-            )
-            } />
-            <Route exact path="/login" component={ LoginForm } />
-            <AuthorizedRoute path="/logout" component={ LogoutButton } />
-            <AuthorizedRoute path="/login/changepassword" render={ () => <PasswordForm userid={3} username="Marcelo" /> } />
-            <Route path="/login/resetpassword" render={ () => <ResetForm email="marcelohpf@hotmail.com" /> } />
-            <Route component={ NotFound } />
-          </Switch>
+          <Routers />
         </div>
       </div>
     );

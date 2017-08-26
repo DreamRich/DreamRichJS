@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import {Auth} from './Auth';
+import {Auth} from '../Auth';
 import PropTypes from 'prop-types';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 export default class PasswordForm extends Component{
   constructor(props){
     super(props);
-    this.state={password: '', new_password: '', new_password_confirmation: ''};
     this.handleForm = this.handleForm.bind(this);
   }
 
@@ -23,38 +24,32 @@ export default class PasswordForm extends Component{
       headers: Auth.getHeader(),
       body: data
     })
-    .then(() => {console.log('ok');})
+    .then(() => {console.log('ok'); this.setState({send: true}); })
     .catch(() => {console.log('treta');});
-  }
-
-  handleChange(field, value){
-    this.setState({[field]: value});
   }
 
   render(){
     return (
       <section>
         <form onSubmit={this.handleForm}>
-          <input label="Usuário" disabled value={this.props.username} />
-          <input type="password"
-            label="Senha"
+          <TextField floatingLabel="Usuário" disabled value={this.props.username} />
+      <br />
+          <TextField type="password"
+            floatingLabelText="Senha"
             name="password"
-            hint="Digite sua senha antiga"
-            value={this.state.password}
-            onChange={this.handleChange.bind(this, 'password')}/>
-          <input
-            label="Nova senha"
+            hintText="Digite sua senha antiga" />
+      <br />
+          <TextField
+            floatingLabelText="Nova senha"
             name="new_password"
-            hint="Digite sua nova senha"
-            value={this.state.new_password}
-            onChange={this.handleChange.bind(this, 'new_password')}/>
-          <input
-            label="Confirmação"
+            hintText="Digite sua nova senha" />
+      <br />
+          <TextField
+            floatingLabelText="Confirmação"
             name="new_password_confirmation"
-            hint="Confirme sua nova senha"
-            value={this.state.new_password_confirmation}
-            onChange={this.handleChange.bind(this, 'new_password_confirmation')}/>
-          <button raised primary label="ALTERAR" />
+            hintText="Confirme sua nova senha" />
+      <br />
+          <RaisedButton primary label="ALTERAR" />
         </form>
       </section>
     );
