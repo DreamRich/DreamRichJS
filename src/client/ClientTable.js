@@ -1,17 +1,19 @@
 import ReactDataGrid from 'react-data-grid';
 import React, {Component} from 'react';
+import getData from '../resources/getData';
 
 export default class ClientTable extends Component {
   constructor(props) {
     super(props);
     this.state = {_columns: [
-      { key: 'id', name: 'ID' },
-      { key: 'title', name: 'Title' },
-      { key: 'count', name: 'Count' } ],
+      { key: 'name', name: 'Name' },
+      { key: 'cpf', name: 'CPF' },
+      { key: 'telephone', name: 'Telefone' },
+      { key: 'email', name: 'Email' } ],
       _rows: []};
   }
 
-  componentDidMount(){ this.createRows();}
+  componentDidMount(){ getData('/api/client/active/', this, '_rows');}
 
   createRows() {
     let rows = [];
@@ -31,6 +33,7 @@ export default class ClientTable extends Component {
   }
 
   render() {
+    console.log(this.state._rows);
     return  (
       <ReactDataGrid
         columns={this.state._columns}
