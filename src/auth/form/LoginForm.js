@@ -33,11 +33,14 @@ export default class LoginForm extends Component{
     return (
       <form onSubmit={this.handleForm} >
         <Title title="Faça login" />
-        <TextField type="text" name="username" hintText="Seu usuário (CPF) ..." floatingLabelText="Usuário"/>
+        <TextField type="text" name="username" hintText="E-mail ou nome de usuário" floatingLabelText="Usuário"/>
         <br/>
-        <TextField type="password" name="password" hintText="Sua senha ..."  floatingLabelText="Senha"/>
+        <TextField type="password" name="password" hintText="Senha"  floatingLabelText="Senha"/>
+        <br/>
         <br/>
         <RaisedButton primary label="ENTRAR" />
+        <br/>
+        <br/>
       </form>
     );
   }
