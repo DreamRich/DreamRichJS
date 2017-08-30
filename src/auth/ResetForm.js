@@ -4,6 +4,7 @@ import Title from '../layout/Title';
 import Subtitle from '../layout/Subtitle';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import FlatButton from 'material-ui/FlatButton';
 import {Link} from 'react-router-dom';
 
 export default class ResetForm extends Component{
@@ -29,14 +30,21 @@ export default class ResetForm extends Component{
       button = <RaisedButton primary label="LOGIN" type="submit" containerElement={<Link to="/login" />} />;
     }
     return (
-      <section>
-        <Title label="Recuperação de senha"/>
-        <Subtitle label={!this.state.send?'Informe o endereço de e-mail associado à sua conta e enviaremos instruções para a recuperação de sua senha.': 'Confira sua caixa de entrada. As instruções para a recuperação de sua senha foram enviadas para: '} />
-      <br />
-        <TextField disabled={this.state.send} floatingLabelText="E-MAIL" name="email" hintText="Seu e-mail cadastrado" />
-      <br />
-        {button}
-      </section>
+      <div className="container">
+        <div className="button-left">
+          <FlatButton primary className="back-btn" label="VOLTAR"/>
+        </div>
+        <section>
+          <Title style={{fontSize: '48px'}} label="Recuperação de senha" />
+          <Subtitle style={{fontSize: '22px', textAlign:'left'}} label={!this.state.send?'Informe o endereço de e-mail associado à sua conta e enviaremos instruções para a recuperação de sua senha.': 'Confira sua caixa de entrada. As instruções para a recuperação de sua senha foram enviadas para: '} />
+        <br />
+          <TextField disabled={this.state.send} floatingLabelText="E-MAIL" name="email" hintText="Seu e-mail cadastrado" />
+        <br />
+        <br />
+        <br />
+          {button}
+        </section>
+      </div>
     );
   }
 }
