@@ -24,9 +24,12 @@ export default class ResetForm extends Component{
   }
   render(){
     let button = null;
+    let email = null;
     if(!this.state.send){
+      email = <TextField disabled={this.state.send} floatingLabelText="E-MAIL" name="email" hintText="Seu e-mail cadastrado" />;
       button = <RaisedButton primary label="RECUPERAR" onClick={this.handleSubmit} />;
     } else {
+      email = <Title style={{fontSize: '30px', color:'#00D0A7'}} label={this.props.email} />;
       button = <RaisedButton primary label="LOGIN" type="submit" containerElement={<Link to="/login" />} />;
     }
     return (
@@ -36,9 +39,9 @@ export default class ResetForm extends Component{
         </div>
         <section>
           <Title style={{fontSize: '48px'}} label="Recuperação de senha" />
-          <Subtitle style={{fontSize: '22px', textAlign:'left'}} label={!this.state.send?'Informe o endereço de e-mail associado à sua conta e enviaremos instruções para a recuperação de sua senha.': 'Confira sua caixa de entrada. As instruções para a recuperação de sua senha foram enviadas para: '} />
+          <Subtitle style={{fontSize: '22px', textAlign:'left'}} label={!this.state.send?'Informe o endereço de e-mail associado à sua conta e enviaremos instruções para a recuperação de sua senha.': 'Confira sua caixa de entrada. As instruções para a recuperação de sua senha foram enviadas para:'} />
         <br />
-          <TextField disabled={this.state.send} floatingLabelText="E-MAIL" name="email" hintText="Seu e-mail cadastrado" />
+          {email}
         <br />
         <br />
         <br />
