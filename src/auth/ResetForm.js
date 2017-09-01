@@ -21,6 +21,8 @@ export default class ResetForm extends Component{
 
     this.invalidMessage = {isEmail: 'E-mail inválido', 
       emailExist: 'E-mail não cadastrado'};
+    this.sendedMessage = 'Informe o endereço de e-mail associado à sua conta e enviaremos instruções para a recuperação de sua senha.';
+    this.unsendedMessage = 'Confira sua caixa de entrada. As instruções para a recuperação de sua senha foram enviadas para: ';
   }
 
   handleSubmit(){
@@ -52,12 +54,12 @@ export default class ResetForm extends Component{
         </div>
         <section>
           <Title style={{fontSize: '48px'}} label="Recuperação de senha" />
-          <Subtitle style={{fontSize: '22px', textAlign:'left'}} label={!this.state.send?'Informe o endereço de e-mail associado à sua conta e enviaremos instruções para a recuperação de sua senha.': 'Confira sua caixa de entrada. As instruções para a recuperação de sua senha foram enviadas para: '} />
+          <Subtitle style={{fontSize: '22px', textAlign:'left'}} label={!this.state.send? this.sendedMessage : this.unsendedMessage} />
         <br />
         <Formsy.Form ref={ (form) => {this.form = form;} } onInvalid={() => {this.setState({emailExist: true});}}>
-          <FormsyText name="name" validations={{isEmail: true, emailExist: true}}
+          <FormsyText name="E-MAIL" validations={{isEmail: true, emailExist: true}}
             validationErrors={this.invalidMessage} 
-            required hintText="What is your name?" floatingLabelText="Name"/>
+            required hintText="Seu e-mail cadastrado" floatingLabelText="E-MAIL"/>
         </Formsy.Form>
         <br />
         <br />
