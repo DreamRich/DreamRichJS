@@ -3,33 +3,46 @@ import PropTypes from 'prop-types';
 import Title from '../layout/Title';
 import Subtitle from '../layout/Subtitle';
 import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import {Link} from 'react-router-dom';
+import Formsy from 'formsy-react';
+
+import {FormsyText} from 'formsy-material-ui/lib';
 
 export default class ResetForm extends Component{
   constructor(props){
     super(props);
-    this.state={send: false};
+    this.state={send: false, emailExist: true};
     this.handleSubmit = this.handleSubmit.bind(this);
+
+    Formsy.addValidationRule('emailExist', () => {
+      return this.state.emailExist;
+    });
+
+    this.invalidMessage = {isEmail: 'E-mail inválido', 
+      emailExist: 'E-mail não cadastrado'};
   }
 
   handleSubmit(){
-    fetch('/api/auth/password/?email='+this.props.email)
-    .then((() => {
-      console.log('email send', this.state.send);
-      this.setState({send: true}); 
-    }).bind(this))
+    //const email = document.getElementsTagName
+    const email = this.form.getCurrentValues();
+    fetch('/api/client/auth/password/?email='+email.name)
+    .then((response) => {
+      if(!response.ok){
+        this.setState({emailExist: false});
+        this.form.validateForm();
+      } else {
+        this.setState({send: true});  
+      }
+    })
     .catch((e) => {console.log('problem in email sending', e);});
   }
+  
   render(){
     let button = null;
-    let email = null;
     if(!this.state.send){
-      email = <TextField disabled={this.state.send} floatingLabelText="E-MAIL" name="email" hintText="Seu e-mail cadastrado" />;
       button = <RaisedButton primary label="RECUPERAR" onClick={this.handleSubmit} />;
     } else {
-      email = <Title style={{fontSize: '30px', color:'#00D0A7'}} label={this.props.email} />;
       button = <RaisedButton primary label="LOGIN" type="submit" containerElement={<Link to="/login" />} />;
     }
     return (
@@ -39,9 +52,13 @@ export default class ResetForm extends Component{
         </div>
         <section>
           <Title style={{fontSize: '48px'}} label="Recuperação de senha" />
-          <Subtitle style={{fontSize: '22px', textAlign:'left'}} label={!this.state.send?'Informe o endereço de e-mail associado à sua conta e enviaremos instruções para a recuperação de sua senha.': 'Confira sua caixa de entrada. As instruções para a recuperação de sua senha foram enviadas para:'} />
+          <Subtitle style={{fontSize: '22px', textAlign:'left'}} label={!this.state.send?'Informe o endereço de e-mail associado à sua conta e enviaremos instruções para a recuperação de sua senha.': 'Confira sua caixa de entrada. As instruções para a recuperação de sua senha foram enviadas para: '} />
         <br />
-          {email}
+        <Formsy.Form ref={ (form) => {this.form = form;} } onInvalid={() => {this.setState({emailExist: true});}}>
+          <FormsyText name="name" validations={{isEmail: true, emailExist: true}}
+            validationErrors={this.invalidMessage} 
+            required hintText="What is your name?" floatingLabelText="Name"/>
+        </Formsy.Form>
         <br />
         <br />
         <br />
