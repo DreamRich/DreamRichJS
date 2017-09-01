@@ -4,11 +4,19 @@
 
 .react-grid-HeaderRow
   overflow-x: unset !important
-.react-grid-HeaderCell
-  height: auto !important
+  height: 33px !important
 
 .react-grid-HeaderCell
+  height: 45 !important
   background: white !important
   border-bottom: 1px solid #ddd !important
+  border-left: 0px !important
+  border-right: 0px !important
 
+.react-grid-Cell
+  height: 45px !important
+  border-left: 0px !important
+  border-right: 0px !important
 
+.react-grid-HeaderCell,.react-grid-Cell,:before,:after
+  box-sizing: border-box;
