@@ -1,22 +1,23 @@
 import ReactDataGrid from 'react-data-grid';
+import {Link} from 'react-router-dom';
 import React, {Component} from 'react';
 import getData from '../resources/getData';
 import {Data, Toolbar} from 'react-data-grid-addons';
+import FontIcon from 'material-ui/FontIcon';
 import '../stylesheet/Table.sass';
 
 export default class ClientTable extends Component {
   constructor(props) {
     super(props);
     this.state = {_columns: [
-      { key: 'name', name: 'Name', sortable: true, filterable: true },
-      { key: 'telephone', name: 'Telefone', sortable: true, filterable: true },
-      { key: 'email', name: 'Email', sortable: true, filterable: true },
-      { key: 'actions', name: 'Actions', locked: true, filterable: false }
+      { key: 'name', name: 'Name', sortable: true, filterable: true, resizable: true },
+      { key: 'telephone', name: 'Telefone', sortable: true, filterable: true, resizable: true },
+      { key: 'email', name: 'Email', sortable: true, filterable: true, resizable: true },
+      { key: 'actions', name: 'Actions', locked: true, filterable: false, resizable: false }
     ],
       rows: [], original: [], filters: {}, sortDirection: null,
       sortColumn: null};
     this.getRows = this.getRows.bind(this);
-    this.a = this.a.bind(this);
   }
 
   componentWillMount(){ getData('/api/client/active/', this, 'original', 'rows');}
@@ -31,7 +32,9 @@ export default class ClientTable extends Component {
 
   rowGetter(i) {
     const row = this.getRows()[i];
-    row['actions'] = <div><a href="asd">A</a><a href="afd"> asdf</a></div>;
+    row['actions'] = (<Link to="/login">
+      <FontIcon className="material-icons">home</FontIcon>
+      </Link>);
     return row;
   }
 
@@ -56,18 +59,20 @@ export default class ClientTable extends Component {
 
   render() {
     //console.log(this.state._rows);
-    return  (
-      <ReactDataGrid
-        columns={this.state._columns}
-        onGridSort={this.handleSort.bind(this)}
-        rowGetter={this.rowGetter.bind(this)}
-        enableCellSelect={true}
-        rowsCount={this.getSize()}
-        toolbar={<Toolbar enableFilter={true}/>}
-        onAddFilter={this.handleFilterChange.bind(this)}
-        onClearFilters={this.onClearFilters.bind(this)}
-        rowHeight={50}
-        disableCellDrag={true}
-        minHeight={500} />);
+    return (
+      <div className="container">
+        <ReactDataGrid
+          columns={this.state._columns}
+          onGridSort={this.handleSort.bind(this)}
+          rowGetter={this.rowGetter.bind(this)}
+          enableCellSelect={true}
+          rowsCount={this.getSize()}
+          toolbar={<Toolbar enableFilter={true}/>}
+          onAddFilter={this.handleFilterChange.bind(this)}
+          onClearFilters={this.onClearFilters.bind(this)}
+          rowHeight={46}
+          columnWidth={120}
+          minHeight={500} />
+      </div>);
   }
 }
