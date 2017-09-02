@@ -7,6 +7,8 @@ import errorMessages from '../utils/FormsErrorMessages';
 import IconButton from 'material-ui/IconButton';
 import FileFileUpload from 'material-ui/svg-icons/file/file-upload';
 import '../stylesheet/RegisterForms.sass';
+import routeMap from '../routes/RouteMap.js';
+import {Auth} from '../auth/Auth';
 
 class ClientRegister extends Component {
 
@@ -15,6 +17,7 @@ class ClientRegister extends Component {
     this.state = {
       canSubmit: false,
     };
+    this.forms = {};
   }
 
   enableButton() {

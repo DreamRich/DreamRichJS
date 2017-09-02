@@ -15,7 +15,7 @@ export default class Routers extends Component{
       <Switch>
         <Route exact path="/" render={() => <div>Home</div>} />
         <Route exact path="/login" component={ LoginPage } />
-        <Route exact path="/register/client" component={ClientRegister} />
+        <AuthorizedRoute  exact path="/register/client" component={ClientRegister} />
         <AuthorizedRoute path="/logout" component={ LogoutButton } />
         <AuthorizedRoute path="/login/changepassword" render={ () => <PasswordForm userid={3} username="Marcelo" /> } />
         <Route path="/login/resetpassword" render={ () => <ResetForm email="marcelohpf@hotmail.com" /> } />

@@ -48,6 +48,7 @@ class App extends Component {
             <Link to="/">home </Link>
             <Link to="/login">login </Link>
             <AuthorizedLink to="/logout">logout </AuthorizedLink>
+            <AuthorizedLink to="/register/client">new client </AuthorizedLink>
             <AuthorizedLink to="/login/changepassword">change </AuthorizedLink>
         </div>
         <div className="conteiner">
