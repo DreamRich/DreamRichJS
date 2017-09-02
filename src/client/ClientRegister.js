@@ -32,53 +32,65 @@ class ClientRegister extends Component {
     });
   }
 
-  submitAllForms() {
-    var submitter = {};
-    var forms = document.getElementsByTagName('form');
-    var count = 0;
-
-    function partialSubmitForms(){
-      for (let count = 0; count < forms.length; ++count) {
-        let current_form = forms[count];
-        let buttons = current_form.getElementsByTagName('button');
-        let form_name = current_form.getAttribute('name');
-
-        for(let i = 0; i < buttons.length; ++i){
-
-          if(buttons[i].name == 'partial_submit'){
-            buttons[i].click();
-            console.log(form_name  + ' was partially submitted');
-            break;
-          }
-          else if(i == buttons.lenght - 1) {
-            console.error(form_name  +
-              ' doesn\'t have any button for partial submit');
-          }
-        }
-      }
-    }
-
-    function submitForm(data) {
-      let current_form = forms[count];
-      let form_name = current_form.getAttribute('name');
-
-      fetch('/api/' + current_form.route.value, {
+  submitForms() {
+    function submitForm(data){
+      console.log('data loca', data);
+      fetch(routeMap[this.name], {
         method: 'post',
-        body: data
+        headers: Auth.getHeader(),
+        body: JSON.stringify(data),
       })
-        .then(() => {console.log(form_name + ' was submitted');})
-        .catch(() => {console.error('An error occurred when submitting ' + form_name);});
+      .then(() => {//console.log(this.name + ' was submitted');
+      })
+      .catch(() => {console.error(this.name + ' could not be submitted');});
+    }
+    const forms = this.forms;
+    // Gambira bind na marra
+    //const state = this;
 
-      count++;
+    function submitBaseForm(data){
+      data.birthday = data['birthday'].toISOString().slice(0, 10);
+      // console.log(data.birthday);
+
+      //console.log(JSON.stringify(data));
+      fetch(routeMap[this.name], {
+        method: 'post',
+        headers: Auth.getHeader(),
+        body: JSON.stringify(data),
+      })
+      .then(((response) => {
+        if(response.ok) {
+          //console.log(this.name + ' was submitted');
+          return response.json();
+        } else {
+          console.error(this.name + ' could not be submitted');
+        }
+      }).bind(this))
+      .then((data) => {
+        console.log(forms);
+        for (var form in forms) {
+          console.log(data);
+          forms[form].inputs[0].setValue(data.id);
+          forms[form].submit();
+        }
+      })
+      .catch((error) => {console.error(error);});
     }
 
-    submitter = {
-      submitForm : submitForm, 
-      partialSubmitForms : partialSubmitForms,
+    function partialSubmits(){
+      console.log(this.base);
+      this.base.submit();
+    }
+
+    var submitter = {
+      submitForm: submitForm,
+      partialSubmits: partialSubmits,
+      submitBaseForm: submitBaseForm
     };
 
     return submitter;
   }
+
 
   notifyFormError(data) {
     console.error('Form error:', data);
@@ -86,7 +98,7 @@ class ClientRegister extends Component {
 
   render() {
     let {wordsError, numericError, emailError} = errorMessages;
-    let {submitForm, partialSubmitForms} = this.submitAllForms();
+    let {submitForm, submitBaseForm, partialSubmits} = this.submitForms();
 
     return (
       <div>
@@ -94,25 +106,18 @@ class ClientRegister extends Component {
 
         <Paper className="Paper">
           <Formsy.Form
-            name="client"
+            name="active_client"
+            ref={ (form) => { this.base = form; } }
             onValid={this.enableButton.bind(this)}
             onInvalidSubmit={this.notifyFormError}
-            onValidSubmit={submitForm.bind(this)}>
-
-            <input
-              name="route"
-              type="text"
-              value="client/"
-              hidden
-              readOnly
-            / >
+            onValidSubmit={submitBaseForm}>
             <FormsyText
               name="name"
               validations="isWords"
               validationError={wordsError}
               hintText="Nome do cliente"
               floatingLabelText="Nome"
-              required
+              value="asd"
             />
             <FormsyText
               name="surname"
@@ -120,13 +125,14 @@ class ClientRegister extends Component {
               validationError={wordsError}
               hintText="Sobrenome do cliente"
               floatingLabelText="Sobrenome"
-              required
+              value="asd"
+              
             />
             <FormsyDate
               name="birthday"
               hintText="Data de nasc. do cliente"
               floatingLabelText="Data de Nascimento"
-              required
+              
             />
             <FormsyText
               name="profession"
@@ -134,7 +140,8 @@ class ClientRegister extends Component {
               validationError={wordsError}
               hintText="Profissão do cliente"
               floatingLabelText="Profissão"
-              required
+              value="asd"
+              
             />
             <FormsyText
               name="cpf"
@@ -142,8 +149,9 @@ class ClientRegister extends Component {
               validationError={numericError}
               hintText="Apenas números"
               floatingLabelText="CPF"
+              value="33044946425"
+              
               updateImmediately
-              required
             />
             <FormsyText
               name="telephone"
@@ -151,8 +159,9 @@ class ClientRegister extends Component {
               validationError={numericError}
               hintText="Telefone do cliente"
               floatingLabelText="Telefone"
+              value="111"
+              
               updateImmediately
-              required
             />
             <FormsyText
               name="email"
@@ -160,7 +169,8 @@ class ClientRegister extends Component {
               validationError={emailError}
               hintText="E-mail do cliente"
               floatingLabelText="E-mail"
-              required
+              value="asd@gmail.com"
+              
             />
             <FormsyText
               name="hometown"
@@ -168,31 +178,32 @@ class ClientRegister extends Component {
               validationError={wordsError}
               hintText="Onde o cliente nasceu?"
               floatingLabelText="Cidade natal"
-              required
+              value="asdac"
+              
             />
-            <button hidden name="partial_submit" type="submit" />
           </Formsy.Form>
 
           <Formsy.Form
             name="address"
+            ref={ (form) => { this.forms.address = form; } }
             onValid={this.enableButton.bind(this)}
             onInvalidSubmit={this.notifyFormError}
-            onValidSubmit={submitForm.bind(this)}>
-            <input
-              name="route"
-              type="text"
-              value="client/address/"
+            onValidSubmit={submitForm}>
+            <FormsyText
+              name="active_client_id"
               hidden
-              readOnly
-            / >
+              value=""
+            />
+
             <FormsyText
               name="cep"
               validations="isNumeric"
               validationError={numericError}
               hintText="Apenas números"
               floatingLabelText="CEP"
+              
               updateImmediately
-              required
+              
             />
             <FormsyText
               name="details"
@@ -200,6 +211,7 @@ class ClientRegister extends Component {
               validationError={wordsError}
               hintText="Detalhes do endereço"
               floatingLabelText="Detalhes"
+              
             />
             <FormsyText
               name="number"
@@ -207,8 +219,9 @@ class ClientRegister extends Component {
               validationError={numericError}
               hintText="Número do lote"
               floatingLabelText="Número"
+              
               updateImmediately
-              required
+              
             />
             <FormsyText
               name="complement"
@@ -216,7 +229,8 @@ class ClientRegister extends Component {
               validationError={wordsError}
               hintText="Complemento do endereço"
               floatingLabelText="Complemento"
-              required
+              
+              
             />
             <FormsyText
               name="neighborhood"
@@ -224,7 +238,8 @@ class ClientRegister extends Component {
               validationError={wordsError}
               hintText="Bairro do endereço"
               floatingLabelText="Bairro"
-              required
+              
+              
             />
             <FormsyText
               name="type_of_address"
@@ -232,30 +247,30 @@ class ClientRegister extends Component {
               validationError={wordsError}
               hintText="Casa, apartamento, etc."
               floatingLabelText="Tipo de Endereço"
-              required
+              
+              
             />
-            <button hidden name="partial_submit" type="submit" />
           </Formsy.Form>
 
           <Formsy.Form
             name="state"
             onValid={this.enableButton.bind(this)}
             onInvalidSubmit={this.notifyFormError}
-            onValidSubmit={submitForm.bind(this)}>
-            <input
-              name="route"
-              type="text"
-              value="client/state/"
+            onValidSubmit={submitForm}>
+            <FormsyText
+              name="active_client_id"
               hidden
-              readOnly
-            / >
+              value=""
+            />
+
             <FormsyText
               name="name"
               validations="isWords"
               validationError={wordsError}
               hintText="Estado do endereço"
               floatingLabelText="Estado"
-              required
+              
+              
             />
             <FormsyText
               name="abbreviation"
@@ -263,30 +278,30 @@ class ClientRegister extends Component {
               validationError={wordsError}
               hintText="DF, RS, MG ..."
               floatingLabelText="Sigla do estado"
-              required
+              
+              
             />
-            <button hidden name="partial_submit" type="submit" />
           </Formsy.Form>
 
           <Formsy.Form
             name="country"
             onValid={this.enableButton.bind(this)}
             onInvalidSubmit={this.notifyFormError}
-            onValidSubmit={submitForm.bind(this)}>
-            <input
-              name="route"
-              type="text"
-              value="client/country/"
+            onValidSubmit={submitForm}>
+            <FormsyText
+              name="active_client_id"
               hidden
-              readOnly
-            / >
+              value=""
+            />
+
             <FormsyText
               name="name"
               validations="isWords"
               validationError={wordsError}
               hintText="Nome do país"
               floatingLabelText="País"
-              required
+              
+              
             />
             <FormsyText
               name="abbreviation"
@@ -294,30 +309,31 @@ class ClientRegister extends Component {
               validationError={wordsError}
               hintText="BR, US ..."
               floatingLabelText="Sigla do país"
-              required
+              
+              
             />
-            <button hidden name="partial_submit" type="submit" />
           </Formsy.Form>
 
           <Formsy.Form
             name="bank_account"
+            ref={ (form) => { this.forms.bank = form; } }
             onValid={this.enableButton.bind(this)}
             onInvalidSubmit={this.notifyFormError}
-            onValidSubmit={submitForm.bind(this)}>
-            <input
-              name="route"
-              hidden
-              readOnly
-              type="text"
-              value="client/bank-account/"
-            / >
+            onValidSubmit={submitForm}>
             <FormsyText
-              name="name"
+              name="active_client_id"
+              hidden
+              value=""
+            />
+
+            <FormsyText
+              name="agency"
               validations="isNumeric"
               validationError={numericError}
               hintText="Agência da conta bancária"
               floatingLabelText="Agência"
-              required
+              
+              
             />
             <FormsyText
               name="account"
@@ -325,30 +341,31 @@ class ClientRegister extends Component {
               validationError={numericError}
               hintText="Número da conta bancária"
               floatingLabelText="Conta"
-              required
+              
+              
             />
-            <button hidden name="partial_submit" type="submit" />
           </Formsy.Form>
 
           <Formsy.Form
             name="dependent"
+            ref={ (form) => { this.forms.dependent = form; } }
             onValid={this.enableButton.bind(this)}
             onInvalidSubmit={this.notifyFormError}
-            onValidSubmit={submitForm.bind(this)}>
-            <input
-              name="route"
-              type="text"
-              value="client/dependent/"
+            onValidSubmit={submitForm}>
+            <FormsyText
+              name="active_client_id"
               hidden
-              readOnly
-            / >
+              value=""
+            />
+
             <FormsyText
               name="name"
               validations="isWords"
               validationError={wordsError}
               hintText="Nome do dependente"
               floatingLabelText="Nome"
-              required
+              
+              
             />
             <FormsyText
               name="surname"
@@ -356,29 +373,29 @@ class ClientRegister extends Component {
               validationError={wordsError}
               hintText="Sobrenome do dependente"
               floatingLabelText="Sobrenome"
-              required
+              
+              
             />
             <FormsyDate
               name="birthday"
               hintText="Data de nasc. do cliente"
               floatingLabelText="Data de Nascimento"
-              required
+              
+              
             />
-            <button hidden name="partial_submit" type="submit" />
           </Formsy.Form>
 
           <Formsy.Form
-            name="active_client"
+            name="client"
+            ref={ (form) => { this.forms.active = form; } }
             onValid={this.enableButton.bind(this)}
             onInvalidSubmit={this.notifyFormError}
-            onValidSubmit={submitForm.bind(this)}>
-            <input
+            onValidSubmit={submitForm}>
+            <FormsyText
+              name="active_client_id"
               hidden
-              readOnly
-              name="route"
-              type="text"
-              value="client/active/"
-            / >
+              value=""
+            />
             <IconButton
               name="id_document"
               tooltip="Documento de Identificação"
@@ -391,8 +408,7 @@ class ClientRegister extends Component {
               tooltip="Comprovante de Residência"
               touch={true}
               tooltipPosition="top-right">
-              <FileFileUpload />
-            </IconButton>
+              <FileFileUpload /> </IconButton>
             <button hidden name="partial_submit" type="submit" />
           </Formsy.Form>
 
@@ -400,7 +416,7 @@ class ClientRegister extends Component {
             primary
             type="submit"
             label="Enviar"
-            onClick={partialSubmitForms.bind(this)}
+            onClick={partialSubmits.bind(this)}
             disabled={!this.state.canSubmit}
           />
         </Paper>
