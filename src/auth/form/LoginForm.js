@@ -1,47 +1,78 @@
 import React, {Component} from 'react';
 import {Auth} from '../Auth';
 import '../../stylesheet/LoginForm.sass';
-import Title from '../../layout/Title';
-import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import Formsy from 'formsy-react';
+import {FormsyText} from 'formsy-material-ui/lib';
 
-// import {AuthorizedRoute, AuthorizedLink} from './routes/Router';
 
 export default class LoginForm extends Component{
 
-  handleForm(event){
-    event.preventDefault();
-    console.log(event.target.username.value);
-    console.log(event.target.password.value);
-    fetch('/api/auth/',{
+  constructor(props){
+    super(props);
+    this.state={send: false, userExist: true};
+    this.handleSubmit = this.handleSubmit.bind(this);
+
+    Formsy.addValidationRule('userExist', () => {
+      return this.state.userExist;
+    });
+
+    this.invalidMessage = 'Usuário e/ou senha inválidos.';
+  }
+
+  handleSubmit(data){
+    console.log(data);
+    // console.log(event.target.username.value);
+    // console.log(event.target.password.value);
+    fetch('/api/client/auth/',{
       method: 'POST',
       headers:{
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
-      body: JSON.stringify({
-        username: event.target.username.value,
-        password: event.target.password.value
-      })
+      body: JSON.stringify(data)
     })
-    .then((e) => e.json())
+    .then((response) => {
+      if(response.ok){ 
+        return response.json(); 
+      }else {
+        console.log('Requisition error');
+        this.setState({userExist: false});
+        this.form.validateForm();
+        return {};
+      } 
+    })
     .then(Auth.authenticate)
-    .catch((e) => {console.log(e);});
+    .catch((error) => {console.log(error);});
   }
 
   render(){
     return (
-      <form onSubmit={this.handleForm} >
-        <Title title="Faça login" />
-        <TextField type="text" name="username" hintText="E-mail ou nome de usuário" floatingLabelText="Usuário"/>
+      <Formsy.Form ref={ (form) => {this.form = form;} }
+        onValidSubmit={this.handleSubmit}>
+        <FormsyText type="text" 
+          name="username" 
+          required 
+          hintText="E-mail ou nome de usuário" 
+          floatingLabelText="Usuário"
+          onInvalid={() => {this.setState({userExist: true});}}
+          validations = "userExist"
+          validationError={' '}
+        />
         <br/>
-        <TextField type="password" name="password" hintText="Senha"  floatingLabelText="Senha"/>
-        <br/>
-        <br/>
-        <RaisedButton primary label="ENTRAR" />
-        <br/>
-        <br/>
-      </form>
+        <FormsyText type="password" 
+          name="password" 
+          required 
+          hintText="Senha" 
+          floatingLabelText="Senha"  
+          onInvalid={() => {this.setState({userExist: true});} }
+          validations = "userExist"
+          validationError={this.invalidMessage} />
+        <br/><br/>
+        <RaisedButton primary label="ENTRAR" type="submit"/>
+        <br/><br/>
+      </Formsy.Form>
+
     );
   }
 }

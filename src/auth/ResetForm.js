@@ -41,12 +41,19 @@ export default class ResetForm extends Component{
   }
   
   render(){
+
     let button = null;
+
     if(!this.state.send){
       button = <RaisedButton primary label="RECUPERAR" onClick={this.handleSubmit} />;
     } else {
       button = <RaisedButton primary label="LOGIN" type="submit" containerElement={<Link to="/login" />} />;
     }
+
+    let textfield = <FormsyText name="E-MAIL" validations={{isEmail: true, emailExist: true}}
+            validationErrors={this.invalidMessage} 
+            required hintText="Seu e-mail cadastrado" floatingLabelText="E-MAIL"/>;
+
     return (
       <div className="container">
         <div className="button-left">
@@ -57,9 +64,7 @@ export default class ResetForm extends Component{
           <Subtitle style={{fontSize: '22px', textAlign:'left'}} label={!this.state.send? this.sendedMessage : this.unsendedMessage} />
         <br />
         <Formsy.Form ref={ (form) => {this.form = form;} } onInvalid={() => {this.setState({emailExist: true});}}>
-          <FormsyText name="E-MAIL" validations={{isEmail: true, emailExist: true}}
-            validationErrors={this.invalidMessage} 
-            required hintText="Seu e-mail cadastrado" floatingLabelText="E-MAIL"/>
+          {textfield}
         </Formsy.Form>
         <br />
         <br />
