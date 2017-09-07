@@ -10,35 +10,46 @@ import routeMap from '../routes/RouteMap.js';
 import {Auth} from '../auth/Auth';
 import '../stylesheet/RegisterForms.sass';
 
-var {wordsError, numericError, emailError} = errorMessages;
+var {
+  wordsError,
+  numericError,
+  emailError
+} = errorMessages;
 
 class ClientRegister extends Component {
 
   constructor(props){
     super(props);
-    this.state = {
-      canSubmit: false,
-    };
     this.forms = {};
+
+    let formsFunctions = this.submitForms();
+    this.submitForm = formsFunctions.submitForm;
+    this.submitBaseForm = formsFunctions.submitBaseForm;
+    this.callBaseSubmit = formsFunctions.callBaseSubmit;
   }
 
-  enableButton() {
+  state = {
+    canSubmit: false,
+  }
+
+  enableButton = () => {
     this.setState({
       canSubmit: true,
     });
   }
 
-  disableButton() {
+  disableButton = () => {
     this.setState({
       canSubmit: false,
     });
   }
 
-  notifyFormError(data) {
+  notifyFormError = (data) => {
     console.error('Form error:', data);
   }
 
-  submitForms() {
+  submitForms = () => {
+
     function submitForm(data){
       if(data.birthday)
         data.birthday = data['birthday'].toISOString().slice(0, 10);
@@ -52,17 +63,18 @@ class ClientRegister extends Component {
         if(response.ok) {
           console.log(this.name + ' was submitted');
         } else {
-          console.error(this.name + ' could not be submitted');
+          throw new Error (this.name + ' could not be submitted');
         }
       })
-      .catch(() => {
-        console.error(this.name + ' could not be submitted');
+      .catch((error) => {
+        console.error(error.message);
       });
     }
 
-    const forms = this.forms;
+    var that = this;
 
     function submitBaseForm(data){
+
       if(data.birthday)
         data.birthday = data['birthday'].toISOString().slice(0, 10);
 
@@ -72,36 +84,41 @@ class ClientRegister extends Component {
         body: JSON.stringify(data),
       })
       .then(((response) => {
+        var data = {};
+
         if(response.ok) {
-          console.log('active_client was submitted');
+          console.log(this.name + ' was submitted');
+          data = response.json();
         } else {
-          console.error('active_client could not be submitted');
+          throw new Error (this.name + ' could not be submitted');
         }
-      }).bind(this))
+        return data;
+      }))
       .then((data) => {
-        for (var form in forms) {
-          forms[form].inputs[0].setValue(data.id);
-          forms[form].submit();
+        for (var form in that.forms) {
+          that.forms[form].inputs[0].setValue(data.id);
+          that.forms[form].submit();
         }
       })
-      .catch((error) => {console.error(error);});
+      .catch((error) => {
+        console.error(error.message);
+      });
     }
 
-    function partialSubmits(){
-      console.log(this.base);
-      this.base.submit();
+    function callBaseSubmit(){
+      that.baseForm.submit();
     }
 
     var submitter = {
       submitForm: submitForm,
-      partialSubmits: partialSubmits,
+      callBaseSubmit: callBaseSubmit,
       submitBaseForm: submitBaseForm
     };
 
     return submitter;
   }
 
-  getClientsFields(){
+  getClientsFields = () => {
     return (
       <div>
         <FormsyText
@@ -172,7 +189,6 @@ class ClientRegister extends Component {
   }
 
   render() {
-    let {submitForm, submitBaseForm, partialSubmits} = this.submitForms();
 
     return (
       <div>
@@ -183,10 +199,10 @@ class ClientRegister extends Component {
             <h2>Cliente</h2>
             <Formsy.Form
               name="active_client"
-              ref={ (form) => { this.base = form; } }
-              onValid={this.enableButton.bind(this)}
+              ref={(form) => {this.baseForm = form;}}
+              onValid={this.enableButton}
               onInvalidSubmit={this.notifyFormError}
-              onValidSubmit={submitBaseForm}>
+              onValidSubmit={this.submitBaseForm}>
 
               {this.getClientsFields()}
 
@@ -202,8 +218,8 @@ class ClientRegister extends Component {
                 tooltip="Comprovante de Residência"
                 touch={true}
                 tooltipPosition="top-right">
-                <FileFileUpload /> </IconButton>
-              <button hidden name="partial_submit" type="submit" />
+                <FileFileUpload />
+              </IconButton>
             </Formsy.Form>
           </div>
 
@@ -211,10 +227,10 @@ class ClientRegister extends Component {
             <h2>Cônjuge</h2>
             <Formsy.Form
               name="client"
-              ref={ (form) => { this.forms.active = form; } }
-              onValid={this.enableButton.bind(this)}
+              ref={(form) => {this.forms.client = form;}}
+              onValid={this.enableButton}
               onInvalidSubmit={this.notifyFormError}
-              onValidSubmit={submitForm}>
+              onValidSubmit={this.submitForm}>
               <FormsyText
                 name="active_client_id"
                 hidden
@@ -229,10 +245,10 @@ class ClientRegister extends Component {
             <h2>Endereço</h2>
             <Formsy.Form
               name="address"
-              ref={ (form) => { this.forms.address = form; } }
-              onValid={this.enableButton.bind(this)}
+              ref={(form) => {this.forms.address = form;}}
+              onValid={this.enableButton}
               onInvalidSubmit={this.notifyFormError}
-              onValidSubmit={submitForm}>
+              onValidSubmit={this.submitForm}>
               <FormsyText
                 name="active_client_id"
                 hidden
@@ -287,9 +303,9 @@ class ClientRegister extends Component {
 
             <Formsy.Form
               name="state"
-              onValid={this.enableButton.bind(this)}
+              onValid={this.enableButton}
               onInvalidSubmit={this.notifyFormError}
-              onValidSubmit={submitForm}>
+              onValidSubmit={this.submitForm}>
               <FormsyText
                 name="active_client_id"
                 hidden
@@ -314,9 +330,9 @@ class ClientRegister extends Component {
 
             <Formsy.Form
               name="country"
-              onValid={this.enableButton.bind(this)}
+              onValid={this.enableButton}
               onInvalidSubmit={this.notifyFormError}
-              onValidSubmit={submitForm}>
+              onValidSubmit={this.submitForm}>
               <FormsyText
                 name="active_client_id"
                 hidden
@@ -344,10 +360,10 @@ class ClientRegister extends Component {
             <h2>Conta Bancária</h2>
             <Formsy.Form
               name="bank_account"
-              ref={ (form) => { this.forms.bank = form; } }
-              onValid={this.enableButton.bind(this)}
+              ref={(form) => {this.forms.bank = form;}}
+              onValid={this.enableButton}
               onInvalidSubmit={this.notifyFormError}
-              onValidSubmit={submitForm}>
+              onValidSubmit={this.submitForm}>
               <FormsyText
                 name="active_client_id"
                 hidden
@@ -375,10 +391,10 @@ class ClientRegister extends Component {
             <h2>Dependente</h2>
             <Formsy.Form
               name="dependent"
-              ref={ (form) => { this.forms.dependent = form; } }
-              onValid={this.enableButton.bind(this)}
+              ref={(form) => {this.forms.dependent = form;}}
+              onValid={this.enableButton}
               onInvalidSubmit={this.notifyFormError}
-              onValidSubmit={submitForm}>
+              onValidSubmit={this.submitForm}>
               <FormsyText
                 name="active_client_id"
                 hidden
@@ -411,7 +427,7 @@ class ClientRegister extends Component {
             primary
             type="submit"
             label="Enviar"
-            onClick={partialSubmits.bind(this)}
+            onClick={this.callBaseSubmit}
             disabled={!this.state.canSubmit}
           />
         </Paper>
