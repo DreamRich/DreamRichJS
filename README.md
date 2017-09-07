@@ -1,3 +1,10 @@
+# DreamRich - Frontend
+
+[![Build Status](https://travis-ci.org/DreamRich/DreamRichJS.svg?branch=master)](https://travis-ci.org/DreamRich/DreamRichJS)
+[![Coverage Status](https://coveralls.io/repos/github/DreamRich/DreamRichJS/badge.svg?branch=master)](https://coveralls.io/github/DreamRich/DreamRichJS?branch=master)
+[![Code Climate](https://codeclimate.com/github/codeclimate/codeclimate/badges/gpa.svg)](https://codeclimate.com/github/codeclimate/codeclimate)
+[![Issue Count](https://codeclimate.com/github/codeclimate/codeclimate/badges/issue_count.svg)](https://codeclimate.com/github/codeclimate/codeclimate)
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
