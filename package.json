@@ -23,6 +23,8 @@
     "eslint-plugin-react": "7.1.0",
     "extract-text-webpack-plugin": "2.1.2",
     "file-loader": "0.11.2",
+    "formsy-material-ui": "^0.6.3",
+    "formsy-react": "^0.19.5",
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
