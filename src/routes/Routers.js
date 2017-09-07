@@ -8,6 +8,7 @@ import {AuthorizedRoute, NotFoundRoute} from './Router';
 import ClientRegister from '../client/ClientRegister';
 import ClientTable from '../client/ClientTable';
 import Employeer from '../employee/Employeer';
+import PatrimonyForm from '../patrimony/PatrimonyForm';
 
 export default class Routers extends Component{
 
@@ -22,6 +23,7 @@ export default class Routers extends Component{
         <AuthorizedRoute path="/logout" component={ LogoutButton } />
         <AuthorizedRoute path="/login/changepassword" render={ () => <PasswordForm userid={3} username="Marcelo" /> } />
         <Route path="/login/resetpassword" render={ () => <ResetForm email="marcelohpf@hotmail.com" /> } />
+        <Route path="/patrimony" component={ PatrimonyForm } />
         <Route component={ NotFoundRoute } />
       </Switch>
     );
