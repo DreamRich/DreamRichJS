@@ -1,8 +1,9 @@
-import ReactDataGrid from 'react-data-grid';
+import '../stylesheet/Table.sass';
 import React, {Component} from 'react';
+import ReactDataGrid from 'react-data-grid';
+import Snackbar from 'material-ui/Snackbar';
 import getData from '../resources/getData';
 import {Data} from 'react-data-grid-addons';
-import '../stylesheet/Table.sass';
 
 export default class GridTable extends Component {
   constructor(props) {
@@ -10,8 +11,9 @@ export default class GridTable extends Component {
     this.state = {
       _columns: this.getColumns(),
       rows: [], filters: {}, sortDirection: null,
-      sortColumn: null};
+      sortColumn: null, open: false, message: ''};
     this.getRows = this.getRows.bind(this);
+    this.handleGridRowsUpdated = this.handleGridRowsUpdated.bind(this);
   }
 
   /* Need override */
@@ -21,7 +23,25 @@ export default class GridTable extends Component {
   getRoute(){return '';}
 
   /* Need override */
-  getActions(register){ register; return null; }
+  getActions(register, idx){ register, idx; return null; }
+
+  createOrUpdate(row, updated){
+    row; updated;
+  }
+
+  handleGridRowsUpdated(updates) {
+    const { fromRow, toRow, updated } = updates;
+    let rows = this.state.rows.slice();
+    console.log(fromRow, toRow);
+    console.log(updated);
+
+    if(fromRow == toRow){
+      const row = rows[fromRow];
+      rows[fromRow] = this.createOrUpdate(row,updated);
+    }
+
+    this.setState({ rows });
+  }
 
   componentWillMount(){ getData(this.getRoute(), this, 'rows');}
 
@@ -36,7 +56,7 @@ export default class GridTable extends Component {
   rowGetter(i) {
     const row = this.getRows()[i];
     if(row !== undefined && row !== null){
-      row['actions'] = this.getActions(row);
+      row['actions'] = this.getActions(row, i);
     }
     return row;
   }
@@ -60,11 +80,15 @@ export default class GridTable extends Component {
     console.log(this.state);
   }
 
+  handleRequestClose(){
+    this.setState({ open: false });
+  }
+
   render() {
     return (
       <div className="container">
         <ReactDataGrid
-          {...this.props}
+          enableCellSelect={true}
           columns={this.state._columns}
           onGridSort={this.handleSort.bind(this)}
           rowGetter={this.rowGetter.bind(this)}
@@ -72,9 +96,16 @@ export default class GridTable extends Component {
           toolbar={this.getToolbar()}
           onAddFilter={this.handleFilterChange.bind(this)}
           onClearFilters={this.onClearFilters.bind(this)}
+          onGridRowsUpdated={this.handleGridRowsUpdated}
           rowHeight={46}
           columnWidth={120}
           minHeight={500} />
+        <Snackbar
+          open={this.state.open}
+          message={this.state.message}
+          autoHideDuration={9000}
+          onRequestClose={this.handleRequestClose.bind(this)}
+        />
       </div>);
   }
 }
