@@ -1,11 +1,11 @@
 /** This file implements a Grid table defined in src/layout
  * Only override the necessary methods to it work.
  */
-import FontIcon from 'material-ui/FontIcon';
 import GridTable from '../layout/GridTable';
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {Toolbar} from 'react-data-grid-addons';
+import FlatButton from 'material-ui/FlatButton';
 
 export default class ClientTable extends GridTable {
   constructor(props) {
@@ -26,9 +26,12 @@ export default class ClientTable extends GridTable {
 
   getActions(register) {
     if(register !== undefined && register !== null){
-      return (<Link to={`/client/${register.id}`}>
-        <FontIcon className="material-icons"> ver </FontIcon>
-        </Link>);
+      return (
+        <FlatButton 
+          primary
+          label=">" 
+          containerElement={ <Link to={`/client/${register.id}`} /> }
+        />);
     }
     return null;
   }

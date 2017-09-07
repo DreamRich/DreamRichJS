@@ -3,6 +3,7 @@ import React from 'react';
 import {Toolbar} from 'react-data-grid-addons';
 import {Auth} from '../auth/Auth';
 import GridTable from '../layout/GridTable';
+import FlatButton from 'material-ui/FlatButton';
 
 export default class EmployeeTable extends GridTable {
   constructor(props) {
@@ -52,11 +53,11 @@ export default class EmployeeTable extends GridTable {
   getActions(register, idx) {
     if(register !== undefined && register !== null){
       return (
-        <div>
-          <button onClick={this.handleDeletion.bind(this, register.id, idx)}>
-            X
-          </button>
-        </div>
+          <FlatButton 
+            secondary
+            onClick={this.handleDeletion.bind(this, register.id, idx)}
+            label="X"
+          />
       );
     }
     return null;
