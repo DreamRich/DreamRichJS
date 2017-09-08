@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import Formsy from 'formsy-react';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
-import {FormsyText, FormsyDate} from 'formsy-material-ui/lib';
+import {FormsyText} from 'formsy-material-ui/lib';
+import {FormsyDate} from '../utils/FormsyComponents.js';
 import errorMessages from '../utils/FormsErrorMessages';
 import IconButton from 'material-ui/IconButton';
 import FileFileUpload from 'material-ui/svg-icons/file/file-upload';
@@ -139,7 +140,6 @@ class ClientRegister extends Component {
         />
         <FormsyDate
           name="birthday"
-          hintText="Data de nasc. do cliente"
           floatingLabelText="Data de Nascimento"
         />
         <FormsyText
@@ -417,7 +417,6 @@ class ClientRegister extends Component {
               />
               <FormsyDate
                 name="birthday"
-                hintText="Data de nasc. do cliente"
                 floatingLabelText="Data de Nascimento"
               />
             </Formsy.Form>
