@@ -7,7 +7,7 @@ import ResetForm from '../auth/ResetForm';
 import {AuthorizedRoute, NotFoundRoute} from './Router';
 import ClientTable from '../client/ClientTable';
 import Employeer from '../employee/Employeer';
-import PatrimonyForm from '../patrimony/PatrimonyForm';
+import PatrimonyRegister from '../patrimony/PatrimonyRegister';
 import ClientRegister from '../client/ClientRegister';
 import FixedCostRegister from '../client/FixedCostRegister';
 import {Auth} from '../auth/Auth';
@@ -31,8 +31,7 @@ export default class Routers extends Component{
         <AuthorizedRoute permission="allow_any" path="/goals" component={ GoalChart } />
 
         <Route path="/login/resetpassword" render={ () => <ResetForm email="marcelohpf@hotmail.com" /> } />
-        <Route path="/logout" component={ LogoutButton } />
-        <Route path="/patrimony" component={ PatrimonyForm } />
+        <Route path="/patrimony" component={ PatrimonyRegister } />
         <Route component={ NotFoundRoute } />
       </Switch>
     );

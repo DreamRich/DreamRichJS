@@ -43,24 +43,23 @@ export default class LoginForm extends Component{
 
   render(){
     return (
-      <Formsy.Form ref={ (form) => {this.form = form;} }
-        onValidSubmit={this.handleSubmit}
-        onInvalid={() => {this.setState({userExist: true});}}
-      >
-        <FormsyText type="text" 
-          name="username" 
-          required 
-          hintText="E-mail ou nome de usuário" 
+      <Formsy.Form ref={ (form) => {this.form = form;}}
+        onInvalid={() => {this.setState({userExist: true});} }
+        onValidSubmit={this.handleSubmit}>
+        <FormsyText type="text"
+          name="username"
+          required
+          hintText="E-mail ou nome de usuário"
           floatingLabelText="Usuário"
           validations = "userExist"
           validationError={' '}
         />
         <br/>
-        <FormsyText type="password" 
-          name="password" 
-          required 
-          hintText="Senha" 
-          floatingLabelText="Senha"  
+        <FormsyText type="password"
+          name="password"
+          required
+          hintText="Senha"
+          floatingLabelText="Senha"
           validations = "userExist"
           validationError={this.invalidMessage} />
         <br/><br/>

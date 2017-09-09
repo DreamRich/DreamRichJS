@@ -372,7 +372,7 @@ class ClientRegister extends Component {
         </Paper>
 
       </div>
-    ); 
+    );
   }
 }
 
