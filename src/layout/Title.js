@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 export default class Title extends Component{
   render(){
-    return (<div className="main-title" style={this.props.style}>{this.props.label}</div>);
+    return (<div style={this.props.style} className="main-title">{this.props.label}</div>);
   }
 }
 Title.propTypes = {
   label: PropTypes.string,
-  style: PropTypes.object
+  style: PropTypes.object,
 };
