@@ -13,9 +13,9 @@ export default class EmployeeTable extends GridTable {
 
   getColumns() {
     return [
-      { key: 'name', name: 'Name', sortable: true, filterable: true, resizable: true, editable: true },
-      { key: 'surname', name: 'Surname', sortable: true, filterable: true, resizable: true, editable: true },
-      { key: 'telephone', name: 'Telefone', sortable: true, filterable: true, resizable: true, editable: true },
+      { key: 'first_name', name: 'Name', sortable: true, filterable: true, resizable: true, editable: true },
+      { key: 'last_name', name: 'Surname', sortable: true, filterable: true, resizable: true, editable: true },
+      /*{ key: 'telephone', name: 'Telefone', sortable: true, filterable: true, resizable: true, editable: true },*/
       { key: 'email', name: 'Email', sortable: true, filterable: true, resizable: true, editable: true },
       { key: 'cpf', name: 'cpf', sortable: true, filterable: true, resizable: true, editable: true },
       { key: 'actions', name: 'Actions', locked: true, filterable: false, resizable: true, editable: false }
@@ -66,7 +66,8 @@ export default class EmployeeTable extends GridTable {
 
   handleAddRow() {
     const newRow = {
-      name: '', telephone: '', email: '', actions: ''
+      first_name: '', last_name: ''/*, telephone: ''*/, email: '',
+      cpf: '', actions: ''
     };
     let rows = this.state.rows.slice();
     rows.unshift(newRow);
@@ -76,10 +77,10 @@ export default class EmployeeTable extends GridTable {
   createOrUpdate(data, newField){
     const changedData = Object.assign(data, newField);
     if( changedData['email'] !== undefined
-      && changedData['name'] !== undefined
-      && changedData['surname'] !== undefined
+      && changedData['first_name'] !== undefined
+      && changedData['last_name'] !== undefined
       && changedData['cpf'] !== undefined
-      && changedData['telephone'] !== undefined){
+      /*&& changedData['telephone'] !== undefined*/){
       changedData['username'] = changedData.cpf;
       let method = 'post';
       let route = this.getRoute();
