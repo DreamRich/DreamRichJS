@@ -34,8 +34,9 @@ class DefFormsyDate extends Component {
   }
 
   state = {
-    selectedDate: null,
-    dateText: null
+    selectedDate: null, // Date object
+    dateText: null, // For displaying
+    dateSubmit: null // For submitting
   }
 
   componentDidMount() {
@@ -81,7 +82,11 @@ class DefFormsyDate extends Component {
   }
 
   handleChangeDatePicker = (event, date) => {
-    this.setState({selectedDate: date, dateText:format(date, 'DD/MM/YYYY')});
+    this.setState({
+      selectedDate: date,
+      dateText: format(date, 'DD/MM/YYYY'),
+      dateSubmit: date.toISOString().slice(0, 10)
+    });
   };
 
   handleChange(event, value) {
@@ -92,6 +97,7 @@ class DefFormsyDate extends Component {
   render() {
 
     const {
+      name,
       defaultDate, // eslint-disable-line no-unused-vars
       validations, // eslint-disable-line no-unused-vars
       validationErrors, // eslint-disable-line no-unused-vars
@@ -99,10 +105,11 @@ class DefFormsyDate extends Component {
       requiredError, // eslint-disable-line no-unused-vars
       ...rest } = this.props;
 
-
     return (
+      // Name will define which field will be submitted
       <div style={{display: 'flex'}}>
         <FormsyText
+          name='text'
           id={this.props.name + '_field'}
           style={{width:225, marginLeft: 20}}
           disabled={this.isFormDisabled}
@@ -124,8 +131,8 @@ class DefFormsyDate extends Component {
 
       <div style={{width:'0px', height:'0px'}}>
         <DatePicker
+          name='date'
           id={this.props.name + '_dataPicker'}
-          formatDate={date => { return format(date, 'DD/MM/YYYY'); } }
           onChange={this.handleChangeDatePicker}
           value={this.state.selectedDate}
           ref={picker => { this.datePicker = picker;}}
@@ -133,6 +140,11 @@ class DefFormsyDate extends Component {
           container='inline'
           fullWidth
           autoOk
+        />
+        <FormsyText 
+          name={name}
+          value={this.state.dateSubmit}
+          hidden
         />
       </div>
     </div>
