@@ -24,7 +24,7 @@ export default class LoginForm extends Component{
     console.log(data);
     // console.log(event.target.username.value);
     // console.log(event.target.password.value);
-    fetch('/api/client/auth/',{
+    fetch('/api/auth/',{
       method: 'POST',
       headers:{
         'Content-Type': 'application/json',

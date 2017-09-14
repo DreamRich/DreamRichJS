@@ -19,7 +19,7 @@ export class Auth{
     }
     header['Accept'] = 'application/json';
     header['Content-type'] = 'application/json';
-    header['Authenticate'] = 'Token ' + Auth.getAuth();
+    header['Authorization'] = 'Token ' + Auth.getAuth();
     return header;
 
   }

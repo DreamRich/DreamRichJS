@@ -28,7 +28,7 @@ export default class ResetForm extends Component{
   handleSubmit(){
     //const email = document.getElementsTagName
     const email = this.form.getCurrentValues();
-    fetch('/api/client/auth/password/?email='+email.name)
+    fetch('/api/auth/password/?email='+email.name)
     .then((response) => {
       if(!response.ok){
         this.setState({emailExist: false});
