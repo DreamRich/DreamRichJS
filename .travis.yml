@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+  - "8.2"
+  - "8.2.1"
+install:
+  - npm install
+cache:
+  directories:
+    - "node_modules"
+script:
+  - npm run build
+  - npm run coveralls
+branch:
+  only:
+    - master
+    - devel
+notifications:
+  slack: dreamrich:cTexLtv9sRIcw118O7Q4WejK 
