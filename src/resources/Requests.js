@@ -1,43 +1,45 @@
 import {methods, getAuthenticatedHeader} from './Headers';
 
-const getData = (url, component, field, fieldB) => {
-  fetch(url, {
-    method: methods.GET,
-    headers: getAuthenticatedHeader(),
-  })
+const noneFunction = () => {}; //Design for none object
+
+const request = (url, meta, handleData=noneFunction, handleOk=noneFunction, handleFail=noneFunction) => {
+  fetch(url, meta)
   .then((response) => {
     if(response.ok){
+      handleOk(response);
       return response.json();
     } else {
+      handleFail(response);
       throw new Error(`Request error status ${response.status}`);
     }
   })
-  .then((data) => {
-    component.setState({[field]: data});
-    if (fieldB !== undefined) component.setState({[fieldB]: data});
-  })
-  .catch((error) => {console.log(error);});
+  .then(handleData)
+  .catch((error) => {console.error(error);});
 };
 
-const postData = (url, data, handleData, handleFail) => {
-  fetch(url, {
-    method: methods.POST,
+const getData = (url, component, field, fieldB) => {
+  request(url, {
+    method: methods.GET,
     headers: getAuthenticatedHeader(),
-    body: JSON.stringify(data),
-  })
-    .then((response) => {
-      if(response.ok) {
-        console.log(url + ' was submitted');
-        return response.json();
-      } else {
-        handleFail(response);
-        throw new Error (`Response error ${response.status}: `+
-          `${url} could not be submitted`);
-      }
-    })
-    .then(handleData)
-    .catch((error) => {
-      console.error(error);
+  }, (data) => {
+    component.setState({[field]: data});
+    if (fieldB !== undefined) component.setState({[fieldB]: data});
+  });
+};
+
+const postData = (url, data, handleData=noneFunction, handleFail=noneFunction) => {
+  request(url,
+    {
+      method: methods.POST,
+      headers: getAuthenticatedHeader(),
+      body: JSON.stringify(data),
+    },
+    handleData,
+    () => {},
+    (response) => {
+      handleFail(response);
+      throw new Error (`Response error ${response.status}: `+
+        `${url} could not be submitted`);
     });
 };
 
