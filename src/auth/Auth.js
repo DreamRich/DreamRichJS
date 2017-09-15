@@ -30,17 +30,6 @@ export class Auth{
     return localStorage.getItem('token');
   }
 
-  static getHeader(additional={}){
-    let header;
-    if (additional !== undefined && additional !== null){
-      header = additional;
-    }
-    header['Accept'] = 'application/json';
-    header['Content-type'] = 'application/json';
-    header['Authorization'] = 'Token ' + Auth.getAuth();
-    return header;
-  }
-
   static deauthenticate(){
     console.log('Deauthenticate');
     clearInterval(Auth.loginCheck);
