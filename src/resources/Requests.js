@@ -1,39 +1,40 @@
-import {Auth} from '../auth/Auth';
-
-const getHeader = (additional={}) => {
-  let header;
-  if (additional !== undefined && additional !== null){
-    header = additional;
-  }
-  header['Accept'] = 'application/json';
-  header['Content-type'] = 'application/json';
-  return header;
-};
-
-const getAuthenticatedHeader = (additional={}) => {
-  const header = getHeader(additional);
-  header['Authorization'] = 'Token ' + Auth.getAuth();
-};
-
-const methods = {
-  POST: 'post',
-  GET: 'get',
-};
-
-import {Auth} from '../auth/Auth';
+import {methods, getAuthenticatedHeader} from './Headers';
 
 const getData = (url, component, field, fieldB) => {
-  console.log(field);
   fetch(url, {
-    method: 'get',
-    headers: Auth.getHeader(),
+    method: methods.GET,
+    headers: getAuthenticatedHeader(),
   })
-  .then((response) => response.json() )
+  .then((response) => {
+    if(response.ok){
+      return response.json();
+    } else {
+      throw new Error(`Request error status ${response.status}`);
+    }
+  })
   .then((data) => {
     component.setState({[field]: data});
     if (fieldB !== undefined) component.setState({[fieldB]: data});
   })
   .catch((error) => {console.log(error);});
 };
+
+const postData = (url, component, data) => {
+  fetch(routeMap[this.name], {
+    method: methods.POST,
+    headers: getAuthenticatedHeader(),
+    body: JSON.stringify(data),
+  })
+    .then((response) => {
+      if(response.ok) {
+        console.log(this.name + ' was submitted');
+      } else {
+        throw new Error (this.name + ' could not be submitted');
+      }
+    })
+    .catch((error) => {
+      console.error(error.message);
+    });
+}
 
 export default getData;

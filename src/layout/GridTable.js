@@ -2,7 +2,7 @@ import '../stylesheet/Table.sass';
 import React, {Component} from 'react';
 import ReactDataGrid from 'react-data-grid';
 import Snackbar from 'material-ui/Snackbar';
-import getData from '../resources/getData';
+import getData from '../resources/Requests';
 import {Data} from 'react-data-grid-addons';
 
 export default class GridTable extends Component {
