@@ -1,4 +1,5 @@
 import {methods, getAuthenticatedHeader} from './Headers';
+import {Auth} from '../auth/Auth';
 
 const noneFunction = () => {}; //Design for none object
 
@@ -8,12 +9,22 @@ const request = (url, meta, handleData=noneFunction, handleOk=noneFunction, hand
     if(response.ok){
       handleOk(response);
       return response.json();
+    } else if( response.status === 401) {
+      handleFail(response);
+      return response.json();
     } else {
       handleFail(response);
       throw new Error(`Request error status ${response.status}`);
     }
   })
-  .then(handleData)
+  .then((data) => {
+    if(data.detail === 'Signature has expired.'){
+      alert('Sua sessão expirou!');
+      Auth.deauthenticate();
+    } else {
+      handleData(data);
+    }
+  })
   .catch((error) => {console.error(error);});
 };
 
