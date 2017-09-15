@@ -35,7 +35,7 @@ const postData = (url, data, handleData=noneFunction, handleFail=noneFunction) =
       body: JSON.stringify(data),
     },
     handleData,
-    () => {},
+    noneFunction,
     (response) => {
       handleFail(response);
       throw new Error (`Response error ${response.status}: `+
@@ -43,4 +43,12 @@ const postData = (url, data, handleData=noneFunction, handleFail=noneFunction) =
     });
 };
 
-export {getData, postData};
+const putData = (url, data, handleData=noneFunction) => {
+  request(url, {
+    method: methods.PUT,
+    headers: getAuthenticatedHeader(),
+    body: JSON.stringify(data),
+  }, handleData);
+};
+
+export {getData, postData, putData};

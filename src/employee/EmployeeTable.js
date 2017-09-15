@@ -1,9 +1,9 @@
 // import {Link} from 'react-router-dom';
 import React from 'react';
 import {Toolbar} from 'react-data-grid-addons';
-import {Auth} from '../auth/Auth';
 import GridTable from '../layout/GridTable';
 import FlatButton from 'material-ui/FlatButton';
+import {putData, postData} from '../resources/Requests';
 
 export default class EmployeeTable extends GridTable {
   constructor(props) {
@@ -74,39 +74,28 @@ export default class EmployeeTable extends GridTable {
     this.setState({ rows });
   }
 
+
   createOrUpdate(data, newField){
     const changedData = Object.assign(data, newField);
-    if( changedData['email'] !== undefined
-      && changedData['first_name'] !== undefined
-      && changedData['last_name'] !== undefined
-      && changedData['cpf'] !== undefined
-      /*&& changedData['telephone'] !== undefined*/){
+    if( changedData['email'] !== ''
+      && changedData['first_name'] !== ''
+      && changedData['last_name'] !== ''
+      && changedData['cpf'] !== ''
+    /*&& changedData['telephone'] !== undefined*/){
       changedData['username'] = changedData.cpf;
-      let method = 'post';
       let route = this.getRoute();
       let message = 'Salvo com sucesso!';
-      if (changedData.id !== undefined){
-        method = 'put';
-        route = `${route}${changedData.id}/`;
-        message = 'Atualizado com sucesso!';
-      }
-      fetch(route, {
-        method: method,
-        body: JSON.stringify(changedData),
-        headers: Auth.getHeader()
-      })
-      .then((response) => response.json())
-      .then((e) => {
-        console.log(e);
-        if(e.id){
+
+      const handleSubmitData = (data) => {
+        console.log(data);
+        if(data.id){
           this.setState({ open: true, message: message });
-          changedData['id'] = e.id;
-          console.log(e); 
+          changedData['id'] = data.id;
         } else {
           message = '';
-          for(let key in e){
-            if(e.hasOwnProperty(key)){
-              message += `${key}: ${e[key]}\n`;
+          for(let key in data){
+            if(data.hasOwnProperty(key)){
+              message += `${key}: ${data[key]}\n`;
             }
           }
 
@@ -114,7 +103,14 @@ export default class EmployeeTable extends GridTable {
             message: `Ocorreu um erro\n${message}`
           });
         }
-      });
+      };
+
+      if (changedData.id !== undefined){
+        message = 'Atualizado com sucesso!';
+        putData(`${route}${changedData.id}/`, changedData, handleSubmitData);
+      } else {
+        postData(route, changedData, handleSubmitData);
+      }
     }
     return changedData;
   }

@@ -19,6 +19,7 @@ const getAuthenticatedHeader = (additional={}) => {
 const methods = {
   POST: 'post',
   GET: 'get',
+  PUT: 'put',
 };
 
 export {getHeader, getAuthenticatedHeader, methods};
