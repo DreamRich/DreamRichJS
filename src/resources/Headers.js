@@ -12,7 +12,8 @@ const getHeader = (additional={}) => {
 
 const getAuthenticatedHeader = (additional={}) => {
   const header = getHeader(additional);
-  header['Authorization'] = 'Token ' + Auth.getAuth();
+  header['Authorization'] = 'JWT ' + Auth.getAuth();
+  return header;
 };
 
 const methods = {

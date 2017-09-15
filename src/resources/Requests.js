@@ -19,7 +19,7 @@ const getData = (url, component, field, fieldB) => {
   .catch((error) => {console.log(error);});
 };
 
-const postData = (url, data, component, handleResponse) => {
+const postData = (url, data, handleData, handleFail) => {
   fetch(url, {
     method: methods.POST,
     headers: getAuthenticatedHeader(),
@@ -30,11 +30,12 @@ const postData = (url, data, component, handleResponse) => {
         console.log(url + ' was submitted');
         return response.json();
       } else {
+        handleFail(response);
         throw new Error (`Response error ${response.status}: `+
           `${url} could not be submitted`);
       }
     })
-    .then(handleResponse)
+    .then(handleData)
     .catch((error) => {
       console.error(error);
     });

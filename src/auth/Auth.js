@@ -3,7 +3,7 @@ export class Auth{
 
   static checkAuth(){
     const minute = 1000*60;
-    const quarter_hour = minute*15;
+    const quarter_hour = minute*1;
     if (Date.now() > Auth.start_login+quarter_hour){
       Auth.deauthenticate();
     } else {
@@ -17,9 +17,12 @@ export class Auth{
 
   static authenticate(token){
     console.log('Authenticate');
-    Auth.start_login = Date.now();
-    Auth.loginCheck = setInterval(Auth.checkAuth, 1000);
-    localStorage.setItem('token', token.token);
+    if(token.token !== undefined && token.token !== null){
+      Auth.start_login = Date.now();
+      clearInterval(Auth.loginCheck);
+      Auth.loginCheck = setInterval(Auth.checkAuth, 1000);
+      localStorage.setItem('token', token.token);
+    }
   }
 
   static isAuthenticated(){
