@@ -18,9 +18,11 @@ const request = (url, meta, handleData=noneFunction, handleOk=noneFunction, hand
     }
   })
   .then((data) => {
-    if(data.detail === 'Signature has expired.'){
+    if (data.detail === 'Signature has expired.' 
+      || data.detail === 'Invalid signature.'){
       alert('Sua sessão expirou!');
       Auth.deauthenticate();
+      window.location.replace('/login');
     } else {
       handleData(data);
     }
@@ -62,4 +64,13 @@ const putData = (url, data, handleData=noneFunction) => {
   }, handleData);
 };
 
-export {getData, postData, putData};
+const deleteData = (url, handleOk) => {
+  request(url, {
+    method: methods.DELETE,
+    headers: getAuthenticatedHeader()
+  }, noneFunction,
+    handleOk
+  );
+};
+
+export {getData, postData, putData, deleteData};

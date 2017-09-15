@@ -20,6 +20,7 @@ const methods = {
   POST: 'post',
   GET: 'get',
   PUT: 'put',
+  DELETE: 'delete',
 };
 
 export {getHeader, getAuthenticatedHeader, methods};

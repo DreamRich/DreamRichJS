@@ -3,7 +3,7 @@ import React from 'react';
 import {Toolbar} from 'react-data-grid-addons';
 import GridTable from '../layout/GridTable';
 import FlatButton from 'material-ui/FlatButton';
-import {putData, postData} from '../resources/Requests';
+import {putData, postData, deleteData} from '../resources/Requests';
 
 export default class EmployeeTable extends GridTable {
   constructor(props) {
@@ -28,11 +28,8 @@ export default class EmployeeTable extends GridTable {
     const confirmation = confirm('A deleção não poderá ser desfeita\n'+
       'Você confirma a deleção?');
     if(confirmation){
-      fetch(`${this.getRoute()}${id}/`,{
-        method: 'delete'
-      })
-      .then((e) => {
-        if(e.ok){
+      deleteData(`${this.getRoute()}${id}/`,
+        () => {
           const rows = this.state.rows.slice();
           rows.splice(idx, 1);
           this.setState({
@@ -40,11 +37,7 @@ export default class EmployeeTable extends GridTable {
             message: 'Funcionario excluido',
             rows: rows
           });
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+        });
     } else {
       this.setState({open: true, message: 'Deleção cancelada'});
     }
