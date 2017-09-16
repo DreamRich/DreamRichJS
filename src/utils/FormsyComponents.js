@@ -6,6 +6,7 @@ import ActionDateRange from 'material-ui/svg-icons/action/date-range';
 import {FormsyText} from 'formsy-material-ui/lib';
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
+import '../stylesheet/RegisterForms.sass';
 
 /*
 reference:
@@ -129,10 +130,11 @@ class DefFormsyDate extends Component {
         <ActionDateRange />
       </IconButton>
 
-      <div style={{width:'0px', height:'0px'}}>
+      <div>
         <DatePicker
           name='date'
           id={this.props.name + '_dataPicker'}
+          className="Hidden"
           onChange={this.handleChangeDatePicker}
           value={this.state.selectedDate}
           ref={picker => { this.datePicker = picker;}}
@@ -143,8 +145,8 @@ class DefFormsyDate extends Component {
         />
         <FormsyText 
           name={name}
+          className="Hidden"
           value={this.state.dateSubmit}
-          hidden
         />
       </div>
     </div>

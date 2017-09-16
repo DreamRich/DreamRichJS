@@ -226,7 +226,7 @@ class ClientRegister extends Component {
               onValidSubmit={this.submitForm}>
               <FormsyText
                 name="active_client_id"
-                hidden
+                className="Hidden"
                 value=""
               />
 
@@ -244,7 +244,7 @@ class ClientRegister extends Component {
               onValidSubmit={this.submitForm}>
               <FormsyText
                 name="active_client_id"
-                hidden
+                className="Hidden"
                 value=""
               />
 
@@ -301,7 +301,7 @@ class ClientRegister extends Component {
               onValidSubmit={this.submitForm}>
               <FormsyText
                 name="active_client_id"
-                hidden
+                className="Hidden"
                 value=""
               />
 
@@ -328,7 +328,7 @@ class ClientRegister extends Component {
               onValidSubmit={this.submitForm}>
               <FormsyText
                 name="active_client_id"
-                hidden
+                className="Hidden"
                 value=""
               />
 
@@ -359,7 +359,7 @@ class ClientRegister extends Component {
               onValidSubmit={this.submitForm}>
               <FormsyText
                 name="active_client_id"
-                hidden
+                className="Hidden"
                 value=""
               />
 
@@ -390,7 +390,7 @@ class ClientRegister extends Component {
               onValidSubmit={this.submitForm}>
               <FormsyText
                 name="active_client_id"
-                hidden
+                className="Hidden"
                 value=""
               />
 
