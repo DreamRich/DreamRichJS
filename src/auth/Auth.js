@@ -37,7 +37,7 @@ export class Auth{
     }
     header['Accept'] = 'application/json';
     header['Content-type'] = 'application/json';
-    header['Authorization'] = 'Token ' + Auth.getAuth();
+    header['Authorization'] = 'JWT ' + Auth.getAuth();
     return header;
   }
 
