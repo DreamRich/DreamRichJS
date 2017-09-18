@@ -3,8 +3,10 @@ import {Auth} from '../Auth';
 import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import {postData} from '../resources/Requests';
 
 export default class PasswordForm extends Component{
+
   constructor(props){
     super(props);
     this.handleForm = this.handleForm.bind(this);
@@ -12,20 +14,18 @@ export default class PasswordForm extends Component{
 
   handleForm(event){
     event.preventDefault();
-    console.log(Auth.getHeader(), this.props.userid);
-    const data = JSON.stringify({
+    console.log(this.props.userid);
+    const data = {
       userid: this.props.userid,
       password: event.target.password.value,
       new_password: event.target.new_password.value,
       new_password_confirmation: event.target.new_password_confirmation.value
-    });
-    fetch('/api/auth/password/', {
-      method: 'post',
-      headers: Auth.getHeader(),
-      body: data
-    })
-    .then(() => {console.log('ok'); this.setState({send: true}); })
-    .catch(() => {console.log('treta');});
+    };
+    postData('/api/auth/password/',
+      data,
+      () => {
+        this.setState({send: true}); 
+      });
   }
 
   render(){
