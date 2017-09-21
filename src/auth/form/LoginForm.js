@@ -5,14 +5,16 @@ import Formsy from 'formsy-react';
 import {FormsyText} from 'formsy-material-ui/lib';
 import {postData} from '../../resources/Requests';
 import {Auth} from '../Auth';
+import AppDispatcher from '../../AppDispatcher';
+import LoginStore from '../../stores/LoginStore';
 
 
 export default class LoginForm extends Component{
 
   constructor(props){
     super(props);
-    this.state={send: false, userExist: true};
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {};
 
     Formsy.addValidationRule('userExist', () => {
       return this.state.userExist;
@@ -21,10 +23,21 @@ export default class LoginForm extends Component{
     this.invalidMessage = 'Usuário e/ou senha inválidos.';
   }
 
+  componentWillMound() {
+    this.setState( LoginStore.getState() );
+  }
+
   handleSubmit(data){
     // console.log(data);
     // console.log(event.target.username.value);
     // console.log(event.target.password.value);
+    AppDispatcher.dispatch({
+      actionType: 'coisa'
+    });
+    AppDispatcher.dispatch({
+      actionType: 'a',
+      xalala: 'asdf'
+    });
     postData('/api/auth/',
       data,
       Auth.authenticate,

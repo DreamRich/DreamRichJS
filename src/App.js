@@ -24,7 +24,6 @@ class App extends Component {
   }
 
   componentDidMount(){
-
     /* Add validation to logout when user don not make some moviment */
     const body = document.getElementsByTagName('body')[0];
     body.onmousemove = Auth.updateDate;
@@ -37,7 +36,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-
         <div className="App-header">
             <RaisedButton primary onClick={() => {Auth.authenticate({token: 'ok'}); }} label="simulate login" />
           { this.state.auth && <div>{Auth.getAuth()}</div>}
