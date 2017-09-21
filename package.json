@@ -52,6 +52,7 @@
     "whatwg-fetch": "2.0.3"
   },
   "devDependencies": {
+    "coveralls": "^2.13.1",
     "eslint": "^4.4.1",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
