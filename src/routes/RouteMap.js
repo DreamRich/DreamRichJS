@@ -8,4 +8,8 @@ const routeMap = {
   active_client: '/api/client/active/',
 };
 
-export default routeMap;
+const goalRouters = {
+  goals_flow_dic:  '/api/goal/dic/1/',
+};
+
+export {routeMap, goalRouters};

@@ -9,6 +9,7 @@ import ClientTable from '../client/ClientTable';
 import Employeer from '../employee/Employeer';
 import PatrimonyForm from '../patrimony/PatrimonyForm';
 import ClientRegister from '../client/ClientRegister';
+import GoalChart from '../goal/GoalChart';
 
 export default class Routers extends Component{
 
@@ -21,6 +22,7 @@ export default class Routers extends Component{
         <Route exact path="/login" component={ LoginPage } />
         <AuthorizedRoute  exact path="/register/client" component={ ClientRegister } />
         <AuthorizedRoute path="/logout" component={ LogoutButton } />
+        <AuthorizedRoute path="/goals" component={ GoalChart } />
         <AuthorizedRoute path="/login/changepassword" render={ () => <PasswordForm userid={3} username="Marcelo" /> } />
         <Route path="/login/resetpassword" render={ () => <ResetForm email="marcelohpf@hotmail.com" /> } />
         <Route path="/patrimony" component={ PatrimonyForm } />

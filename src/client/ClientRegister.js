@@ -7,7 +7,7 @@ import {FormsyDate} from '../utils/FormsyComponents.js';
 import errorMessages from '../utils/FormsErrorMessages';
 import IconButton from 'material-ui/IconButton';
 import FileFileUpload from 'material-ui/svg-icons/file/file-upload';
-import routeMap from '../routes/RouteMap.js';
+import {routeMap} from '../routes/RouteMap.js';
 import {Auth} from '../auth/Auth';
 import '../stylesheet/RegisterForms.sass';
 
