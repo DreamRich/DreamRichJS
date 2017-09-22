@@ -1,7 +1,6 @@
 language: node_js
 node_js:
-  - "8.2"
-  - "8.2.1"
+  - "8.4"
 install:
   - npm install
 cache:
@@ -14,5 +13,6 @@ branch:
   only:
     - master
     - devel
+    - unstable
 notifications:
   slack: dreamrich:cTexLtv9sRIcw118O7Q4WejK 

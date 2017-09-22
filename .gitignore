@@ -65,3 +65,9 @@ typings/
 
 # temporari file editor
 *.swp
+
+# Mac OS
+.DS_Store
+
+# Editor configurations
+.tern-project
