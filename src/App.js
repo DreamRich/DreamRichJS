@@ -46,6 +46,7 @@ class App extends Component {
             <AuthorizedLink to="/login/changepassword">change </AuthorizedLink>
             <AuthorizedLink to="/client">client </AuthorizedLink>
             <AuthorizedLink to="/employee">employee </AuthorizedLink>
+            <AuthorizedLink to="/goals">goal </AuthorizedLink>
         </div>
         <div className="conteiner">
           <Routers />
