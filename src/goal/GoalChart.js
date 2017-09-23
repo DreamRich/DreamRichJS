@@ -9,22 +9,24 @@ export default class GoalChart extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {data: {goals_flow_dic: []}, chart: null};
+    this.state = {
+      data_series: {
+        goals_flow_dic: []
+      },
+    };
   }
 
   componentWillMount() {
-    getData(goalRouters['goals_flow_dic'], this, 'data');
+    getData(goalRouters['goals_flow_dic'], this, 'data_series');
+    getData(goalRouters['year_init_to_year_end'], this, 'data_x');
   }
 
   componentDidMount() {
     addFunnel(Highcharts);
-    //  new Highcharts.Chart(
-    //      'chart',
-    //      {series: [{name: 'xalala', data: [123,123,123,321]}]}
-    //  );
+
     this.setState({chart: new Highcharts[this.props.type || 'Chart'](
       'chart', {
-        series: this.state.data.goals_flow_dic,
+        series: this.state.data_series.goals_flow_dic,
         chart:{type: 'column'},
         plotOptions: {
           column: {
@@ -47,14 +49,14 @@ export default class GoalChart extends Component {
     console.log(this.state.chart);
     console.log(this.state.chart.series);
     console.log(this.state.chart.get('seire'));
-    //this.state.chart.update({series: this.state.data.goals_flow_dic});
-    this.state.data.goals_flow_dic.map((e) => { console.log(e); this.state.chart.addSeries(e);});
+    //this.state.chart.update({series: this.state.data_series.goals_flow_dic});
+    this.state.data_series.goals_flow_dic.map((e) => { console.log(e); this.state.chart.addSeries(e);});
     this.state.chart.redraw();
   }
 
   render() {
-    const data = this.state.data.goals_flow_dic;
-    console.log(data);
+    const data_series = this.state.data_series.goals_flow_dic;
+    console.log(data_series);
 
     //console.log(new Highcharts.Chart('chart',{}));
     return (<div id='chart'></div>);
