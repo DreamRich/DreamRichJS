@@ -13,7 +13,7 @@ export default class Employeer extends Component {
         headers: Auth.getHeader(),
       }
     ).then((e) => e.json()) 
-     .then((e) => console.log(e));
+      .then((e) => console.log(e));
   }
 
   render() {

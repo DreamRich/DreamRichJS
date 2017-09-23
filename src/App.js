@@ -37,15 +37,15 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-            <RaisedButton primary onClick={() => {Auth.authenticate({token: 'ok'}); }} label="simulate login" />
+          <RaisedButton primary onClick={() => {Auth.authenticate({token: 'ok'}); }} label="simulate login" />
           { this.state.auth && <div>{Auth.getAuth()}</div>}
-            <Link to="/">home </Link>
-            <Link to="/login">login </Link>
-            <AuthorizedLink to="/logout">logout </AuthorizedLink>
-            <AuthorizedLink to="/register/client">new client </AuthorizedLink>
-            <AuthorizedLink to="/login/changepassword">change </AuthorizedLink>
-            <AuthorizedLink to="/client">client </AuthorizedLink>
-            <AuthorizedLink to="/employee">employee </AuthorizedLink>
+          <Link to="/">home </Link>
+          <Link to="/login">login </Link>
+          <AuthorizedLink to="/logout">logout </AuthorizedLink>
+          <AuthorizedLink to="/register/client">new client </AuthorizedLink>
+          <AuthorizedLink to="/login/changepassword">change </AuthorizedLink>
+          <AuthorizedLink to="/client">client </AuthorizedLink>
+          <AuthorizedLink to="/employee">employee </AuthorizedLink>
         </div>
         <div className="conteiner">
           <Routers />

@@ -57,16 +57,16 @@ class ClientRegister extends Component {
         headers: Auth.getHeader(),
         body: JSON.stringify(data),
       })
-      .then((response) => {
-        if(response.ok) {
-          console.log(this.name + ' was submitted');
-        } else {
-          throw new Error (this.name + ' could not be submitted');
-        }
-      })
-      .catch((error) => {
-        console.error(error.message);
-      });
+        .then((response) => {
+          if(response.ok) {
+            console.log(this.name + ' was submitted');
+          } else {
+            throw new Error (this.name + ' could not be submitted');
+          }
+        })
+        .catch((error) => {
+          console.error(error.message);
+        });
     }
 
     var that = this;
@@ -77,26 +77,26 @@ class ClientRegister extends Component {
         headers: Auth.getHeader(),
         body: JSON.stringify(data),
       })
-      .then(((response) => {
-        var data = {};
+        .then(((response) => {
+          var data = {};
 
-        if(response.ok) {
-          console.log(this.name + ' was submitted');
-          data = response.json();
-        } else {
-          throw new Error (this.name + ' could not be submitted');
-        }
-        return data;
-      }))
-      .then((data) => {
-        for (var form in that.forms) {
-          that.forms[form].inputs[0].setValue(data.id);
-          that.forms[form].submit();
-        }
-      })
-      .catch((error) => {
-        console.error(error.message);
-      });
+          if(response.ok) {
+            console.log(this.name + ' was submitted');
+            data = response.json();
+          } else {
+            throw new Error (this.name + ' could not be submitted');
+          }
+          return data;
+        }))
+        .then((data) => {
+          for (var form in that.forms) {
+            that.forms[form].inputs[0].setValue(data.id);
+            that.forms[form].submit();
+          }
+        })
+        .catch((error) => {
+          console.error(error.message);
+        });
     }
 
     function callBaseSubmit(){

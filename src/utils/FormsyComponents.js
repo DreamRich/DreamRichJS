@@ -119,37 +119,37 @@ class DefFormsyDate extends Component {
           hintText="Ex: 01/01/1970"
           validationError='Insira uma data válida'
           validations={{
-            matchRegexp:/^(0?[1-9]|[12][0-9]|3[01])[\/](0?[1-9]|1[012])[\/]\d{4}$/
+            matchRegexp:/^(0?[1-9]|[12][0-9]|3[01])[/](0?[1-9]|1[012])[/]\d{4}$/
           }}
           requiredError={requiredError}
           {...rest}
         />
 
-      <IconButton style={{opacity:'0.65', marginTop:20}}
-        onClick={() => this.datePicker.focus()}>
-        <ActionDateRange />
-      </IconButton>
+        <IconButton style={{opacity:'0.65', marginTop:20}}
+          onClick={() => this.datePicker.focus()}>
+          <ActionDateRange />
+        </IconButton>
 
-      <div>
-        <DatePicker
-          name='date'
-          id={this.props.name + '_dataPicker'}
-          className="Hidden"
-          onChange={this.handleChangeDatePicker}
-          value={this.state.selectedDate}
-          ref={picker => { this.datePicker = picker;}}
-          default={defaultDate}
-          container='inline'
-          fullWidth
-          autoOk
-        />
-        <FormsyText 
-          name={name}
-          className="Hidden"
-          value={this.state.dateSubmit}
-        />
+        <div>
+          <DatePicker
+            name='date'
+            id={this.props.name + '_dataPicker'}
+            className="Hidden"
+            onChange={this.handleChangeDatePicker}
+            value={this.state.selectedDate}
+            ref={picker => { this.datePicker = picker;}}
+            default={defaultDate}
+            container='inline'
+            fullWidth
+            autoOk
+          />
+          <FormsyText 
+            name={name}
+            className="Hidden"
+            value={this.state.dateSubmit}
+          />
+        </div>
       </div>
-    </div>
     );
   }
 }

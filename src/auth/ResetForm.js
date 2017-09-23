@@ -29,15 +29,15 @@ export default class ResetForm extends Component{
     //const email = document.getElementsTagName
     const email = this.form.getCurrentValues();
     fetch('/api/auth/password/?email='+email.name)
-    .then((response) => {
-      if(!response.ok){
-        this.setState({emailExist: false});
-        this.form.validateForm();
-      } else {
-        this.setState({send: true});  
-      }
-    })
-    .catch((e) => {console.log('problem in email sending', e);});
+      .then((response) => {
+        if(!response.ok){
+          this.setState({emailExist: false});
+          this.form.validateForm();
+        } else {
+          this.setState({send: true});  
+        }
+      })
+      .catch((e) => {console.log('problem in email sending', e);});
   }
   
   render(){
@@ -51,8 +51,8 @@ export default class ResetForm extends Component{
     }
 
     let textfield = <FormsyText name="E-MAIL" validations={{isEmail: true, emailExist: true}}
-            validationErrors={this.invalidMessage} 
-            required hintText="Seu e-mail cadastrado" floatingLabelText="E-MAIL"/>;
+      validationErrors={this.invalidMessage} 
+      required hintText="Seu e-mail cadastrado" floatingLabelText="E-MAIL"/>;
 
     return (
       <div className="container">
@@ -62,13 +62,13 @@ export default class ResetForm extends Component{
         <section>
           <Title style={{fontSize: '48px'}} label="Recuperação de senha" />
           <Subtitle style={{fontSize: '22px', textAlign:'left'}} label={!this.state.send? this.sendedMessage : this.unsendedMessage} />
-        <br />
-        <Formsy.Form ref={ (form) => {this.form = form;} } onInvalid={() => {this.setState({emailExist: true});}}>
-          {textfield}
-        </Formsy.Form>
-        <br />
-        <br />
-        <br />
+          <br />
+          <Formsy.Form ref={ (form) => {this.form = form;} } onInvalid={() => {this.setState({emailExist: true});}}>
+            {textfield}
+          </Formsy.Form>
+          <br />
+          <br />
+          <br />
           {button}
         </section>
       </div>
