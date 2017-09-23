@@ -35,6 +35,10 @@ export default class GoalChart extends Component {
             }
           }
         },
+        tooltip: {
+          headerFormat: '<b>{point.x}</b><br/>',
+          pointFormat: '{series.name}: {point.y}<br/>Objetivos Totais: {point.stackTotal}'
+        },
       }
     )});
   }
