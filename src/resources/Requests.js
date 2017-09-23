@@ -40,6 +40,13 @@ const getData = (url, component, field, fieldB) => {
   });
 };
 
+const getDataReal = (url, handleData=noneFunction) => {
+  request(url, {
+    method: methods.GET,
+    headers: getAuthenticatedHeader(),
+  }, handleData);
+};
+
 const postData = (url, data, handleData=noneFunction, handleFail=noneFunction) => {
   request(url,
     {
@@ -73,4 +80,4 @@ const deleteData = (url, handleOk) => {
   );
 };
 
-export {getData, postData, putData, deleteData};
+export {getData, postData, putData, deleteData, getDataReal};
