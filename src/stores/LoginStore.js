@@ -16,7 +16,10 @@ class LoginStore extends ReduceStore {
       console.log(state, action);
       postData('/api/auth/',
         action.data,
-        Auth.authenticate,
+        (data) => {
+          AppDispatcher.dispatch({actionType: 'login/success',
+            data: data});
+        },
         () => {
           AppDispatcher.dispatch({actionType: 'login/fail'});
         }
