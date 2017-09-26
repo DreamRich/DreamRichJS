@@ -1,56 +1,58 @@
 import React, {Component} from 'react';
-import {Auth} from '../Auth';
 import PropTypes from 'prop-types';
-import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import {postData} from '../../resources/Requests';
+import Formsy from 'formsy-react';
+import {FormsyText} from 'formsy-material-ui/lib';
 
 export default class PasswordForm extends Component{
+
   constructor(props){
     super(props);
+    this.state = {};
     this.handleForm = this.handleForm.bind(this);
   }
 
-  handleForm(event){
-    event.preventDefault();
-    console.log(Auth.getHeader(), this.props.userid);
-    const data = JSON.stringify({
-      userid: this.props.userid,
-      password: event.target.password.value,
-      new_password: event.target.new_password.value,
-      new_password_confirmation: event.target.new_password_confirmation.value
-    });
-    fetch('/api/auth/password/', {
-      method: 'post',
-      headers: Auth.getHeader(),
-      body: data
-    })
-    .then(() => {console.log('ok'); this.setState({send: true}); })
-    .catch(() => {console.log('treta');});
+  handleForm(data){
+    console.log(this.props.userid);
+    data.userid = this.props.userid;
+    console.log(data);
+    postData('/api/auth/password/',
+      data,
+      () => {
+        this.setState({send: true}); 
+      });
   }
 
   render(){
     return (
       <section>
-        <form onSubmit={this.handleForm}>
-          <TextField floatingLabel="Usuário" disabled value={this.props.username} />
-      <br />
-          <TextField type="password"
-            floatingLabelText="Senha"
-            name="password"
-            hintText="Digite sua senha antiga" />
-      <br />
-          <TextField
-            floatingLabelText="Nova senha"
-            name="new_password"
-            hintText="Digite sua nova senha" />
-      <br />
-          <TextField
-            floatingLabelText="Confirmação"
-            name="new_password_confirmation"
-            hintText="Confirme sua nova senha" />
-      <br />
-          <RaisedButton primary label="ALTERAR" />
-        </form>
+        <Formsy.Form ref={ (form) => {this.form = form;} }
+          onValidSubmit={this.handleForm}
+        >
+          <FormsyText type="text"
+            name="username"
+            disabled
+            value={this.props.username}
+            floatingLabelText="Usuário" />
+          <FormsyText type="password" 
+            name="password" 
+            required 
+            hintText="Digite sua senha antiga" 
+            floatingLabelText="Senha" />
+          <FormsyText type="password" 
+            name="new_password" 
+            required 
+            hintText="Digite sua nova senha" 
+            floatingLabelText="Nova senha" />
+          <FormsyText type="password" 
+            name="new_password_confirmation" 
+            required 
+            hintText="Confirme sua nova senha" 
+            floatingLabelText="Confirmação" />
+          <br />
+          <RaisedButton primary label="ALTERAR" type="submit"/>
+        </Formsy.Form>
       </section>
     );
   }

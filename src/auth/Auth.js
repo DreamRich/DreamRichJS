@@ -4,7 +4,7 @@ export class Auth{
 
   static checkAuth(){
     const minute = 1000*60;
-    const quarter_hour = minute*1;
+    const quarter_hour = minute*15;
     if (Date.now() > Auth.start_login+quarter_hour){
       AppDispatcher.dispatch({actionType: 'logout' });
     } else {
