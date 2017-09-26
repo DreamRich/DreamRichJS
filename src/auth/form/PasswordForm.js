@@ -35,22 +35,29 @@ export default class PasswordForm extends Component{
             disabled
             value={this.props.username}
             floatingLabelText="Usuário" />
+          <br/>
+          <br/>
           <FormsyText type="password" 
             name="password" 
             required 
             hintText="Digite sua senha antiga" 
             floatingLabelText="Senha" />
+          <br/>
+          <br/>
           <FormsyText type="password" 
             name="new_password" 
             required 
             hintText="Digite sua nova senha" 
             floatingLabelText="Nova senha" />
+          <br/>
+          <br/>
           <FormsyText type="password" 
             name="new_password_confirmation" 
             required 
             hintText="Confirme sua nova senha" 
             floatingLabelText="Confirmação" />
           <br />
+          <br/>
           <RaisedButton primary label="ALTERAR" type="submit"/>
         </Formsy.Form>
       </section>

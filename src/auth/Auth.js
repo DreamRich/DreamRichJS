@@ -25,6 +25,8 @@ export class Auth{
       clearInterval(Auth.loginCheck);
       Auth.loginCheck = setInterval(Auth.checkAuth, 1000);
       localStorage.setItem('token', token.token);
+      localStorage.setItem('username', token.username);
+      localStorage.setItem('userid', token.id);
     }
   }
 
@@ -34,6 +36,14 @@ export class Auth{
 
   static getAuth(){
     return localStorage.getItem('token');
+  }
+
+  static getUserName() {
+    return localStorage.getItem('username');
+  }
+
+  static getUserId() {
+    return localStorage.getItem('userid');
   }
 
   static deauthenticate(){
