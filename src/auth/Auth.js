@@ -1,3 +1,4 @@
+import AppDispatcher from '../AppDispatcher';
 
 export class Auth{
 
@@ -5,7 +6,7 @@ export class Auth{
     const minute = 1000*60;
     const quarter_hour = minute*1;
     if (Date.now() > Auth.start_login+quarter_hour){
-      Auth.deauthenticate();
+      AppDispatcher.dispatch({actionType: 'logout' });
     } else {
       console.info('Time to logout (minute): '
         + (Auth.start_login + quarter_hour - Date.now())/minute
