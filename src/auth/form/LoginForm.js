@@ -13,7 +13,6 @@ export default class LoginForm extends Component{
   constructor(props){
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = {listeners: []};
 
     Formsy.addValidationRule('userExist', () => {
       return this.state.userExist;
@@ -23,9 +22,7 @@ export default class LoginForm extends Component{
   }
 
   componentWillMount = () => {
-    this.setState( LoginStore.getState() );
-    this.state.listeners.push(LoginStore.addListener(this.validateForm));
-    console.log(this.state.listeners);
+    this.setState({...LoginStore.getState(), listener: LoginStore.addListener(this.validateForm)} );
   }
 
   validateForm = () => {
@@ -34,9 +31,7 @@ export default class LoginForm extends Component{
   }
 
   componentWillUnmount = () => {
-    this.state.listeners.forEach((listener) => {
-      listener.remove();
-    });
+    this.state.listener.remove();
   }
 
 

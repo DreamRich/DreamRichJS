@@ -1,27 +1,32 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import RaisedButton from 'material-ui/RaisedButton';
-import {postData} from '../../resources/Requests';
 import Formsy from 'formsy-react';
 import {FormsyText} from 'formsy-material-ui/lib';
+import PasswordStore from '../../stores/PasswordStore';
+import AppDispatcher from '../../AppDispatcher';
 
 export default class PasswordForm extends Component{
 
   constructor(props){
     super(props);
-    this.state = {};
-    this.handleForm = this.handleForm.bind(this);
   }
 
-  handleForm(data){
-    console.log(this.props.userid);
+  componentWillMount = () => {
+    this.setState({...PasswordStore.getState(), listener: PasswordStore.addListener(this.handleUpdate)} );
+  }
+
+  handleUpdate = () => {
+    this.setState(PasswordStore.getState());
+  }
+
+  handleForm = (data) => {
     data.userid = this.props.userid;
     console.log(data);
-    postData('/api/auth/password/',
-      data,
-      () => {
-        this.setState({send: true}); 
-      });
+    AppDispatcher.dispatch({
+      actionType: 'password/change',
+      data: data,
+    });
   }
 
   render(){
