@@ -8,11 +8,11 @@ import ActionType from '../actions/ActionType';
 class PasswordStore extends ReduceStore {
   constructor(){ super(AppDispatcher); }
 
-  getInitialState(){ return {send: false}; }
+  getInitialState(){ return {send: false, snack: false, message: ''}; }
 
   reduce = (state, action) => {
     switch (action.actionType) {
-    case 'password/change':
+    case ActionType.PASSWORD.CHANGE:
       console.log(state, action);
       postData('/api/auth/password/',
         action.data,
@@ -24,16 +24,30 @@ class PasswordStore extends ReduceStore {
           AppDispatcher.dispatch({actionType: ActionType.PASSWORD.FAIL});
         }
         );
-      return {send: true};
+      return {...state, send: true};
 
     case ActionType.PASSWORD.RESET:
       return {userExist: false};
 
     case ActionType.PASSWORD.FAIL:
-      return {send: false};
+      return {
+        send: false,
+        snack: true,
+        message: 'Falha ao alterar a senha.'
+      };
 
     case ActionType.PASSWORD.SUCCESS:
-      return {send: false};
+      return {
+        send: false,
+        snack: true,
+        message: 'Senha alterada com sucesso!'
+      };
+
+    case ActionType.PASSWORD.SNACKCLOSE:
+      return {
+        ...state,
+        snack: false
+      };
 
     default:
       console.log(action);

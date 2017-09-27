@@ -7,9 +7,11 @@ const actionTypes = {
 
   LOGOUT: 'logout',
   PASSWORD: {
+    CHANGE: 'password/change',
     SUCCESS: 'password/success',
     FAIL: 'password/fail',
     RESET: 'password/reset',
+    SNACKCLOSE: 'password/snack'
   }
 };
 

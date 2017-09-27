@@ -6,6 +6,8 @@ import {FormsyText} from 'formsy-material-ui/lib';
 import PasswordStore from '../../stores/PasswordStore';
 import AppDispatcher from '../../AppDispatcher';
 import CircularProgress from 'material-ui/CircularProgress';
+import Snackbar from 'material-ui/Snackbar';
+import ActionType from '../../actions/ActionType';
 
 export default class PasswordForm extends Component{
 
@@ -17,6 +19,10 @@ export default class PasswordForm extends Component{
     this.setState({...PasswordStore.getState(), listener: PasswordStore.addListener(this.handleUpdate)} );
   }
 
+  componentWillUnmount = () => {
+    this.state.listener.remove();
+  }
+
   handleUpdate = () => {
     this.setState(PasswordStore.getState());
   }
@@ -25,7 +31,7 @@ export default class PasswordForm extends Component{
     data.userid = this.props.userid;
     console.log(data);
     AppDispatcher.dispatch({
-      actionType: 'password/change',
+      actionType: ActionType.PASSWORD.CHANGE,
       data: data,
     });
   }
@@ -70,9 +76,16 @@ export default class PasswordForm extends Component{
 
   render(){
     const toRender = (this.state.send? <CircularProgress /> : this.getForm());
+    console.log(this.state.snack);
     return (
       <section>
         {toRender}
+        <Snackbar
+          open={this.state.snack}
+          message={this.state.message}
+          autoHideDuration={9000}
+          onRequestClose={() => AppDispatcher.dispatch({actionType: ActionType.PASSWORD.SNACKCLOSE})}
+        />
       </section>
     );
   }
