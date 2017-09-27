@@ -4,7 +4,7 @@ export class Auth{
 
   static checkAuth(){
     const minute = 1000*60;
-    const quarter_hour = minute*1;
+    const quarter_hour = minute*15;
     if (Date.now() > Auth.start_login+quarter_hour){
       AppDispatcher.dispatch({actionType: 'logout' });
     } else {
@@ -25,6 +25,8 @@ export class Auth{
       clearInterval(Auth.loginCheck);
       Auth.loginCheck = setInterval(Auth.checkAuth, 1000);
       localStorage.setItem('token', token.token);
+      localStorage.setItem('username', token.username);
+      localStorage.setItem('userid', token.id);
     }
   }
 
@@ -34,6 +36,14 @@ export class Auth{
 
   static getAuth(){
     return localStorage.getItem('token');
+  }
+
+  static getUserName() {
+    return localStorage.getItem('username');
+  }
+
+  static getUserId() {
+    return localStorage.getItem('userid');
   }
 
   static deauthenticate(){

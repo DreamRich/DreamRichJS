@@ -9,6 +9,7 @@ import ClientTable from '../client/ClientTable';
 import Employeer from '../employee/Employeer';
 import PatrimonyForm from '../patrimony/PatrimonyForm';
 import ClientRegister from '../client/ClientRegister';
+import {Auth} from '../auth/Auth';
 
 export default class Routers extends Component{
 
@@ -21,7 +22,7 @@ export default class Routers extends Component{
         <Route exact path="/login" component={ LoginPage } />
         <AuthorizedRoute  exact path="/register/client" component={ ClientRegister } />
         <AuthorizedRoute path="/logout" component={ LogoutButton } />
-        <AuthorizedRoute path="/login/changepassword" render={ () => <PasswordForm userid={3} username="Marcelo" /> } />
+        <AuthorizedRoute path="/login/changepassword" render={ () => <PasswordForm userid={Auth.getUserId()} username={Auth.getUserName()} /> } />
         <Route path="/login/resetpassword" render={ () => <ResetForm email="marcelohpf@hotmail.com" /> } />
         <Route path="/patrimony" component={ PatrimonyForm } />
         <Route component={ NotFoundRoute } />
