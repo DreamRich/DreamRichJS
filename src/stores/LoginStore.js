@@ -4,6 +4,7 @@ import {ReduceStore} from 'flux/utils';
 import AppDispatcher from '../AppDispatcher';
 import {postData} from '../resources/Requests';
 import {Auth} from '../auth/Auth';
+import ActionType from '../actions/ActionType';
 
 class LoginStore extends ReduceStore {
   constructor(){ super(AppDispatcher); }
@@ -12,24 +13,24 @@ class LoginStore extends ReduceStore {
 
   reduce = (state, action) => {
     switch (action.actionType) {
-    case 'login/post':
+    case ActionType.LOGIN.POST:
       console.log(state, action);
       postData('/api/auth/',
         action.data,
         (data) => {
-          AppDispatcher.dispatch({actionType: 'login/success',
+          AppDispatcher.dispatch({actionType: ActionType.LOGIN.SUCCESS,
             data: data});
         },
         () => {
-          AppDispatcher.dispatch({actionType: 'login/fail'});
+          AppDispatcher.dispatch({actionType: ActionType.LOGIN.FAIL});
         }
         );
       return state;
 
-    case 'login/fail':
+    case ActionType.LOGIN.FAIL:
       return {userExist: false};
 
-    case 'logout':
+    case ActionType.LOGOUT:
       Auth.deauthenticate();
       return state;
     default:

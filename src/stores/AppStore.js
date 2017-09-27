@@ -4,6 +4,7 @@ import {ReduceStore} from 'flux/utils';
 import AppDispatcher from '../AppDispatcher';
 import {Auth} from '../auth/Auth';
 import LoginStore from './LoginStore';
+import ActionType from '../actions/ActionType';
 
 class AppStore extends ReduceStore {
   constructor(){ super(AppDispatcher); }
@@ -12,11 +13,11 @@ class AppStore extends ReduceStore {
 
   reduce = (state, action) => {
     switch (action.actionType) {
-    case 'login/success':
+    case ActionType.LOGIN.SUCCESS:
       console.log(state, action);
       Auth.authenticate(action.data);
       return {auth: true};
-    case 'logout':
+    case ActionType.LOGOUT:
       console.log(LoginStore.getDispatchToken());
       AppDispatcher.waitFor([LoginStore.getDispatchToken()]);
       return {auth: false};

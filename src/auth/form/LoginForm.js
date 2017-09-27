@@ -5,6 +5,7 @@ import Formsy from 'formsy-react';
 import {FormsyText} from 'formsy-material-ui/lib';
 import AppDispatcher from '../../AppDispatcher';
 import LoginStore from '../../stores/LoginStore';
+import ActionType from '../../actions/ActionType';
 
 
 export default class LoginForm extends Component{
@@ -48,7 +49,7 @@ export default class LoginForm extends Component{
   handleSubmit(data){
     console.log(data);
     AppDispatcher.dispatch({
-      actionType: 'login/post',
+      actionType: ActionType.LOGIN.POST,
       data: data,
     });
   }
