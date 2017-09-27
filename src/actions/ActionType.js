@@ -6,6 +6,11 @@ const actionTypes = {
   },
 
   LOGOUT: 'logout',
+  PASSWORD: {
+    SUCCESS: 'password/success',
+    FAIL: 'password/fail',
+    RESET: 'password/reset',
+  }
 };
 
 export default actionTypes;

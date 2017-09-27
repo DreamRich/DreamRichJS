@@ -51,8 +51,6 @@ const postData = (url, data, handleData=noneFunction, handleFail=noneFunction) =
     noneFunction,
     (response) => {
       handleFail(response);
-      throw new Error (`Response error ${response.status}: `+
-        `${url} could not be submitted`);
     });
 };
 

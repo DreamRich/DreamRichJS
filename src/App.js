@@ -25,6 +25,7 @@ class App extends Component {
 
   componentWillUnmount = () => {
     this.state.updateId.remove();
+    Auth.deauthenticate();
   }
 
   componentDidMount = () => {

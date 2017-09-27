@@ -3,7 +3,7 @@
 import {ReduceStore} from 'flux/utils';
 import AppDispatcher from '../AppDispatcher';
 import {postData} from '../resources/Requests';
-//import ActionType from '../actions/ActionType';
+import ActionType from '../actions/ActionType';
 
 class PasswordStore extends ReduceStore {
   constructor(){ super(AppDispatcher); }
@@ -17,17 +17,23 @@ class PasswordStore extends ReduceStore {
       postData('/api/auth/password/',
         action.data,
         (data) => {
-          AppDispatcher.dispatch({actionType: 'password/success',
+          AppDispatcher.dispatch({actionType: ActionType.PASSWORD.SUCCESS,
             data: data});
         },
         () => {
-          AppDispatcher.dispatch({actionType: 'password/fail'});
+          AppDispatcher.dispatch({actionType: ActionType.PASSWORD.FAIL});
         }
         );
       return {send: true};
 
-    case 'password/reset':
+    case ActionType.PASSWORD.RESET:
       return {userExist: false};
+
+    case ActionType.PASSWORD.FAIL:
+      return {send: false};
+
+    case ActionType.PASSWORD.SUCCESS:
+      return {send: false};
 
     default:
       console.log(action);
