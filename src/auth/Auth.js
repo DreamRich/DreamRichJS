@@ -27,11 +27,17 @@ export class Auth{
       localStorage.setItem('token', token.token);
       localStorage.setItem('username', token.username);
       localStorage.setItem('userid', token.id);
+      localStorage.setItem('permissions', 'coisa, see_own_client_data');
     }
   }
 
   static isAuthenticated(){
     return localStorage.getItem('token') !== undefined && localStorage.getItem('token') !== null;
+  }
+  static hasPermission(permission){
+    return Auth.isAuthenticated() && (
+      localStorage.getItem('permissions').split(',').map(e=> e.trim()).find(e=> e===permission)
+    );
   }
 
   static getAuth(){
