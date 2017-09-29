@@ -22,7 +22,7 @@ export default class Routers extends Component{
         <Route exact path="/login" component={ LoginPage } />
         <AuthorizedRoute permission="change_own_client_data" exact path="/register/client" component={ ClientRegister } />
         <Route path="/logout" component={ LogoutButton } />
-        <AuthorizedRoute permission="see_own_client_data" path="/login/changepassword" render={ () => <PasswordForm userid={Auth.getUserId()} username={Auth.getUserName()} /> } />
+        <AuthorizedRoute permission="allow_any" path="/login/changepassword" render={ () => <PasswordForm userid={Auth.getUserId()} username={Auth.getUserName()} /> } />
         <Route path="/login/resetpassword" render={ () => <ResetForm email="marcelohpf@hotmail.com" /> } />
         <Route path="/patrimony" component={ PatrimonyForm } />
         <Route component={ NotFoundRoute } />
