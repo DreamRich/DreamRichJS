@@ -27,7 +27,7 @@ export class Auth{
       localStorage.setItem('token', token.token);
       localStorage.setItem('username', token.username);
       localStorage.setItem('userid', token.id);
-      localStorage.setItem('permissions', 'coisa, see_own_client_data');
+      localStorage.setItem('permissions', token.permissions);
     }
   }
 
