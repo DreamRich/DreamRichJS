@@ -12,7 +12,10 @@ const actionTypes = {
     FAIL: 'password/fail',
     RESET: 'password/reset',
     SNACKCLOSE: 'password/snack'
-  }
+  },
+  CLIENT: {
+    ACTIVE: 'client/create_active',
+  }  
 };
 
 export default actionTypes;
