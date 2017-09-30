@@ -15,6 +15,8 @@ const actionTypes = {
   },
   CLIENT: {
     ACTIVE: 'client/create_active',
+    ACTIVESUCCESS: 'client/create_active_success',
+    SUBFORM: 'client/create_subforms',
   }  
 };
 

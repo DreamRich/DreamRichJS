@@ -13,6 +13,7 @@ import ClientStore from '../stores/ClientStore';
 import ActionType from '../actions/ActionType';
 import AppDispatcher from '../AppDispatcher';
 import '../stylesheet/RegisterForms.sass';
+import PropTypes from 'prop-types';
 
 var {
   wordsError,
@@ -25,7 +26,6 @@ class ClientRegister extends Component {
   constructor(props){
     super(props);
     this.forms = {};
-    ClientStore;
     let formsFunctions = this.submitForms();
     this.submitForm = formsFunctions.submitForm;
     this.submitBaseForm = formsFunctions.submitBaseForm;
@@ -34,6 +34,22 @@ class ClientRegister extends Component {
 
   state = {
     canSubmit: false,
+  }
+
+  componentWillMount = () => {
+    this.setState({listener: ClientStore.addListener(this.handleChange)});
+  }
+
+  componentWillUnmount = () => {
+    this.state.listener.remove();
+  }
+
+  handleChange = () => {
+    /* This timeout is to prevent the update action launch together with
+     * react dipatcher and throw error of Invariant Violation Dispatch.dispatch
+     */
+    setTimeout(() =>
+    this.setState(ClientStore.getState()), 500);
   }
 
   enableButton = () => {
@@ -157,11 +173,9 @@ class ClientRegister extends Component {
         />
         <FormsyText
           name="telephone"
-          validations="isNumeric"
-          validationError={numericError}
           hintText="Telefone do cliente"
           floatingLabelText="Telefone"
-          value="111"
+          value="(61) 98131-4508"
           updateImmediately
         />
         <FormsyText
@@ -213,6 +227,7 @@ class ClientRegister extends Component {
                 tooltip="Documento de Identificação"
                 touch={true}
                 tooltipPosition="top-left">
+                <FileFileUpload />
               </IconButton>
               <IconButton
                 name="proof_of_address"
