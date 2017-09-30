@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import Formsy from 'formsy-react';
+import {FormsyText, FormsySelect} from 'formsy-material-ui/lib';
+import {FormsyDate} from '../utils/FormsyComponents/FormsyComponents.js';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
-import {FormsyText} from 'formsy-material-ui/lib';
-import {FormsyDate} from '../utils/FormsyComponents.js';
 import errorMessages from '../utils/FormsErrorMessages';
 import IconButton from 'material-ui/IconButton';
 import FileFileUpload from 'material-ui/svg-icons/file/file-upload';
 import routeMap from '../routes/RouteMap.js';
 import {Auth} from '../auth/Auth';
 import '../stylesheet/RegisterForms.sass';
+import MenuItem from 'material-ui/MenuItem';
 
 var {
   wordsError,
@@ -17,13 +18,14 @@ var {
   emailError
 } = errorMessages;
 
+
 class ClientRegister extends Component {
 
   constructor(props){
     super(props);
-    this.forms = {};
 
     let formsFunctions = this.submitForms();
+    this.forms = {};
     this.submitForm = formsFunctions.submitForm;
     this.submitBaseForm = formsFunctions.submitBaseForm;
     this.callBaseSubmit = formsFunctions.callBaseSubmit;
@@ -31,6 +33,8 @@ class ClientRegister extends Component {
 
   state = {
     canSubmit: false,
+
+    stateName: null, 
   }
 
   enableButton = () => {
@@ -53,7 +57,7 @@ class ClientRegister extends Component {
 
     function submitForm(data){
       fetch(routeMap[this.name], {
-        method: 'post',
+        method: 'POST',
         headers: Auth.getHeader(),
         body: JSON.stringify(data),
       })
@@ -73,7 +77,7 @@ class ClientRegister extends Component {
 
     function submitBaseForm(data){
       fetch(routeMap[this.name], {
-        method: 'post',
+        method: 'POST',
         headers: Auth.getHeader(),
         body: JSON.stringify(data),
       })
@@ -110,6 +114,10 @@ class ClientRegister extends Component {
     };
 
     return submitter;
+  }
+
+  handleCountryState = () => {
+    this.setState({stateName: 'lele'});
   }
 
   getClientsFields = () => {
@@ -182,7 +190,6 @@ class ClientRegister extends Component {
   }
 
   render() {
-
     return (
       <div>
         <h1> Cadastro de Cliente </h1>
@@ -236,6 +243,55 @@ class ClientRegister extends Component {
 
           <div>
             <h2>Endereço</h2>
+            <Formsy.Form
+              name="country"
+              ref={(form) => {this.forms.country = form;}}
+              onValid={this.enableButton}
+              onInvalidSubmit={this.notifyFormError}
+              onValidSubmit={this.submitForm}>
+              <FormsyText
+                name="active_client_id"
+                className="Hidden"
+                value=""
+              />
+
+              <FormsySelect
+                name="country"
+                floatingLabelText="País"
+                onChange={this.handleCountryState}
+              >
+              </FormsySelect>
+            </Formsy.Form>
+
+            <Formsy.Form
+              name="state"
+              ref={(form) => {this.forms.state = form;}}
+              onValid={this.enableButton}
+              onInvalidSubmit={this.notifyFormError}
+              onValidSubmit={this.submitForm}>
+              <FormsyText
+                name="active_client_id"
+                className="Hidden"
+                value=''
+              />
+
+              <FormsyText
+                name="name"
+                validations="isWords"
+                validationError={wordsError}
+                hintText="Estado do endereço"
+                floatingLabelText="Estado"
+                value={this.state.stateName}
+              />
+              <FormsyText
+                name="abbreviation"
+                validations="isWords"
+                validationError={wordsError}
+                hintText="DF, RS, MG ..."
+                floatingLabelText="Sigla do estado"
+              />
+            </Formsy.Form>
+
             <Formsy.Form
               name="address"
               ref={(form) => {this.forms.address = form;}}
@@ -294,59 +350,6 @@ class ClientRegister extends Component {
               />
             </Formsy.Form>
 
-            <Formsy.Form
-              name="state"
-              onValid={this.enableButton}
-              onInvalidSubmit={this.notifyFormError}
-              onValidSubmit={this.submitForm}>
-              <FormsyText
-                name="active_client_id"
-                className="Hidden"
-                value=""
-              />
-
-              <FormsyText
-                name="name"
-                validations="isWords"
-                validationError={wordsError}
-                hintText="Estado do endereço"
-                floatingLabelText="Estado"
-              />
-              <FormsyText
-                name="abbreviation"
-                validations="isWords"
-                validationError={wordsError}
-                hintText="DF, RS, MG ..."
-                floatingLabelText="Sigla do estado"
-              />
-            </Formsy.Form>
-
-            <Formsy.Form
-              name="country"
-              onValid={this.enableButton}
-              onInvalidSubmit={this.notifyFormError}
-              onValidSubmit={this.submitForm}>
-              <FormsyText
-                name="active_client_id"
-                className="Hidden"
-                value=""
-              />
-
-              <FormsyText
-                name="name"
-                validations="isWords"
-                validationError={wordsError}
-                hintText="Nome do país"
-                floatingLabelText="País"
-              />
-              <FormsyText
-                name="abbreviation"
-                validations="isWords"
-                validationError={wordsError}
-                hintText="BR, US ..."
-                floatingLabelText="Sigla do país"
-              />
-            </Formsy.Form>
           </div>
 
           <div>

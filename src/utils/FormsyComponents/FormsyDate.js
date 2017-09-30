@@ -12,7 +12,7 @@ reference:
   https://github.com/callemall/material-ui/issues/3933/
 */
 
-class DefFormsyDate extends Component {
+class DefineFormsyDate extends Component {
 
   static propTypes = {
     value: PropTypes.object,
@@ -133,6 +133,6 @@ class DefFormsyDate extends Component {
   }
 }
 
-const FormsyDate = HOC(DefFormsyDate);
+const FormsyDate = HOC(DefineFormsyDate);
 
 export default FormsyDate;
