@@ -7,13 +7,14 @@ import {FormsyDate} from '../utils/FormsyComponents';
 import errorMessages from '../utils/FormsErrorMessages';
 import IconButton from 'material-ui/IconButton';
 import FileFileUpload from 'material-ui/svg-icons/file/file-upload';
-import routeMap from '../routes/RouteMap';
-import {Auth} from '../auth/Auth';
+//import routeMap from '../routes/RouteMap';
+//import {Auth} from '../auth/Auth';
 import ClientStore from '../stores/ClientStore';
 import ActionType from '../actions/ActionType';
 import AppDispatcher from '../AppDispatcher';
 import '../stylesheet/RegisterForms.sass';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
+import ClientSubForm from './ClientSubForm';
 
 var {
   wordsError,
@@ -25,11 +26,6 @@ class ClientRegister extends Component {
 
   constructor(props){
     super(props);
-    this.forms = {};
-    let formsFunctions = this.submitForms();
-    this.submitForm = formsFunctions.submitForm;
-    this.submitBaseForm = formsFunctions.submitBaseForm;
-    this.callBaseSubmit = formsFunctions.callBaseSubmit;
   }
 
   state = {
@@ -58,77 +54,8 @@ class ClientRegister extends Component {
     });
   }
 
-  disableButton = () => {
-    this.setState({
-      canSubmit: false,
-    });
-  }
-
   notifyFormError = (data) => {
     console.error('Form error:', data);
-  }
-
-  submitForms = () => {
-
-    function submitForm(data){
-      fetch(routeMap[this.name], {
-        method: 'post',
-        headers: Auth.getHeader(),
-        body: JSON.stringify(data),
-      })
-      .then((response) => {
-        if(response.ok) {
-          console.log(this.name + ' was submitted');
-        } else {
-          throw new Error (this.name + ' could not be submitted');
-        }
-      })
-      .catch((error) => {
-        console.error(error.message);
-      });
-    }
-
-    var that = this;
-
-    function submitBaseForm(data){
-      fetch(routeMap[this.name], {
-        method: 'post',
-        headers: Auth.getHeader(),
-        body: JSON.stringify(data),
-      })
-      .then(((response) => {
-        var data = {};
-
-        if(response.ok) {
-          console.log(this.name + ' was submitted');
-          data = response.json();
-        } else {
-          throw new Error (this.name + ' could not be submitted');
-        }
-        return data;
-      }))
-      .then((data) => {
-        for (var form in that.forms) {
-          that.forms[form].inputs[0].setValue(data.id);
-          that.forms[form].submit();
-        }
-      })
-      .catch((error) => {
-        console.error(error.message);
-      });
-    }
-
-    function callBaseSubmit(){
-      that.baseForm.submit();
-    }
-
-    var submitter = {
-      submitForm: submitForm,
-      callBaseSubmit: callBaseSubmit,
-      submitBaseForm: submitBaseForm
-    };
-
-    return submitter;
   }
 
   getClientsFields = () => {
@@ -200,8 +127,10 @@ class ClientRegister extends Component {
 
   handleSubmit = (data) => {
     console.log(data);
-    AppDispatcher.dispatch({actionType: ActionType.CLIENT.ACTIVE,
-      data: data});
+    AppDispatcher.dispatch({
+      actionType: ActionType.CLIENT.ACTIVE,
+      data: data
+    });
   }
 
   render() {
@@ -238,16 +167,25 @@ class ClientRegister extends Component {
               </IconButton>
             </Formsy.Form>
           </div>
-          <SubForm 
-            name='address'
+          <ClientSubForm
+            title="Cônjuge"
+            name="client"
+            parent_name="active_client_id"
+            parent_id={this.state.id}
+          >
+            {this.getClientsFields()}
+          </ClientSubForm>
+
+          <ClientSubForm
             title='Endereço'
+            name='address'
             parent_name='active_client_id'
             parent_id={this.state.id}
           >
             <FormsyText
               name="cep"
-              validations="isNumeric"
-              validationError={numericError}
+              //validations="isNumeric"
+              //validationError={numericError}
               hintText="Apenas números"
               floatingLabelText="CEP"
               updateImmediately
@@ -288,32 +226,56 @@ class ClientRegister extends Component {
               hintText="Casa, apartamento, etc."
               floatingLabelText="Tipo de Endereço"
             />
-          </SubForm>
-          <SubForm
+          </ClientSubForm>
+          <ClientSubForm
             title="Conta Bancária"
             name="bank_account"
             parent_name='active_client_id'
             parent_id={this.state.id}
           >
-           <FormsyText
-             name="agency"
-             validations="isNumeric"
-             validationError={numericError}
-             hintText="Agência da conta bancária"
-             floatingLabelText="Agência"
-           />
-           <FormsyText
-             name="account"
-             hintText="Número da conta bancária"
-             floatingLabelText="Conta"
-           />
-          </SubForm>
+             <FormsyText
+               name="agency"
+               validations="isNumeric"
+               validationError={numericError}
+               hintText="Agência da conta bancária"
+               floatingLabelText="Agência"
+             />
+             <FormsyText
+               name="account"
+               hintText="Número da conta bancária"
+               floatingLabelText="Conta"
+             />
+          </ClientSubForm>
 
+          <ClientSubForm
+            title="Dependente"
+            name="dependent"
+            parent_name='active_client_id'
+            parent_id={this.state.id}>
+            <FormsyText
+              name="name"
+              validations="isWords"
+              validationError={wordsError}
+              hintText="Nome do dependente"
+              floatingLabelText="Nome"
+            />
+            <FormsyText
+              name="surname"
+              validations="isWords"
+              validationError={wordsError}
+              hintText="Sobrenome do dependente"
+              floatingLabelText="Sobrenome"
+            />
+            <FormsyDate
+              name="birthday"
+              floatingLabelText="Data de Nascimento"
+            />
+          </ClientSubForm>
           <RaisedButton
             primary
             type="submit"
             label="Enviar"
-            onClick={this.callBaseSubmit}
+            onClick={() => this.baseForm.submit()}
             disabled={!this.state.canSubmit}
           />
         </Paper>
@@ -324,53 +286,7 @@ class ClientRegister extends Component {
 
 export default ClientRegister;
 
-// TODO: Move this component to another file
-class SubForm extends Component {
-  constructor(props){
-    super(props);
-  }
 
-  componentDidUpdate = (prevProps) => {
-    if (prevProps.parent_id === undefined &&
-        this.props.parent_id !== undefined) {
-      console.log(prevProps, 'previous');
-      console.log(this.props, 'next');
-      this.form.submit();
-    }
-  }
-
-  submitForm = (data) => {
-    console.log(data);
-    data[this.props.parent_name] = this.props.parent_id;
-    AppDispatcher.dispatch(
-      {
-        actionType: ActionType.CLIENT.SUBFORM,
-        data: data,
-        route: routeMap[this.props.name]
-      });
-  }
-
-  render = () => {
-    return (
-      <div>
-        <h2>{this.props.title}</h2>
-        <Formsy.Form
-          ref={(ref) => {this.form = ref; }}
-          onValidSubmit={this.submitForm}>
-          {this.props.children}
-        </Formsy.Form>
-      </div>
-    );
-  }
-}
-
-SubForm.propTypes = {
-  title: PropTypes.string,
-  parent_id: PropTypes.number,
-  parent_name: PropTypes.string,
-  name: PropTypes.string,
-  children: PropTypes.element,
-};
 //
   //const a = (
   //
