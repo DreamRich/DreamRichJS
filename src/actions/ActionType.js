@@ -17,7 +17,8 @@ const actionTypes = {
     ACTIVE: 'client/create_active',
     ACTIVESUCCESS: 'client/create_active_success',
     SUBFORM: 'client/create_subforms',
-  }  
+  },
+  REFRESH_LOGIN: 'refresh_token'
 };
 
 export default actionTypes;
