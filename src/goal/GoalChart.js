@@ -26,6 +26,7 @@ export default class GoalChart extends Component {
         new Highcharts.Chart(
           'chart', {
             series: data.goals_flow_dic,
+            title:{text: 'Goals'},
             chart:{type: 'column'},
             plotOptions: {
               column: {
@@ -36,12 +37,19 @@ export default class GoalChart extends Component {
                 }
               }
             },
-            tooltip: {
-              headerFormat: '<b>{point.x}</b><br/>',
-              pointFormat: '{series.name}: {point.y}<br/>Objetivos Totais: {point.stackTotal}'
-            },
             xAxis: {
               categories: data.year_init_to_year_end
+            },
+            yAxis: {
+              min: 0,
+              title:{text: 'Values'},
+              stackLabels: {
+                enabled: true,
+                style: {
+                  fontWeight: 'bold',
+                  color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                }
+              }
             },
           }
         );
