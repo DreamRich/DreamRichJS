@@ -33,6 +33,20 @@ class LoginStore extends ReduceStore {
     case ActionType.LOGOUT:
       Auth.deauthenticate();
       return state;
+
+    case ActionType.REFRESH_LOGIN:
+      postData('/api/auth/refresh/',
+        action.data,
+        (data) => {
+          AppDispatcher.dispatch({actionType: ActionType.LOGIN.SUCCESS,
+            data: data});
+        },
+        () => {
+          alert('Fail when try refresh token\nLogouting');
+          AppDispatcher.dispatch({actionType: ActionType.LOGOUT});
+        }
+        );
+      return state;
     default:
       console.log(action);
       return state;

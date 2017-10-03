@@ -1,28 +1,41 @@
 import AppDispatcher from '../AppDispatcher';
+import ActionType from '../actions/ActionType';
 
 export class Auth{
 
   static checkAuth(){
     const minute = 1000*60;
-    const quarter_hour = minute*15;
-    if (Date.now() > Auth.start_login+quarter_hour){
-      AppDispatcher.dispatch({actionType: 'logout' });
+    const quarterHour = minute*15;
+    const now = Date.now();
+    if (now > Auth.lastVerify+quarterHour){
+      AppDispatcher.dispatch({actionType: ActionType.LOGOUT });
     } else {
       console.info('Time to logout (minute): '
-        + (Auth.start_login + quarter_hour - Date.now())/minute
+        + (Auth.lastVerify + quarterHour - Date.now())/minute
       );
     }
   }
 
   static updateDate(){
-    Auth.start_login = Date.now();
+    Auth.lastVerify = Date.now();
+  }
+
+  static refreshToken(){
+    console.info('Refresh login token');
+    AppDispatcher.dispatch({actionType: ActionType.REFRESH_LOGIN,
+      data: {token: Auth.getAuth()}
+    });
   }
 
   static authenticate(token){
     console.log('Authenticate');
     if(token.token !== undefined && token.token !== null){
-      Auth.start_login = Date.now();
+      if(!Auth.isAuthenticated()){
+        Auth.lastVerify = Date.now();
+      }
       clearInterval(Auth.loginCheck);
+      clearTimeout(Auth.loginTimeout);
+      Auth.loginTimeout = setTimeout(Auth.refreshToken, 1000*60*4);
       Auth.loginCheck = setInterval(Auth.checkAuth, 1000);
       localStorage.setItem('token', token.token);
       localStorage.setItem('username', token.username);
@@ -55,6 +68,7 @@ export class Auth{
   static deauthenticate(){
     console.log('Deauthenticate');
     clearInterval(Auth.loginCheck);
+    clearTimeout(Auth.login_timeout);
     return localStorage.removeItem('token');
   }
 
