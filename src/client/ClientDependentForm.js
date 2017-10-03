@@ -37,12 +37,10 @@ class ClientDependentForm extends Component {
     });
   }
 
-  removeDependent = () => {
+  removeDependent = (key) => {
     const array = this.state.dependents.slice();
-    array.pop();
     this.setState({
-      dependents: array,
-      key: this.state.key-1
+      dependents: array.filter(e => e !== key),
     });
   }
 
@@ -50,41 +48,44 @@ class ClientDependentForm extends Component {
     console.log(this.state.dependents, this);
     return (
       <div>
-        <RaisedButton onClick={this.addDependent}>add</RaisedButton>
         {this.state.dependents.map(e => 
-          <ClientSubForm
-            title="Dependente"
-            name="dependent"
-            key={e}
-            parent_name='active_client_id'
-            parent_id={this.props.parent_id}>
-            <div>
-              <FormsyText
-                name="name"
-                validations="isWords"
-                validationError={wordsError}
-                hintText="Nome do dependente"
-                floatingLabelText="Nome"
-              />
-              <FormsyText
-                name="surname"
-                validations="isWords"
-                validationError={wordsError}
-                hintText="Sobrenome do dependente"
-                floatingLabelText="Sobrenome"
-              />
-              <FormsyDate
-                name="birthday"
-                floatingLabelText="Data de Nascimento"
-              />
-            </div>
-          </ClientSubForm>
+          <div key={e}
+          >
+            <ClientSubForm
+              title="Dependente"
+              name="dependent"
+              parent_name='active_client_id'
+              parent_id={this.props.parent_id}>
+              <div>
+                <FormsyText
+                  name="name"
+                  validations="isWords"
+                  validationError={wordsError}
+                  hintText="Nome do dependente"
+                  floatingLabelText="Nome"
+                />
+                <FormsyText
+                  name="surname"
+                  validations="isWords"
+                  validationError={wordsError}
+                  hintText="Sobrenome do dependente"
+                  floatingLabelText="Sobrenome"
+                />
+                <FormsyDate
+                  name="birthday"
+                  floatingLabelText="Data de Nascimento"
+                />
+              </div>
+            </ClientSubForm>
+            <RaisedButton onClick={this.removeDependent.bind(this, e)}>Remove</RaisedButton>
+          </div>
         )}
-        <RaisedButton onClick={this.removeDependent}> remove</RaisedButton>
+        <RaisedButton onClick={this.addDependent}>add</RaisedButton>
       </div>
     );
   }
 }
+
 export default ClientDependentForm;
 
 ClientDependentForm.propTypes = {
