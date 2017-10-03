@@ -45,12 +45,12 @@ class App extends Component {
             <RaisedButton primary onClick={() => {Auth.authenticate({token: 'ok'}); }} label="simulate login" />
           { this.state.auth && <div>{Auth.getAuth()}</div>}
             <Link to="/">home </Link>
-            <Link to="/login">login </Link>
-            <AuthorizedLink to="/logout">logout </AuthorizedLink>
-            <AuthorizedLink to="/register/client">new client </AuthorizedLink>
-            <AuthorizedLink to="/login/changepassword">change </AuthorizedLink>
-            <AuthorizedLink to="/client">client </AuthorizedLink>
-            <AuthorizedLink to="/employee">employee </AuthorizedLink>
+          { !this.state.auth && <Link to="/login">login </Link> }
+          { this.state.auth && <Link to="/logout">logout </Link> }
+            <AuthorizedLink permission="change_own_client_data" to="/register/client">new client </AuthorizedLink>
+          <AuthorizedLink permission="allow_any" to="/login/changepassword">change </AuthorizedLink>
+            <AuthorizedLink permission="see_all_basic_client_data" to="/client">client </AuthorizedLink>
+            <AuthorizedLink permission="see_employee_data" to="/employee">employee </AuthorizedLink>
         </div>
         <div className="conteiner">
           <Routers />

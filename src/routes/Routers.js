@@ -17,12 +17,12 @@ export default class Routers extends Component{
     return (
       <Switch>
         <Route exact path="/" render={ () => <h1>Home</h1> } />
-        <AuthorizedRoute exact path="/client" component={ ClientTable } />
-        <AuthorizedRoute path="/employee" component={ Employeer } />
+        <AuthorizedRoute permission="see_all_basic_client_data" exact path="/client" component={ ClientTable } />
+        <AuthorizedRoute permission="see_employee_data" path="/employee" component={ Employeer } />
         <Route exact path="/login" component={ LoginPage } />
-        <AuthorizedRoute  exact path="/register/client" component={ ClientRegister } />
-        <AuthorizedRoute path="/logout" component={ LogoutButton } />
-        <AuthorizedRoute path="/login/changepassword" render={ () => <PasswordForm userid={Auth.getUserId()} username={Auth.getUserName()} /> } />
+        <AuthorizedRoute permission="change_own_client_data" exact path="/register/client" component={ ClientRegister } />
+        <Route path="/logout" component={ LogoutButton } />
+        <AuthorizedRoute permission="allow_any" path="/login/changepassword" render={ () => <PasswordForm userid={Auth.getUserId()} username={Auth.getUserName()} /> } />
         <Route path="/login/resetpassword" render={ () => <ResetForm email="marcelohpf@hotmail.com" /> } />
         <Route path="/patrimony" component={ PatrimonyForm } />
         <Route component={ NotFoundRoute } />
