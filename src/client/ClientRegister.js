@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-//import Formsy from 'formsy-react';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import {FormsyText} from 'formsy-material-ui/lib';
@@ -7,12 +6,9 @@ import {FormsyDate} from '../utils/FormsyComponents';
 import errorMessages from '../utils/FormsErrorMessages';
 //import IconButton from 'material-ui/IconButton';
 //import FileFileUpload from 'material-ui/svg-icons/file/file-upload';
-//import routeMap from '../routes/RouteMap';
-//import {Auth} from '../auth/Auth';
 import ClientStore from '../stores/ClientStore';
 import '../stylesheet/RegisterForms.sass';
-//import PropTypes from 'prop-types';
-//import ClientSubForm from './ClientSubForm';
+import ClientSubForm from './ClientSubForm';
 import ClientForm from './ClientForm';
 import ClientDependentForm from './ClientDependentForm';
 
@@ -30,6 +26,7 @@ class ClientRegister extends Component {
 
   state = {
     canSubmit: true,
+    sponse: false,
   }
 
   componentWillMount = () => {
@@ -46,12 +43,6 @@ class ClientRegister extends Component {
      */
     setTimeout(() =>
     this.setState(ClientStore.getState()), 500);
-  }
-
-  enableButton = () => {
-    this.setState({
-      canSubmit: true,
-    });
   }
 
   getClientsFields = () => {
@@ -121,17 +112,40 @@ class ClientRegister extends Component {
     );
   }
 
-  notifyFormError = (data) => {
-    console.error('Form error:', data);
+  switchSponse = () => {
+    const sponse = !this.state.sponse;
+    this.setState({sponse});
   }
 
   render() {
 
+    const sponseForm = (
+      this.state.sponse ? (
+      <ClientSubForm
+        title="Cônjuge"
+        name="client"
+        parent_name="active_client_id"
+        parent_id={this.state.id}
+      >
+        <div>
+          {this.getClientsFields()}
+          <RaisedButton onClick={this.switchSponse} > 
+            Remove Sponse 
+          </RaisedButton>
+        </div>
+      </ClientSubForm>) : (<div>
+        <h2> Cônjuge </h2> 
+        <RaisedButton onClick={this.switchSponse}>
+          Add 
+        </RaisedButton>
+        </div>)
+      );
     return (
       <div>
         <h1> Cadastro de Cliente </h1>
 
         <Paper className="Paper">
+
           <div>
             <ClientForm
               title="Cliente"
@@ -140,10 +154,88 @@ class ClientRegister extends Component {
             {this.getClientsFields()}
             </ClientForm>
           </div>
+          {sponseForm}
+
+          <ClientSubForm
+            title='Endereço'
+            name='address'
+            parent_name='active_client_id'
+            parent_id={this.state.id}
+          >
+            <div>
+              <FormsyText
+                name="cep"
+                //validations="isNumeric"
+                //validationError={numericError}
+                hintText="Apenas números"
+                floatingLabelText="CEP"
+                updateImmediately
+              />
+              <FormsyText
+                name="details"
+                validations="isWords" 
+                validationError={wordsError}
+                hintText="Detalhes do endereço"
+                floatingLabelText="Detalhes"
+              />
+              <FormsyText
+                name="number"
+                validations="isNumeric"
+                validationError={numericError}
+                hintText="Número do lote"
+                floatingLabelText="Número"
+                updateImmediately
+              />
+              <FormsyText
+                name="complement"
+                validations="isWords" 
+                validationError={wordsError}
+                hintText="Complemento do endereço"
+                floatingLabelText="Complemento"
+              />
+              <FormsyText
+                name="neighborhood"
+                validations="isWords" 
+                validationError={wordsError}
+                hintText="Bairro do endereço"
+                floatingLabelText="Bairro"
+              />
+              <FormsyText
+                name="type_of_address"
+                validations="isWords" 
+                validationError={wordsError}
+                hintText="Casa, apartamento, etc."
+                floatingLabelText="Tipo de Endereço"
+              />
+            </div>
+          </ClientSubForm>
+
+          <ClientSubForm
+            title="Conta Bancária"
+            name="bank_account"
+            parent_name='active_client_id'
+            parent_id={this.state.id}
+          >
+            <div>
+             <FormsyText
+               name="agency"
+               validations="isNumeric"
+               validationError={numericError}
+               hintText="Agência da conta bancária"
+               floatingLabelText="Agência"
+             />
+             <FormsyText
+               name="account"
+               hintText="Número da conta bancária"
+               floatingLabelText="Conta"
+             />
+            </div>
+          </ClientSubForm>
 
           <ClientDependentForm
             parent_id={this.state.id}
           />
+
           <RaisedButton
             primary
             type="submit"
@@ -151,298 +243,12 @@ class ClientRegister extends Component {
             onClick={() => this.baseForm.submit()}
             disabled={!this.state.canSubmit}
           />
+
         </Paper>
+
       </div>
     ); 
   }
 }
 
 export default ClientRegister;
-
-
-//
-//          <ClientSubForm
-//            title="Cônjuge"
-//            name="client"
-//            parent_name="active_client_id"
-//            parent_id={this.state.id}
-//          >
-//            <div>
-//              {this.getClientsFields()}
-//            </div>
-//          </ClientSubForm>
-//
-//          <ClientSubForm
-//            title='Endereço'
-//            name='address'
-//            parent_name='active_client_id'
-//            parent_id={this.state.id}
-//          >
-//            <div>
-//              <FormsyText
-//                name="cep"
-//                //validations="isNumeric"
-//                //validationError={numericError}
-//                hintText="Apenas números"
-//                floatingLabelText="CEP"
-//                updateImmediately
-//              />
-//              <FormsyText
-//                name="details"
-//                validations="isWords" 
-//                validationError={wordsError}
-//                hintText="Detalhes do endereço"
-//                floatingLabelText="Detalhes"
-//              />
-//              <FormsyText
-//                name="number"
-//                validations="isNumeric"
-//                validationError={numericError}
-//                hintText="Número do lote"
-//                floatingLabelText="Número"
-//                updateImmediately
-//              />
-//              <FormsyText
-//                name="complement"
-//                validations="isWords" 
-//                validationError={wordsError}
-//                hintText="Complemento do endereço"
-//                floatingLabelText="Complemento"
-//              />
-//              <FormsyText
-//                name="neighborhood"
-//                validations="isWords" 
-//                validationError={wordsError}
-//                hintText="Bairro do endereço"
-//                floatingLabelText="Bairro"
-//              />
-//              <FormsyText
-//                name="type_of_address"
-//                validations="isWords" 
-//                validationError={wordsError}
-//                hintText="Casa, apartamento, etc."
-//                floatingLabelText="Tipo de Endereço"
-//              />
-//            </div>
-//          </ClientSubForm>
-//          <ClientSubForm
-//            title="Conta Bancária"
-//            name="bank_account"
-//            parent_name='active_client_id'
-//            parent_id={this.state.id}
-//          >
-//            <div>
-//             <FormsyText
-//               name="agency"
-//               validations="isNumeric"
-//               validationError={numericError}
-//               hintText="Agência da conta bancária"
-//               floatingLabelText="Agência"
-//             />
-//             <FormsyText
-//               name="account"
-//               hintText="Número da conta bancária"
-//               floatingLabelText="Conta"
-//             />
-//            </div>
-//          </ClientSubForm>
-  //const a = (
-  //
-  //          <div>
-  //            <h2>Cônjuge</h2>
-  //            <Formsy.Form
-  //              name="client"
-  //              ref={(form) => {this.forms.client = form;}}
-  //              onValid={this.enableButton}
-  //              onInvalidSubmit={this.notifyFormError}
-  //              onValidSubmit={this.submitForm}>
-  //              <FormsyText
-  //                name="active_client_id"
-  //                className="Hidden"
-  //                value=""
-  //              />
-  //
-  //              {this.getClientsFields()}
-  //            </Formsy.Form>
-  //          </div>
-  //
-  //          <div>
-  //            <h2>Endereço</h2>
-  //            <Formsy.Form
-  //              name="address"
-  //              ref={(form) => {this.forms.address = form;}}
-  //              onValid={this.enableButton}
-  //              onInvalidSubmit={this.notifyFormError}
-  //              onValidSubmit={this.submitForm}>
-  //              <FormsyText
-  //                name="active_client_id"
-  //                className="Hidden"
-  //                value=""
-  //              />
-  //
-  //              <FormsyText
-  //                name="cep"
-  //                validations="isNumeric"
-  //                validationError={numericError}
-  //                hintText="Apenas números"
-  //                floatingLabelText="CEP"
-  //                updateImmediately
-  //              />
-  //              <FormsyText
-  //                name="details"
-  //                validations="isWords" 
-  //                validationError={wordsError}
-  //                hintText="Detalhes do endereço"
-  //                floatingLabelText="Detalhes"
-  //              />
-  //              <FormsyText
-  //                name="number"
-  //                validations="isNumeric"
-  //                validationError={numericError}
-  //                hintText="Número do lote"
-  //                floatingLabelText="Número"
-  //                updateImmediately
-  //              />
-  //              <FormsyText
-  //                name="complement"
-  //                validations="isWords" 
-  //                validationError={wordsError}
-  //                hintText="Complemento do endereço"
-  //                floatingLabelText="Complemento"
-  //              />
-  //              <FormsyText
-  //                name="neighborhood"
-  //                validations="isWords" 
-  //                validationError={wordsError}
-  //                hintText="Bairro do endereço"
-  //                floatingLabelText="Bairro"
-  //              />
-  //              <FormsyText
-  //                name="type_of_address"
-  //                validations="isWords" 
-  //                validationError={wordsError}
-  //                hintText="Casa, apartamento, etc."
-  //                floatingLabelText="Tipo de Endereço"
-  //              />
-  //            </Formsy.Form>
-  //
-  //            <Formsy.Form
-  //              name="state"
-  //              onValid={this.enableButton}
-  //              onInvalidSubmit={this.notifyFormError}
-  //              onValidSubmit={this.submitForm}>
-  //              <FormsyText
-  //                name="active_client_id"
-  //                className="Hidden"
-  //                value=""
-  //              />
-  //
-  //              <FormsyText
-  //                name="name"
-  //                validations="isWords"
-  //                validationError={wordsError}
-  //                hintText="Estado do endereço"
-  //                floatingLabelText="Estado"
-  //              />
-  //              <FormsyText
-  //                name="abbreviation"
-  //                validations="isWords"
-  //                validationError={wordsError}
-  //                hintText="DF, RS, MG ..."
-  //                floatingLabelText="Sigla do estado"
-  //              />
-  //            </Formsy.Form>
-  //
-  //            <Formsy.Form
-  //              name="country"
-  //              onValid={this.enableButton}
-  //              onInvalidSubmit={this.notifyFormError}
-  //              onValidSubmit={this.submitForm}>
-  //              <FormsyText
-  //                name="active_client_id"
-  //                className="Hidden"
-  //                value=""
-  //              />
-  //
-  //              <FormsyText
-  //                name="name"
-  //                validations="isWords"
-  //                validationError={wordsError}
-  //                hintText="Nome do país"
-  //                floatingLabelText="País"
-  //              />
-  //              <FormsyText
-  //                name="abbreviation"
-  //                validations="isWords"
-  //                validationError={wordsError}
-  //                hintText="BR, US ..."
-  //                floatingLabelText="Sigla do país"
-  //              />
-  //            </Formsy.Form>
-  //          </div>
-  //
-  //          <div>
-  //            <h2>Conta Bancária</h2>
-  //            <Formsy.Form
-  //              name="bank_account"
-  //              ref={(form) => {this.forms.bank = form;}}
-  //              onValid={this.enableButton}
-  //              onInvalidSubmit={this.notifyFormError}
-  //              onValidSubmit={this.submitForm}>
-  //              <FormsyText
-  //                name="active_client_id"
-  //                className="Hidden"
-  //                value=""
-  //              />
-  //
-  //              <FormsyText
-  //                name="agency"
-  //                validations="isNumeric"
-  //                validationError={numericError}
-  //                hintText="Agência da conta bancária"
-  //                floatingLabelText="Agência"
-  //              />
-  //              <FormsyText
-  //                name="account"
-  //                validations="isNumeric"
-  //                validationError={numericError}
-  //                hintText="Número da conta bancária"
-  //                floatingLabelText="Conta"
-  //              />
-  //            </Formsy.Form>
-  //          </div>
-  //
-  //          <div>
-  //            <h2>Dependente</h2>
-  //            <Formsy.Form
-  //              name="dependent"
-  //              ref={(form) => {this.forms.dependent = form;}}
-  //              onValid={this.enableButton}
-  //              onInvalidSubmit={this.notifyFormError}
-  //              onValidSubmit={this.submitForm}>
-  //              <FormsyText
-  //                name="active_client_id"
-  //                className="Hidden"
-  //                value=""
-  //              />
-  //
-  //              <FormsyText
-  //                name="name"
-  //                validations="isWords"
-  //                validationError={wordsError}
-  //                hintText="Nome do dependente"
-  //                floatingLabelText="Nome"
-  //              />
-  //              <FormsyText
-  //                name="surname"
-  //                validations="isWords"
-  //                validationError={wordsError}
-  //                hintText="Sobrenome do dependente"
-  //                floatingLabelText="Sobrenome"
-  //              />
-  //              <FormsyDate
-  //                name="birthday"
-  //                floatingLabelText="Data de Nascimento"
-  //              />
-  //            </Formsy.Form>
-  //          </div>);
