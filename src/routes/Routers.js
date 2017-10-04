@@ -9,6 +9,7 @@ import ClientTable from '../client/ClientTable';
 import Employeer from '../employee/Employeer';
 import PatrimonyForm from '../patrimony/PatrimonyForm';
 import ClientRegister from '../client/ClientRegister';
+import FixedCostRegister from '../client/FixedCostRegister';
 import {Auth} from '../auth/Auth';
 
 export default class Routers extends Component{
@@ -17,13 +18,14 @@ export default class Routers extends Component{
     return (
       <Switch>
         <Route exact path="/" render={ () => <h1>Home</h1> } />
-        <AuthorizedRoute permission="see_all_basic_client_data" exact path="/client" component={ ClientTable } />
-        <AuthorizedRoute permission="see_employee_data" path="/employee" component={ Employeer } />
-        <Route exact path="/login" component={ LoginPage } />
-        <AuthorizedRoute permission="change_own_client_data" exact path="/register/client" component={ ClientRegister } />
-        <Route path="/logout" component={ LogoutButton } />
-        <AuthorizedRoute permission="allow_any" path="/login/changepassword" render={ () => <PasswordForm userid={Auth.getUserId()} username={Auth.getUserName()} /> } />
+        <AuthorizedRoute path="/login/changepassword" permission="allow_any"  render={ () => <PasswordForm userid={Auth.getUserId()} username={Auth.getUserName()} /> } />
+        <AuthorizedRoute path="/register/client" permission="change_own_client_data" exact component={ ClientRegister } />
+        <AuthorizedRoute path="/register/fixed_cost" permission="change_own_client_data" exact component={ FixedCostRegister } />
+        <AuthorizedRoute path="/client" permission="see_all_basic_client_data" exact component={ ClientTable } />
+        <AuthorizedRoute path="/employee" permission="see_employee_data" component={ Employeer } />
+        <Route path="/login" exact component={ LoginPage } />
         <Route path="/login/resetpassword" render={ () => <ResetForm email="marcelohpf@hotmail.com" /> } />
+        <Route path="/logout" component={ LogoutButton } />
         <Route path="/patrimony" component={ PatrimonyForm } />
         <Route component={ NotFoundRoute } />
       </Switch>
