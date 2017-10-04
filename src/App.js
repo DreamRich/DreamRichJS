@@ -51,6 +51,7 @@ class App extends Component {
           <AuthorizedLink permission="allow_any" to="/login/changepassword">change </AuthorizedLink>
             <AuthorizedLink permission="see_all_basic_client_data" to="/client">client </AuthorizedLink>
             <AuthorizedLink permission="see_employee_data" to="/employee">employee </AuthorizedLink>
+            <AuthorizedLink permission="allow_any" to="/goals">goal </AuthorizedLink>
         </div>
         <div className="conteiner">
           <Routers />
