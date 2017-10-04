@@ -71,3 +71,6 @@ typings/
 
 # Editor configurations
 .tern-project
+
+# Node packages control
+package-lock.json
