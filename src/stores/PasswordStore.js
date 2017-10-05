@@ -3,12 +3,20 @@
 import {ReduceStore} from 'flux/utils';
 import AppDispatcher from '../AppDispatcher';
 import {postData} from '../resources/Requests';
+import {getRealData} from '../resources/Requests';
 import ActionType from '../actions/ActionType';
 
 class PasswordStore extends ReduceStore {
   constructor(){ super(AppDispatcher); }
 
-  getInitialState(){ return {send: false, snack: false, message: ''}; }
+  getInitialState(){
+    return {
+      send: false,
+      snack: false,
+      message: '',
+      emailExist: true,
+    };
+  }
 
   reduce = (state, action) => {
     switch (action.actionType) {
@@ -27,14 +35,26 @@ class PasswordStore extends ReduceStore {
       return {...state, send: true};
 
     case ActionType.PASSWORD.RESET:
-      return {userExist: false};
+      console.log(state, action);
+      getRealData('/api/auth/password/',
+        action.data,
+        (data) => {
+          AppDispatcher.dispatch({actionType: ActionType.PASSWORD.SUCCESS,
+            data: data});
+        },
+        () => {
+          AppDispatcher.dispatch({actionType: ActionType.PASSWORD.FAIL});
+        }
+      );
+      return {...state, send: true};
 
     case ActionType.PASSWORD.FAIL:
       return {
+        ...state,
         send: false,
         snack: true,
-        message: 'Falha ao alterar a senha.'
-      };
+        message: 'Falha ao alterar a senha',
+        emailExist: false};
 
     case ActionType.PASSWORD.SUCCESS:
       return {
