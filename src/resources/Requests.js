@@ -40,6 +40,22 @@ const getData = (url, component, field, fieldB) => {
   });
 };
 
+const getRealData = (url, data, handleData=noneFunction, handleFail=noneFunction) => {
+  for(let [key, value] of Object.entries(data)){
+    url = url + '?' + key + '=' + value;
+  }
+  console.log(url);
+  request(url,
+    {
+      method: methods.GET,
+    },
+    handleData,
+    noneFunction,
+    (response) => {
+      handleFail(response);
+    });
+};
+
 const postData = (url, data, handleData=noneFunction, handleFail=noneFunction) => {
   request(url,
     {
@@ -71,4 +87,4 @@ const deleteData = (url, handleOk) => {
   );
 };
 
-export {getData, postData, putData, deleteData};
+export {getData, postData, putData, deleteData, getRealData};
