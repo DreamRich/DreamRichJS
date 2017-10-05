@@ -7,8 +7,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import errorMessages from '../utils/FormsErrorMessages';
 import IconButton from 'material-ui/IconButton';
 import FileFileUpload from 'material-ui/svg-icons/file/file-upload';
-import routeMap from '../routes/RouteMap.js';
-import {Auth} from '../auth/Auth';
+import {getUrl} from '../routes/RouteMap.js';
+import {getHeader} from '../resources/Headers.js';
 import '../stylesheet/RegisterForms.sass';
 import MenuItem from 'material-ui/MenuItem';
 
@@ -17,7 +17,6 @@ var {
   numericError,
   emailError
 } = errorMessages;
-
 
 class ClientRegister extends Component {
 
@@ -34,7 +33,12 @@ class ClientRegister extends Component {
   state = {
     canSubmit: false,
 
+    countryListMenuItens: [],
     stateName: null, 
+  }
+
+  componentWillMount(){
+    this.fillCountryList(); 
   }
 
   enableButton = () => {
@@ -56,9 +60,9 @@ class ClientRegister extends Component {
   submitForms = () => {
 
     function submitForm(data){
-      fetch(routeMap[this.name], {
-        method: 'POST',
-        headers: Auth.getHeader(),
+      fetch(getUrl(this.name), {
+        method: 'post',
+        headers: getHeader(),
         body: JSON.stringify(data),
       })
         .then((response) => {
@@ -76,9 +80,9 @@ class ClientRegister extends Component {
     var that = this;
 
     function submitBaseForm(data){
-      fetch(routeMap[this.name], {
-        method: 'POST',
-        headers: Auth.getHeader(),
+      fetch(getUrl(this.name), {
+        method: 'post',
+        headers: getHeader(),
         body: JSON.stringify(data),
       })
         .then(((response) => {
@@ -116,8 +120,53 @@ class ClientRegister extends Component {
     return submitter;
   }
 
+  fillCountryList = () => {
+    var that = this;
+
+    function convertToMenuItens(countryList){
+      var countryListMenuItens = countryList.map((country, index) => {
+        let countryDisplay = `${country.name} - ${country.abbreviation}`;
+
+        return (
+          <MenuItem key={index} value={country.countryId} primaryText={countryDisplay} />
+        );
+      });
+
+      that.setState({countryListMenuItens: countryListMenuItens});
+    }
+
+    function fetchCountrys(){
+      var countryListArray = {};
+
+      fetch(getUrl('country', 'json'), {
+        method: 'get',
+        headers: getHeader(),
+        mode: 'cors',
+        cache: 'default'
+      })
+        .then((response) => {
+          if(response.ok) {
+            console.log('Country list was gotten from API');
+            countryListArray = response.json();
+          } else {
+            throw new Error ('Couldn\'t get country list from API');
+          }
+
+          return countryListArray;
+        })
+        .then((countryListArray) => {
+          convertToMenuItens(countryListArray);
+        })
+        .catch((error) => {
+          console.error(error.message);
+        });
+    }
+
+    fetchCountrys();
+  }
+
   handleCountryState = () => {
-    this.setState({stateName: 'lele'});
+    this.setState({stateName: 'a state'});
   }
 
   getClientsFields = () => {
@@ -254,12 +303,12 @@ class ClientRegister extends Component {
                 className="Hidden"
                 value=""
               />
-
               <FormsySelect
                 name="country"
                 floatingLabelText="País"
                 onChange={this.handleCountryState}
               >
+                {this.state.countryListMenuItens}
               </FormsySelect>
             </Formsy.Form>
 
@@ -274,7 +323,6 @@ class ClientRegister extends Component {
                 className="Hidden"
                 value=''
               />
-
               <FormsyText
                 name="name"
                 validations="isWords"

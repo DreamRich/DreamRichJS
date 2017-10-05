@@ -12,9 +12,11 @@ const valid_formats = ['json', 'html', 'xml'];
 
 // Param format refers to the data format from request. Ex: .json
 function getUrlFormatted(route, format){
+  var url;
+
   if(valid_formats.includes(format)){
     let formated_value = `${urls[route].slice(0, -1)}.${format}/`;
-    urls[route] = formated_value;
+    url = formated_value;
   } else {
     let invalid_format = new Error();
 
@@ -24,7 +26,7 @@ function getUrlFormatted(route, format){
     throw invalid_format;
   }
 
-  return urls[route];
+  return url;
 }
 
 function checkRoute(route){
