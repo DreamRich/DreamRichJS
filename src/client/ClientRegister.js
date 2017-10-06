@@ -33,12 +33,14 @@ class ClientRegister extends Component {
   state = {
     canSubmit: false,
 
-    countryListMenuItens: [],
-    stateName: null, 
+    countryListMenuItems: [],
+    stateListMenuItems: [],
+    selectedCountry: null,
+    selectedState: null,  // State region
   }
 
   componentWillMount(){
-    this.fillCountryList(); 
+    this.fetchCountrys(); 
   }
 
   enableButton = () => {
@@ -120,53 +122,78 @@ class ClientRegister extends Component {
     return submitter;
   }
 
-  fillCountryList = () => {
-    var that = this;
+  // Convert ordinary Array to MenuItem Array to use in drop down list
+  convertRegionToMenuItens = (list) => {
+    var listMenuItems = list.map((region, index) => {
+      let primaryText = `${region.name} - ${region.abbreviation}`;
 
-    function convertToMenuItens(countryList){
-      var countryListMenuItens = countryList.map((country, index) => {
-        let countryDisplay = `${country.name} - ${country.abbreviation}`;
+      return (
+        <MenuItem key={index} value={region.id} primaryText={primaryText} />
+      );
+    });
 
-        return (
-          <MenuItem key={index} value={country.countryId} primaryText={countryDisplay} />
-        );
-      });
-
-      that.setState({countryListMenuItens: countryListMenuItens});
-    }
-
-    function fetchCountrys(){
-      var countryListArray = {};
-
-      fetch(getUrl('country', 'json'), {
-        method: 'get',
-        headers: getHeader(),
-        mode: 'cors',
-        cache: 'default'
-      })
-        .then((response) => {
-          if(response.ok) {
-            console.log('Country list was gotten from API');
-            countryListArray = response.json();
-          } else {
-            throw new Error ('Couldn\'t get country list from API');
-          }
-
-          return countryListArray;
-        })
-        .then((countryListArray) => {
-          convertToMenuItens(countryListArray);
-        })
-        .catch((error) => {
-          console.error(error.message);
-        });
-    }
-
-    fetchCountrys();
+    return listMenuItems;
   }
 
-  handleCountryState = () => {
-    this.setState({stateName: 'a state'});
+  fetchStates = (selectedCountry) => {
+    var stateListArray = {};
+    var url = `${getUrl('state')}${'?country_id'}=${selectedCountry}`;
+
+    fetch(url, {
+      method: 'get',
+      headers: getHeader(),
+      mode: 'cors',
+      cache: 'default'
+    })
+      .then((response) => {
+        if(response.ok) {
+          console.log('State list was gotten from API');
+          stateListArray = response.json();
+        } else {
+          throw new Error ('Couldn\'t get state list from API');
+        }
+
+        return stateListArray;
+      })
+      .then((stateListArray) => {
+        let stateListMenuItems = this.convertRegionToMenuItens(stateListArray);
+        this.setState({stateListMenuItems});
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+  }
+
+  fetchCountrys = () => {
+    var countryListArray = {};
+
+    fetch(getUrl('country'), {
+      method: 'get',
+      headers: getHeader(),
+      mode: 'cors',
+      cache: 'default'
+    })
+      .then((response) => {
+        if(response.ok) {
+          console.log('Country list was gotten from API');
+          countryListArray = response.json();
+        } else {
+          throw new Error ('Couldn\'t get country list from API');
+        }
+
+        return countryListArray;
+      })
+      .then((countryListArray) => {
+        let countryListMenuItems = this.convertRegionToMenuItens(countryListArray);
+        this.setState({countryListMenuItems});
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+  }
+
+  handleCountryChange = (event, selectedCountry) => {
+    this.fetchStates(selectedCountry);
   }
 
   getClientsFields = () => {
@@ -306,9 +333,9 @@ class ClientRegister extends Component {
               <FormsySelect
                 name="country"
                 floatingLabelText="País"
-                onChange={this.handleCountryState}
+                onChange={this.handleCountryChange}
               >
-                {this.state.countryListMenuItens}
+                {this.state.countryListMenuItems}
               </FormsySelect>
             </Formsy.Form>
 
@@ -323,21 +350,13 @@ class ClientRegister extends Component {
                 className="Hidden"
                 value=''
               />
-              <FormsyText
-                name="name"
-                validations="isWords"
-                validationError={wordsError}
-                hintText="Estado do endereço"
+              <FormsySelect
+                name="state"
                 floatingLabelText="Estado"
-                value={this.state.stateName}
-              />
-              <FormsyText
-                name="abbreviation"
-                validations="isWords"
-                validationError={wordsError}
-                hintText="DF, RS, MG ..."
-                floatingLabelText="Sigla do estado"
-              />
+                maxHeight={300}
+              >
+                {this.state.stateListMenuItems}
+              </FormsySelect>
             </Formsy.Form>
 
             <Formsy.Form
@@ -397,7 +416,6 @@ class ClientRegister extends Component {
                 floatingLabelText="Tipo de Endereço"
               />
             </Formsy.Form>
-
           </div>
 
           <div>

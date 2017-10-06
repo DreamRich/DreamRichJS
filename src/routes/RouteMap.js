@@ -11,12 +11,12 @@ const urls = {
 const valid_formats = ['json', 'html', 'xml'];
 
 // Param format refers to the data format from request. Ex: .json
-function getUrlFormatted(route, format){
+function getUrlWithFormat(route, format){
   var url;
 
   if(valid_formats.includes(format)){
-    let formated_value = `${urls[route].slice(0, -1)}.${format}/`;
-    url = formated_value;
+    let formatted_url = `${urls[route].slice(0, -1)}.${format}/`;
+    url = formatted_url;
   } else {
     let invalid_format = new Error();
 
@@ -43,7 +43,7 @@ function checkRoute(route){
 }
 
 // Param format refers to the data format from request. Ex: .json
-const getUrl = (route, format='') => {
+function getUrl(route, format=''){
   try {
     checkRoute(route);
   } catch(err){
@@ -54,7 +54,7 @@ const getUrl = (route, format='') => {
 
   if(format.length > 0){
     try {
-      url = getUrlFormatted(route, format);
+      url = getUrlWithFormat(route, format);
     } catch(err){
       console.error(`Couldn't get url for '${route}' route. ${err.message}`); 
     }
@@ -63,6 +63,6 @@ const getUrl = (route, format='') => {
   }
 
   return url;
-};
+}
 
 export { getUrl };
