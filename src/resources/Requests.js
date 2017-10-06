@@ -40,19 +40,20 @@ const getData = (url, component, field, fieldB) => {
   });
 };
 
-const getRealData = (url, data, handleData=noneFunction, handleFail=noneFunction) => {
+const getRealData = (url, data, handleOk=noneFunction, handleFail=noneFunction) => {
   for(let [key, value] of Object.entries(data)){
     url = url + '?' + key + '=' + value;
   }
-  console.log(url);
   request(url,
     {
       method: methods.GET,
     },
-    handleData,
     noneFunction,
     (response) => {
-      handleFail(response);
+      handleOk(response.status);
+    },
+    (response) => {
+      handleFail(response.status);
     });
 };
 

@@ -18,6 +18,19 @@ class PasswordStore extends ReduceStore {
     };
   }
 
+  buildResetFormMessage = (responseStatus, state) => {
+    var message = '';
+
+    if(responseStatus === 200){
+      message = 'Email enviado com sucesso';
+      state = {...state, message: message};
+    } else if(responseStatus === 404){
+      message = 'Email não cadastrado';
+      state = {...state, message: message};
+    }
+    return state;
+  }
+
   reduce = (state, action) => {
     switch (action.actionType) {
     case ActionType.PASSWORD.CHANGE:
@@ -38,29 +51,32 @@ class PasswordStore extends ReduceStore {
       console.log(state, action);
       getRealData('/api/auth/password/',
         action.data,
-        (data) => {
+        (responseStatus) => {
+          state = this.buildResetFormMessage(responseStatus, state);
           AppDispatcher.dispatch({actionType: ActionType.PASSWORD.SUCCESS,
-            data: data});
+            data: state});
         },
-        () => {
-          AppDispatcher.dispatch({actionType: ActionType.PASSWORD.FAIL});
+        (responseStatus) => {
+          state = this.buildResetFormMessage(responseStatus, state);
+          AppDispatcher.dispatch({actionType: ActionType.PASSWORD.FAIL,
+            data: state});
         }
       );
-      return {...state, send: true};
+      return {...state, send: true, emailExist: true};
 
     case ActionType.PASSWORD.FAIL:
       return {
         ...state,
         send: false,
         snack: true,
-        message: 'Falha ao alterar a senha',
+        message: action.data.message,
         emailExist: false};
 
     case ActionType.PASSWORD.SUCCESS:
       return {
         send: false,
         snack: true,
-        message: 'Senha alterada com sucesso!'
+        message: action.data.message
       };
 
     case ActionType.PASSWORD.SNACKCLOSE:

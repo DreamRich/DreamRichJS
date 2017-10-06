@@ -9,6 +9,7 @@ import Formsy from 'formsy-react';
 import PasswordStore from '../stores/PasswordStore';
 import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
+import Snackbar from 'material-ui/Snackbar';
 
 import {FormsyText} from 'formsy-material-ui/lib';
 
@@ -36,6 +37,7 @@ export default class ResetForm extends Component{
 
   handleUpdate = () => {
     this.setState(PasswordStore.getState());
+    this.form.validateForm();
   }
 
   handleSubmit = (data) => {
@@ -84,6 +86,12 @@ export default class ResetForm extends Component{
         <br />
           {this.getForm()}
         <br />
+        <Snackbar
+          open={this.state.snack}
+          message={this.state.message}
+          autoHideDuration={9000}
+          onRequestClose={() => AppDispatcher.dispatch({actionType: ActionType.PASSWORD.SNACKCLOSE})}
+        />
         </section>
       </div>
     );
