@@ -192,10 +192,6 @@ class ClientRegister extends Component {
       });
   }
 
-  handleCountryChange = (event, selectedCountry) => {
-    this.fetchStates(selectedCountry);
-  }
-
   getClientsFields = () => {
     return (
       <div>
@@ -321,19 +317,13 @@ class ClientRegister extends Component {
             <h2>Endereço</h2>
             <Formsy.Form
               name="country"
-              ref={(form) => {this.forms.country = form;}}
               onValid={this.enableButton}
-              onInvalidSubmit={this.notifyFormError}
-              onValidSubmit={this.submitForm}>
-              <FormsyText
-                name="active_client_id"
-                className="Hidden"
-                value=""
-              />
+              onInvalidSubmit={this.notifyFormError}>
               <FormsySelect
                 name="country"
                 floatingLabelText="País"
-                onChange={this.handleCountryChange}
+                maxHeight={300}
+                onChange={(event, selectedCountry) => this.fetchStates(selectedCountry)}
               >
                 {this.state.countryListMenuItems}
               </FormsySelect>
@@ -341,19 +331,13 @@ class ClientRegister extends Component {
 
             <Formsy.Form
               name="state"
-              ref={(form) => {this.forms.state = form;}}
               onValid={this.enableButton}
-              onInvalidSubmit={this.notifyFormError}
-              onValidSubmit={this.submitForm}>
-              <FormsyText
-                name="active_client_id"
-                className="Hidden"
-                value=''
-              />
+              onInvalidSubmit={this.notifyFormError}>
               <FormsySelect
                 name="state"
                 floatingLabelText="Estado"
                 maxHeight={300}
+                onChange={(event, selectedState) => this.setState({selectedState})}
               >
                 {this.state.stateListMenuItems}
               </FormsySelect>
@@ -372,6 +356,12 @@ class ClientRegister extends Component {
               />
 
               <FormsyText
+                name="state_id"
+                className="Hidden"
+                value={this.state.selectedState}
+              />
+
+              <FormsyText
                 name="cep"
                 validations="isNumeric"
                 validationError={numericError}
@@ -380,7 +370,15 @@ class ClientRegister extends Component {
                 updateImmediately
               />
               <FormsyText
-                name="details"
+                name="city"
+                validations="isWords"
+                validationError={wordsError}
+                hintText="Cidade do endereço"
+                floatingLabelText="Cidade"
+                updateImmediately
+              />
+              <FormsyText
+                name="detail"
                 validations="isWords" 
                 validationError={wordsError}
                 hintText="Detalhes do endereço"
