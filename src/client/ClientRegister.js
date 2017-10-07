@@ -2,11 +2,12 @@ import React, {Component} from 'react';
 import {getUrl} from '../routes/RouteMap.js';
 import {getHeader} from '../resources/Headers.js';
 import '../stylesheet/RegisterForms.sass';
+
 import MenuItem from 'material-ui/MenuItem';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
-import {FormsyText} from 'formsy-material-ui/lib';
-import {FormsyDate} from '../utils/FormsyComponents';
+import {FormsyText, FormsySelect} from 'formsy-material-ui/lib';
+import {FormsyDate} from '../utils/formsyComponents/FormsyComponents';
 import errorMessages from '../utils/FormsErrorMessages';
 import ClientStore from '../stores/ClientStore';
 import '../stylesheet/RegisterForms.sass';
@@ -36,10 +37,6 @@ class ClientRegister extends Component {
     selectedState: null,  // State region
   }
 
-  componentWillMount(){
-    this.fetchCountrys(); 
-  }
-
   enableButton = () => {
     this.setState({
       canSubmit: true,
@@ -48,6 +45,7 @@ class ClientRegister extends Component {
 
   componentWillMount = () => {
     this.setState({listener: ClientStore.addListener(this.handleChange)});
+    this.fetchCountrys();
   }
 
   componentWillUnmount = () => {
@@ -59,7 +57,7 @@ class ClientRegister extends Component {
      * react dipatcher and throw error of Invariant Violation Dispatch.dispatch
      */
     setTimeout(() =>
-    this.setState(ClientStore.getState()), 500);
+      this.setState(ClientStore.getState()), 500);
   }
 
   // Convert ordinary Array to MenuItem Array to use in drop down list
@@ -205,28 +203,27 @@ class ClientRegister extends Component {
   }
 
   render() {
-
     const sponseForm = (
       this.state.sponse ? (
-      <ClientSubForm
-        title="Cônjuge"
-        name="client"
-        parent_name="active_client_id"
-        parent_id={this.state.id}
-      >
-        <div>
-          {this.getClientsFields()}
-          <RaisedButton onClick={this.switchSponse} > 
-            Remove Sponse 
-          </RaisedButton>
-        </div>
-      </ClientSubForm>) : (<div>
+        <ClientSubForm
+          title="Cônjuge"
+          name="client"
+          parent_name="active_client_id"
+          parent_id={this.state.id}
+        >
+          <div>
+            {this.getClientsFields()}
+            <RaisedButton onClick={this.switchSponse} > 
+              Remove Sponse 
+            </RaisedButton>
+          </div>
+        </ClientSubForm>) : (<div>
         <h2> Cônjuge </h2> 
         <RaisedButton onClick={this.switchSponse}>
           Add 
         </RaisedButton>
-        </div>)
-      );
+      </div>)
+    );
 
     return (
       <div>
@@ -239,7 +236,7 @@ class ClientRegister extends Component {
               title="Cliente"
               ref={(ref) => {this.baseForm = ref;}}
             >
-            {this.getClientsFields()}
+              {this.getClientsFields()}
             </ClientForm>
           </div>
           {sponseForm}
@@ -335,18 +332,18 @@ class ClientRegister extends Component {
             parent_id={this.state.id}
           >
             <div>
-             <FormsyText
-               name="agency"
-               validations="isNumeric"
-               validationError={numericError}
-               hintText="Agência da conta bancária"
-               floatingLabelText="Agência"
-             />
-             <FormsyText
-               name="account"
-               hintText="Número da conta bancária"
-               floatingLabelText="Conta"
-             />
+              <FormsyText
+                name="agency"
+                validations="isNumeric"
+                validationError={numericError}
+                hintText="Agência da conta bancária"
+                floatingLabelText="Agência"
+              />
+              <FormsyText
+                name="account"
+                hintText="Número da conta bancária"
+                floatingLabelText="Conta"
+              />
             </div>
           </ClientSubForm>
 

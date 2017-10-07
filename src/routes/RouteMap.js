@@ -1,4 +1,4 @@
-const urls = {
+const routeMap = {
   client: '/api/client/',
   address: '/api/client/address/',
   state: '/api/client/state/',
@@ -19,7 +19,7 @@ function getUrlWithFormat(route, format){
   var url;
 
   if(valid_formats.includes(format)){
-    let formatted_url = `${urls[route].slice(0, -1)}.${format}/`;
+    let formatted_url = `${routeMap[route].slice(0, -1)}.${format}/`;
     url = formatted_url;
   } else {
     let invalid_format = new Error();
@@ -34,7 +34,7 @@ function getUrlWithFormat(route, format){
 }
 
 function checkRoute(route){
-  if(route in urls){
+  if(route in routeMap){
     // OK
   } else {
     let invalid_route = new Error();
@@ -63,7 +63,7 @@ function getUrl(route, format=''){
       console.error(`Couldn't get url for '${route}' route. ${err.message}`); 
     }
   } else {
-    url = urls[route];
+    url = routeMap[route];
   }
 
   return url;

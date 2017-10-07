@@ -23,7 +23,7 @@ class PasswordStore extends ReduceStore {
         () => {
           AppDispatcher.dispatch({actionType: ActionType.PASSWORD.FAIL});
         }
-        );
+      );
       return {...state, send: true};
 
     case ActionType.PASSWORD.RESET:
