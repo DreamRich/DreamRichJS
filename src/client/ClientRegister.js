@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import Formsy from 'formsy-react';
+import {FormsyText, FormsySelect} from 'formsy-material-ui/lib';
+import {FormsyDate} from '../utils/FormsyComponents/FormsyComponents.js';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
-import {FormsyText} from 'formsy-material-ui/lib';
-import {FormsyDate} from '../utils/FormsyComponents.js';
 import errorMessages from '../utils/FormsErrorMessages';
 import IconButton from 'material-ui/IconButton';
 import FileFileUpload from 'material-ui/svg-icons/file/file-upload';
-import routeMap from '../routes/RouteMap.js';
-import {Auth} from '../auth/Auth';
+import {getUrl} from '../routes/RouteMap.js';
+import {getHeader} from '../resources/Headers.js';
 import '../stylesheet/RegisterForms.sass';
+import MenuItem from 'material-ui/MenuItem';
 
 var {
   wordsError,
@@ -21,9 +22,9 @@ class ClientRegister extends Component {
 
   constructor(props){
     super(props);
-    this.forms = {};
 
     let formsFunctions = this.submitForms();
+    this.forms = {};
     this.submitForm = formsFunctions.submitForm;
     this.submitBaseForm = formsFunctions.submitBaseForm;
     this.callBaseSubmit = formsFunctions.callBaseSubmit;
@@ -31,6 +32,15 @@ class ClientRegister extends Component {
 
   state = {
     canSubmit: false,
+
+    countryListMenuItems: [],
+    stateListMenuItems: [],
+    selectedCountry: null,
+    selectedState: null,  // State region
+  }
+
+  componentWillMount(){
+    this.fetchCountrys(); 
   }
 
   enableButton = () => {
@@ -52,51 +62,51 @@ class ClientRegister extends Component {
   submitForms = () => {
 
     function submitForm(data){
-      fetch(routeMap[this.name], {
+      fetch(getUrl(this.name), {
         method: 'post',
-        headers: Auth.getHeader(),
+        headers: getHeader(),
         body: JSON.stringify(data),
       })
-      .then((response) => {
-        if(response.ok) {
-          console.log(this.name + ' was submitted');
-        } else {
-          throw new Error (this.name + ' could not be submitted');
-        }
-      })
-      .catch((error) => {
-        console.error(error.message);
-      });
+        .then((response) => {
+          if(response.ok) {
+            console.log(this.name + ' was submitted');
+          } else {
+            throw new Error (this.name + ' could not be submitted');
+          }
+        })
+        .catch((error) => {
+          console.error(error.message);
+        });
     }
 
     var that = this;
 
     function submitBaseForm(data){
-      fetch(routeMap[this.name], {
+      fetch(getUrl(this.name), {
         method: 'post',
-        headers: Auth.getHeader(),
+        headers: getHeader(),
         body: JSON.stringify(data),
       })
-      .then(((response) => {
-        var data = {};
+        .then(((response) => {
+          var data = {};
 
-        if(response.ok) {
-          console.log(this.name + ' was submitted');
-          data = response.json();
-        } else {
-          throw new Error (this.name + ' could not be submitted');
-        }
-        return data;
-      }))
-      .then((data) => {
-        for (var form in that.forms) {
-          that.forms[form].inputs[0].setValue(data.id);
-          that.forms[form].submit();
-        }
-      })
-      .catch((error) => {
-        console.error(error.message);
-      });
+          if(response.ok) {
+            console.log(this.name + ' was submitted');
+            data = response.json();
+          } else {
+            throw new Error (this.name + ' could not be submitted');
+          }
+          return data;
+        }))
+        .then((data) => {
+          for (var form in that.forms) {
+            that.forms[form].inputs[0].setValue(data.id);
+            that.forms[form].submit();
+          }
+        })
+        .catch((error) => {
+          console.error(error.message);
+        });
     }
 
     function callBaseSubmit(){
@@ -110,6 +120,76 @@ class ClientRegister extends Component {
     };
 
     return submitter;
+  }
+
+  // Convert ordinary Array to MenuItem Array to use in drop down list
+  convertRegionToMenuItens = (list) => {
+    var listMenuItems = list.map((region, index) => {
+      let primaryText = `${region.name} - ${region.abbreviation}`;
+
+      return (
+        <MenuItem key={index} value={region.id} primaryText={primaryText} />
+      );
+    });
+
+    return listMenuItems;
+  }
+
+  fetchStates = (selectedCountry) => {
+    var stateListArray = {};
+    var url = `${getUrl('state')}${'?country_id'}=${selectedCountry}`;
+
+    fetch(url, {
+      method: 'get',
+      headers: getHeader(),
+      mode: 'cors',
+      cache: 'default'
+    })
+      .then((response) => {
+        if(response.ok) {
+          console.log('State list was gotten from API');
+          stateListArray = response.json();
+        } else {
+          throw new Error ('Couldn\'t get state list from API');
+        }
+
+        return stateListArray;
+      })
+      .then((stateListArray) => {
+        let stateListMenuItems = this.convertRegionToMenuItens(stateListArray);
+        this.setState({stateListMenuItems});
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+  }
+
+  fetchCountrys = () => {
+    var countryListArray = {};
+
+    fetch(getUrl('country'), {
+      method: 'get',
+      headers: getHeader(),
+      mode: 'cors',
+      cache: 'default'
+    })
+      .then((response) => {
+        if(response.ok) {
+          console.log('Country list was gotten from API');
+          countryListArray = response.json();
+        } else {
+          throw new Error ('Couldn\'t get country list from API');
+        }
+
+        return countryListArray;
+      })
+      .then((countryListArray) => {
+        let countryListMenuItems = this.convertRegionToMenuItens(countryListArray);
+        this.setState({countryListMenuItems});
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
   }
 
   getClientsFields = () => {
@@ -182,7 +262,6 @@ class ClientRegister extends Component {
   }
 
   render() {
-
     return (
       <div>
         <h1> Cadastro de Cliente </h1>
@@ -237,6 +316,34 @@ class ClientRegister extends Component {
           <div>
             <h2>Endereço</h2>
             <Formsy.Form
+              name="country"
+              onValid={this.enableButton}
+              onInvalidSubmit={this.notifyFormError}>
+              <FormsySelect
+                name="country"
+                floatingLabelText="País"
+                maxHeight={300}
+                onChange={(event, selectedCountry) => this.fetchStates(selectedCountry)}
+              >
+                {this.state.countryListMenuItems}
+              </FormsySelect>
+            </Formsy.Form>
+
+            <Formsy.Form
+              name="state"
+              onValid={this.enableButton}
+              onInvalidSubmit={this.notifyFormError}>
+              <FormsySelect
+                name="state"
+                floatingLabelText="Estado"
+                maxHeight={300}
+                onChange={(event, selectedState) => this.setState({selectedState})}
+              >
+                {this.state.stateListMenuItems}
+              </FormsySelect>
+            </Formsy.Form>
+
+            <Formsy.Form
               name="address"
               ref={(form) => {this.forms.address = form;}}
               onValid={this.enableButton}
@@ -249,6 +356,12 @@ class ClientRegister extends Component {
               />
 
               <FormsyText
+                name="state_id"
+                className="Hidden"
+                value={this.state.selectedState}
+              />
+
+              <FormsyText
                 name="cep"
                 validations="isNumeric"
                 validationError={numericError}
@@ -257,7 +370,15 @@ class ClientRegister extends Component {
                 updateImmediately
               />
               <FormsyText
-                name="details"
+                name="city"
+                validations="isWords"
+                validationError={wordsError}
+                hintText="Cidade do endereço"
+                floatingLabelText="Cidade"
+                updateImmediately
+              />
+              <FormsyText
+                name="detail"
                 validations="isWords" 
                 validationError={wordsError}
                 hintText="Detalhes do endereço"
@@ -291,60 +412,6 @@ class ClientRegister extends Component {
                 validationError={wordsError}
                 hintText="Casa, apartamento, etc."
                 floatingLabelText="Tipo de Endereço"
-              />
-            </Formsy.Form>
-
-            <Formsy.Form
-              name="state"
-              onValid={this.enableButton}
-              onInvalidSubmit={this.notifyFormError}
-              onValidSubmit={this.submitForm}>
-              <FormsyText
-                name="active_client_id"
-                className="Hidden"
-                value=""
-              />
-
-              <FormsyText
-                name="name"
-                validations="isWords"
-                validationError={wordsError}
-                hintText="Estado do endereço"
-                floatingLabelText="Estado"
-              />
-              <FormsyText
-                name="abbreviation"
-                validations="isWords"
-                validationError={wordsError}
-                hintText="DF, RS, MG ..."
-                floatingLabelText="Sigla do estado"
-              />
-            </Formsy.Form>
-
-            <Formsy.Form
-              name="country"
-              onValid={this.enableButton}
-              onInvalidSubmit={this.notifyFormError}
-              onValidSubmit={this.submitForm}>
-              <FormsyText
-                name="active_client_id"
-                className="Hidden"
-                value=""
-              />
-
-              <FormsyText
-                name="name"
-                validations="isWords"
-                validationError={wordsError}
-                hintText="Nome do país"
-                floatingLabelText="País"
-              />
-              <FormsyText
-                name="abbreviation"
-                validations="isWords"
-                validationError={wordsError}
-                hintText="BR, US ..."
-                floatingLabelText="Sigla do país"
               />
             </Formsy.Form>
           </div>

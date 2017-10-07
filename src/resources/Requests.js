@@ -5,29 +5,29 @@ const noneFunction = () => {}; //Design for none object
 
 const request = (url, meta, handleData=noneFunction, handleOk=noneFunction, handleFail=noneFunction) => {
   fetch(url, meta)
-  .then((response) => {
-    if(response.ok){
-      handleOk(response);
-      return response.json();
-    } else if( response.status === 401) {
-      handleFail(response);
-      return response.json();
-    } else {
-      handleFail(response);
-      throw new Error(`Request error status ${response.status}`);
-    }
-  })
-  .then((data) => {
-    if (data.detail === 'Signature has expired.' 
+    .then((response) => {
+      if(response.ok){
+        handleOk(response);
+        return response.json();
+      } else if( response.status === 401) {
+        handleFail(response);
+        return response.json();
+      } else {
+        handleFail(response);
+        throw new Error(`Request error status ${response.status}`);
+      }
+    })
+    .then((data) => {
+      if (data.detail === 'Signature has expired.' 
       || data.detail === 'Invalid signature.'){
-      alert('Sua sessão expirou!');
-      Auth.deauthenticate();
-      window.location.replace('/login');
-    } else {
-      handleData(data);
-    }
-  })
-  .catch((error) => {console.error(error);});
+        alert('Sua sessão expirou!');
+        Auth.deauthenticate();
+        window.location.replace('/login');
+      } else {
+        handleData(data);
+      }
+    })
+    .catch((error) => {console.error(error);});
 };
 
 const getData = (url, component, field, fieldB) => {
@@ -69,7 +69,7 @@ const deleteData = (url, handleOk) => {
     method: methods.DELETE,
     headers: getAuthenticatedHeader()
   }, noneFunction,
-    handleOk
+  handleOk
   );
 };
 

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Auth} from '../Auth';
 import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -33,22 +32,22 @@ export default class PasswordForm extends Component{
       <section>
         <form onSubmit={this.handleForm}>
           <TextField floatingLabel="Usuário" disabled value={this.props.username} />
-      <br />
+          <br />
           <TextField type="password"
             floatingLabelText="Senha"
             name="password"
             hintText="Digite sua senha antiga" />
-      <br />
+          <br />
           <TextField
             floatingLabelText="Nova senha"
             name="new_password"
             hintText="Digite sua nova senha" />
-      <br />
+          <br />
           <TextField
             floatingLabelText="Confirmação"
             name="new_password_confirmation"
             hintText="Confirme sua nova senha" />
-      <br />
+          <br />
           <RaisedButton primary label="ALTERAR" />
         </form>
       </section>
