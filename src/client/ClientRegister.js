@@ -6,7 +6,7 @@ import '../stylesheet/RegisterForms.sass';
 import MenuItem from 'material-ui/MenuItem';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
-import {FormsyText, FormsySelect} from 'formsy-material-ui/lib';
+import {FormsyText, FormsySelect, FormsyAutoComplete} from 'formsy-material-ui/lib';
 import {FormsyDate} from '../utils/formsyComponents/FormsyComponents';
 import errorMessages from '../utils/FormsErrorMessages';
 import ClientStore from '../stores/ClientStore';
@@ -33,6 +33,7 @@ class ClientRegister extends Component {
 
     countryListMenuItems: [],
     stateListMenuItems: [],
+    type_of_address: [''],
     selectedCountry: null,
     selectedState: null,  // State region
   }
@@ -46,6 +47,10 @@ class ClientRegister extends Component {
   componentWillMount = () => {
     this.setState({listener: ClientStore.addListener(this.handleChange)});
     this.fetchCountrys();
+    fetch('/api/client/address/type_of_address/', {
+      headers: getHeader()
+    }).then((response) => response.json()).then( (type_of_address) =>
+      this.setState({type_of_address}));
   }
 
   componentWillUnmount = () => {
@@ -203,6 +208,7 @@ class ClientRegister extends Component {
   }
 
   render() {
+    console.log(this.state.type_of_address);
     const sponseForm = (
       this.state.sponse ? (
         <ClientSubForm
@@ -315,7 +321,8 @@ class ClientRegister extends Component {
                 hintText="Bairro do endereço"
                 floatingLabelText="Bairro"
               />
-              <FormsyText
+              <FormsyAutoComplete
+                dataSource={this.state.type_of_address}
                 name="type_of_address"
                 validations="isWords" 
                 validationError={wordsError}
