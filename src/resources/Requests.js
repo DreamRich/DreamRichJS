@@ -50,14 +50,14 @@ const getRealData = (url, data, handleOk=noneFunction, handleFail=noneFunction) 
     },
     noneFunction,
     (response) => {
-      handleOk(response.status);
+      handleOk(response);
     },
     (response) => {
-      handleFail(response.status);
+      handleFail(response);
     });
 };
 
-const postData = (url, data, handleData=noneFunction, handleFail=noneFunction) => {
+const postData = (url, data, handleData=noneFunction, handleFail=noneFunction, handleOk=noneFunction) => {
   request(url,
     {
       method: methods.POST,
@@ -65,7 +65,9 @@ const postData = (url, data, handleData=noneFunction, handleFail=noneFunction) =
       body: JSON.stringify(data),
     },
     handleData,
-    noneFunction,
+    (response) => {
+      handleOk(response);
+    },
     (response) => {
       handleFail(response);
     });
