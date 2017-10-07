@@ -3,10 +3,9 @@ import '../../stylesheet/LoginForm.sass';
 import RaisedButton from 'material-ui/RaisedButton';
 import Formsy from 'formsy-react';
 import {FormsyText} from 'formsy-material-ui/lib';
-import {postData} from '../../resources/Requests';
-import {Auth} from '../Auth';
 import AppDispatcher from '../../AppDispatcher';
 import LoginStore from '../../stores/LoginStore';
+import ActionType from '../../actions/ActionType';
 
 
 export default class LoginForm extends Component{
@@ -14,7 +13,6 @@ export default class LoginForm extends Component{
   constructor(props){
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = {};
 
     Formsy.addValidationRule('userExist', () => {
       return this.state.userExist;
@@ -23,28 +21,32 @@ export default class LoginForm extends Component{
     this.invalidMessage = 'Usuário e/ou senha inválidos.';
   }
 
-  componentWillMound() {
-    this.setState( LoginStore.getState() );
+  componentWillMount = () => {
+    this.setState({...LoginStore.getState(), listener: LoginStore.addListener(this.validateForm)} );
+  }
+
+  validateForm = () => {
+    this.setState(LoginStore.getState());
+    this.form.validateForm();
+  }
+
+  componentWillUnmount = () => {
+    this.state.listener.remove();
+  }
+
+
+
+  componentDidUpdate(){
+    console.log('e');
+  //  this.form.validateForm();
   }
 
   handleSubmit(data){
-    // console.log(data);
-    // console.log(event.target.username.value);
-    // console.log(event.target.password.value);
+    console.log(data);
     AppDispatcher.dispatch({
-      actionType: 'coisa'
+      actionType: ActionType.LOGIN.POST,
+      data: data,
     });
-    AppDispatcher.dispatch({
-      actionType: 'a',
-      xalala: 'asdf'
-    });
-    postData('/api/auth/',
-      data,
-      Auth.authenticate,
-      () => {
-        this.setState({userExist: false});
-        this.form.validateForm();
-      });
   }
 
   render(){

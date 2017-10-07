@@ -1,9 +1,13 @@
 import React, {Component} from 'react';
-import {Auth} from './Auth';
+import AppDispatcher from '../AppDispatcher';
+import ActionType from '../actions/ActionType';
 
 export default class LogoutButton extends Component{
+
   render(){
-    return (<button onClick={Auth.deauthenticate}></button>
+    return (<button onClick={
+      () => { AppDispatcher.dispatch({actionType: ActionType.LOGOUT}); }
+    } >logout</button>
     );
   }
 }

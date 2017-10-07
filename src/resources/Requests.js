@@ -40,6 +40,13 @@ const getData = (url, component, field, fieldB) => {
   });
 };
 
+const getDataReal = (url, handleData=noneFunction) => {
+  request(url, {
+    method: methods.GET,
+    headers: getAuthenticatedHeader(),
+  }, handleData);
+};
+
 const postData = (url, data, handleData=noneFunction, handleFail=noneFunction) => {
   request(url,
     {
@@ -51,8 +58,6 @@ const postData = (url, data, handleData=noneFunction, handleFail=noneFunction) =
     noneFunction,
     (response) => {
       handleFail(response);
-      throw new Error (`Response error ${response.status}: `+
-        `${url} could not be submitted`);
     });
 };
 
@@ -73,4 +78,4 @@ const deleteData = (url, handleOk) => {
   );
 };
 
-export {getData, postData, putData, deleteData};
+export {getData, postData, putData, deleteData, getDataReal};

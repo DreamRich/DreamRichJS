@@ -4,8 +4,12 @@ const urls = {
   state: '/api/client/state/',
   country: '/api/client/country/',
   bank_account: '/api/client/bank-account/',
-  dependent: '/api/client/dependents/',
+  dependent: '/api/client/dependent/',
   active_client: '/api/client/active/',
+};
+
+const goalRouters = {
+  goals_flow_dic:  '/api/goal/dic/1/',
 };
 
 const valid_formats = ['json', 'html', 'xml'];
@@ -65,4 +69,5 @@ function getUrl(route, format=''){
   return url;
 }
 
-export { getUrl };
+
+export {getUrl, routeMap, goalRouters};
