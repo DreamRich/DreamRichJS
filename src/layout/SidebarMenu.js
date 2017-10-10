@@ -6,8 +6,11 @@ import Divider from 'material-ui/Divider';
 import MenuItem from 'material-ui/MenuItem';
 import {AuthorizedLink} from '../routes/Router';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import PersonAdd from 'material-ui/svg-icons/social/person-add';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
+import MenuStore from '../stores/MenuStore';
+import {Auth} from '../auth/Auth';
 
 const muiTheme = getMuiTheme({
   drawer: {
@@ -31,7 +34,7 @@ export default class SidebarMenu extends React.Component {
     super(props);
     this.state = {
       open: true,
-      auth: true
+      auth: false
     };
   }
 
@@ -47,18 +50,42 @@ export default class SidebarMenu extends React.Component {
     );
   }
 
+  handleUpdate = () => {
+    this.setState(MenuStore.getState());
+  }
+
+  componentWillMount = () => {
+    this.setState({ updateId: MenuStore.addListener(this.handleUpdate) });
+  }
+
+  componentWillUnmount = () => {
+    this.state.updateId.remove();
+    Auth.deauthenticate();
+  }
+
+  componentDidMount = () => {
+    /* Add validation to logout when user don not make some moviment */
+    const body = document.getElementsByTagName('body')[0];
+    body.onmousemove = Auth.updateDate;
+    body.onkeyup = Auth.updateDate;
+    // TODO: Remove it with when add the flux pattern
+    // const second = 1000; // 1000 ms = 1 sec
+    // setInterval(this.handleTimeLogout, second);
+  }
+
   render() {
     return (
       <div>
         <MuiThemeProvider muiTheme={muiTheme}>
           <Drawer open={this.state.open}>
-
             {this.makeItemMenu('allow_any','/',<h1>iRich</h1>)}
 
             <Menu>
               <MenuItem style={styleText}>
-                <strong>Olá, {'Bruce Wayne  -  '}</strong>
-                { this.state.auth && <Link style={styleText} to="/logout">Logout</Link> }
+                <div className="App-header" style={styleText}>
+                  { !this.state.auth && <Link to="/login">Login </Link> }
+                  { this.state.auth && <Link to="/logout">Logout </Link> }
+                </div>
               </MenuItem>
 
               <Divider />
