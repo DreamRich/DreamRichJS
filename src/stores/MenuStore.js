@@ -1,12 +1,11 @@
 'use strict';
-
 import {ReduceStore} from 'flux/utils';
-import AppDispatcher from '../AppDispatcher';
 import {Auth} from '../auth/Auth';
 import LoginStore from './LoginStore';
+import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
 
-class AppStore extends ReduceStore {
+class MenuStore extends ReduceStore {
   constructor(){ super(AppDispatcher); }
 
   getInitialState(){ return {auth: false}; }
@@ -28,4 +27,4 @@ class AppStore extends ReduceStore {
   }
 }
 
-export default new AppStore();
+export default new MenuStore();
