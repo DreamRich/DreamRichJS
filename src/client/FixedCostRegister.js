@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
-import {FormsyText} from 'formsy-material-ui/lib';
-import Formsy from 'formsy-react';
 import ClientStore from '../stores/ClientStore';
 import '../stylesheet/RegisterForms.sass';
+import FixedCostForm from './FixedCostForm';
 
 class FixedCostRegister extends Component {
 
@@ -12,8 +11,28 @@ class FixedCostRegister extends Component {
     super(props);
   }
 
+  state = {
+    costs: [0],
+    idx: 1
+  }
+
+  addCost = () => {
+    const new_array = this.state.costs.slice();
+    new_array.push(this.state.idx);
+    this.setState({costs: new_array, idx: this.state.idx + 1});
+  }
+
+  removeCost = (key) => {
+    const new_array = this.state.slice();
+    this.setState({
+      costs: new_array.filter( element => element !== key )
+    });
+  }
+
   componentWillMount = () => {
-    this.setState({listener: ClientStore.addListener(this.handleChange)});
+    this.setState({
+      listener: ClientStore.addListener(this.handleChange)
+    });
   }
 
   componentWillUnmount = () => {
@@ -31,102 +50,21 @@ class FixedCostRegister extends Component {
 
         <Paper className="Paper">
 
-          <Formsy.Form
-            ref={(form) => this.form = form}
-            name="fixed_cost"
-          >
-            <FormsyText
-              name="home"
-              hintText="Custo com casa"
-              floatingLabelText="Casa"
-            />
-            <FormsyText
-              name="electricity_bill"
-              hintText=""
-              floatingLabelText=""
-            />
-            <FormsyText
-              name="gym"
-              hintText=""
-              floatingLabelText=""
-            />
-            <FormsyText
-              name="taxes"
-              hintText=""
-              floatingLabelText=""
-            />
-            <FormsyText
-              name="car_gas"
-              hintText=""
-              floatingLabelText=""
-            />
-            <FormsyText
-              name="insurance"
-              hintText=""
-              floatingLabelText=""
-            />
-            <FormsyText
-              name="cellphone"
-              hintText=""
-              floatingLabelText=""
-            />
-            <FormsyText
-              name="health_insurance"
-              hintText=""
-              floatingLabelText=""
-            />
-            <FormsyText
-              name="supermarket"
-              hintText=""
-              floatingLabelText=""
-            />
-            <FormsyText
-              name="housekeeper"
-              hintText=""
-              floatingLabelText=""
-            />
-            <FormsyText
-              name="beauty"
-              hintText=""
-              floatingLabelText=""
-            />
-            <FormsyText
-              name="internet"
-              hintText=""
-              floatingLabelText=""
-            />
-            <FormsyText
-              name="netflix"
-              hintText=""
-              floatingLabelText=""
-            />
-            <FormsyText
-              name="recreation"
-              hintText=""
-              floatingLabelText=""
-            />
-            <FormsyText
-              name="meals"
-              hintText=""
-              floatingLabelText=""
-            />
-            <FormsyText
-              name="appointments"
-              hintText=""
-              floatingLabelText=""
-            />
-            <FormsyText
-              name="drugstore"
-              hintText=""
-              floatingLabelText=""
-            />
-            <FormsyText
-              name="extras"
-              hintText=""
-              floatingLabelText=""
-            />
-          </Formsy.Form>
-
+          {this.state.costs.map( key => 
+            <div key={key}>
+              <FixedCostForm />
+              <RaisedButton
+                primary
+                label="remove"
+                onClick={this.removeCost.bind(this, key)}
+              />
+            </div>
+          )}
+          <RaisedButton
+            primary
+            label="add"
+            onClick={this.addCost}
+          />
           <RaisedButton
             primary
             type="submit"
