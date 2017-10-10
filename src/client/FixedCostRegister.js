@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
+import AppDispatcher from '../AppDispatcher';
+import ActionType from '../actions/ActionType';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
-import ClientStore from '../stores/ClientStore';
+import FixedCostStore from '../stores/FixedCostStore';
 import '../stylesheet/RegisterForms.sass';
 import FixedCostForm from './FixedCostForm';
 
@@ -11,27 +13,22 @@ class FixedCostRegister extends Component {
     super(props);
   }
 
-  state = {
-    costs: [0],
-    idx: 1
-  }
-
   addCost = () => {
-    const new_array = this.state.costs.slice();
-    new_array.push(this.state.idx);
-    this.setState({costs: new_array, idx: this.state.idx + 1});
+    AppDispatcher.dispatch({
+      actionType: ActionType.FIXEDCOST.ADD
+    });
   }
 
   removeCost = (key) => {
-    const new_array = this.state.slice();
-    this.setState({
-      costs: new_array.filter( element => element !== key )
+    AppDispatcher.dispatch({
+      actionType: ActionType.FIXEDCOST.REMOVE,
+      key: key
     });
   }
 
   componentWillMount = () => {
-    this.setState({
-      listener: ClientStore.addListener(this.handleChange)
+    this.setState({...FixedCostStore.getState(), 
+      listener: FixedCostStore.addListener(this.handleChange)
     });
   }
 
@@ -40,7 +37,7 @@ class FixedCostRegister extends Component {
   }
 
   handleChange = () => {
-    this.setState(ClientStore.getState());
+    this.setState(FixedCostStore.getState());
   }
 
   render() {

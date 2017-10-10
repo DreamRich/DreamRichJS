@@ -18,7 +18,11 @@ const actionTypes = {
     ACTIVESUCCESS: 'client/create_active_success',
     SUBFORM: 'client/create_subforms',
   },
-  REFRESH_LOGIN: 'refresh_token'
+  REFRESH_LOGIN: 'refresh_token',
+  FIXEDCOST: {
+    ADD: 'fixed_cost/add',
+    REMOVE: 'fixed_cost/remove',
+  },
 };
 
 export default actionTypes;
