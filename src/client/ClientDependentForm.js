@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 //import Formsy from 'formsy-react';
 import RaisedButton from 'material-ui/RaisedButton';
 import {FormsyText} from 'formsy-material-ui/lib';
-import {FormsyDate} from '../utils/FormsyComponents';
+import {FormsyDate} from '../utils/formsyComponents/FormsyComponents';
 import errorMessages from '../utils/FormsErrorMessages';
 import ClientSubForm from './ClientSubForm';
 import PropTypes from 'prop-types';

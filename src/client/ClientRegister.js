@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
+import {getUrl} from '../routes/RouteMap.js';
+import {getHeader} from '../resources/Headers.js';
+import '../stylesheet/RegisterForms.sass';
+
+import MenuItem from 'material-ui/MenuItem';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
-import {FormsyText} from 'formsy-material-ui/lib';
-import {FormsyDate} from '../utils/FormsyComponents';
+import {FormsyText, FormsySelect, FormsyAutoComplete} from 'formsy-material-ui/lib';
+import {FormsyDate} from '../utils/formsyComponents/FormsyComponents';
 import errorMessages from '../utils/FormsErrorMessages';
-//import IconButton from 'material-ui/IconButton';
-//import FileFileUpload from 'material-ui/svg-icons/file/file-upload';
 import ClientStore from '../stores/ClientStore';
 import '../stylesheet/RegisterForms.sass';
 import ClientSubForm from './ClientSubForm';
@@ -27,10 +30,27 @@ class ClientRegister extends Component {
   state = {
     canSubmit: true,
     sponse: false,
+
+    countryListMenuItems: [],
+    stateListMenuItems: [],
+    type_of_address: [''],
+    selectedCountry: null,
+    selectedState: null,  // State region
+  }
+
+  enableButton = () => {
+    this.setState({
+      canSubmit: true,
+    });
   }
 
   componentWillMount = () => {
     this.setState({listener: ClientStore.addListener(this.handleChange)});
+    this.fetchCountrys();
+    fetch('/api/client/address/type_of_address/', {
+      headers: getHeader()
+    }).then((response) => response.json()).then( (type_of_address) =>
+      this.setState({type_of_address}));
   }
 
   componentWillUnmount = () => {
@@ -42,7 +62,77 @@ class ClientRegister extends Component {
      * react dipatcher and throw error of Invariant Violation Dispatch.dispatch
      */
     setTimeout(() =>
-    this.setState(ClientStore.getState()), 500);
+      this.setState(ClientStore.getState()), 500);
+  }
+
+  // Convert ordinary Array to MenuItem Array to use in drop down list
+  convertRegionToMenuItens = (list) => {
+    var listMenuItems = list.map((region, index) => {
+      let primaryText = `${region.name} - ${region.abbreviation}`;
+
+      return (
+        <MenuItem key={index} value={region.id} primaryText={primaryText} />
+      );
+    });
+
+    return listMenuItems;
+  }
+
+  fetchStates = (selectedCountry) => {
+    var stateListArray = {};
+    var url = `${getUrl('state')}${'?country_id'}=${selectedCountry}`;
+
+    fetch(url, {
+      method: 'get',
+      headers: getHeader(),
+      mode: 'cors',
+      cache: 'default'
+    })
+      .then((response) => {
+        if(response.ok) {
+          console.log('State list was gotten from API');
+          stateListArray = response.json();
+        } else {
+          throw new Error ('Couldn\'t get state list from API');
+        }
+
+        return stateListArray;
+      })
+      .then((stateListArray) => {
+        let stateListMenuItems = this.convertRegionToMenuItens(stateListArray);
+        this.setState({stateListMenuItems});
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+  }
+
+  fetchCountrys = () => {
+    var countryListArray = {};
+
+    fetch(getUrl('country'), {
+      method: 'get',
+      headers: getHeader(),
+      mode: 'cors',
+      cache: 'default'
+    })
+      .then((response) => {
+        if(response.ok) {
+          console.log('Country list was gotten from API');
+          countryListArray = response.json();
+        } else {
+          throw new Error ('Couldn\'t get country list from API');
+        }
+
+        return countryListArray;
+      })
+      .then((countryListArray) => {
+        let countryListMenuItems = this.convertRegionToMenuItens(countryListArray);
+        this.setState({countryListMenuItems});
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
   }
 
   getClientsFields = () => {
@@ -118,28 +208,29 @@ class ClientRegister extends Component {
   }
 
   render() {
-
+    console.log(this.state.type_of_address);
     const sponseForm = (
       this.state.sponse ? (
-      <ClientSubForm
-        title="Cônjuge"
-        name="client"
-        parent_name="active_client_id"
-        parent_id={this.state.id}
-      >
-        <div>
-          {this.getClientsFields()}
-          <RaisedButton onClick={this.switchSponse} > 
-            Remove Sponse 
-          </RaisedButton>
-        </div>
-      </ClientSubForm>) : (<div>
+        <ClientSubForm
+          title="Cônjuge"
+          name="client"
+          parent_name="active_client_id"
+          parent_id={this.state.id}
+        >
+          <div>
+            {this.getClientsFields()}
+            <RaisedButton onClick={this.switchSponse} > 
+              Remove Sponse 
+            </RaisedButton>
+          </div>
+        </ClientSubForm>) : (<div>
         <h2> Cônjuge </h2> 
         <RaisedButton onClick={this.switchSponse}>
           Add 
         </RaisedButton>
-        </div>)
-      );
+      </div>)
+    );
+
     return (
       <div>
         <h1> Cadastro de Cliente </h1>
@@ -151,7 +242,7 @@ class ClientRegister extends Component {
               title="Cliente"
               ref={(ref) => {this.baseForm = ref;}}
             >
-            {this.getClientsFields()}
+              {this.getClientsFields()}
             </ClientForm>
           </div>
           {sponseForm}
@@ -163,6 +254,28 @@ class ClientRegister extends Component {
             parent_id={this.state.id}
           >
             <div>
+              <FormsySelect
+                name="country"
+                floatingLabelText="País"
+                maxHeight={300}
+                onChange={(event, selectedCountry) => this.fetchStates(selectedCountry)}
+              >
+                {this.state.countryListMenuItems}
+              </FormsySelect>
+              <FormsySelect
+                name="state"
+                floatingLabelText="Estado"
+                maxHeight={300}
+                onChange={(event, selectedState) => this.setState({selectedState})}
+              >
+                {this.state.stateListMenuItems}
+              </FormsySelect>
+              <FormsyText
+                name="state_id"
+                className="Hidden"
+                value={this.state.selectedState}
+              />
+
               <FormsyText
                 name="cep"
                 //validations="isNumeric"
@@ -172,7 +285,15 @@ class ClientRegister extends Component {
                 updateImmediately
               />
               <FormsyText
-                name="details"
+                name="city"
+                validations="isWords"
+                validationError={wordsError}
+                hintText="Cidade do endereço"
+                floatingLabelText="Cidade"
+                updateImmediately
+              />
+              <FormsyText
+                name="detail"
                 validations="isWords" 
                 validationError={wordsError}
                 hintText="Detalhes do endereço"
@@ -200,7 +321,8 @@ class ClientRegister extends Component {
                 hintText="Bairro do endereço"
                 floatingLabelText="Bairro"
               />
-              <FormsyText
+              <FormsyAutoComplete
+                dataSource={this.state.type_of_address}
                 name="type_of_address"
                 validations="isWords" 
                 validationError={wordsError}
@@ -217,18 +339,18 @@ class ClientRegister extends Component {
             parent_id={this.state.id}
           >
             <div>
-             <FormsyText
-               name="agency"
-               validations="isNumeric"
-               validationError={numericError}
-               hintText="Agência da conta bancária"
-               floatingLabelText="Agência"
-             />
-             <FormsyText
-               name="account"
-               hintText="Número da conta bancária"
-               floatingLabelText="Conta"
-             />
+              <FormsyText
+                name="agency"
+                validations="isNumeric"
+                validationError={numericError}
+                hintText="Agência da conta bancária"
+                floatingLabelText="Agência"
+              />
+              <FormsyText
+                name="account"
+                hintText="Número da conta bancária"
+                floatingLabelText="Conta"
+              />
             </div>
           </ClientSubForm>
 

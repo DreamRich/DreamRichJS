@@ -24,7 +24,7 @@ class LoginStore extends ReduceStore {
         () => {
           AppDispatcher.dispatch({actionType: ActionType.LOGIN.FAIL});
         }
-        );
+      );
       return state;
 
     case ActionType.LOGIN.FAIL:
@@ -45,7 +45,7 @@ class LoginStore extends ReduceStore {
           alert('Fail when try refresh token\nLogouting');
           AppDispatcher.dispatch({actionType: ActionType.LOGOUT});
         }
-        );
+      );
       return state;
     default:
       console.log(action);
