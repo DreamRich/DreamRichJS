@@ -15,6 +15,7 @@ class PasswordStore extends ReduceStore {
       snack: false,
       message: '',
       emailExist: true,
+      openSendedMessage: true
     };
   }
 
@@ -91,7 +92,8 @@ class PasswordStore extends ReduceStore {
       return {
         send: false,
         snack: true,
-        message: action.data.message
+        message: action.data.message,
+        openSendedMessage: false
       };
 
     case ActionType.PASSWORD.SNACKCLOSE:
@@ -99,6 +101,9 @@ class PasswordStore extends ReduceStore {
         ...state,
         snack: false
       };
+
+    case ActionType.PASSWORD.UNMOUNT:
+      return {...this.getInitialState()};
 
     default:
       console.log(action);

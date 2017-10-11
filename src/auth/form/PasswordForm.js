@@ -20,6 +20,9 @@ export default class PasswordForm extends Component{
   }
 
   componentWillUnmount = () => {
+    AppDispatcher.dispatch({
+      actionType: ActionType.PASSWORD.UNMOUNT
+    });
     this.state.listener.remove();
   }
 

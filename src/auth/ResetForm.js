@@ -32,6 +32,9 @@ export default class ResetForm extends Component{
   }
 
   componentWillUnmount = () => {
+    AppDispatcher.dispatch({
+      actionType: ActionType.PASSWORD.UNMOUNT
+    });
     this.state.listener.remove();
   }
 
@@ -50,7 +53,7 @@ export default class ResetForm extends Component{
   getForm = () => {
     let button = null;
 
-    if(!this.state.send){
+    if(this.state.openSendedMessage){
       button = <RaisedButton primary label="RECUPERAR" type="submit" />;
     } else {
       button = <RaisedButton primary label="LOGIN" type="submit" containerElement={<Link to="/login" />} />;
@@ -82,7 +85,7 @@ export default class ResetForm extends Component{
         </div>
         <section>
           <Title style={{fontSize: '48px'}} label="Recuperação de senha" />
-          <Subtitle style={{fontSize: '22px', textAlign:'left'}} label={!this.state.send? this.sendedMessage : this.unsendedMessage} />
+          <Subtitle style={{fontSize: '22px', textAlign:'left'}} label={this.state.openSendedMessage? this.sendedMessage : this.unsendedMessage} />
         <br />
           {this.getForm()}
         <br />
