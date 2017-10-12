@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Paper from 'material-ui/Paper';
+//import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import {FormsyText} from 'formsy-material-ui/lib';
 import {FormsyDate} from '../utils/FormsyComponents';
@@ -129,14 +129,14 @@ class ClientRegister extends Component {
       >
         <div>
           {this.getClientsFields()}
-          <RaisedButton onClick={this.switchSponse} > 
-            Remove Sponse 
+          <RaisedButton onClick={this.switchSponse} >
+            Remove Sponse
           </RaisedButton>
         </div>
       </ClientSubForm>) : (<div>
-        <h2> Cônjuge </h2> 
+        <h2> Cônjuge </h2>
         <RaisedButton onClick={this.switchSponse}>
-          Add 
+          Add
         </RaisedButton>
         </div>)
       );
@@ -144,14 +144,14 @@ class ClientRegister extends Component {
       <div>
         <h1> Cadastro de Cliente </h1>
 
-        <Paper className="Paper">
+        <div style={{width:'auto'}}>
 
           <div>
             <ClientForm
               title="Cliente"
               ref={(ref) => {this.baseForm = ref;}}
             >
-            {this.getClientsFields()}
+              {this.getClientsFields()}
             </ClientForm>
           </div>
           {sponseForm}
@@ -173,7 +173,7 @@ class ClientRegister extends Component {
               />
               <FormsyText
                 name="details"
-                validations="isWords" 
+                validations="isWords"
                 validationError={wordsError}
                 hintText="Detalhes do endereço"
                 floatingLabelText="Detalhes"
@@ -188,21 +188,21 @@ class ClientRegister extends Component {
               />
               <FormsyText
                 name="complement"
-                validations="isWords" 
+                validations="isWords"
                 validationError={wordsError}
                 hintText="Complemento do endereço"
                 floatingLabelText="Complemento"
               />
               <FormsyText
                 name="neighborhood"
-                validations="isWords" 
+                validations="isWords"
                 validationError={wordsError}
                 hintText="Bairro do endereço"
                 floatingLabelText="Bairro"
               />
               <FormsyText
                 name="type_of_address"
-                validations="isWords" 
+                validations="isWords"
                 validationError={wordsError}
                 hintText="Casa, apartamento, etc."
                 floatingLabelText="Tipo de Endereço"
@@ -244,10 +244,10 @@ class ClientRegister extends Component {
             disabled={!this.state.canSubmit}
           />
 
-        </Paper>
+        </div>
 
       </div>
-    ); 
+    );
   }
 }
 

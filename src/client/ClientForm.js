@@ -20,7 +20,7 @@ export default class ClientForm extends Component {
     });
   }
 
-  submit= () => {console.log(this.form); this.form.submit();}
+  submit = () => {console.log(this.form); this.form.submit();}
 
   render = () => {
     return (
