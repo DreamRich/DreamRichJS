@@ -1,17 +1,7 @@
 import React, { Component } from 'react';
 import './stylesheet/App.sass';
-//import SidebarMenu from './layout/SidebarMenu';
-// TODO Make adjust of elemets in routers
-//import Routers from './routes/Routers';
-//<div style={styles.container}>
-//  <Routers />
-//</div>
-// <SidebarMenu />
-
-// New
 import Header from './layout/Header';
 import SidebarMenu from './layout/SidebarMenu';
-import {SMALL, LARGE} from 'material-ui/utils/withWidth';
 import PropTypes from 'prop-types';
 import Routers from './routes/Routers';
 
@@ -21,12 +11,6 @@ class App extends Component {
     this.state = {
       navDrawerOpen: true
     };
-  }
-
-  componentWillReceiveProps = (nextProps) => {
-    if (this.props.width !== nextProps.width) {
-      this.setState({navDrawerOpen: nextProps.width === LARGE});
-    }
   }
 
   handleChangeRequestNavDrawer = () => {
@@ -46,13 +30,14 @@ class App extends Component {
         paddingLeft: navDrawerOpen ? paddingLeftDrawerOpen : 0
       },
       container: {
-        margin: '80px 20px 20px 15px',
-        paddingLeft: navDrawerOpen && this.props.width !== SMALL ? paddingLeftDrawerOpen : 0
+        paddingLeft: navDrawerOpen ? paddingLeftDrawerOpen : 0,
+        margin: navDrawerOpen ? '90px 20px 20px 15px' : '90px 5% 0px 8%'
       }
     };
+
     return (
       <div className="App">
-        <div className="conteiner" style={styles.container}>
+        <div style={styles.container}>
           <Routers />
         </div>
         <Header styles={styles.header}

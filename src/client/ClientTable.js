@@ -17,7 +17,7 @@ export default class ClientTable extends GridTable {
       { key: 'name', name: 'Name', sortable: true, filterable: true, resizable: true },
       { key: 'telephone', name: 'Telefone', sortable: true, filterable: true, resizable: true },
       { key: 'email', name: 'Email', sortable: true, filterable: true, resizable: true },
-      { key: 'cpf', name: 'cpf', sortable: true, filterable: true, resizable: true },
+      { key: 'cpf', name: 'CPF', sortable: true, filterable: true, resizable: true },
       { key: 'actions', name: 'Actions', locked: true, filterable: false, resizable: false }
     ];
   }
@@ -27,11 +27,12 @@ export default class ClientTable extends GridTable {
   getActions(register) {
     if(register !== undefined && register !== null){
       return (
-        <FlatButton 
+        <FlatButton
           primary
-          label=">" 
+          label=">"
           containerElement={ <Link to={`/client/${register.id}`} /> }
-        />);
+        />
+      );
     }
     return null;
   }
@@ -39,5 +40,4 @@ export default class ClientTable extends GridTable {
   getToolbar(){
     return (<Toolbar enableFilter={true} />);
   }
-
 }

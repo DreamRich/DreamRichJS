@@ -1,14 +1,61 @@
 import React from 'react';
-import PropTypes from 'prop-types'; // ES6
+import {Auth} from '../auth/Auth';
+import PropTypes from 'prop-types';
 import AppBar from 'material-ui/AppBar';
-import Menu from 'material-ui/svg-icons/navigation/menu';
-import {white} from 'material-ui/styles/colors';
 import IconMenu from 'material-ui/IconMenu';
+import MenuStore from '../stores/MenuStore';
 import MenuItem from 'material-ui/MenuItem';
+import {white} from 'material-ui/styles/colors';
 import IconButton from 'material-ui/IconButton';
+import makeMenuItem from '../utils/makeMenuItem';
+import Menu from 'material-ui/svg-icons/navigation/menu';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 class Header extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      openMenu: false,
+      auth: false
+    };
+  }
+
+  handleOpenMenu = () => {
+    this.setState({
+      openMenu: !this.state.openMenu,
+    });
+    console.log(this.state.openMenu);
+  }
+
+  handleOnRequestChange = (value) => {
+    this.setState({
+      openMenu: value,
+    });
+  }
+
+  handleUpdate = () => {
+    this.setState(MenuStore.getState());
+  }
+
+  componentWillMount = () => {
+    this.setState({ updateId: MenuStore.addListener(this.handleUpdate) });
+  }
+
+  componentWillUnmount = () => {
+    this.state.updateId.remove();
+    Auth.deauthenticate();
+  }
+
+  componentDidMount = () => {
+    /* Add validation to logout when user don not make some moviment */
+    const body = document.getElementsByTagName('body')[0];
+    body.onmousemove = Auth.updateDate;
+    body.onkeyup = Auth.updateDate;
+    // TODO: Remove it with when add the flux pattern
+    // const second = 1000; // 1000 ms = 1 sec
+    // setInterval(this.handleTimeLogout, second);
+  }
 
   render() {
 
@@ -24,6 +71,9 @@ class Header extends React.Component {
       menuButton: {
         marginLeft: 30
       },
+      iconsRightContainer: {
+        marginLeft: 30
+      },
     };
 
     return (
@@ -36,17 +86,21 @@ class Header extends React.Component {
             </IconButton>
           }
           iconElementRight={
-            <IconMenu
-              iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-              anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-              targetOrigin={{horizontal: 'right', vertical: 'top'}}
-            >
-              <MenuItem primaryText="Refresh" />
-              <MenuItem primaryText="Send feedback" />
-              <MenuItem primaryText="Settings" />
-              <MenuItem primaryText="Help" />
-              <MenuItem primaryText="Sign out" />
-            </IconMenu>
+            <div onClick={this.handleOpenMenu}>
+              <IconMenu styles={style.iconsRightContainer}
+                iconButtonElement={<IconButton iconStyle={{color:'white'}}><MoreVertIcon /></IconButton>}
+                anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                onRequestChange={this.handleOnRequestChange}
+                open={this.state.openMenu}
+              >
+                <MenuItem>
+                  { !this.state.auth && makeMenuItem('allow_any','/login/','Login')}
+                  { this.state.auth && makeMenuItem('allow_any','/logout/','Sign out')}
+                </MenuItem>
+                  {makeMenuItem('allow_any','/login/changepassword','Change Password')}
+              </IconMenu>
+            </div>
           }
         />
       </div>
