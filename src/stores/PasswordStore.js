@@ -13,7 +13,6 @@ class PasswordStore extends ReduceStore {
   reduce = (state, action) => {
     switch (action.actionType) {
     case ActionType.PASSWORD.CHANGE:
-      console.log(state, action);
       postData('/api/auth/password/',
         action.data,
         (data) => {
@@ -50,7 +49,6 @@ class PasswordStore extends ReduceStore {
       };
 
     default:
-      console.log(action);
       return state;
     }
   }

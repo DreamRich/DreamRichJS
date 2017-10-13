@@ -14,12 +14,9 @@ var {
   numericError,
 } = errorMessages;
 export default class FixedCostForm extends Component {
+
   constructor(props){
     super(props);
-  }
-
-  submitForm = (data) => {
-    console.log(data);
   }
 
   getOptions = () => {
@@ -27,9 +24,6 @@ export default class FixedCostForm extends Component {
       <MenuItem key={type.id} value={type.id} primaryText={type.name} /> 
     );
   }
-
-
-  submit= () => {console.log(this.form); this.form.submit();}
 
   render = () => {
     return (
@@ -40,20 +34,22 @@ export default class FixedCostForm extends Component {
           parent_name='cost_manager_id'
           title="cost"
         >
-          <FormsySelect
-            name="cost_type_id"
-            floatingLabelText="Tipo"
-            maxHeight={300}
-          >
-            {this.getOptions()}
-          </FormsySelect>
-          <FormsyText
-            name="value"
-            validations="isNumeric"
-            validationError={numericError}
-            hintText="000.00"
-            floatingLabelText="Valor"
-          />
+          <div>
+            <FormsySelect
+              name="cost_type_id"
+              floatingLabelText="Tipo"
+              maxHeight={300}
+            >
+              {this.getOptions()}
+            </FormsySelect>
+            <FormsyText
+              name="value"
+              validations="isNumeric"
+              validationError={numericError}
+              hintText="000.00"
+              floatingLabelText="Valor"
+            />
+          </div>
         </ClientSubForm>
       </div>
     );

@@ -11,6 +11,7 @@ class FixedCostRegister extends Component {
 
   constructor(props){
     super(props);
+    this.state = FixedCostStore.getState();
   }
 
   addCost = () => {
@@ -27,7 +28,7 @@ class FixedCostRegister extends Component {
   }
 
   componentWillMount = () => {
-    this.setState({...FixedCostStore.getState(), 
+    this.setState({...this.state,
       listener: FixedCostStore.addListener(this.handleChange)
     });
 
@@ -45,7 +46,6 @@ class FixedCostRegister extends Component {
   }
 
   submitBase = (event) => {
-    console.log(event);
     event.preventDefault();
     AppDispatcher.dispatch({
       actionType: ActionType.FIXEDCOST.MANAGER

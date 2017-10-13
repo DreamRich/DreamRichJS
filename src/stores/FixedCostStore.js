@@ -8,7 +8,14 @@ import {postData, getData} from '../resources/Requests';
 class FixedCostStore extends ReduceStore {
   constructor(){ super(AppDispatcher); }
 
-  getInitialState(){ return {costs: [0], idx: 1, id: undefined, types: []}; }
+  getInitialState(){
+    return {
+      costs: [0],
+      idx: 1,
+      id: undefined,
+      types: []
+    };
+  }
 
   reduce = (state, action) => {
     let new_array;
@@ -39,15 +46,16 @@ class FixedCostStore extends ReduceStore {
     case ActionType.FIXEDCOST.TYPE:
       getData('/api/financial_planning/costtype/',
         (data) => AppDispatcher.dispatch({
-          ActionType: ActionType.FIXEDCOST.TYPESUCCESS,
+          actionType: ActionType.FIXEDCOST.TYPESUCCESS,
           types: data
         })
       );
       return state;
+
     case ActionType.FIXEDCOST.TYPESUCCESS:
-      return {...state, types: action.data};
+      return {...state, types: action.types};
+
     default:
-      console.log(action);
       return state;
     }
   }

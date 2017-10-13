@@ -208,7 +208,6 @@ class ClientRegister extends Component {
   }
 
   render() {
-    console.log(this.state.type_of_address);
     const sponseForm = (
       this.state.sponse ? (
         <ClientSubForm

@@ -20,7 +20,6 @@ export default class ClientSubForm extends Component {
   }
 
   submitForm = (data) => {
-    console.log(data);
     data[this.props.parent_name] = this.props.parent_id;
     AppDispatcher.dispatch(
       {

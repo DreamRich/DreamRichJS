@@ -21,7 +21,7 @@ export default class Employeer extends Component {
       <Form onValidSubmit={this.submit}
         onValid={() => true}
         onInvalid={() => true}
-        onInvalidSubmit={() => console.log('Deu ruim')}
+        onInvalidSubmit={() => console.log('problem')}
       >
         <FormsyText
           name='fgts'

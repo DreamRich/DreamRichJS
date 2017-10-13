@@ -16,7 +16,6 @@ export default class ResetForm extends Component{
   handleSubmit(){
     fetch('/api/auth/password/?email='+this.props.email)
     .then((() => {
-      console.log('email send', this.state.send);
       this.setState({send: true}); 
     }).bind(this))
     .catch((e) => {console.log('problem in email sending', e);});

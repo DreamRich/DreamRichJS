@@ -77,7 +77,6 @@ export default class GridTable extends Component {
 
   handleSort(sortColumn, sortDirection){
     this.setState({ sortColumn: sortColumn, sortDirection: sortDirection });
-    console.log(this.state);
   }
 
   handleRequestClose(){

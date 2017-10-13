@@ -14,7 +14,6 @@ class LoginStore extends ReduceStore {
   reduce = (state, action) => {
     switch (action.actionType) {
     case ActionType.LOGIN.POST:
-      console.log(state, action);
       postData('/api/auth/',
         action.data,
         (data) => {
@@ -48,7 +47,6 @@ class LoginStore extends ReduceStore {
       );
       return state;
     default:
-      console.log(action);
       return state;
     }
   }

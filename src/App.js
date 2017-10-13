@@ -7,6 +7,7 @@ import {AuthorizedLink} from './routes/Router';
 import Routers from './routes/Routers';
 import RaisedButton from 'material-ui/RaisedButton';
 import AppStore from './stores/AppStore';
+import LoggerStore from './stores/LoggerStore'; // eslint-disable-line no-unused-vars
 
 class App extends Component {
 

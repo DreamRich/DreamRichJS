@@ -25,7 +25,6 @@ class ClientDependentForm extends Component {
     console.log(nextProps);
     if (nextProps.parent_id!== undefined) {
       this.setState({id: nextProps.parent_id});
-      console.log('update next props state');
     }
   }
 
@@ -45,7 +44,6 @@ class ClientDependentForm extends Component {
   }
 
   render = () => {
-    console.log(this.state.dependents, this);
     return (
       <div>
         {this.state.dependents.map(e => 

@@ -80,7 +80,6 @@ export default class EmployeeTable extends GridTable {
       let message = 'Salvo com sucesso!';
 
       const handleSubmitData = (data) => {
-        console.log(data);
         if(data.id){
           this.setState({ open: true, message: message });
           changedData['id'] = data.id;
