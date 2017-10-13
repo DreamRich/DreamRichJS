@@ -3,14 +3,17 @@ import React, {Component} from 'react';
 //import ActionType from '../actions/ActionType';
 import PropTypes from 'prop-types';
 //import routeMap from '../routes/RouteMap';
-import Formsy from 'formsy-react';
+//import Formsy from 'formsy-react';
 import {FormsyText} from 'formsy-material-ui/lib';
 import errorMessages from '../utils/FormsErrorMessages';
+import ClientSubForm from './ClientSubForm';
+import MenuItem from 'material-ui/MenuItem';
+import {FormsySelect} from 'formsy-material-ui/lib';
 
 var {
   numericError,
 } = errorMessages;
-export default class ClientForm extends Component {
+export default class FixedCostForm extends Component {
   constructor(props){
     super(props);
   }
@@ -19,20 +22,31 @@ export default class ClientForm extends Component {
     console.log(data);
   }
 
+  getOptions = () => {
+    return this.props.types.map( (type) => 
+      <MenuItem key={type.id} value={type.id} primaryText={type.name} /> 
+    );
+  }
+
+
   submit= () => {console.log(this.form); this.form.submit();}
 
   render = () => {
     return (
       <div>
-        <Formsy.Form
-          ref={(ref) => this.form = ref}
-          name="fixed_cos"
+        <ClientSubForm
+          name="regular_cost"
+          parent_id={this.props.id}
+          parent_name='cost_manager_id'
+          title="cost"
         >
-          <FormsyText
-            name="type_cost"
-            hintText="Tipo do custo"
+          <FormsySelect
+            name="cost_type_id"
             floatingLabelText="Tipo"
-          />
+            maxHeight={300}
+          >
+            {this.getOptions()}
+          </FormsySelect>
           <FormsyText
             name="value"
             validations="isNumeric"
@@ -40,14 +54,13 @@ export default class ClientForm extends Component {
             hintText="000.00"
             floatingLabelText="Valor"
           />
-        </Formsy.Form>
+        </ClientSubForm>
       </div>
     );
   }
 }
 
-ClientForm.propTypes = {
-  title: PropTypes.string,
-  name: PropTypes.string,
-  children: PropTypes.element,
+FixedCostForm.propTypes = {
+  id: PropTypes.number,
+  types: PropTypes.array,
 };

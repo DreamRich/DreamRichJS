@@ -6,6 +6,7 @@ const routeMap = {
   bank_account: '/api/client/bank-account/',
   dependent: '/api/client/dependent/',
   active_client: '/api/client/active/',
+  regular_cost: '/api/financial_planning/regularcost/',
 };
 
 const goalRouters = {

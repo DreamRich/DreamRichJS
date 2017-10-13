@@ -22,6 +22,10 @@ const actionTypes = {
   FIXEDCOST: {
     ADD: 'fixed_cost/add',
     REMOVE: 'fixed_cost/remove',
+    MANAGER: 'fixed_cost/submit_form',
+    SUCCESS: 'fixed_cost/form_success',
+    TYPE: 'fixed_cost/types',
+    TYPESUCCESS: 'fixed_cost/types_success',
   },
 };
 

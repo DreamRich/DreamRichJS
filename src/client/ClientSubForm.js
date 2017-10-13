@@ -15,7 +15,7 @@ export default class ClientSubForm extends Component {
         this.props.parent_id !== undefined) {
       console.log(prevProps, 'previous');
       console.log(this.props, 'next');
-      this.form.submit();
+      setTimeout(this.form.submit, 200);
     }
   }
 

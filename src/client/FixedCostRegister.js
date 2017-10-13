@@ -30,6 +30,10 @@ class FixedCostRegister extends Component {
     this.setState({...FixedCostStore.getState(), 
       listener: FixedCostStore.addListener(this.handleChange)
     });
+
+    AppDispatcher.dispatch({
+      actionType: ActionType.FIXEDCOST.TYPE
+    });
   }
 
   componentWillUnmount = () => {
@@ -40,6 +44,14 @@ class FixedCostRegister extends Component {
     this.setState(FixedCostStore.getState());
   }
 
+  submitBase = (event) => {
+    console.log(event);
+    event.preventDefault();
+    AppDispatcher.dispatch({
+      actionType: ActionType.FIXEDCOST.MANAGER
+    });
+  }
+
   render() {
     return (
       <div>
@@ -47,9 +59,13 @@ class FixedCostRegister extends Component {
 
         <Paper className="Paper">
 
+
           {this.state.costs.map( key => 
             <div key={key}>
-              <FixedCostForm />
+              <FixedCostForm
+                id={this.state.id}
+                types={this.state.types}
+              />
               <RaisedButton
                 primary
                 label="remove"
@@ -62,12 +78,16 @@ class FixedCostRegister extends Component {
             label="add"
             onClick={this.addCost}
           />
-          <RaisedButton
-            primary
-            type="submit"
-            label="Enviar"
-            onClick={() => this.baseForm.submit()}
-          />
+
+          <form 
+            onSubmit={this.submitBase}
+          >
+            <RaisedButton
+              primary
+              type="submit"
+              label="Enviar"
+            />
+          </form>
 
         </Paper>
 

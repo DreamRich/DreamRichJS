@@ -21,7 +21,7 @@ export class Auth{
   }
 
   static refreshToken(){
-    console.info('Refresh login token');
+    alert('Refresh login token');
     AppDispatcher.dispatch({actionType: ActionType.REFRESH_LOGIN,
       data: {token: Auth.getAuth()}
     });
