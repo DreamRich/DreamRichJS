@@ -23,6 +23,7 @@ class FixedCostStore extends ReduceStore {
       return {...state,
         costs: new_array.filter( element => element !== action.key )
       };
+
     case ActionType.FIXEDCOST.MANAGER:
       postData('/api/financial_planning/costmanager/',{},
         (data) => AppDispatcher.dispatch({
@@ -31,8 +32,10 @@ class FixedCostStore extends ReduceStore {
         })
       );
       return state;
+
     case ActionType.FIXEDCOST.SUCCESS:
       return {...state, id: action.id};
+
     case ActionType.FIXEDCOST.TYPE:
       getData('/api/financial_planning/costtype/',
         (data) => AppDispatcher.dispatch({

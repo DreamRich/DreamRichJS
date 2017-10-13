@@ -30,17 +30,7 @@ const request = (url, meta, handleData=noneFunction, handleOk=noneFunction, hand
     .catch((error) => {console.error(error);});
 };
 
-const getData = (url, component, field, fieldB) => {
-  request(url, {
-    method: methods.GET,
-    headers: getAuthenticatedHeader(),
-  }, (data) => {
-    component.setState({[field]: data});
-    if (fieldB !== undefined) component.setState({[fieldB]: data});
-  });
-};
-
-const getDataReal = (url, handleData=noneFunction) => {
+const getData = (url, handleData=noneFunction) => {
   request(url, {
     method: methods.GET,
     headers: getAuthenticatedHeader(),
@@ -78,4 +68,4 @@ const deleteData = (url, handleOk) => {
   );
 };
 
-export {getData, postData, putData, deleteData, getDataReal};
+export {getData, postData, putData, deleteData};
