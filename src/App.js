@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './stylesheet/App.sass';
 import {Auth} from './auth/Auth';
+import AppDispatcher from './AppDispatcher';
+import ActionType from './actions/ActionType';
 
 import {Link} from 'react-router-dom';
 import {AuthorizedLink} from './routes/Router';
@@ -22,6 +24,14 @@ class App extends Component {
 
   componentWillMount = () => {
     this.setState({ updateId: AppStore.addListener(this.handleUpdate) });
+    if(Auth.isAuthenticated()){
+      Auth.updateDate();
+      AppDispatcher.dispatch({
+        actionType: ActionType.REFRESH_LOGIN,
+        data: {token: Auth.getAuth()}
+      });
+    }
+
   }
 
   componentWillUnmount = () => {
