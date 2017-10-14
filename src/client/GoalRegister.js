@@ -3,7 +3,7 @@ import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
-import FixedCostStore from '../stores/FixedCostStore';
+import GoalStore from '../stores/GoalStore';
 import '../stylesheet/RegisterForms.sass';
 import GoalForm from './GoalForm';
 
@@ -11,8 +11,7 @@ class GoalRegister extends Component {
 
   constructor(props){
     super(props);
-    this.state = FixedCostStore.getState();
-    this.state = {goals: []};
+    this.state = GoalStore.getState();
   }
 
   addGoal = () => {
@@ -30,7 +29,7 @@ class GoalRegister extends Component {
 
   componentWillMount = () => {
     this.setState({...this.state,
-      listener: FixedCostStore.addListener(this.handleChange)
+      listener: GoalStore.addListener(this.handleChange)
     });
 
     AppDispatcher.dispatch({
@@ -43,7 +42,7 @@ class GoalRegister extends Component {
   }
 
   handleChange = () => {
-    this.setState(FixedCostStore.getState());
+    this.setState(GoalStore.getState());
   }
 
   submitBase = (event) => {
@@ -56,7 +55,7 @@ class GoalRegister extends Component {
   render() {
     return (
       <div>
-        <h1> Cadastro de custo fixo </h1>
+        <h1> Cadastro de objetivos </h1>
 
         <Paper className="Paper">
 

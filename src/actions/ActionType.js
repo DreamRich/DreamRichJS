@@ -28,6 +28,12 @@ const actionTypes = {
     TYPESUCCESS: 'fixed_cost/types_success',
   },
   GOAL:{
+    ADD: 'goal/add',
+    REMOVE: 'goal/remove',
+    MANAGER: 'goal/submit_form',
+    SUCCESS: 'goal/form_success',
+    TYPE: 'goal/types',
+    TYPESUCCESS: 'goal/types_success',
   },
 };
 
