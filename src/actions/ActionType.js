@@ -27,6 +27,8 @@ const actionTypes = {
     TYPE: 'fixed_cost/types',
     TYPESUCCESS: 'fixed_cost/types_success',
   },
+  GOAL:{
+  },
 };
 
 export default actionTypes;

@@ -12,6 +12,7 @@ class GoalRegister extends Component {
   constructor(props){
     super(props);
     this.state = FixedCostStore.getState();
+    this.state = {goals: []};
   }
 
   addGoal = () => {

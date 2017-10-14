@@ -59,6 +59,7 @@ class App extends Component {
           { !this.state.auth && <Link to="/login">login </Link> }
           { this.state.auth && <Link to="/logout">logout </Link> }
           <AuthorizedLink permission="change_own_client_data" to="/register/client">new client </AuthorizedLink>
+          <AuthorizedLink permission="change_own_client_data" to="/register/goal">new goal </AuthorizedLink>
           <AuthorizedLink permission="change_own_client_data" to="/register/fixed_cost">new fixed cost </AuthorizedLink>
           <AuthorizedLink permission="allow_any" to="/login/changepassword">change </AuthorizedLink>
           <AuthorizedLink permission="see_all_basic_client_data" to="/client">client </AuthorizedLink>

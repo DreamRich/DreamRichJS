@@ -12,6 +12,7 @@ import ClientRegister from '../client/ClientRegister';
 import FixedCostRegister from '../client/FixedCostRegister';
 import {Auth} from '../auth/Auth';
 import GoalChart from '../goal/GoalChart';
+import GoalRegister from '../client/GoalRegister';
 
 export default class Routers extends Component{
 
@@ -19,7 +20,8 @@ export default class Routers extends Component{
     return (
       <Switch>
         <Route exact path="/" render={ () => <h1>Home</h1> } />
-        <AuthorizedRoute path="/register/fixed_cost" permission="change_own_client_data" exact component={ FixedCostRegister } />
+        <AuthorizedRoute permission="change_own_client_data" path="/register/fixed_cost" exact component={ FixedCostRegister } />
+        <AuthorizedRoute permission="change_own_client_data" path="/register/goal" exact component={ GoalRegister } />
         <AuthorizedRoute permission="see_all_basic_client_data" exact path="/client" component={ ClientTable } />
         <AuthorizedRoute permission="see_employee_data" path="/employee" component={ Employeer } />
         <Route exact path="/login" component={ LoginPage } />
