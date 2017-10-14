@@ -51,7 +51,7 @@ export default class ClientField extends Component {
     return (
       <Row around="xs">
         <Col xs={2}>
-          <h1> {this.props.title} </h1>
+          <div className='steps-title'>{this.props.title}</div>
         </Col>
         <Col xs={2}>
           <ClientForm ref={(ref) => {this.baseForm = ref;}} >

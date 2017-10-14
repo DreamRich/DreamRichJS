@@ -7,6 +7,7 @@ import {FormsyText} from 'formsy-material-ui/lib';
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
 import '../stylesheet/RegisterForms.sass';
+import { Row, Col } from 'react-flexbox-grid';
 
 /*
 reference:
@@ -108,27 +109,30 @@ class DefFormsyDate extends Component {
 
     return (
       // Name will define which field will be submitted
-      <div style={{display: 'flex'}}>
-        <FormsyText
-          name='text'
-          id={this.props.name + '_field'}
-          style={{width:225, marginLeft: 20}}
-          disabled={this.isFormDisabled}
-          errorText={this.getErrorMessage}
-          value={this.state.dateText}
-          hintText="Ex: 01/01/1970"
-          validationError='Insira uma data válida'
-          validations={{
-            matchRegexp:/^(0?[1-9]|[12][0-9]|3[01])[\/](0?[1-9]|1[012])[\/]\d{4}$/
-          }}
-          requiredError={requiredError}
-          {...rest}
-        />
-
-      <IconButton style={{opacity:'0.65', marginTop:20}}
-        onClick={() => this.datePicker.focus()}>
-        <ActionDateRange />
-      </IconButton>
+      <Row>
+        <Col xs>
+          <FormsyText
+            name='text'
+            id={this.props.name + '_field'}
+            style={{width:225, marginLeft: 20}}
+            disabled={this.isFormDisabled}
+            errorText={this.getErrorMessage}
+            value={this.state.dateText}
+            hintText='Ex: 01/01/1970'
+            validationError='Insira uma data válida'
+            validations={{
+              matchRegexp:/^(0?[1-9]|[12][0-9]|3[01])[\/](0?[1-9]|1[012])[\/]\d{4}$/
+            }}
+            requiredError={requiredError}
+            {...rest}
+          />
+        </Col>
+        <Col xs>
+          <IconButton style={{opacity:'0.65'}}
+            onClick={() => this.datePicker.focus()}>
+            <ActionDateRange />
+          </IconButton>
+        </Col>
 
       <div>
         <DatePicker
@@ -141,15 +145,16 @@ class DefFormsyDate extends Component {
           default={defaultDate}
           container='inline'
           fullWidth
+          mode='landscape'
           autoOk
         />
-        <FormsyText 
+        <FormsyText
           name={name}
           className="Hidden"
           value={this.state.dateSubmit}
         />
       </div>
-    </div>
+    </Row>
     );
   }
 }

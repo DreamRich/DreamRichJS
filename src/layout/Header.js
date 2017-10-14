@@ -90,11 +90,14 @@ class Header extends React.Component {
       <div>
         <MuiThemeProvider muiTheme={muiTheme}>
           <AppBar
+            title="iRich"
             style={{...styles, ...style.appBar}}
             iconElementLeft={
-              <IconButton style={style.menuButton} onClick={handleChangeRequestNavDrawer}>
-                <Menu color={white} />
-              </IconButton>
+              <div>
+                <IconButton style={style.menuButton} onClick={handleChangeRequestNavDrawer}>
+                  <Menu color={white} />
+                </IconButton>
+              </div>
             }
             iconElementRight={
               <div onClick={this.handleOpenMenu}>

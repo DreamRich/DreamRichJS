@@ -1,6 +1,7 @@
 import React from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import ClientRegister from '../client/ClientRegister';
 import {
   Step,
   Stepper,
@@ -24,22 +25,38 @@ class StepperClient extends React.Component {
     switch (stepIndex) {
     case 0:
       return (
-        <p>
-         {'First form'}
-        </p>
+        <ClientRegister />
       );
 
     case 1:
       return (
         <p>
-          {'Second form'}
         </p>
       );
 
     case 2:
       return (
         <p>
-          {'Second form'}
+          {'2 form'}
+        </p>
+      );
+
+    case 3:
+      return (
+        <p>
+          {'3 form'}
+        </p>
+      );
+    case 4:
+      return (
+        <p>
+          {'4 form'}
+        </p>
+      );
+    case 5:
+      return (
+        <p>
+          {'5 form'}
         </p>
       );
     }
@@ -48,7 +65,7 @@ class StepperClient extends React.Component {
   handleNext() {
     const {stepIndex} = this.state;
 
-    if (stepIndex < 2) {
+    if (stepIndex < 6) {
       this.setState({stepIndex: stepIndex + 1});
     }
   }
@@ -65,18 +82,25 @@ class StepperClient extends React.Component {
     const {stepIndex} = this.state;
 
     return (
-      <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
+      <div style={{width: '100%', maxWidth: '80%', margin: 'auto'}}>
         <Stepper activeStep={stepIndex} connector={<ArrowForwardIcon />}>
           <Step>
-            <StepLabel>Passo 1</StepLabel>
+            <StepLabel>Cadastro Básico</StepLabel>
           </Step>
-
           <Step>
-            <StepLabel>Passo 2</StepLabel>
+            <StepLabel>Custos Fixos</StepLabel>
           </Step>
-
           <Step>
-            <StepLabel>Passo 3</StepLabel>
+            <StepLabel>Renda</StepLabel>
+          </Step>
+          <Step>
+            <StepLabel>Patrimônio</StepLabel>
+          </Step>
+          <Step>
+            <StepLabel>Proteção</StepLabel>
+          </Step>
+          <Step>
+            <StepLabel>Objetivos</StepLabel>
           </Step>
         </Stepper>
 
@@ -90,7 +114,7 @@ class StepperClient extends React.Component {
             style={{marginRight: 12}}
           />
           <RaisedButton
-            label={stepIndex === 2 ? 'Finish' : 'Next'}
+            label={stepIndex === 6 ? 'Finish' : 'Next'}
             primary={true}
             onClick={this.handleNext}
           />

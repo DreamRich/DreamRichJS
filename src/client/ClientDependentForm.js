@@ -58,7 +58,7 @@ class ClientDependentForm extends Component {
               parent_id={this.props.parent_id}>
                 <Row around="xs">
                   <Col xs={2}>
-                    <div className='steps-title'>Conta Bancária</div>
+                    <div className='steps-title'>Dependentes</div>
                   </Col>
                   <Col xs={2}>
                     <FormsyText
