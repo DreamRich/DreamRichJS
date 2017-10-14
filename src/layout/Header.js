@@ -9,7 +9,16 @@ import {white} from 'material-ui/styles/colors';
 import IconButton from 'material-ui/IconButton';
 import makeMenuItem from '../utils/makeMenuItem';
 import Menu from 'material-ui/svg-icons/navigation/menu';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+
+// TODO: Make css in a extern file
+const muiTheme = getMuiTheme({
+  appBar: {
+    color: '#2E4155'
+  },
+});
 
 class Header extends React.Component {
 
@@ -63,6 +72,7 @@ class Header extends React.Component {
 
     const style = {
       appBar: {
+        color: '#00cea5',
         position: 'fixed',
         top: 0,
         overflow: 'hidden',
@@ -78,31 +88,33 @@ class Header extends React.Component {
 
     return (
       <div>
-        <AppBar
-          style={{...styles, ...style.appBar}}
-          iconElementLeft={
-            <IconButton style={style.menuButton} onClick={handleChangeRequestNavDrawer}>
-              <Menu color={white} />
-            </IconButton>
-          }
-          iconElementRight={
-            <div onClick={this.handleOpenMenu}>
-              <IconMenu styles={style.iconsRightContainer}
-                iconButtonElement={<IconButton iconStyle={{color:'white'}}><MoreVertIcon /></IconButton>}
-                anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-                targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                onRequestChange={this.handleOnRequestChange}
-                open={this.state.openMenu}
-              >
-                <MenuItem>
-                  { !this.state.auth && makeMenuItem('allow_any','/login/','Login')}
-                  { this.state.auth && makeMenuItem('allow_any','/logout/','Sign out')}
-                </MenuItem>
-                  {makeMenuItem('allow_any','/login/changepassword','Change Password')}
-              </IconMenu>
-            </div>
-          }
-        />
+        <MuiThemeProvider muiTheme={muiTheme}>
+          <AppBar
+            style={{...styles, ...style.appBar}}
+            iconElementLeft={
+              <IconButton style={style.menuButton} onClick={handleChangeRequestNavDrawer}>
+                <Menu color={white} />
+              </IconButton>
+            }
+            iconElementRight={
+              <div onClick={this.handleOpenMenu}>
+                <IconMenu styles={style.iconsRightContainer}
+                  iconButtonElement={<IconButton iconStyle={{color:'white'}}><MoreVertIcon /></IconButton>}
+                  anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                  targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                  onRequestChange={this.handleOnRequestChange}
+                  open={this.state.openMenu}
+                >
+                  <MenuItem>
+                    { !this.state.auth && makeMenuItem('allow_any','/login/','Login')}
+                    { this.state.auth && makeMenuItem('allow_any','/logout/','Sign out')}
+                  </MenuItem>
+                    {makeMenuItem('allow_any','/login/changepassword','Change Password')}
+                </IconMenu>
+              </div>
+            }
+          />
+        </MuiThemeProvider>
       </div>
     );
   }

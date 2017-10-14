@@ -11,7 +11,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // TODO: Make css in a extern file
 const muiTheme = getMuiTheme({
   drawer: {
-    color: '#00cea5'
+    color: '#2E4155'
   },
 });
 
