@@ -11,8 +11,8 @@ export default class LoginPage extends Component{
   render(){
     return (
       <div>
-        <Title label = "DreamRich" />
-        <Subtitle label="Faça login" />
+        <Title  label = "iRich" />
+        <Subtitle style={{marginTop: '50px', marginBottom: '50px'}} label="Faça login" />
         <LoginForm />
         <Link to="/login/resetpassword" className="forgot-password">Esqueceu a senha?</Link>
       </div>

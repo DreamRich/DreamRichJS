@@ -72,7 +72,7 @@ export default class LoginForm extends Component{
           validationError={this.invalidMessage} />
 
         <br/><br/>
-        <RaisedButton primary label="ENTRAR" type="submit"/>
+        <RaisedButton backgroundColor='#324356' labelColor='#FFFFFF' label="ENTRAR" type="submit" style={{marginBottom: '30px', marginTop: '30px'}}/>
         <br/><br/>
       </Formsy.Form>
     );
