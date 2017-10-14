@@ -6,6 +6,7 @@ import {FormsyDate} from '../utils/FormsyComponents';
 import errorMessages from '../utils/FormsErrorMessages';
 import ClientSubForm from './ClientSubForm';
 import PropTypes from 'prop-types';
+import { Row, Col } from 'react-flexbox-grid';
 
 
 var {
@@ -48,39 +49,45 @@ class ClientDependentForm extends Component {
     console.log(this.state.dependents, this);
     return (
       <div>
-        {this.state.dependents.map(e => 
+        {this.state.dependents.map(e =>
           <div key={e}
           >
             <ClientSubForm
-              title="Dependente"
               name="dependent"
               parent_name='active_client_id'
               parent_id={this.props.parent_id}>
-              <div>
-                <FormsyText
-                  name="name"
-                  validations="isWords"
-                  validationError={wordsError}
-                  hintText="Nome do dependente"
-                  floatingLabelText="Nome"
-                />
-                <FormsyText
-                  name="surname"
-                  validations="isWords"
-                  validationError={wordsError}
-                  hintText="Sobrenome do dependente"
-                  floatingLabelText="Sobrenome"
-                />
-                <FormsyDate
-                  name="birthday"
-                  floatingLabelText="Data de Nascimento"
-                />
-              </div>
+                <Row around="xs">
+                  <Col xs={2}>
+                    <div className='steps-title'>Conta Bancária</div>
+                  </Col>
+                  <Col xs={2}>
+                    <FormsyText
+                      name="name"
+                      validations="isWords"
+                      validationError={wordsError}
+                      hintText="Nome do dependente"
+                      floatingLabelText="Nome"
+                    />
+                    <FormsyDate
+                      name="birthday"
+                      floatingLabelText="Data de Nascimento"
+                    />
+                  </Col>
+                  <Col xs={2}>
+                    <FormsyText
+                      name="surname"
+                      validations="isWords"
+                      validationError={wordsError}
+                      hintText="Sobrenome do dependente"
+                      floatingLabelText="Sobrenome"
+                    />
+                  </Col>
+                </Row>
             </ClientSubForm>
             <RaisedButton onClick={this.removeDependent.bind(this, e)}>Remove</RaisedButton>
           </div>
         )}
-        <RaisedButton onClick={this.addDependent}>add</RaisedButton>
+        <RaisedButton onClick={this.addDependent}>Add</RaisedButton>
       </div>
     );
   }
