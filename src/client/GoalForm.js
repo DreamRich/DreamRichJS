@@ -4,11 +4,10 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 //import routeMap from '../routes/RouteMap';
 //import Formsy from 'formsy-react';
-import {FormsyText} from 'formsy-material-ui/lib';
+import {FormsySelect, FormsyText , FormsyCheckbox, FormsyDate} from 'formsy-material-ui/lib';
 import errorMessages from '../utils/FormsErrorMessages';
 import ClientSubForm from './ClientSubForm';
 import MenuItem from 'material-ui/MenuItem';
-import {FormsySelect} from 'formsy-material-ui/lib';
 
 var {
   numericError,
@@ -20,8 +19,8 @@ export default class GoalForm extends Component {
   }
 
   getOptions = () => {
-    return this.props.types.map( (type) => 
-      <MenuItem key={type.id} value={type.id} primaryText={type.name} /> 
+    return this.props.types.map( (type) =>
+      <MenuItem key={type.id} value={type.id} primaryText={type.name} />
     );
   }
 
@@ -42,6 +41,33 @@ export default class GoalForm extends Component {
             >
               {this.getOptions()}
             </FormsySelect>
+            <FormsyCheckbox
+              name='has_end_date'
+              floatingLabelText='Tem fim?'
+            />
+            <div>
+              <FormsyDate
+                name='year_end'
+                floatingLabelText='Ano de início do objetivo'
+                openToYearSelection={true}
+                autoOk={true}
+                formatDate={(date)=>date.getUTCFullYear()}
+              />
+              <FormsyDate
+                name='year_end'
+                floatingLabelText='Ano de fim do objetivo'
+                openToYearSelection={true}
+                autoOk={true}
+                formatDate={(date)=>date.getUTCFullYear()}
+              />
+            </div>
+            <FormsyText
+              name="periodicity"
+              validations="isNumeric"
+              validationError={numericError}
+              hintText="0"
+              floatingLabelText="Valor"
+            />
             <FormsyText
               name="value"
               validations="isNumeric"
