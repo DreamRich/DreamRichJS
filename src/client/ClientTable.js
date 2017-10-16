@@ -38,6 +38,8 @@ export default class ClientTable extends GridTable {
   }
 
   getToolbar(){
-    return (<Toolbar enableFilter={true} />);
+    return (
+      <Toolbar enableFilter={true} />
+    );
   }
 }

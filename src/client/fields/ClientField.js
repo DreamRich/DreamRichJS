@@ -7,6 +7,7 @@ import ClientForm from '../ClientForm';
 import {FormsyDate} from '../../utils/FormsyComponents';
 import PropTypes from 'prop-types';
 import makeFormysTextList from '../../utils/MakeFormysTextList';
+import RaisedButton from 'material-ui/RaisedButton';
 
 var {
   wordsError,
@@ -49,6 +50,7 @@ export default class ClientField extends Component {
   render(){
     const formsyList = makeFormysTextList(dataClient,'clientform');
     return (
+      <Row>
       <Row around="xs">
         <Col xs={2}>
           <div className='steps-title'>{this.props.title}</div>
@@ -82,9 +84,20 @@ export default class ClientField extends Component {
           </IconButton>
         </Col>
       </Row>
+      <Row>
+        <RaisedButton
+          primary
+          type="submit"
+          label="Enviar"
+          onClick={() => this.baseForm.submit()}
+          disabled={!this.props.canSubmit}
+        />
+      </Row>
+      </Row>
     );
   }
 }
 ClientField.propTypes = {
   title: PropTypes.string,
+  canSubmit: PropTypes.bool,
 };

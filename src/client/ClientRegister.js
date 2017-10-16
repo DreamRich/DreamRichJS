@@ -56,7 +56,7 @@ class ClientRegister extends Component {
           parent_id={this.state.id}
         >
           <div>
-            <ClientField title='Cônjuge' />
+            <ClientField title='Cônjuge' canSubmit={this.state.canSubmit} />
             <RaisedButton onClick={this.switchSponse} >
               Remove Sponse
             </RaisedButton>
@@ -73,7 +73,7 @@ class ClientRegister extends Component {
         <div style={{width:'auto'}}>
           {this.getDivider()}
 
-          <ClientField title='Cliente' />
+          <ClientField title='Cliente' canSubmit={this.state.canSubmit} />
           {this.getDivider()}
           {sponseForm}
           {this.getDivider()}
@@ -89,13 +89,6 @@ class ClientRegister extends Component {
           />
           {this.getDivider()}
 
-        <RaisedButton
-            primary
-            type="submit"
-            label="Enviar"
-            onClick={() => this.baseForm.submit()}
-            disabled={!this.state.canSubmit}
-          />
         </div>
     );
   }

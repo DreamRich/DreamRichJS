@@ -41,6 +41,8 @@ export default class SidebarMenu extends React.Component {
               <PersonAdd color={white} />,styleText)}
             {makeMenuItem('allow_any','/goals','Goal',
               <PersonAdd color={white} />,styleText)}
+            {makeMenuItem('allow_any','/login','Login',
+              <PersonAdd color={white} />,styleText)}
           </Drawer>
         </MuiThemeProvider>
       </div>
