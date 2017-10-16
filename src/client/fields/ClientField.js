@@ -47,6 +47,11 @@ var dataClient = [
 ];
 
 export default class ClientField extends Component {
+
+  submit = () => {
+    this.baseForm.submit();
+  }
+
   render(){
     const formsyList = makeFormysTextList(dataClient,'clientform');
     return (

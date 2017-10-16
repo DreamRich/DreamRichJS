@@ -46,6 +46,10 @@ class ClientRegister extends Component {
     return (<Divider style={{marginTop: '50px', marginBottom: '30px'}} />);
   }
 
+  submit = () => {
+    this.form.submit();
+  }
+
   render() {
 
     const sponseForm = (
@@ -73,7 +77,7 @@ class ClientRegister extends Component {
         <div style={{width:'auto'}}>
           {this.getDivider()}
 
-          <ClientField title='Cliente' canSubmit={this.state.canSubmit} />
+          <ClientField title='Cliente' canSubmit={this.state.canSubmit} ref={ref => this.form = ref} />
           {this.getDivider()}
           {sponseForm}
           {this.getDivider()}
@@ -88,6 +92,8 @@ class ClientRegister extends Component {
             parent_id={this.state.id}
           />
           {this.getDivider()}
+
+          <RaisedButton onClick={this.submit} >submit</RaisedButton>
 
         </div>
     );
