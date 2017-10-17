@@ -56,7 +56,7 @@ export default class ResetForm extends Component{
     if(this.state.openSendedMessage){
       button = <RaisedButton primary label="RECUPERAR" type="submit" />;
     } else {
-      button = <RaisedButton primary label="LOGIN" type="submit" containerElement={<Link to="/login" />} />;
+      button = <RaisedButton primary label="LOGIN" containerElement={<Link to="/login" />} />;
     }
 
     return (
@@ -69,6 +69,7 @@ export default class ResetForm extends Component{
         validations={{isEmail: true, emailExist: true}}
         validationErrors={this.invalidMessage}
         required
+        disabled={!this.state.openSendedMessage}
         hintText="Informe seu email cadastrado"
         floatingLabelText="E-mail" />
         <br />
