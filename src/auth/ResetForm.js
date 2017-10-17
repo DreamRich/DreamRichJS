@@ -10,6 +10,7 @@ import PasswordStore from '../stores/PasswordStore';
 import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
 import Snackbar from 'material-ui/Snackbar';
+import CircularProgress from 'material-ui/CircularProgress';
 
 import {FormsyText} from 'formsy-material-ui/lib';
 
@@ -77,27 +78,31 @@ export default class ResetForm extends Component{
         {button}
       </Formsy.Form>);
   }
-  render(){
 
+  getHeader = () => {
     return (
       <div className="container">
         <div className="button-left">
           <FlatButton primary className="back-btn" label="VOLTAR"/>
         </div>
-        <section>
-          <Title style={{fontSize: '48px'}} label="Recuperação de senha" />
-          <Subtitle style={{fontSize: '22px', textAlign:'left'}} label={this.state.openSendedMessage? this.sendedMessage : this.unsendedMessage} />
-          <br />
-          {this.getForm()}
-          <br />
-          <Snackbar
-            open={this.state.snack}
-            message={this.state.message}
-            autoHideDuration={9000}
-            onRequestClose={() => AppDispatcher.dispatch({actionType: ActionType.PASSWORD.SNACKCLOSE})}
-          />
-        </section>
-      </div>
+        <Title style={{fontSize: '48px'}} label="Recuperação de senha" />
+        <Subtitle style={{fontSize: '22px', textAlign:'left'}} label={this.state.openSendedMessage? this.sendedMessage : this.unsendedMessage} />
+        <br />
+        {this.getForm()}
+        <br />
+      </div>);
+  }
+  render(){
+    const toRender = (this.state.send? <CircularProgress /> : this.getHeader());
+    return (
+      <section>
+        {toRender}
+        <Snackbar
+          open={this.state.snack}
+          message={this.state.message}
+          autoHideDuration={9000}
+          onRequestClose={() => AppDispatcher.dispatch({actionType: ActionType.PASSWORD.SNACKCLOSE})}/>
+      </section>
     );
   }
 }
