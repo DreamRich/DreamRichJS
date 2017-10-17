@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import './stylesheet/App.sass';
 import {Auth} from './auth/Auth';
+import AppDispatcher from './AppDispatcher';
+import ActionType from './actions/ActionType';
 
 import {Link} from 'react-router-dom';
 import {AuthorizedLink} from './routes/Router';
 import Routers from './routes/Routers';
 import RaisedButton from 'material-ui/RaisedButton';
 import AppStore from './stores/AppStore';
+import LoggerStore from './stores/LoggerStore'; // eslint-disable-line no-unused-vars
 
 class App extends Component {
 
@@ -21,6 +24,14 @@ class App extends Component {
 
   componentWillMount = () => {
     this.setState({ updateId: AppStore.addListener(this.handleUpdate) });
+    if(Auth.isAuthenticated()){
+      Auth.updateDate();
+      AppDispatcher.dispatch({
+        actionType: ActionType.REFRESH_LOGIN,
+        data: {token: Auth.getAuth()}
+      });
+    }
+
   }
 
   componentWillUnmount = () => {
@@ -42,15 +53,17 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-            <RaisedButton primary onClick={() => {Auth.authenticate({token: 'ok'}); }} label="simulate login" />
+          <RaisedButton primary onClick={() => {Auth.authenticate({token: 'ok'}); }} label="simulate login" />
           { this.state.auth && <div>{Auth.getAuth()}</div>}
-            <Link to="/">home </Link>
-            <Link to="/login">login </Link>
-            <AuthorizedLink to="/logout">logout </AuthorizedLink>
-            <AuthorizedLink to="/register/client">new client </AuthorizedLink>
-            <AuthorizedLink to="/login/changepassword">change </AuthorizedLink>
-            <AuthorizedLink to="/client">client </AuthorizedLink>
-            <AuthorizedLink to="/employee">employee </AuthorizedLink>
+          <Link to="/">home </Link>
+          { !this.state.auth && <Link to="/login">login </Link> }
+          { this.state.auth && <Link to="/logout">logout </Link> }
+          <AuthorizedLink permission="change_own_client_data" to="/register/client">new client </AuthorizedLink>
+          <AuthorizedLink permission="change_own_client_data" to="/register/fixed_cost">new fixed cost </AuthorizedLink>
+          <AuthorizedLink permission="allow_any" to="/login/changepassword">change </AuthorizedLink>
+          <AuthorizedLink permission="see_all_basic_client_data" to="/client">client </AuthorizedLink>
+          <AuthorizedLink permission="see_employee_data" to="/employee">employee </AuthorizedLink>
+          <AuthorizedLink permission="allow_any" to="/goals">goal </AuthorizedLink>
         </div>
         <div className="conteiner">
           <Routers />

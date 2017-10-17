@@ -15,11 +15,10 @@ export default class ResetForm extends Component{
 
   handleSubmit(){
     fetch('/api/auth/password/?email='+this.props.email)
-    .then((() => {
-      console.log('email send', this.state.send);
-      this.setState({send: true}); 
-    }).bind(this))
-    .catch((e) => {console.log('problem in email sending', e);});
+      .then((() => {
+        this.setState({send: true}); 
+      }).bind(this))
+      .catch((e) => {console.log('problem in email sending', e);});
   }
   render(){
     let button = null;
@@ -32,9 +31,9 @@ export default class ResetForm extends Component{
       <section>
         <Title label="Recuperação de senha"/>
         <Subtitle label={!this.state.send?'Informe o endereço de e-mail associado à sua conta e enviaremos instruções para a recuperação de sua senha.': 'Confira sua caixa de entrada. As instruções para a recuperação de sua senha foram enviadas para: '}  />
-      <br />
+        <br />
         <TextField disabled={this.state.send} floatingLabelText="E-MAIL" name="email" hintText="Seu e-mail cadastrado" />
-      <br />
+        <br />
         {button}
       </section>
     );

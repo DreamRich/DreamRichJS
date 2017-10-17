@@ -43,7 +43,7 @@ export default class GridTable extends Component {
     this.setState({ rows });
   }
 
-  componentWillMount(){ getData(this.getRoute(), this, 'rows');}
+  componentWillMount(){ getData(this.getRoute(), (data) => this.setState({rows: data}));}
 
   getRows() {
     return Data.Selectors.getRows(this.state);
@@ -77,7 +77,6 @@ export default class GridTable extends Component {
 
   handleSort(sortColumn, sortDirection){
     this.setState({ sortColumn: sortColumn, sortDirection: sortDirection });
-    console.log(this.state);
   }
 
   handleRequestClose(){

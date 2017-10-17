@@ -14,7 +14,6 @@ class LoginStore extends ReduceStore {
   reduce = (state, action) => {
     switch (action.actionType) {
     case ActionType.LOGIN.POST:
-      console.log(state, action);
       postData('/api/auth/',
         action.data,
         (data) => {
@@ -24,7 +23,7 @@ class LoginStore extends ReduceStore {
         () => {
           AppDispatcher.dispatch({actionType: ActionType.LOGIN.FAIL});
         }
-        );
+      );
       return state;
 
     case ActionType.LOGIN.FAIL:
@@ -33,8 +32,21 @@ class LoginStore extends ReduceStore {
     case ActionType.LOGOUT:
       Auth.deauthenticate();
       return state;
+
+    case ActionType.REFRESH_LOGIN:
+      postData('/api/auth/refresh/',
+        action.data,
+        (data) => {
+          AppDispatcher.dispatch({actionType: ActionType.LOGIN.SUCCESS,
+            data: data});
+        },
+        () => {
+          alert('Fail when try refresh token\nLogouting');
+          AppDispatcher.dispatch({actionType: ActionType.LOGOUT});
+        }
+      );
+      return state;
     default:
-      console.log(action);
       return state;
     }
   }

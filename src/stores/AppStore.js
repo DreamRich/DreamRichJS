@@ -14,15 +14,12 @@ class AppStore extends ReduceStore {
   reduce = (state, action) => {
     switch (action.actionType) {
     case ActionType.LOGIN.SUCCESS:
-      console.log(state, action);
       Auth.authenticate(action.data);
       return {auth: true};
     case ActionType.LOGOUT:
-      console.log(LoginStore.getDispatchToken());
       AppDispatcher.waitFor([LoginStore.getDispatchToken()]);
       return {auth: false};
     default:
-      console.log(action);
       return state;
     }
   }

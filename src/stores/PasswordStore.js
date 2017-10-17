@@ -46,7 +46,6 @@ class PasswordStore extends ReduceStore {
   reduce = (state, action) => {
     switch (action.actionType) {
     case ActionType.PASSWORD.CHANGE:
-      console.log(state, action);
       postData('/api/auth/password/',
         action.data,
         () => {},
@@ -60,7 +59,7 @@ class PasswordStore extends ReduceStore {
           AppDispatcher.dispatch({actionType: ActionType.PASSWORD.SUCCESS,
             data: state});
         }
-        );
+      );
       return {...state, send: true};
 
     case ActionType.PASSWORD.RESET:
@@ -106,7 +105,6 @@ class PasswordStore extends ReduceStore {
       return {...this.getInitialState()};
 
     default:
-      console.log(action);
       return state;
     }
   }

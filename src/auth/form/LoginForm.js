@@ -34,15 +34,7 @@ export default class LoginForm extends Component{
     this.state.listener.remove();
   }
 
-
-
-  componentDidUpdate(){
-    console.log('e');
-  //  this.form.validateForm();
-  }
-
   handleSubmit(data){
-    console.log(data);
     AppDispatcher.dispatch({
       actionType: ActionType.LOGIN.POST,
       data: data,

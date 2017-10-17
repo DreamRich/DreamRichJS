@@ -13,7 +13,7 @@ export default class Employeer extends Component {
         headers: Auth.getHeader(),
       }
     ).then((e) => e.json()) 
-     .then((e) => console.log(e));
+      .then((e) => console.log(e));
   }
 
   render() {
@@ -21,7 +21,7 @@ export default class Employeer extends Component {
       <Form onValidSubmit={this.submit}
         onValid={() => true}
         onInvalid={() => true}
-        onInvalidSubmit={() => console.log('Deu ruim')}
+        onInvalidSubmit={() => console.log('problem')}
       >
         <FormsyText
           name='fgts'
