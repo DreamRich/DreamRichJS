@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-//import AppDispatcher from '../AppDispatcher';
-//import ActionType from '../actions/ActionType';
+import AppDispatcher from '../AppDispatcher';
+import ActionType from '../actions/ActionType';
 import PropTypes from 'prop-types';
 //import routeMap from '../routes/RouteMap';
 //import Formsy from 'formsy-react';
-import {FormsySelect, FormsyText , FormsyCheckbox, FormsyDate} from 'formsy-material-ui/lib';
+import {FormsySelect, FormsyText , FormsyToggle/*, FormsyDate*/} from 'formsy-material-ui/lib';
 import errorMessages from '../utils/FormsErrorMessages';
 import ClientSubForm from './ClientSubForm';
 import MenuItem from 'material-ui/MenuItem';
@@ -25,55 +25,63 @@ export default class GoalForm extends Component {
     );
   }
 
+  onChangeHasEnd = (event, value) => {
+    AppDispatcher.dispatch({
+      actionType: ActionType.GOAL.HASEND,
+      hasEnd: value
+    });
+  }
+
   render = () => {
     return (
       <div>
         <ClientSubForm
-          name="regular_cost"
+          name="goal"
+          action={ActionType.GOAL.SUBFORM}
           parent_id={this.props.id}
-          parent_name='cost_manager_id'
-          title="cost"
+          parent_name='goal_manager_id'
+          title="Goal"
         >
           <div>
             <FormsySelect
-              name="cost_type_id"
+              name="goal_type_id"
               floatingLabelText="Tipo"
               maxHeight={300}
             >
               {this.getOptions()}
             </FormsySelect>
-            <FormsyCheckbox
+            <FormsyToggle
               name='has_end_date'
-              floatingLabelText='Tem fim?'
+              label='Tem fim?'
+              labelPosition='left'
+              onChange={this.onChangeHasEnd}
             />
             <div>
-              <FormsyDate
-                name='year_end'
+              <FormsyText
+                name='year_init'
                 floatingLabelText='Ano de início do objetivo'
-                openToYearSelection={true}
-                autoOk={true}
-                formatDate={(date)=>date.getUTCFullYear()}
+                validations="isNumeric"
+                validationError={numericError}
               />
-              <FormsyDate
+              {this.props.hasEndDate && <FormsyText
                 name='year_end'
                 floatingLabelText='Ano de fim do objetivo'
-                openToYearSelection={true}
-                autoOk={true}
-                formatDate={(date)=>date.getUTCFullYear()}
-              />
+                validations="isNumeric"
+                validationError={numericError}
+              /> }
             </div>
             <FormsyText
               name="periodicity"
               validations="isNumeric"
               validationError={numericError}
-              hintText="0"
-              floatingLabelText="Valor"
+              hintText="Em anos. Ex: 10"
+              floatingLabelText="Periodicidade"
             />
             <FormsyText
               name="value"
               validations="isNumeric"
               validationError={numericError}
-              hintText="000.00"
+              hintText="Valor em R$. Ex.: 000.00"
               floatingLabelText="Valor"
             />
           </div>
@@ -86,4 +94,5 @@ export default class GoalForm extends Component {
 GoalForm.propTypes = {
   id: PropTypes.number,
   types: PropTypes.array,
+  hasEndDate: PropTypes.bool,
 };

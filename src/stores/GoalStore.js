@@ -14,7 +14,8 @@ class GoalStore extends ReduceStore {
       goals: [0],
       idx: 1,
       id: undefined,
-      types: []
+      types: [],
+      hasEndDate: false
     };
   }
 
@@ -33,7 +34,9 @@ class GoalStore extends ReduceStore {
       };
 
     case ActionType.GOAL.MANAGER:
-      postData('/api/financial_planning/costmanager/',{},
+      postData(
+        routeMap.goal_manager,
+        {},
         (data) => AppDispatcher.dispatch({
           actionType: ActionType.GOAL.SUCCESS,
           id: data.id
@@ -45,7 +48,8 @@ class GoalStore extends ReduceStore {
       return {...state, id: action.id};
 
     case ActionType.GOAL.TYPE:
-      getData('/api/goal/goal_type/',
+      getData(
+        routeMap.goal_type,
         (data) => AppDispatcher.dispatch({
           actionType: ActionType.GOAL.TYPESUCCESS,
           types: data
@@ -55,6 +59,13 @@ class GoalStore extends ReduceStore {
 
     case ActionType.GOAL.TYPESUCCESS:
       return {...state, types: action.types};
+
+    case ActionType.GOAL.HASEND:
+      return {...state, hasEndDate: action.hasEnd};
+
+    case ActionType.GOAL.SUBFORM:
+      postData(action.route, action.data, (e) => console.log(e));
+      return state;
 
     default:
       return state;

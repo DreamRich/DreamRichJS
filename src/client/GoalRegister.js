@@ -66,6 +66,7 @@ class GoalRegister extends Component {
               <GoalForm
                 id={this.state.id}
                 types={this.state.types}
+                hasEndDate={this.state.hasEndDate}
               />
 
               <RaisedButton

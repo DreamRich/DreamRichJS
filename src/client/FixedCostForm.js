@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 //import AppDispatcher from '../AppDispatcher';
-//import ActionType from '../actions/ActionType';
+import ActionType from '../actions/ActionType';
 import PropTypes from 'prop-types';
 //import routeMap from '../routes/RouteMap';
 //import Formsy from 'formsy-react';

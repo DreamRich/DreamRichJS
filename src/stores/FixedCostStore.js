@@ -59,6 +59,10 @@ class FixedCostStore extends ReduceStore {
     case ActionType.FIXEDCOST.TYPESUCCESS:
       return {...state, types: action.types};
 
+    case ActionType.FIXEDCOST.SUBFORM:
+      postData(action.route, action.data, (e) => console.log(e));
+      return state;
+
     default:
       return state;
     }
