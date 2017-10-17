@@ -4,6 +4,7 @@ import {ReduceStore} from 'flux/utils';
 import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
 import {postData, getData} from '../resources/Requests';
+import {/*getUrl, */routeMap} from '../routes/RouteMap';
 
 class FixedCostStore extends ReduceStore {
   constructor(){ super(AppDispatcher); }
@@ -32,7 +33,9 @@ class FixedCostStore extends ReduceStore {
       };
 
     case ActionType.FIXEDCOST.MANAGER:
-      postData('/api/financial_planning/costmanager/',{},
+      postData(
+        routeMap.cost_manager,
+        {},
         (data) => AppDispatcher.dispatch({
           actionType: ActionType.FIXEDCOST.SUCCESS,
           id: data.id
@@ -44,7 +47,8 @@ class FixedCostStore extends ReduceStore {
       return {...state, id: action.id};
 
     case ActionType.FIXEDCOST.TYPE:
-      getData('/api/financial_planning/costtype/',
+      getData(
+        routeMap.cost_type,
         (data) => AppDispatcher.dispatch({
           actionType: ActionType.FIXEDCOST.TYPESUCCESS,
           types: data

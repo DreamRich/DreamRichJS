@@ -14,6 +14,7 @@ import '../stylesheet/RegisterForms.sass';
 import ClientSubForm from './ClientSubForm';
 import ClientForm from './ClientForm';
 import ClientDependentForm from './ClientDependentForm';
+import ActionType from '../actions/ActionType';
 
 var {
   wordsError,
@@ -211,8 +212,9 @@ class ClientRegister extends Component {
     const sponseForm = (
       this.state.sponse ? (
         <ClientSubForm
-          title="Cônjuge"
           name="client"
+          action={ActionType.CLIENT.SUBFORM}
+          title="Cônjuge"
           parent_name="active_client_id"
           parent_id={this.state.id}
         >
@@ -247,8 +249,9 @@ class ClientRegister extends Component {
           {sponseForm}
 
           <ClientSubForm
-            title='Endereço'
             name='address'
+            action={ActionType.CLIENT.SUBFORM}
+            title='Endereço'
             parent_name='active_client_id'
             parent_id={this.state.id}
           >
@@ -332,8 +335,9 @@ class ClientRegister extends Component {
           </ClientSubForm>
 
           <ClientSubForm
-            title="Conta Bancária"
             name="bank_account"
+            title="Conta Bancária"
+            action={ActionType.CLIENT.SUBFORM}
             parent_name='active_client_id'
             parent_id={this.state.id}
           >

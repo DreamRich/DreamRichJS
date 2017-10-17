@@ -6,6 +6,7 @@ import {FormsyDate} from '../utils/formsyComponents/FormsyComponents';
 import errorMessages from '../utils/FormsErrorMessages';
 import ClientSubForm from './ClientSubForm';
 import PropTypes from 'prop-types';
+import ActionType from '../actions/ActionType';
 
 
 var {
@@ -50,8 +51,9 @@ class ClientDependentForm extends Component {
           <div key={e}
           >
             <ClientSubForm
-              title="Dependente"
               name="dependent"
+              action={ActionType.CLIENT.SUBFORM}
+              title="Dependente"
               parent_name='active_client_id'
               parent_id={this.props.parent_id}>
               <div>

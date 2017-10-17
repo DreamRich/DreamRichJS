@@ -12,6 +12,7 @@ import MenuItem from 'material-ui/MenuItem';
 var {
   numericError,
 } = errorMessages;
+
 export default class GoalForm extends Component {
 
   constructor(props){

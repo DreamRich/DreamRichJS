@@ -30,6 +30,7 @@ export default class FixedCostForm extends Component {
       <div>
         <ClientSubForm
           name="regular_cost"
+          action={ActionType.FIXEDCOST.SUBFORM}
           parent_id={this.props.id}
           parent_name='cost_manager_id'
           title="cost"

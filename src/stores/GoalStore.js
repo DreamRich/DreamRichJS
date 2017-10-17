@@ -4,6 +4,7 @@ import {ReduceStore} from 'flux/utils';
 import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
 import {postData, getData} from '../resources/Requests';
+import {/*getUrl, */routeMap} from '../routes/RouteMap';
 
 class GoalStore extends ReduceStore {
   constructor(){ super(AppDispatcher); }
