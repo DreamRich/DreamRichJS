@@ -1,15 +1,17 @@
 const routeMap = {
+  active_client: '/api/client/active/',
   client: '/api/client/',
   address: '/api/client/address/',
-  state: '/api/client/state/',
-  country: '/api/client/country/',
   bank_account: '/api/client/bank-account/',
+  country: '/api/client/country/',
   dependent: '/api/client/dependent/',
-  active_client: '/api/client/active/',
-  regular_cost: '/api/financial_planning/regularcost/',
-};
-
-const goalRouters = {
+  goal: '/api/goal/goal/',
+  goal_manager: '/api/goal/goal_manager/',
+  goal_type: '/api/goal/goal_type/',
+  cost_type: '/api/financial_planning/cost_type/',
+  regular_cost: '/api/financial_planning/regular_cost/',
+  cost_manager: '/api/financial_planning/cost_manager/',
+  state: '/api/client/state/',
   goals_flow_dic:  '/api/goal/dic/1/',
 };
 
@@ -57,7 +59,7 @@ function getUrl(route, format=''){
 
   var url = '';
 
-  if(format.length > 0){
+  if(format && format.length > 0){
     try {
       url = getUrlWithFormat(route, format);
     } catch(err){
@@ -66,9 +68,8 @@ function getUrl(route, format=''){
   } else {
     url = routeMap[route];
   }
-
   return url;
 }
 
 
-export {getUrl, routeMap, goalRouters};
+export {getUrl, routeMap};
