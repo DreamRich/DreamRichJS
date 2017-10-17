@@ -3,7 +3,7 @@
 import {ReduceStore} from 'flux/utils';
 import AppDispatcher from '../AppDispatcher';
 import {postData} from '../resources/Requests';
-import {getRealData} from '../resources/Requests';
+import {getData} from '../resources/Requests';
 import ActionType from '../actions/ActionType';
 
 class PasswordStore extends ReduceStore {
@@ -64,8 +64,8 @@ class PasswordStore extends ReduceStore {
 
     case ActionType.PASSWORD.RESET:
       console.log(state, action);
-      getRealData('/api/auth/password/',
-        action.data,
+      getData('/api/auth/password/?email='+action.data.email,
+        () => {},
         (responseStatus) => {
           state = this.buildResetFormMessage(responseStatus, state);
           AppDispatcher.dispatch({actionType: ActionType.PASSWORD.SUCCESS,
@@ -75,7 +75,8 @@ class PasswordStore extends ReduceStore {
           state = this.buildResetFormMessage(responseStatus, state);
           AppDispatcher.dispatch({actionType: ActionType.PASSWORD.FAIL,
             data: state});
-        }
+        },
+        false
       );
       return {...state, send: true, emailExist: true};
 

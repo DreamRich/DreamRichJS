@@ -64,17 +64,17 @@ export default class ResetForm extends Component{
         onValidSubmit={this.handleSubmit}
         onInvalid={() => {this.setState({emailExist: true});}}
       >
-      <FormsyText type="text"
-        name="email"
-        validations={{isEmail: true, emailExist: true}}
-        validationErrors={this.invalidMessage}
-        required
-        disabled={!this.state.openSendedMessage}
-        hintText="Informe seu email cadastrado"
-        floatingLabelText="E-mail" />
+        <FormsyText type="text"
+          name="email"
+          validations={{isEmail: true, emailExist: true}}
+          validationErrors={this.invalidMessage}
+          required
+          disabled={!this.state.openSendedMessage}
+          hintText="Informe seu email cadastrado"
+          floatingLabelText="E-mail" />
         <br />
         <br />
-      {button}
+        {button}
       </Formsy.Form>);
   }
   render(){
@@ -87,15 +87,15 @@ export default class ResetForm extends Component{
         <section>
           <Title style={{fontSize: '48px'}} label="Recuperação de senha" />
           <Subtitle style={{fontSize: '22px', textAlign:'left'}} label={this.state.openSendedMessage? this.sendedMessage : this.unsendedMessage} />
-        <br />
+          <br />
           {this.getForm()}
-        <br />
-        <Snackbar
-          open={this.state.snack}
-          message={this.state.message}
-          autoHideDuration={9000}
-          onRequestClose={() => AppDispatcher.dispatch({actionType: ActionType.PASSWORD.SNACKCLOSE})}
-        />
+          <br />
+          <Snackbar
+            open={this.state.snack}
+            message={this.state.message}
+            autoHideDuration={9000}
+            onRequestClose={() => AppDispatcher.dispatch({actionType: ActionType.PASSWORD.SNACKCLOSE})}
+          />
         </section>
       </div>
     );

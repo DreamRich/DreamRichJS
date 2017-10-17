@@ -30,28 +30,24 @@ const request = (url, meta, handleData=noneFunction, handleOk=noneFunction, hand
     .catch((error) => {console.error(error);});
 };
 
-const getData = (url, handleData=noneFunction) => {
-  request(url, {
-    method: methods.GET,
-    headers: getAuthenticatedHeader(),
-  }, handleData);
-};
-
-const getRealData = (url, data, handleOk=noneFunction, handleFail=noneFunction) => {
-  for(let [key, value] of Object.entries(data)){
-    url = url + '?' + key + '=' + value;
-  }
-  request(url,
-    {
+const getData = (url, handleData=noneFunction, handleOk=noneFunction, handleFail=noneFunction, requireAuthentication=true) => {
+  var meta;
+  if(requireAuthentication){
+    meta = {
       method: methods.GET,
-    },
-    noneFunction,
-    (response) => {
-      handleOk(response);
-    },
-    (response) => {
-      handleFail(response);
-    });
+      headers: getAuthenticatedHeader()
+    };
+  } else {
+    meta = {
+      method: methods.GET
+    };
+  }
+  request(
+    url,
+    meta,
+    handleData,
+    handleOk,
+    handleFail);
 };
 
 const postData = (url, data, handleData=noneFunction, handleFail=noneFunction, handleOk=noneFunction) => {
@@ -87,4 +83,4 @@ const deleteData = (url, handleOk) => {
   );
 };
 
-export {getData, postData, putData, deleteData, getRealData};
+export {getData, postData, putData, deleteData};
