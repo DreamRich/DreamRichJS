@@ -6,60 +6,64 @@ import ActionType from '../actions/ActionType';
 import {postData, getData} from '../resources/Requests';
 import {/*getUrl, */routeMap} from '../routes/RouteMap';
 
-class FixedCostStore extends ReduceStore {
+class GoalStore extends ReduceStore {
   constructor(){ super(AppDispatcher); }
 
   getInitialState(){
     return {
-      costs: [0],
+      goals: [0],
       idx: 1,
       id: undefined,
-      types: []
+      types: [],
+      hasEndDate: false
     };
   }
 
   reduce = (state, action) => {
     let new_array;
     switch (action.actionType) {
-    case ActionType.FIXEDCOST.ADD:
-      new_array = state.costs.slice();
+    case ActionType.GOAL.ADD:
+      new_array = state.goals.slice();
       new_array.push(state.idx);
-      return {...state, costs: new_array, idx: state.idx + 1};
+      return {...state, goals: new_array, idx: state.idx + 1};
 
-    case ActionType.FIXEDCOST.REMOVE:
-      new_array = state.costs.slice();
+    case ActionType.GOAL.REMOVE:
+      new_array = state.goals.slice();
       return {...state,
-        costs: new_array.filter( element => element !== action.key )
+        goals: new_array.filter( element => element !== action.key )
       };
 
-    case ActionType.FIXEDCOST.MANAGER:
+    case ActionType.GOAL.MANAGER:
       postData(
-        routeMap.cost_manager,
+        routeMap.goal_manager,
         {},
         (data) => AppDispatcher.dispatch({
-          actionType: ActionType.FIXEDCOST.SUCCESS,
+          actionType: ActionType.GOAL.SUCCESS,
           id: data.id
         })
       );
       return state;
 
-    case ActionType.FIXEDCOST.SUCCESS:
+    case ActionType.GOAL.SUCCESS:
       return {...state, id: action.id};
 
-    case ActionType.FIXEDCOST.TYPE:
+    case ActionType.GOAL.TYPE:
       getData(
-        routeMap.cost_type,
+        routeMap.goal_type,
         (data) => AppDispatcher.dispatch({
-          actionType: ActionType.FIXEDCOST.TYPESUCCESS,
+          actionType: ActionType.GOAL.TYPESUCCESS,
           types: data
         })
       );
       return state;
 
-    case ActionType.FIXEDCOST.TYPESUCCESS:
+    case ActionType.GOAL.TYPESUCCESS:
       return {...state, types: action.types};
 
-    case ActionType.FIXEDCOST.SUBFORM:
+    case ActionType.GOAL.HASEND:
+      return {...state, hasEndDate: action.hasEnd};
+
+    case ActionType.GOAL.SUBFORM:
       postData(action.route, action.data, (e) => console.log(e));
       return state;
 
@@ -69,4 +73,5 @@ class FixedCostStore extends ReduceStore {
   }
 }
 
-export default new FixedCostStore();
+export default new GoalStore();
+

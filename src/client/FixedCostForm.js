@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 //import AppDispatcher from '../AppDispatcher';
-//import ActionType from '../actions/ActionType';
+import ActionType from '../actions/ActionType';
 import PropTypes from 'prop-types';
 //import routeMap from '../routes/RouteMap';
 //import Formsy from 'formsy-react';
@@ -30,6 +30,7 @@ export default class FixedCostForm extends Component {
       <div>
         <ClientSubForm
           name="regular_cost"
+          action={ActionType.FIXEDCOST.SUBFORM}
           parent_id={this.props.id}
           parent_name='cost_manager_id'
           title="cost"

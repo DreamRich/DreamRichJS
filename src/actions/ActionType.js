@@ -27,6 +27,17 @@ const actionTypes = {
     SUCCESS: 'fixed_cost/form_success',
     TYPE: 'fixed_cost/types',
     TYPESUCCESS: 'fixed_cost/types_success',
+    SUBFORM: 'fixed_cost/create_subforms',
+  },
+  GOAL:{
+    ADD: 'goal/add',
+    REMOVE: 'goal/remove',
+    MANAGER: 'goal/submit_form',
+    SUCCESS: 'goal/form_success',
+    TYPE: 'goal/types',
+    TYPESUCCESS: 'goal/types_success',
+    HASEND: 'goal/form_toggle',
+    SUBFORM: 'goal/create_subforms',
   },
 };
 
