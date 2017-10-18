@@ -13,6 +13,7 @@ const routeMap = {
   cost_manager: '/api/financial_planning/cost_manager/',
   state: '/api/client/state/',
   goals_flow_dic:  '/api/goal/dic/1/',
+  patrimony: '/api/patrimony/',
 };
 
 const valid_formats = ['json', 'html', 'xml'];

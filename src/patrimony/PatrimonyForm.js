@@ -2,18 +2,31 @@ import React, {Component} from 'react';
 import {Form} from 'formsy-react';
 import {FormsyText} from 'formsy-material-ui/lib';
 import {Auth} from '../auth/Auth';
+import ActionType from '../../actions/ActionType';
+import PatrimonyStore from '../stores/PatrimonyStore.js';
 
 export default class PatrimonyForm extends Component {
 
+  componentWillMount = () => {
+    this.setState({
+      ...PatrimonyStore.getState(),
+      listener: PatrimonyStore.addListener(this.handleUpdate)
+    });
+  }
+
+  componentWillUnmount = () => {
+    this.state.listener.remove();
+  }
+
+  handleUpdate = () => {
+    this.setState(PatrimonyStore.getState());
+  }
+
   submit = (data) => {
-    fetch('/api/patrimony/',
-      {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: Auth.getHeader(),
-      }
-    ).then((e) => e.json()) 
-      .then((e) => console.log(e));
+    AppDispatcher.dispatch({
+      actionType: ActionType.PATRIMONY,
+      data: data,
+    });
   }
 
   submitForm = () => {

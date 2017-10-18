@@ -39,6 +39,8 @@ const actionTypes = {
     HASEND: 'goal/form_toggle',
     SUBFORM: 'goal/create_subforms',
   },
+  PATRIMONY: {
+  }
 };
 
 export default actionTypes;
