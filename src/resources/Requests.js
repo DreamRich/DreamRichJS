@@ -30,14 +30,27 @@ const request = (url, meta, handleData=noneFunction, handleOk=noneFunction, hand
     .catch((error) => {console.error(error);});
 };
 
-const getData = (url, handleData=noneFunction) => {
-  request(url, {
-    method: methods.GET,
-    headers: getAuthenticatedHeader(),
-  }, handleData);
+const getData = (url, handleData=noneFunction, handleOk=noneFunction, handleFail=noneFunction, requireAuthentication=true) => {
+  var meta;
+  if(requireAuthentication){
+    meta = {
+      method: methods.GET,
+      headers: getAuthenticatedHeader()
+    };
+  } else {
+    meta = {
+      method: methods.GET
+    };
+  }
+  request(
+    url,
+    meta,
+    handleData,
+    handleOk,
+    handleFail);
 };
 
-const postData = (url, data, handleData=noneFunction, handleFail=noneFunction) => {
+const postData = (url, data, handleData=noneFunction, handleFail=noneFunction, handleOk=noneFunction) => {
   request(url,
     {
       method: methods.POST,
@@ -45,7 +58,9 @@ const postData = (url, data, handleData=noneFunction, handleFail=noneFunction) =
       body: JSON.stringify(data),
     },
     handleData,
-    noneFunction,
+    (response) => {
+      handleOk(response);
+    },
     (response) => {
       handleFail(response);
     });

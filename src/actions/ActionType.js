@@ -11,7 +11,8 @@ const actionTypes = {
     SUCCESS: 'password/success',
     FAIL: 'password/fail',
     RESET: 'password/reset',
-    SNACKCLOSE: 'password/snack'
+    SNACKCLOSE: 'password/snack',
+    UNMOUNT: 'password/unmount'
   },
   CLIENT: {
     ACTIVE: 'client/create_active',
