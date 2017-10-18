@@ -3,9 +3,9 @@ import {Form} from 'formsy-react';
 import {FormsyText} from 'formsy-material-ui/lib';
 import {Auth} from '../auth/Auth';
 
-export default class Employeer extends Component {
+export default class PatrimonyForm extends Component {
 
-  submit(data){
+  submit = (data) => {
     fetch('/api/patrimony/',
       {
         method: 'POST',
@@ -16,12 +16,14 @@ export default class Employeer extends Component {
       .then((e) => console.log(e));
   }
 
-  render() {
+  submitForm = () => {
+    this.form.submit();
+  }
+
+  render = () => {
     return (
       <Form onValidSubmit={this.submit}
-        onValid={() => true}
-        onInvalid={() => true}
-        onInvalidSubmit={() => console.log('problem')}
+        ref={ref => this.form = ref}
       >
         <FormsyText
           name='fgts'
