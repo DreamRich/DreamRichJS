@@ -42,6 +42,7 @@ const actionTypes = {
   PATRIMONY: {
     FORM: 'patrimony/create_form',
     SUBFORM: 'patrimony/create_subforms',
+    SUCCESS: 'patrimony/success',
   }
 };
 

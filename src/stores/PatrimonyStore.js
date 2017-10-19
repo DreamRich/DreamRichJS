@@ -28,6 +28,13 @@ class PatrimonyStore extends ReduceStore {
       );
       return state;
 
+    case ActionType.PATRIMONY.SUBFORM:
+      postData(
+        action.route,
+        action.data
+      );
+      return state;
+
     case ActionType.PATRIMONY.SUCCESS:
       return {...state, id: action.id};
 
