@@ -59,10 +59,16 @@
     "webpack-dev-server": "2.9.1"
   },
   "scripts": {
+    "preinstall": "npm run dreamrich",
+    "preuninstall": "npm run dreamrich",
+    "pretest": "npm run dreamrich",
+    "prestart": "npm run dreamrich",
+    "prebuild": "npm run dreamrich",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "coveralls": "npm test -- --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "coveralls": "npm test -- --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "dreamrich": "cat ./dreamrich"
   },
   "proxy": {
     "/api": {
