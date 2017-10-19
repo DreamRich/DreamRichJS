@@ -14,6 +14,7 @@ const routeMap = {
   state: '/api/client/state/',
   goals_flow_dic:  '/api/goal/dic/1/',
   patrimony: '/api/patrimony/',
+  active: '/api/patrimony/active/',
 };
 
 const valid_formats = ['json', 'html', 'xml'];

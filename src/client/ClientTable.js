@@ -1,7 +1,7 @@
-/** This file implements a Grid table defined in src/layout
+/** This file implements a Grid table defined in src/component
  * Only override the necessary methods to it work.
  */
-import GridTable from '../layout/GridTable';
+import GridTable from '../components/GridTable';
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {Toolbar} from 'react-data-grid-addons';

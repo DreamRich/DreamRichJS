@@ -1,7 +1,7 @@
 // import {Link} from 'react-router-dom';
 import React from 'react';
 import {Toolbar} from 'react-data-grid-addons';
-import GridTable from '../layout/GridTable';
+import GridTable from '../components/GridTable';
 import FlatButton from 'material-ui/FlatButton';
 import {putData, postData, deleteData} from '../resources/Requests';
 

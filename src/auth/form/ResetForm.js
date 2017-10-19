@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Title from '../layout/Title';
-import Subtitle from '../layout/Subtitle';
+import Title from '../components/Title';
+import Subtitle from '../components/Subtitle';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import {Link} from 'react-router-dom';
