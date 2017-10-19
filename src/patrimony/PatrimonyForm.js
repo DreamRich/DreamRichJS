@@ -4,7 +4,6 @@ import {FormsyText} from 'formsy-material-ui/lib';
 import ActionType from '../actions/ActionType';
 import AppDispatcher from '../AppDispatcher';
 import PatrimonyStore from '../stores/PatrimonyStore';
-import RaisedButton from 'material-ui/RaisedButton';
 
 export default class PatrimonyForm extends Component {
 
@@ -25,7 +24,7 @@ export default class PatrimonyForm extends Component {
 
   submit = (data) => {
     AppDispatcher.dispatch({
-      actionType: ActionType.PATRIMONY,
+      actionType: ActionType.PATRIMONY.FORM,
       data: data,
     });
   }
@@ -46,7 +45,6 @@ export default class PatrimonyForm extends Component {
           hintText='O quanto você recebe de fgts?'
           floatingLabelText='FGTS'
         />
-        <RaisedButton type='submit' primary label="Enviar" />
       </Form>
     );
   }

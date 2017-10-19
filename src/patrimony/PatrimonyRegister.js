@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Paper from 'material-ui/Paper';
 import PatrimonyForm from './PatrimonyForm';
+import RaisedButton from 'material-ui/RaisedButton';
 
 export default class PatrimonyRegister extends Component {
 
@@ -17,6 +18,7 @@ export default class PatrimonyRegister extends Component {
           <PatrimonyForm
             ref={ref=>this.form=ref}
           />
+          <RaisedButton type='submit' primary label="Enviar" />
         </Paper>
       </div>
     );

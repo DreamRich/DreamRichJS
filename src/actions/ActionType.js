@@ -40,6 +40,8 @@ const actionTypes = {
     SUBFORM: 'goal/create_subforms',
   },
   PATRIMONY: {
+    FORM: 'patrimony/create_form',
+    SUBFORM: 'patrimony/create_subforms',
   }
 };
 
