@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {Form} from 'formsy-react';
 import {FormsyText} from 'formsy-material-ui/lib';
-import {Auth} from '../auth/Auth';
-import ActionType from '../../actions/ActionType';
-import PatrimonyStore from '../stores/PatrimonyStore.js';
+import ActionType from '../actions/ActionType';
+import AppDispatcher from '../AppDispatcher';
+import PatrimonyStore from '../stores/PatrimonyStore';
+import RaisedButton from 'material-ui/RaisedButton';
 
 export default class PatrimonyForm extends Component {
 
@@ -45,7 +46,7 @@ export default class PatrimonyForm extends Component {
           hintText='O quanto você recebe de fgts?'
           floatingLabelText='FGTS'
         />
-        <button type='submit'>x</button>
+        <RaisedButton type='submit' primary label="Enviar" />
       </Form>
     );
   }

@@ -31,7 +31,7 @@ export default class Routers extends Component{
         <AuthorizedRoute permission="allow_any" path="/goals" component={ GoalChart } />
 
         <Route path="/login/resetpassword" render={ () => <ResetForm email="marcelohpf@hotmail.com" /> } />
-        <Route path="/patrimony" component={ PatrimonyRegister } />
+        <Route path="/register/patrimony" component={ PatrimonyRegister } />
         <Route component={ NotFoundRoute } />
       </Switch>
     );

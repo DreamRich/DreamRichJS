@@ -61,6 +61,7 @@ class App extends Component {
           <AuthorizedLink permission="change_own_client_data" to="/register/client">new client </AuthorizedLink>
           <AuthorizedLink permission="change_own_client_data" to="/register/goal">new goal </AuthorizedLink>
           <AuthorizedLink permission="change_own_client_data" to="/register/fixed_cost">new fixed cost </AuthorizedLink>
+          <AuthorizedLink permission="change_own_client_data" to="/register/patrimony">new patrimony </AuthorizedLink>
           <AuthorizedLink permission="allow_any" to="/login/changepassword">change </AuthorizedLink>
           <AuthorizedLink permission="see_all_basic_client_data" to="/client">client </AuthorizedLink>
           <AuthorizedLink permission="see_employee_data" to="/employee">employee </AuthorizedLink>
