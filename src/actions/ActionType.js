@@ -43,7 +43,11 @@ const actionTypes = {
     FORM: 'patrimony/create_form',
     SUBFORM: 'patrimony/create_subforms',
     SUCCESS: 'patrimony/success',
-  }
+  },
+  ACTIVE: {
+    TYPE: 'active/types',
+    FORM: 'active/create_form',
+  },
 };
 
 export default actionTypes;

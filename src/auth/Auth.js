@@ -21,7 +21,6 @@ export class Auth{
   }
 
   static refreshToken(){
-    alert('Refresh login token');
     AppDispatcher.dispatch({actionType: ActionType.REFRESH_LOGIN,
       data: {token: Auth.getAuth()}
     });
@@ -36,7 +35,7 @@ export class Auth{
       clearInterval(Auth.loginCheck);
       clearTimeout(Auth.loginTimeout);
       Auth.loginTimeout = setTimeout(Auth.refreshToken, 1000*60*4);
-      Auth.loginCheck = setInterval(Auth.checkAuth, 1000);
+      Auth.loginCheck = setInterval(Auth.checkAuth, 10000);
       localStorage.setItem('token', token.token);
       localStorage.setItem('username', token.username);
       localStorage.setItem('userid', token.id);

@@ -28,7 +28,7 @@ class GoalRegister extends Component {
   }
 
   componentWillMount = () => {
-    this.setState({...this.state,
+    this.setState({
       listener: GoalStore.addListener(this.handleChange)
     });
 

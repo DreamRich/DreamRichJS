@@ -15,6 +15,7 @@ const routeMap = {
   goals_flow_dic:  '/api/goal/dic/1/',
   patrimony: '/api/patrimony/',
   active: '/api/patrimony/active/',
+  active_type: '/api/patrimony/active_type/',
   realestate: '/api/patrimony/realestate/',
   income: '/api/patrimony/income/',
   company: '/api/patrimony/companyparticipation/',
