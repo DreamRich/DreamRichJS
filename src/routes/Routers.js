@@ -13,7 +13,7 @@ import FixedCostRegister from '../client/FixedCostRegister';
 import {Auth} from '../auth/Auth';
 import GoalChart from '../goal/GoalChart';
 import GoalRegister from '../client/GoalRegister';
-import ActiveForm from '../patrimony/ActiveForm';
+import ActiveRegister from '../patrimony/ActiveRegister';
 
 export default class Routers extends Component{
 
@@ -23,7 +23,7 @@ export default class Routers extends Component{
         <Route exact path="/" render={ () => <h1>Home</h1> } />
         <AuthorizedRoute exact permission="change_own_client_data" path="/register/fixed_cost" component={ FixedCostRegister } />
         <AuthorizedRoute exact permission="change_own_client_data" path="/register/goal" component={ GoalRegister } />
-        <AuthorizedRoute exact permission="change_own_client_data" path="/register/active" component={ ActiveForm } />
+        <AuthorizedRoute exact permission="change_own_client_data" path="/register/active" component={ ActiveRegister } />
         <AuthorizedRoute exact permission="change_own_client_data" path="/register/patrimony" component={ PatrimonyRegister } />
         <AuthorizedRoute exact permission="see_all_basic_client_data" path="/client" component={ ClientTable } />
         <AuthorizedRoute permission="see_employee_data" path="/employee" component={ Employeer } />
