@@ -10,6 +10,7 @@ class LoggerStore extends ReduceStore {
 
   reduce = (state, action) => {
     console.info(`action to: ${action.actionType}`);
+    console.info('action data: ', action.data);
     return state;
   }
 }

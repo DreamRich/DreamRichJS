@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ActiveForm from './ActiveForm';
-//import ActionType from '../actions/ActionType';
-//import AppDispatcher from '../AppDispatcher';
+import ActionType from '../actions/ActionType';
+import AppDispatcher from '../AppDispatcher';
 import ActiveStore from '../stores/ActiveStore';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
@@ -30,22 +30,54 @@ export default class ActiveRegister extends Component {
   }
 
   submit = () => {
-    this.form.submit();
+    AppDispatcher.dispatch({
+      actionType: ActionType.ACTIVE.CANSUBMIT
+    });
+  }
+
+  add = () => {
+    AppDispatcher.dispatch({
+      actionType: ActionType.ACTIVE.ADD
+    });
+  }
+
+  remove = (id) => {
+    AppDispatcher.dispatch({
+      actionType: ActionType.ACTIVE.REMOVE,
+      id: id
+    });
   }
 
   render = () => {
     return (
       <Paper className="Paper">
-        <ActiveForm
-          ref={ref => this.form = ref}
-          patrimony_id={1/*this.props.patrimony_id*/}
-          types={this.state.types}
-        />
+        {this.state.totalProfit}
+        {this.state.actives.map( idx => 
+          <div key={idx}>
+            <ActiveForm
+              patrimony_id={1/*this.props.patrimony_id*/}
+              types={this.state.types}
+              canSubmit={this.state.submit}
+              index={idx}
+            />
+            <RaisedButton
+              primary 
+              onClick={this.remove.bind(this, idx)} 
+              label='Remover'
+            />
+          </div>
+        )}
         <RaisedButton
           primary 
           type='submit'
           onClick={this.submit} 
           label='Enviar'
+        />
+        <RaisedButton
+          primary 
+          type='submit'
+          onClick={this.add} 
+          label='Adicionar'
         />
       </Paper>
     );

@@ -46,7 +46,13 @@ const actionTypes = {
   },
   ACTIVE: {
     TYPE: 'active/types',
+    TYPESUCCESS: 'active/types_success',
     FORM: 'active/create_form',
+    CANSUBMIT: 'active/can_submit_form',
+    PROFIT: 'active/add_active',
+    DELETEPROFIT: 'active/remove_active',
+    ADD: 'active/add_active_list',
+    REMOVE: 'active/remove_active_list',
   },
 };
 

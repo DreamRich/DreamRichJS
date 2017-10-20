@@ -17,9 +17,9 @@ class PatrimonyStore extends ReduceStore {
 
   reduce = (state, action) => {
     switch (action.actionType) {
-    case ActionType.ACTIVE.FORM:
+    case ActionType.PATRIMONY.FORM:
       postData(
-        routeMap.active,
+        routeMap.patrimony,
         action.data,
         (data) => {
           AppDispatcher.dispatch({actionType: ActionType.PATRIMONY.SUCCESS,
