@@ -3,6 +3,7 @@ import Paper from 'material-ui/Paper';
 import PatrimonyForm from './PatrimonyForm';
 import RaisedButton from 'material-ui/RaisedButton';
 import RealeStateSubForm from './RealeStateSubForm.js';
+import IncomeSubForm from './IncomeSubForm.js';
 import PatrimonyStore from '../stores/PatrimonyStore';
 
 export default class PatrimonyRegister extends Component {
@@ -35,10 +36,18 @@ export default class PatrimonyRegister extends Component {
           <PatrimonyForm
             ref={ref=>this.form=ref}
           />
+          <IncomeSubForm
+            parent_id={this.state.id}
+          />
           <RealeStateSubForm
             parent_id={this.state.id}
           />
-          <RaisedButton type='submit' primary label="Enviar" />
+          <RaisedButton 
+            type='submit'
+            primary 
+            label="Enviar"
+            onClick={this.submit}
+          />
         </Paper>
       </div>
     );

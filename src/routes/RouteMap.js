@@ -16,6 +16,7 @@ const routeMap = {
   patrimony: '/api/patrimony/',
   active: '/api/patrimony/active/',
   realestate: '/api/patrimony/realestate/',
+  income: '/api/patrimony/income/',
 };
 
 const valid_formats = ['json', 'html', 'xml'];
