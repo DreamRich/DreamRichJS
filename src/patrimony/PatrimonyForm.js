@@ -6,21 +6,22 @@ import AppDispatcher from '../AppDispatcher';
 
 export default class PatrimonyForm extends Component {
 
-  submit = (data) => {
+  submitForm = (data) => {
     AppDispatcher.dispatch({
       actionType: ActionType.PATRIMONY.FORM,
       data: data,
     });
   }
 
-  submitForm = () => {
+  submit = () => {
     this.form.submit();
   }
 
   render = () => {
     return (
-      <Form onValidSubmit={this.submit}
+      <Form
         ref={ref => this.form = ref}
+        onValidSubmit={this.submitForm}
       >
         <FormsyText
           name='fgts'

@@ -19,7 +19,7 @@ export default class ClientForm extends Component {
     });
   }
 
-  submit= () => {this.form.submit();}
+  submit = () => {this.form.submit();}
 
   render = () => {
     return (
