@@ -22,6 +22,7 @@ const routeMap = {
   company: '/api/patrimony/companyparticipation/',
   equipament: '/api/patrimony/equipment/',
   address_type: '/api/client/address/type_of_address/',
+  total_resource_for_annual_goals: '/api/financial_planning/financial_planning/14/',
 };
 
 const valid_formats = ['json', 'html', 'xml'];

@@ -10,25 +10,70 @@ export default class GoalChart extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      total_resource_for_annual_goals: { 
+        type : 'spline',
+        name : 'bla',
+        data : [],
+        marker: {
+          lineWidth: 2,
+          lineColor: Highcharts.getOptions().colors[3],
+          fillColor: 'white'
+        },
+      },
       data_series: {
-        goals_flow_dic: []
+        goals_flow_dic: [],
       },
       data_x: {
         year_init_to_year_end: []
       },
+
     };
+    getData(
+      routeMap.total_resource_for_annual_goals,
+      (data) => {
+        this.setState(prevState => ({total_resource_for_annual_goals: {...prevState.total_resource_for_annual_goals, data : data.total_resource_for_annual_goals}}));
+        console.log(this.state.total_resource_for_annual_goals);
+        console.log(data);
+        console.log('dnfkhbdhba');
+      }
+    );
   }
 
+  componentWillMount() {
+    getData(
+      routeMap.total_resource_for_annual_goals,
+      (data) => {
+        this.setState(prevState => ({total_resource_for_annual_goals: {...prevState.total_resource_for_annual_goals, data : data.total_resource_for_annual_goals}}));
+        console.log(this.state.total_resource_for_annual_goals);
+        console.log(data);
+        console.log('dnfkhbdhba');
+      }
+    );
+
+  }
   componentDidMount() {
     addFunnel(Highcharts);
     getData(
+      routeMap.total_resource_for_annual_goals,
+      (data) => {
+        this.setState(prevState => ({total_resource_for_annual_goals: {...prevState.total_resource_for_annual_goals, data : data.total_resource_for_annual_goals}}));
+        console.log(this.state.total_resource_for_annual_goals);
+        console.log(data);
+      }
+    );
+    getData(
       routeMap.goals_flow_dic,
       (data) => {
+        var a = [];
+        data.goals_flow_dic.forEach((obj) => {obj.type = 'column';});
+        console.log(data.goals_flow_dic);
+        console.log(this.state.total_resource_for_annual_goals);
+        console.log('aqui' + a);
+        data.goals_flow_dic.push(this.state.total_resource_for_annual_goals);
         new Highcharts.Chart(
           'chart', {
             series: data.goals_flow_dic,
             title:{text: 'Goals'},
-            chart:{type: 'column'},
             plotOptions: {
               column: {
                 stacking: 'normal',
