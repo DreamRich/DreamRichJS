@@ -4,6 +4,7 @@ import {FormsyText} from 'formsy-material-ui/lib';
 import ClientSubForm from './ClientSubForm';
 import errorMessages from '../utils/FormsErrorMessages';
 import { Row, Col } from 'react-flexbox-grid';
+import CardForms from '../layout/CardForms';
 
 var {
   numericError,
@@ -14,6 +15,29 @@ export default class ClientBankAccountForm extends Component {
     super(props);
   }
 
+  getContentCard(){
+    return (
+      <Row around="xs">
+        <Col xs>
+          <FormsyText
+            name="agency"
+            validations="isNumeric"
+            validationError={numericError}
+            hintText="Agência da conta bancária"
+            floatingLabelText="Agência"
+          />
+        </Col>
+        <Col xs>
+          <FormsyText
+            name="account"
+            hintText="Número da conta bancária"
+            floatingLabelText="Conta"
+          />
+        </Col>
+      </Row>
+    );
+  }
+
   render = () => {
     return (
       <ClientSubForm
@@ -21,27 +45,11 @@ export default class ClientBankAccountForm extends Component {
         parent_name='active_client_id'
         parent_id={this.props.id}
       >
-        <Row around="xs">
-          <Col xs={2}>
-            <div className='steps-title'>Conta Bancária</div>
-          </Col>
-          <Col xs={2}>
-            <FormsyText
-              name="agency"
-              validations="isNumeric"
-              validationError={numericError}
-              hintText="Agência da conta bancária"
-              floatingLabelText="Agência"
-            />
-          </Col>
-          <Col xs={2}>
-            <FormsyText
-              name="account"
-              hintText="Número da conta bancária"
-              floatingLabelText="Conta"
-            />
-          </Col>
-        </Row>
+        <CardForms
+          titleCard="Conta Bancária"
+          subtitleCard="Insira as informações correspondentes a conta bancária."
+          contentCard={this.getContentCard()}
+        />
       </ClientSubForm>
     );
   }

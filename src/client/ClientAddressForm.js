@@ -4,6 +4,8 @@ import ClientSubForm from './ClientSubForm';
 import makeFormysTextList from '../utils/MakeFormysTextList';
 import errorMessages from '../utils/FormsErrorMessages';
 import { Row, Col } from 'react-flexbox-grid';
+import CardForms from '../layout/CardForms';
+
 
 var {
   wordsError,
@@ -42,8 +44,38 @@ export default class ClientAddressForm extends Component {
     super(props);
   }
 
-  render = () => {
+  getContentCard(){
     const formysTextList = makeFormysTextList(dataAddressSubForm,'adressform');
+
+    return (
+      <div>
+        <Row>
+          <Col xs>
+            {formysTextList[0]}
+          </Col>
+          <Col xs>
+            {formysTextList[1]}
+          </Col>
+          <Col xs>
+            {formysTextList[2]}
+          </Col>
+        </Row>
+        <Row>
+          <Col xs>
+            {formysTextList[3]}
+          </Col>
+          <Col xs>
+            {formysTextList[4]}
+          </Col>
+          <Col xs>
+            {formysTextList[5]}
+          </Col>
+        </Row>
+      </div>
+    );
+  }
+
+  render = () => {
 
     return (
       <ClientSubForm
@@ -51,18 +83,13 @@ export default class ClientAddressForm extends Component {
         parent_name='active_client_id'
         parent_id={this.props.id}
       >
-        <Row around="xs">
-          <Col xs={2}>
-            <div className='steps-title'>Endereço</div>
-          </Col>
-          <Col xs={2}>
-            {formysTextList.slice(0,3)}
-          </Col>
-          <Col xs={2}>
-            {formysTextList.slice(3,6)}
-          </Col>
-        </Row>
+        <CardForms
+          titleCard="Endereço"
+          subtitleCard="Insira as informações correspondentes ao endereço."
+          contentCard={this.getContentCard()}
+        />
       </ClientSubForm>
+
     );
   }
 }
