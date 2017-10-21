@@ -47,15 +47,15 @@ class SubStepperClient extends React.Component {
           onClick={this.handleNext}
           style={{marginRight: 12}}
         />
-      {step > 0 && (
-        <FlatButton
-          label="Back"
-          disableTouchRipple={true}
-          disableFocusRipple={true}
-          onClick={this.handlePrev}
-        />
-      )}
-    </div>
+        {step > 0 && (
+          <FlatButton
+            label="Back"
+            disableTouchRipple={true}
+            disableFocusRipple={true}
+            onClick={this.handlePrev}
+          />
+        )}
+      </div>
     );
   }
 
@@ -81,13 +81,13 @@ class SubStepperClient extends React.Component {
     const {stepIndex} = this.state;
 
     return (
-        <Stepper
-          activeStep={stepIndex}
-          linear={false}
-          orientation="vertical"
-        >
-          {this.getContentSteps()}
-        </Stepper>
+      <Stepper
+        activeStep={stepIndex}
+        linear={false}
+        orientation="vertical"
+      >
+        {this.getContentSteps()}
+      </Stepper>
     );
   }
 }

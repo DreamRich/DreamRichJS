@@ -31,11 +31,11 @@ class ClientStore extends ReduceStore {
           }
         );
       } else {
-        setTimeout(() => 
-        AppDispatcher.dispatch({
-          actionType: ActionType.CLIENT.ACTIVESUCCESS,
-          id: state.id 
-        }), 1000);
+        setTimeout(() =>
+          AppDispatcher.dispatch({
+            actionType: ActionType.CLIENT.ACTIVESUCCESS,
+            id: state.id
+          }), 1000);
       }
       return {...state, id: undefined};
     case ActionType.CLIENT.ACTIVESUCCESS:

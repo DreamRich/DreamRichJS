@@ -101,11 +101,11 @@ class ClientDependentForm extends Component {
               name="dependent"
               parent_name='active_client_id'
               parent_id={this.props.parent_id}>
-                <CardForms
-                  titleCard='Dependentes'
-                  subtitleCard={subtitleCard}
-                  contentCard={this.getContentCard()}
-                />
+              <CardForms
+                titleCard='Dependentes'
+                subtitleCard={subtitleCard}
+                contentCard={this.getContentCard()}
+              />
             </ClientSubForm>
           </div>
         )}

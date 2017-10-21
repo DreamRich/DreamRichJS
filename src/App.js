@@ -40,7 +40,7 @@ class App extends Component {
           <Routers />
         </div>
         <Header styles={styles.header}
-            handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer.bind(this)}
+          handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer.bind(this)}
         />
         <SidebarMenu  navDrawerOpen={this.state.navDrawerOpen} />
       </div>

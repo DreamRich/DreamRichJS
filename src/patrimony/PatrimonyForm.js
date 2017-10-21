@@ -12,8 +12,8 @@ export default class Employeer extends Component {
         body: JSON.stringify(data),
         headers: Auth.getHeader(),
       }
-    ).then((e) => e.json()) 
-     .then((e) => console.log(e));
+    ).then((e) => e.json())
+      .then((e) => console.log(e));
   }
 
   render() {

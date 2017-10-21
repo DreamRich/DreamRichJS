@@ -92,7 +92,7 @@ export default class ClientField extends Component {
             tooltip="Comprovante de Residência"
             touch={true}
             tooltipPosition="top-right">
-              <FileFileUpload />
+            <FileFileUpload />
           </IconButton>
         </Col>
       </Row>
@@ -148,8 +148,8 @@ export default class ClientField extends Component {
             contentCard={this.getContentCard()}
           />
           {sponseForm}
-      </ClientForm>
-    </div>
+        </ClientForm>
+      </div>
     );
   }
 }

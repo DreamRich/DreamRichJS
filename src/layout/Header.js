@@ -111,7 +111,7 @@ class Header extends React.Component {
                     { !this.state.auth && makeMenuItem('allow_any','/login/','Login')}
                     { this.state.auth && makeMenuItem('allow_any','/logout/','Sign out')}
                   </MenuItem>
-                    {makeMenuItem('allow_any','/login/changepassword','Change Password')}
+                  {makeMenuItem('allow_any','/login/changepassword','Change Password')}
                 </IconMenu>
               </div>
             }
