@@ -40,7 +40,7 @@ class SubStepperClient extends React.Component {
     return (
       <div style={{margin: '12px 0'}}>
         <RaisedButton
-          label="Next"
+          label="Salvar as informações deste formulário"
           disableTouchRipple={true}
           disableFocusRipple={true}
           primary={true}

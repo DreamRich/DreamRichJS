@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
-//import Formsy from 'formsy-react';
-import RaisedButton from 'material-ui/RaisedButton';
 import {FormsyText} from 'formsy-material-ui/lib';
 import {FormsyDate} from '../utils/FormsyComponents';
 import errorMessages from '../utils/FormsErrorMessages';
 import ClientSubForm from './ClientSubForm';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-flexbox-grid';
-
+import Checkbox from 'material-ui/Checkbox';
+import CardForms from '../layout/CardForms';
 
 var {
   wordsError,
 } = errorMessages;
+
 class ClientDependentForm extends Component {
   constructor(props){
     super(props);
@@ -45,49 +45,72 @@ class ClientDependentForm extends Component {
     });
   }
 
+  getContentCard(){
+    return (
+      <Row around="xs">
+        <Col xs>
+          <FormsyText
+            name="name"
+            validations="isWords"
+            validationError={wordsError}
+            hintText="Nome do dependente"
+            floatingLabelText="Nome"
+          />
+        </Col>
+        <Col xs>
+          <FormsyText
+            name="surname"
+            validations="isWords"
+            validationError={wordsError}
+            hintText="Sobrenome do dependente"
+            floatingLabelText="Sobrenome"
+          />
+        </Col>
+        <Col xs>
+          <FormsyDate
+            name="birthday"
+            floatingLabelText="Data de Nascimento"
+          />
+        </Col>
+      </Row>
+    );
+  }
+
+  getSelectOption(selectOption,isChecked,labelOption){
+    return (
+      <Checkbox
+        label={labelOption}
+        checked={isChecked}
+        onClick={selectOption}
+        style={{margin: '30px 0px 30px 0px'}}
+      />
+    );
+  }
+
   render = () => {
-    console.log(this.state.dependents, this);
+    let subtitleCard = 'Insira as informações correspondentes as informações do dependente.';
+    let labelAdd='O cliente possui dependentes? (Maque o quadrado ao lado caso haja).';
+    let labelRemove='O cliente possui não dependentes? (Desmaque o quadrado ao lado caso não haja).';
+
     return (
       <div>
         {this.state.dependents.map(e =>
-          <div key={e}
-          >
+          <div key={e}>
+            {this.getSelectOption(this.removeDependent.bind(this, e), true,labelRemove)}
             <ClientSubForm
               name="dependent"
               parent_name='active_client_id'
               parent_id={this.props.parent_id}>
-                <Row around="xs">
-                  <Col xs={2}>
-                    <div className='steps-title'>Dependentes</div>
-                  </Col>
-                  <Col xs={2}>
-                    <FormsyText
-                      name="name"
-                      validations="isWords"
-                      validationError={wordsError}
-                      hintText="Nome do dependente"
-                      floatingLabelText="Nome"
-                    />
-                    <FormsyDate
-                      name="birthday"
-                      floatingLabelText="Data de Nascimento"
-                    />
-                  </Col>
-                  <Col xs={2}>
-                    <FormsyText
-                      name="surname"
-                      validations="isWords"
-                      validationError={wordsError}
-                      hintText="Sobrenome do dependente"
-                      floatingLabelText="Sobrenome"
-                    />
-                  </Col>
-                </Row>
+                <CardForms
+                  titleCard='Dependentes'
+                  subtitleCard={subtitleCard}
+                  contentCard={this.getContentCard()}
+                />
             </ClientSubForm>
-            <RaisedButton onClick={this.removeDependent.bind(this, e)}>Remove</RaisedButton>
           </div>
         )}
-        <RaisedButton onClick={this.addDependent}>Add</RaisedButton>
+
+        {this.getSelectOption(this.addDependent, false, labelAdd)}
       </div>
     );
   }

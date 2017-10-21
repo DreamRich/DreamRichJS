@@ -114,7 +114,7 @@ class DefFormsyDate extends Component {
           <FormsyText
             name='text'
             id={this.props.name + '_field'}
-            style={{width:225, marginLeft: 20}}
+            style={{width:210}}
             disabled={this.isFormDisabled}
             errorText={this.getErrorMessage}
             value={this.state.dateText}
@@ -126,35 +126,33 @@ class DefFormsyDate extends Component {
             requiredError={requiredError}
             {...rest}
           />
-        </Col>
-        <Col xs>
-          <IconButton style={{opacity:'0.65'}}
+          <IconButton style={{opacity:'0.65', margin: '0' }}
             onClick={() => this.datePicker.focus()}>
             <ActionDateRange />
           </IconButton>
         </Col>
 
-      <div>
-        <DatePicker
-          name='date'
-          id={this.props.name + '_dataPicker'}
-          className="Hidden"
-          onChange={this.handleChangeDatePicker}
-          value={this.state.selectedDate}
-          ref={picker => { this.datePicker = picker;}}
-          default={defaultDate}
-          container='inline'
-          fullWidth
-          mode='landscape'
-          autoOk
-        />
-        <FormsyText
-          name={name}
-          className="Hidden"
-          value={this.state.dateSubmit}
-        />
-      </div>
-    </Row>
+        <div>
+          <DatePicker
+            name='date'
+            id={this.props.name + '_dataPicker'}
+            className="Hidden"
+            onChange={this.handleChangeDatePicker}
+            value={this.state.selectedDate}
+            ref={picker => { this.datePicker = picker;}}
+            default={defaultDate}
+            container='inline'
+            fullWidth
+            mode='landscape'
+            autoOk
+          />
+          <FormsyText
+            name={name}
+            className="Hidden"
+            value={this.state.dateSubmit}
+          />
+        </div>
+      </Row>
     );
   }
 }

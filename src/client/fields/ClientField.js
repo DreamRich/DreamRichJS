@@ -8,7 +8,8 @@ import ClientSubForm from '../ClientSubForm';
 import {FormsyDate} from '../../utils/FormsyComponents';
 import PropTypes from 'prop-types';
 import makeFormysTextList from '../../utils/MakeFormysTextList';
-import RaisedButton from 'material-ui/RaisedButton';
+import CardForms from '../../layout/CardForms';
+import Checkbox from 'material-ui/Checkbox';
 
 var {
   wordsError,
@@ -62,8 +63,59 @@ export default class ClientField extends Component {
     this.setState({sponse});
   }
 
-  render(){
+  getContentCard(){
     const formsyList = makeFormysTextList(dataClient,'clientform');
+
+    return (
+      <Row around="xs">
+        <Col xs>
+          {formsyList.slice(0,3)}
+        </Col>
+        <Col xs>
+          {formsyList.slice(3,6)}
+        </Col>
+        <Col xs>
+          {formsyList.slice(6,8)}
+          <FormsyDate
+            name="birthday"
+            floatingLabelText="Data de Nascimento"
+          />
+          <IconButton
+            name="id_document"
+            tooltip="Documento de Identificação"
+            touch={true}
+            tooltipPosition="top-left">
+            <FileFileUpload />
+          </IconButton>
+          <IconButton
+            name="proof_of_address"
+            tooltip="Comprovante de Residência"
+            touch={true}
+            tooltipPosition="top-right">
+              <FileFileUpload />
+          </IconButton>
+        </Col>
+      </Row>
+    );
+  }
+  getSelectOption(selectOption,isChecked,labelOption){
+    if(selectOption){
+      return (
+        <Checkbox
+          label={labelOption}
+          checked={isChecked}
+          onClick={this.switchSponse}
+          style={{margin: '30px 0px 30px 0px'}}
+        />
+      );
+    }
+  }
+
+  render(){
+    let subtitleCard = 'Insira as informações correspondentes as informações básicas do cônjuge.';
+    let labelAdd='O cliente possui cônjuge? (Maque o quadrado ao lado caso haja).';
+    let labelRemove='O cliente possui cônjuge? (Desmaque o quadrado ao lado caso não haja).';
+
     const sponseForm = (
       this.state.sponse ? (
         <ClientSubForm
@@ -71,60 +123,40 @@ export default class ClientField extends Component {
           parent_name="active_client_id"
           parent_id={this.state.id}
         >
+          {this.getSelectOption(this.props.selectOption, true, labelRemove)}
           <div>
-            <ClientField title='Cônjuge' canSubmit={this.state.canSubmit} />
-            <RaisedButton onClick={this.switchSponse} >
-              Remove Sponse
-            </RaisedButton>
-           </div>
-        </ClientSubForm>) : (
-          <div>
-            <RaisedButton onClick={this.switchSponse}>
-              Add
-            </RaisedButton>
-          </div>)
+            <ClientField
+              title='Cônjuge'
+              subtitleCard={subtitleCard}
+              canSubmit={this.state.canSubmit}
+              selectOption={false}
+            />
+          </div>
+        </ClientSubForm>
+      ) : (
+        this.getSelectOption(this.props.selectOption, false, labelAdd)
+      )
     );
+
 
     return (
       <div>
         <ClientForm ref={(ref) => {this.baseForm = ref;}} >
-          <Row around="xs">
-            <Col xs={2}>
-              <div className='steps-title'>{this.props.title}</div>
-            </Col>
-            <Col xs={2}>
-              {formsyList.slice(0,3)}
-              <FormsyDate
-                name="birthday"
-                floatingLabelText="Data de Nascimento"
-              />
-              <IconButton
-                name="proof_of_address"
-                tooltip="Comprovante de Residência"
-                touch={true}
-                tooltipPosition="top-right">
-                  <FileFileUpload />
-            </IconButton>
-            </Col>
-            <Col xs={2}>
-              {formsyList.slice(3,8)}
-              <IconButton
-                name="id_document"
-                tooltip="Documento de Identificação"
-                touch={true}
-                tooltipPosition="top-left">
-                  <FileFileUpload />
-              </IconButton>
-            </Col>
-          </Row>
-        </ClientForm>
-        {sponseForm}
-      </div>
+          <CardForms
+            titleCard={this.props.title}
+            subtitleCard={this.props.subtitleCard}
+            contentCard={this.getContentCard()}
+          />
+          {sponseForm}
+      </ClientForm>
+    </div>
     );
   }
 }
 
 ClientField.propTypes = {
   title: PropTypes.string,
+  subtitleCard: PropTypes.string,
   canSubmit: PropTypes.bool,
+  selectOption: PropTypes.bool,
 };

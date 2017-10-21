@@ -44,13 +44,13 @@ class ClientRegister extends Component {
   }
 
   render() {
-
+    let subtitleCard = 'Insira as informações correspondentes as informações básicas do cliente.';
     let listInformationSteps = [
       {
         text: 'Cadastrar Cliente',
         formComponent:
           <div>
-            <ClientField title='Cliente' canSubmit={this.state.canSubmit} ref={ref => this.form = ref} />
+            <ClientField title='Cliente' subtitleCard={subtitleCard} canSubmit={this.state.canSubmit} ref={ref => this.form = ref} selectOption={true} />
           </div>
       },
       {
