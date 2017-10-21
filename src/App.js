@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import './stylesheet/App.sass';
 import Header from './layout/Header';
 import SidebarMenu from './layout/SidebarMenu';
-import PropTypes from 'prop-types';
 import Routers from './routes/Routers';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      navDrawerOpen: true
+      navDrawerOpen: false
     };
   }
 
@@ -50,7 +49,3 @@ class App extends Component {
 }
 
 export default App;
-
-App.propTypes = {
-  width: PropTypes.array.isRequired,
-};

@@ -47,29 +47,21 @@ export default class ClientAddressForm extends Component {
   getContentCard(){
     const formysTextList = makeFormysTextList(dataAddressSubForm,'adressform');
 
+    let listColumns = formysTextList.map((form,index)=>{
+      return (
+        <Col xs key={'listColumnsClientAddress'+index}>
+          {formysTextList[index]}
+        </Col>
+      );
+    });
+
     return (
       <div>
         <Row>
-          <Col xs>
-            {formysTextList[0]}
-          </Col>
-          <Col xs>
-            {formysTextList[1]}
-          </Col>
-          <Col xs>
-            {formysTextList[2]}
-          </Col>
+          {listColumns.slice(0,3)}
         </Row>
         <Row>
-          <Col xs>
-            {formysTextList[3]}
-          </Col>
-          <Col xs>
-            {formysTextList[4]}
-          </Col>
-          <Col xs>
-            {formysTextList[5]}
-          </Col>
+          {listColumns.slice(3,6)}
         </Row>
       </div>
     );

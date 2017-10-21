@@ -36,7 +36,7 @@ class ClientRegister extends Component {
   }
 
   getDivider = () => {
-    return (<Divider style={{marginTop: '50px', marginBottom: '30px'}} />);
+    return (<Divider style={{marginTop: '25px', marginBottom: '30px'}} />);
   }
 
   submit = () => {

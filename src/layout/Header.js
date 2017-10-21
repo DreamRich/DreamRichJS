@@ -34,7 +34,6 @@ class Header extends React.Component {
     this.setState({
       openMenu: !this.state.openMenu,
     });
-    console.log(this.state.openMenu);
   }
 
   handleOnRequestChange = (value) => {
@@ -90,7 +89,7 @@ class Header extends React.Component {
       <div>
         <MuiThemeProvider muiTheme={muiTheme}>
           <AppBar
-            title="iRich"
+            title="DreamRich"
             style={{...styles, ...style.appBar}}
             iconElementLeft={
               <div>

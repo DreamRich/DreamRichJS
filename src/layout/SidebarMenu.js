@@ -32,7 +32,7 @@ export default class SidebarMenu extends React.Component {
       <div>
         <MuiThemeProvider muiTheme={muiTheme}>
           <Drawer open={this.props.navDrawerOpen}>
-            {makeMenuItem('allow_any','/',<h1>iRich</h1>,'',styleText)}
+            {makeMenuItem('allow_any','/',<h1>DreamRich</h1>,'',styleText)}
             {makeMenuItem('change_own_client_data','/register/steps',
               'Steps Client', <PersonAdd color={white} />, styleText)}
             {makeMenuItem('see_all_basic_client_data','/client','Client',

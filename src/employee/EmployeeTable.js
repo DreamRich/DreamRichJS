@@ -46,7 +46,7 @@ export default class EmployeeTable extends GridTable {
   getActions(register, idx) {
     if(register !== undefined && register !== null){
       return (
-          <FlatButton 
+          <FlatButton
             secondary
             onClick={this.handleDeletion.bind(this, register.id, idx)}
             label="X"
