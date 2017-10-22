@@ -10,16 +10,6 @@ export default class GoalChart extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      total_resource_for_annual_goals: { 
-        type : 'spline',
-        name : 'bla',
-        data : [],
-        marker: {
-          lineWidth: 2,
-          lineColor: Highcharts.getOptions().colors[3],
-          fillColor: 'white'
-        },
-      },
       data_series: {
         goals_flow_dic: [],
       },
@@ -28,51 +18,28 @@ export default class GoalChart extends Component {
       },
 
     };
-    getData(
-      routeMap.total_resource_for_annual_goals,
-      (data) => {
-        this.setState(prevState => ({total_resource_for_annual_goals: {...prevState.total_resource_for_annual_goals, data : data.total_resource_for_annual_goals}}));
-        console.log(this.state.total_resource_for_annual_goals);
-        console.log(data);
-        console.log('dnfkhbdhba');
-      }
-    );
   }
 
-  componentWillMount() {
-    getData(
-      routeMap.total_resource_for_annual_goals,
-      (data) => {
-        this.setState(prevState => ({total_resource_for_annual_goals: {...prevState.total_resource_for_annual_goals, data : data.total_resource_for_annual_goals}}));
-        console.log(this.state.total_resource_for_annual_goals);
-        console.log(data);
-        console.log('dnfkhbdhba');
-      }
-    );
-
-  }
-  componentDidMount() {
+  mountChart(data_flow) {
     addFunnel(Highcharts);
     getData(
       routeMap.total_resource_for_annual_goals,
       (data) => {
-        this.setState(prevState => ({total_resource_for_annual_goals: {...prevState.total_resource_for_annual_goals, data : data.total_resource_for_annual_goals}}));
-        console.log(this.state.total_resource_for_annual_goals);
-        console.log(data);
-      }
-    );
-    getData(
-      routeMap.goals_flow_dic,
-      (data) => {
-        var a = [];
-        data.goals_flow_dic.forEach((obj) => {obj.type = 'column';});
-        console.log(data.goals_flow_dic);
-        console.log(this.state.total_resource_for_annual_goals);
-        console.log('aqui' + a);
-        data.goals_flow_dic.push(this.state.total_resource_for_annual_goals);
+        const total_resource_for_annual_goals = { 
+          type : 'spline',
+          name : 'bla',
+          data : [],
+          marker: {
+            lineWidth: 2,
+            lineColor: Highcharts.getOptions().colors[3],
+            fillColor: 'white',
+          }
+        };
+        total_resource_for_annual_goals.data = data.total_resource_for_annual_goals;
+        data_flow.push(total_resource_for_annual_goals);
         new Highcharts.Chart(
           'chart', {
-            series: data.goals_flow_dic,
+            series: data_flow,
             title:{text: 'Goals'},
             plotOptions: {
               column: {
@@ -99,6 +66,16 @@ export default class GoalChart extends Component {
             },
           }
         );
+      }
+    );
+  }  
+
+  componentDidMount() {
+    getData(
+      routeMap.goals_flow_dic,
+      (data) => {
+        data.goals_flow_dic.forEach((obj) => {obj.type = 'column';});
+        this.mountChart(data.goals_flow_dic);
       });
   }
 
