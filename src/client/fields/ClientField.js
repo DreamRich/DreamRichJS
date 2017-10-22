@@ -80,20 +80,26 @@ export default class ClientField extends Component {
             name="birthday"
             floatingLabelText="Data de Nascimento"
           />
-          <IconButton
-            name="id_document"
-            tooltip="Documento de Identificação"
-            touch={true}
-            tooltipPosition="top-left">
-            <FileFileUpload />
-          </IconButton>
-          <IconButton
-            name="proof_of_address"
-            tooltip="Comprovante de Residência"
-            touch={true}
-            tooltipPosition="top-right">
-            <FileFileUpload />
-          </IconButton>
+          <p>
+            Enviar identidade:
+            <IconButton
+              name="id_document"
+              tooltip="Documento de Identificação"
+              touch={true}
+              tooltipPosition="top-left">
+              <FileFileUpload />
+            </IconButton>
+          </p>
+          <p>
+            Enviar Comprovante de Residência:
+            <IconButton
+              name="proof_of_address"
+              tooltip="Comprovante de Residência"
+              touch={true}
+              tooltipPosition="top-left">
+              <FileFileUpload />
+            </IconButton>
+          </p>
         </Col>
       </Row>
     );
@@ -113,8 +119,8 @@ export default class ClientField extends Component {
 
   render(){
     let subtitleCard = 'Insira as informações correspondentes as informações básicas do cônjuge.';
-    let labelAdd='O cliente possui cônjuge? (Maque o quadrado ao lado caso haja).';
-    let labelRemove='O cliente possui cônjuge? (Desmaque o quadrado ao lado caso não haja).';
+    let labelAdd='O cliente possui cônjuge? (Marque o quadrado ao lado caso haja).';
+    let labelRemove='O cliente possui cônjuge? (Desmarque o quadrado ao lado caso não haja).';
 
     const sponseForm = (
       this.state.sponse ? (
@@ -137,7 +143,6 @@ export default class ClientField extends Component {
         this.getSelectOption(this.props.selectOption, false, labelAdd)
       )
     );
-
 
     return (
       <div>

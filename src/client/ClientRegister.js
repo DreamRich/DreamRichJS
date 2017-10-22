@@ -78,7 +78,7 @@ class ClientRegister extends Component {
 
         {this.getDivider()}
 
-        <RaisedButton onClick={this.submit} disabled={!this.state.canSubmit}>
+        <RaisedButton onClick={this.submit} disabled={!this.state.canSubmit} style={{marginLeft: '50%', marginRight: '50%' }} >
           Submit
         </RaisedButton>
       </div>

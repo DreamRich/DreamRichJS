@@ -2,6 +2,8 @@ import React from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import ClientRegister from '../client/ClientRegister';
+import Paper from 'material-ui/Paper';
+
 import {
   Step,
   Stepper,
@@ -83,40 +85,44 @@ class StepperClient extends React.Component {
 
     return (
       <div style={{width: '100%', maxWidth: '80%', margin: 'auto'}}>
-        <Stepper activeStep={stepIndex} connector={<ArrowForwardIcon />}>
-          <Step>
-            <StepLabel>Cadastro Básico</StepLabel>
-          </Step>
-          <Step>
-            <StepLabel>Custos Fixos</StepLabel>
-          </Step>
-          <Step>
-            <StepLabel>Renda</StepLabel>
-          </Step>
-          <Step>
-            <StepLabel>Patrimônio</StepLabel>
-          </Step>
-          <Step>
-            <StepLabel>Proteção</StepLabel>
-          </Step>
-          <Step>
-            <StepLabel>Objetivos</StepLabel>
-          </Step>
-        </Stepper>
+        <Paper zDepth={1}>
+          <Stepper activeStep={stepIndex} connector={<ArrowForwardIcon />}>
+            <Step>
+              <StepLabel>Cadastro Básico</StepLabel>
+            </Step>
+            <Step>
+              <StepLabel>Custos Fixos</StepLabel>
+            </Step>
+            <Step>
+              <StepLabel>Renda</StepLabel>
+            </Step>
+            <Step>
+              <StepLabel>Patrimônio</StepLabel>
+            </Step>
+            <Step>
+              <StepLabel>Proteção</StepLabel>
+            </Step>
+            <Step>
+              <StepLabel>Objetivos</StepLabel>
+            </Step>
+          </Stepper>
+        </Paper>
 
         {this.getStepContent(stepIndex)}
 
-        <div style={{marginTop: 24, marginBottom: 12}}>
+        <div style={{marginBottom: '7%'}}>
           <FlatButton
-            label="Back"
+            label="Voltar para o passo anterior"
             disabled={stepIndex === 0}
             onClick={this.handlePrev}
-            style={{marginRight: 12}}
+            backgroundColor='#ebebeb'
+            style={{float: 'left'}}
           />
           <RaisedButton
-            label={stepIndex === 6 ? 'Finish' : 'Seguir para o passo seguinte'}
+            label={stepIndex === 6 ? 'Finalizar' : 'Seguir para o passo seguinte'}
             primary={true}
             onClick={this.handleNext}
+            style={{float: 'right'}}
           />
         </div>
       </div>

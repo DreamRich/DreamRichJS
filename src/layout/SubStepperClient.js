@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import {
   Step,
@@ -45,14 +44,16 @@ class SubStepperClient extends React.Component {
           disableFocusRipple={true}
           primary={true}
           onClick={this.handleNext}
-          style={{marginRight: 12}}
+          style={{float: 'right'}}
         />
         {step > 0 && (
-          <FlatButton
-            label="Back"
+          <RaisedButton
+            label="Voltar para o formulário anterior"
             disableTouchRipple={true}
             disableFocusRipple={true}
             onClick={this.handlePrev}
+            backgroundColor='#ebebeb'
+            style={{float: 'left'}}
           />
         )}
       </div>

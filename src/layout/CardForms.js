@@ -5,6 +5,7 @@ import {Card, CardTitle, CardText} from 'material-ui/Card';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
+// Optional backgroundColor: #FAFAFA
 const muiTheme = getMuiTheme({
   card: {
     titleColor: '#636363',
@@ -20,7 +21,7 @@ export default class CardForms extends Component {
   render = () => {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <Card style={{backgroundColor: '#FAFAFA'}}>
+        <Card style={{backgroundColor: '#ffffff'}}>
           <CardTitle
             title={this.props.titleCard}
             subtitle={this.props.subtitleCard}

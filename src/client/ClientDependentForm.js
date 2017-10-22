@@ -89,8 +89,8 @@ class ClientDependentForm extends Component {
 
   render = () => {
     let subtitleCard = 'Insira as informações correspondentes as informações do dependente.';
-    let labelAdd='O cliente possui dependentes? (Maque o quadrado ao lado caso haja).';
-    let labelRemove='O cliente possui não dependentes? (Desmaque o quadrado ao lado caso não haja).';
+    let labelAdd='O cliente possui dependentes? (Marque o quadrado ao lado caso haja).';
+    let labelRemove='O cliente possui não dependentes? (Desmarque o quadrado ao lado caso não haja).';
 
     return (
       <div>

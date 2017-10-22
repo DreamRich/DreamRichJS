@@ -114,7 +114,7 @@ class DefFormsyDate extends Component {
           <FormsyText
             name='text'
             id={this.props.name + '_field'}
-            style={{width:210}}
+            style={{width:180}}
             disabled={this.isFormDisabled}
             errorText={this.getErrorMessage}
             value={this.state.dateText}
