@@ -53,7 +53,7 @@ export default class ActiveRegister extends Component {
   render = () => {
     return (
       <Paper className="Paper">
-        {this.state.actives.map( idx => 
+        {this.state.actives_idx.map( idx => 
           <div key={idx}>
             <ActiveForm
               parent_id={this.state.id}

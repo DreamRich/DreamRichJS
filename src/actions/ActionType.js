@@ -50,6 +50,7 @@ const actionTypes = {
     FORM: 'active/create_form',
     SUCCESS: 'active/manager_success_form',
     MANAGER: 'active/create_manager',
+    GETMANAGER: 'active/obtain_manager',
     DELETEPROFIT: 'active/remove_active',
     ADD: 'active/add_active_list',
     REMOVE: 'active/remove_active_list',
