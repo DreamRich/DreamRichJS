@@ -11,9 +11,9 @@ global.localStorage = localStorageMock;
 describe('<App />', () => {
   const component = <BrowserRouter>
     <MuiThemeProvider muiTheme={getMuiTheme()}>
-    <App />
+      <App />
     </MuiThemeProvider>
-    </BrowserRouter>;
+  </BrowserRouter>;
 
   it('renders without crashing', () => {
     const div = document.createElement('div');

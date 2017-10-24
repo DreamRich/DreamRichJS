@@ -5,30 +5,30 @@ import {DatePicker, IconButton} from 'material-ui';
 import ActionDateRange from 'material-ui/svg-icons/action/date-range';
 import {FormsyText} from 'formsy-material-ui/lib';
 import format from 'date-fns/format';
-import parse from 'date-fns/parse';
-import '../stylesheet/RegisterForms.sass';
 import { Row, Col } from 'react-flexbox-grid';
+import '../../stylesheet/RegisterForms.sass';
 
 /*
 reference:
   https://github.com/callemall/material-ui/issues/3933/
 */
 
-class DefFormsyDate extends Component {
+class DefineFormsyDate extends Component {
 
   static propTypes = {
+    value: PropTypes.object,
     getValue: PropTypes.func,
     setValue: PropTypes.func,
     defaultDate: PropTypes.object,
+
     name: PropTypes.string.isRequired,
     onChange: PropTypes.func,
     requiredError: PropTypes.string,
+
     validationError: PropTypes.string,
     validationErrors: PropTypes.object,
     validations: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    value: PropTypes.object,
   };
-
 
   constructor(props){
     super(props);
@@ -48,21 +48,6 @@ class DefFormsyDate extends Component {
     if (typeof value === 'undefined' && typeof defaultDate !== 'undefined') {
       this.props.setValue(defaultDate);
     }
-  }
-
-  handleDateInputBlur = (value) => {
-    let parsedDate = parse(value, 'DD/MM/YYYY');
-
-    this.setState({selectedDate:parsedDate});
-  }
-
-  isADate = (maybeDate) => {
-    if ( Object.prototype.toString.call(maybeDate) === '[object Date]' ) {
-      if ( !isNaN( maybeDate.getTime() ) ) {
-        return true;
-      }
-    }
-    return false;
   }
 
   componentWillReceiveProps(newProps) {
@@ -89,11 +74,6 @@ class DefFormsyDate extends Component {
       dateText: format(date, 'DD/MM/YYYY'),
       dateSubmit: date.toISOString().slice(0, 10)
     });
-  };
-
-  handleChange(event, value) {
-    this.props.setValue(value);
-    if (this.props.onChange) this.props.onChange(event, value);
   }
 
   render() {
@@ -131,7 +111,6 @@ class DefFormsyDate extends Component {
             <ActionDateRange />
           </IconButton>
         </Col>
-
         <div>
           <DatePicker
             name='date'
@@ -157,6 +136,6 @@ class DefFormsyDate extends Component {
   }
 }
 
-const FormsyDate = HOC(DefFormsyDate);
+const FormsyDate = HOC(DefineFormsyDate);
 
-export {FormsyDate};
+export default FormsyDate;

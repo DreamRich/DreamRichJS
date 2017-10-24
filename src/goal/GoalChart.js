@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {getDataReal} from '../resources/Requests';
-import {goalRouters} from '../routes/RouteMap';
+import {getData} from '../resources/Requests';
+import {routeMap} from '../routes/RouteMap';
 import Highcharts from 'highcharts';
 import addFunnel from 'highcharts/modules/funnel';
 import PropTypes from 'prop-types';
@@ -21,7 +21,8 @@ export default class GoalChart extends Component {
 
   componentDidMount() {
     addFunnel(Highcharts);
-    getDataReal(goalRouters['goals_flow_dic'],
+    getData(
+      routeMap.goals_flow_dic,
       (data) => {
         new Highcharts.Chart(
           'chart', {

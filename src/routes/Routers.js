@@ -10,8 +10,10 @@ import Employeer from '../employee/Employeer';
 import PatrimonyForm from '../patrimony/PatrimonyForm';
 import ClientRegister from '../client/ClientRegister';
 import StepperClient from '../layout/StepperClient';
+import FixedCostRegister from '../client/FixedCostRegister';
 import {Auth} from '../auth/Auth';
 import GoalChart from '../goal/GoalChart';
+import GoalRegister from '../client/GoalRegister';
 
 export default class Routers extends Component{
 
@@ -19,6 +21,8 @@ export default class Routers extends Component{
     return (
       <Switch>
         <Route exact path="/" render={ () => <h1>Home</h1> } />
+        <AuthorizedRoute permission="change_own_client_data" path="/register/fixed_cost" exact component={ FixedCostRegister } />
+        <AuthorizedRoute permission="change_own_client_data" path="/register/goal" exact component={ GoalRegister } />
         <AuthorizedRoute permission="see_all_basic_client_data" exact path="/client" component={ ClientTable } />
         <AuthorizedRoute permission="see_employee_data" path="/employee" component={ Employeer } />
         <Route exact path="/login" component={ LoginPage } />
@@ -29,6 +33,7 @@ export default class Routers extends Component{
         <AuthorizedRoute permission="allow_any" path="/goals" component={ GoalChart } />
 
         <Route path="/login/resetpassword" render={ () => <ResetForm email="marcelohpf@hotmail.com" /> } />
+        <Route path="/logout" component={ LogoutButton } />
         <Route path="/patrimony" component={ PatrimonyForm } />
         <Route component={ NotFoundRoute } />
       </Switch>

@@ -6,14 +6,17 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import {Link} from 'react-router-dom';
 import Formsy from 'formsy-react';
+import PasswordStore from '../stores/PasswordStore';
+import AppDispatcher from '../AppDispatcher';
+import ActionType from '../actions/ActionType';
+import Snackbar from 'material-ui/Snackbar';
+import CircularProgress from 'material-ui/CircularProgress';
 
 import {FormsyText} from 'formsy-material-ui/lib';
 
 export default class ResetForm extends Component{
   constructor(props){
     super(props);
-    this.state={send: false, emailExist: true};
-    this.handleSubmit = this.handleSubmit.bind(this);
 
     Formsy.addValidationRule('emailExist', () => {
       return this.state.emailExist;
@@ -25,53 +28,82 @@ export default class ResetForm extends Component{
     this.unsendedMessage = 'Confira sua caixa de entrada. As instruções para a recuperação de sua senha foram enviadas para: ';
   }
 
-  handleSubmit(){
-    //const email = document.getElementsTagName
-    const email = this.form.getCurrentValues();
-    fetch('/api/auth/password/?email='+email.name)
-      .then((response) => {
-        if(!response.ok){
-          this.setState({emailExist: false});
-          this.form.validateForm();
-        } else {
-          this.setState({send: true});
-        }
-      })
-      .catch((e) => {console.log('problem in email sending', e);});
+  componentWillMount = () => {
+    this.setState({...PasswordStore.getState(), listener: PasswordStore.addListener(this.handleUpdate)} );
   }
 
-  render(){
+  componentWillUnmount = () => {
+    AppDispatcher.dispatch({
+      actionType: ActionType.PASSWORD.UNMOUNT
+    });
+    this.state.listener.remove();
+  }
 
+  handleUpdate = () => {
+    this.setState(PasswordStore.getState());
+    this.form.validateForm();
+  }
+
+  handleSubmit = (data) => {
+    AppDispatcher.dispatch({
+      actionType: ActionType.PASSWORD.RESET,
+      data: data,
+    });
+  }
+
+  getForm = () => {
     let button = null;
 
-    if(!this.state.send){
-      button = <RaisedButton primary label="RECUPERAR" onClick={this.handleSubmit} />;
+    if(this.state.openSendedMessage){
+      button = <RaisedButton primary label="RECUPERAR" type="submit" />;
     } else {
-      button = <RaisedButton primary label="LOGIN" type="submit" containerElement={<Link to="/login" />} />;
+      button = <RaisedButton primary label="LOGIN" containerElement={<Link to="/login" />} />;
     }
 
-    let textfield = <FormsyText name="E-MAIL" validations={{isEmail: true, emailExist: true}}
-      validationErrors={this.invalidMessage}
-      required hintText="Seu e-mail cadastrado" floatingLabelText="E-MAIL"/>;
+    return (
+      <Formsy.Form ref={ (form) => {this.form = form;}}
+        onValidSubmit={this.handleSubmit}
+        onInvalid={() => {this.setState({emailExist: true});}}
+      >
+        <FormsyText type="text"
+          name="email"
+          validations={{isEmail: true, emailExist: true}}
+          validationErrors={this.invalidMessage}
+          required
+          disabled={!this.state.openSendedMessage}
+          hintText="Informe seu email cadastrado"
+          floatingLabelText="E-mail" />
+        <br />
+        <br />
+        {button}
+      </Formsy.Form>);
+  }
 
+  getHeader = () => {
     return (
       <div className="container">
         <div className="button-left">
           <FlatButton primary className="back-btn" label="VOLTAR"/>
         </div>
-        <section>
-          <Title style={{fontSize: '48px'}} label="Recuperação de senha" />
-          <Subtitle style={{fontSize: '22px', textAlign:'left'}} label={!this.state.send? this.sendedMessage : this.unsendedMessage} />
-          <br />
-          <Formsy.Form ref={ (form) => {this.form = form;} } onInvalid={() => {this.setState({emailExist: true});}}>
-            {textfield}
-          </Formsy.Form>
-          <br />
-          <br />
-          <br />
-          {button}
-        </section>
-      </div>
+        <Title style={{fontSize: '48px'}} label="Recuperação de senha" />
+        <Subtitle style={{fontSize: '22px', textAlign:'left'}} label={this.state.openSendedMessage? this.sendedMessage : this.unsendedMessage} />
+        <br />
+        {this.getForm()}
+        <br />
+      </div>);
+  }
+  render(){
+    const toRender = (this.state.send? <CircularProgress /> : this.getHeader());
+    return (
+      <section>
+        {toRender}
+        <Snackbar
+          open={this.state.snack}
+          message={this.state.message}
+          autoHideDuration={9000}
+          onRequestClose={() => AppDispatcher.dispatch({actionType: ActionType.PASSWORD.SNACKCLOSE})}
+        />
+      </section>
     );
   }
 }

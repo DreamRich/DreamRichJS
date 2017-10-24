@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {FormsyText} from 'formsy-material-ui/lib';
-import {FormsyDate} from '../utils/FormsyComponents';
+import {FormsyDate} from '../utils/formsyComponents/FormsyComponents';
 import errorMessages from '../utils/FormsErrorMessages';
 import ClientSubForm from './ClientSubForm';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-flexbox-grid';
 import Checkbox from 'material-ui/Checkbox';
 import CardForms from '../layout/CardForms';
+import ActionType from '../actions/ActionType';
 
 var {
   wordsError,
@@ -26,7 +27,6 @@ class ClientDependentForm extends Component {
     console.log(nextProps);
     if (nextProps.parent_id!== undefined) {
       this.setState({id: nextProps.parent_id});
-      console.log('update next props state');
     }
   }
 
@@ -99,6 +99,8 @@ class ClientDependentForm extends Component {
             {this.getSelectOption(this.removeDependent.bind(this, e), true,labelRemove)}
             <ClientSubForm
               name="dependent"
+              action={ActionType.CLIENT.SUBFORM}
+              title="Dependente"
               parent_name='active_client_id'
               parent_id={this.props.parent_id}>
               <CardForms

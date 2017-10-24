@@ -11,14 +11,13 @@ export default class ClientForm extends Component {
   }
 
   submitForm = (data) => {
-    console.log(data);
     AppDispatcher.dispatch({
       actionType: ActionType.CLIENT.ACTIVE,
       data: data
     });
   }
 
-  submit = () => {console.log(this.form); this.form.submit();}
+  submit= () => {this.form.submit();}
 
   render = () => {
     return (

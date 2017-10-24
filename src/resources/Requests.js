@@ -18,8 +18,8 @@ const request = (url, meta, handleData=noneFunction, handleOk=noneFunction, hand
       }
     })
     .then((data) => {
-      if (data.detail === 'Signature has expired.' 
-        || data.detail === 'Invalid signature.'){
+      if (data.detail === 'Signature has expired.'
+      || data.detail === 'Invalid signature.'){
         alert('Sua sessão expirou!');
         Auth.deauthenticate();
         window.location.replace('/login');
@@ -30,24 +30,27 @@ const request = (url, meta, handleData=noneFunction, handleOk=noneFunction, hand
     .catch((error) => {console.error(error);});
 };
 
-const getData = (url, component, field, fieldB) => {
-  request(url, {
-    method: methods.GET,
-    headers: getAuthenticatedHeader(),
-  }, (data) => {
-    component.setState({[field]: data});
-    if (fieldB !== undefined) component.setState({[fieldB]: data});
-  });
+const getData = (url, handleData=noneFunction, handleOk=noneFunction, handleFail=noneFunction, requireAuthentication=true) => {
+  var meta;
+  if(requireAuthentication){
+    meta = {
+      method: methods.GET,
+      headers: getAuthenticatedHeader()
+    };
+  } else {
+    meta = {
+      method: methods.GET
+    };
+  }
+  request(
+    url,
+    meta,
+    handleData,
+    handleOk,
+    handleFail);
 };
 
-const getDataReal = (url, handleData=noneFunction) => {
-  request(url, {
-    method: methods.GET,
-    headers: getAuthenticatedHeader(),
-  }, handleData);
-};
-
-const postData = (url, data, handleData=noneFunction, handleFail=noneFunction) => {
+const postData = (url, data, handleData=noneFunction, handleFail=noneFunction, handleOk=noneFunction) => {
   request(url,
     {
       method: methods.POST,
@@ -55,7 +58,9 @@ const postData = (url, data, handleData=noneFunction, handleFail=noneFunction) =
       body: JSON.stringify(data),
     },
     handleData,
-    noneFunction,
+    (response) => {
+      handleOk(response);
+    },
     (response) => {
       handleFail(response);
     });
@@ -78,4 +83,4 @@ const deleteData = (url, handleOk) => {
   );
 };
 
-export {getData, postData, putData, deleteData, getDataReal};
+export {getData, postData, putData, deleteData};

@@ -5,7 +5,7 @@ import errorMessages from '../../utils/FormsErrorMessages';
 import { Row, Col } from 'react-flexbox-grid';
 import ClientForm from '../ClientForm';
 import ClientSubForm from '../ClientSubForm';
-import {FormsyDate} from '../../utils/FormsyComponents';
+import FormsyDate from '../../utils/formsyComponents/FormsyDate';
 import PropTypes from 'prop-types';
 import makeFormysTextList from '../../utils/MakeFormysTextList';
 import CardForms from '../../layout/CardForms';

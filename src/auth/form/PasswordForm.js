@@ -22,6 +22,9 @@ export default class PasswordForm extends Component{
   }
 
   componentWillUnmount = () => {
+    AppDispatcher.dispatch({
+      actionType: ActionType.PASSWORD.UNMOUNT
+    });
     this.state.listener.remove();
   }
 
@@ -31,7 +34,6 @@ export default class PasswordForm extends Component{
 
   handleForm = (data) => {
     data.userid = this.props.userid;
-    console.log(data);
     AppDispatcher.dispatch({
       actionType: ActionType.PASSWORD.CHANGE,
       data: data,
@@ -110,7 +112,6 @@ export default class PasswordForm extends Component{
 
   render(){
     const toRender = (this.state.send? <CircularProgress /> : this.getForm());
-    console.log(this.state.snack);
     return (
       <section>
         {toRender}

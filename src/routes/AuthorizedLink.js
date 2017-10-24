@@ -5,8 +5,9 @@ import {Auth} from '../auth/Auth';
 
 export default class AuthorizedLink extends Component{
   render() {
+    const {permission, ...props} = this.props;
     return (
-      Auth.hasPermission(this.props.permission) ? (<Link {...this.props} />) : (null)
+      Auth.hasPermission(permission) ? (<Link {...props} />) : (null)
     );
   }
 }
