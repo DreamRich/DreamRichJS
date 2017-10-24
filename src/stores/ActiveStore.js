@@ -10,16 +10,29 @@ class ActiveStore extends ReduceStore {
   constructor(){ super(AppDispatcher); }
 
   getInitialState(){ 
-    return {types: [], profit: {}, actives: [0], idx: 1, submit: false, totalProfit: 0.0};
+    return {types: [], id: undefined, actives: [0], idx:1};
   }
 
   reduce = (state, action) => {
     let actives;
     switch (action.actionType) {
+    case ActionType.ACTIVE.MANAGER:
+      postData(routeMap.active_manager,
+        action.data,
+        (data) => AppDispatcher.dispatch({
+          id: data.id,
+          actionType: ActionType.ACTIVE.SUCCESS
+        })
+      );
+      return state;
+
     case ActionType.ACTIVE.FORM:
       postData(routeMap.active,
         action.data);
       return {...state, submit: false};
+
+    case ActionType.ACTIVE.SUCCESS:
+      return {...state, id: action.id};
 
     case ActionType.ACTIVE.TYPE:
       getData(routeMap.active_type,
@@ -49,9 +62,6 @@ class ActiveStore extends ReduceStore {
     case ActionType.ACTIVE.REMOVE:
       actives = state.actives.filter(id=> id !== action.id);
       return {...state, actives};
-
-    case ActionType.ACTIVE.CANSUBMIT:
-      return {...state, submit: true};
 
     default:
       return state;

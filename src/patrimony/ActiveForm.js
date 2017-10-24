@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {Form} from 'formsy-react';
 import {FormsyText, FormsySelect} from 'formsy-material-ui/lib';
 import ActionType from '../actions/ActionType';
 import AppDispatcher from '../AppDispatcher';
 import MenuItem from 'material-ui/MenuItem';
 import PropTypes from 'prop-types';
+import ClientSubForm from '../client/ClientSubForm';
 //import RaisedButton from 'material-ui/RaisedButton';
 
 
@@ -20,55 +20,20 @@ export default class ActiveForm extends Component {
     });
   }
 
-  componentWillUnmount = () => {
-  }
-
   getOptions = () => {
     return this.props.types.map( (type) =>
       <MenuItem key={type.id} value={type.id} primaryText={type.name} />
     );
   }
 
-  submitForm = (data) => {
-    data.patrimony_id = this.props.patrimony_id;
-    AppDispatcher.dispatch({
-      actionType: ActionType.ACTIVE.FORM,
-      data: data,
-    });
-  }
-
-  componentWillReceiveProps = (nextProps) => {
-    if(!this.props.canSubmit && nextProps.canSubmit){
-      this.form.submit();
-    }
-  }
-
-  getValues = (data) => {
-    AppDispatcher.dispatch({
-      actionType: ActionType.ACTIVE.PROFIT,
-      data: {
-        [this.props.index]: {
-          rate: data.rate,
-          value: data.value,
-        }
-      }
-    });
-  }
-
-  componentWillUnmount = () => {
-    AppDispatcher.dispatch({
-      actionType: ActionType.ACTIVE.DELETEPROFIT,
-      index: this.props.index
-    });
-  }
-
-
   render = () => {
     return (
-      <Form
-        ref={ref => this.form = ref}
-        onValidSubmit={this.submitForm}
-        onChange={this.getValues}
+      <ClientSubForm
+        title="Ativo"
+        parent_id={this.props.parent_id}
+        parent_name="active_manager_id"
+        name='active'
+        action={ActionType.ACTIVE.FORM}
       >
         <FormsySelect
           name="active_type_id"
@@ -93,15 +58,13 @@ export default class ActiveForm extends Component {
           hintText='100.0'
           onChange={this.onRateChange}
         />
-      </Form>
+      </ClientSubForm>
     );
   }
 }
 
 ActiveForm.propTypes = {
-  patrimony_id: PropTypes.number,
+  parent_id: PropTypes.number,
   types: PropTypes.array,
-  index: PropTypes.number,
-  canSubmit: PropTypes.bool,
 };
 

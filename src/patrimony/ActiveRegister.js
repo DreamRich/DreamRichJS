@@ -29,9 +29,11 @@ export default class ActiveRegister extends Component {
     this.setState(ActiveStore.getState());
   }
 
-  submit = () => {
+  submitBase = (event) => {
+    event.preventDefault();
     AppDispatcher.dispatch({
-      actionType: ActionType.ACTIVE.CANSUBMIT
+      actionType: ActionType.ACTIVE.MANAGER,
+      data: {patrimony_id: 1/*this.props.patrimony_id*/}
     });
   }
 
@@ -51,14 +53,11 @@ export default class ActiveRegister extends Component {
   render = () => {
     return (
       <Paper className="Paper">
-        {this.state.totalProfit}
         {this.state.actives.map( idx => 
           <div key={idx}>
             <ActiveForm
-              patrimony_id={1/*this.props.patrimony_id*/}
+              parent_id={this.state.id}
               types={this.state.types}
-              canSubmit={this.state.submit}
-              index={idx}
             />
             <RaisedButton
               primary 
@@ -70,15 +69,18 @@ export default class ActiveRegister extends Component {
         <RaisedButton
           primary 
           type='submit'
-          onClick={this.submit} 
-          label='Enviar'
-        />
-        <RaisedButton
-          primary 
-          type='submit'
           onClick={this.add} 
           label='Adicionar'
         />
+        <form 
+          onSubmit={this.submitBase}
+        >
+          <RaisedButton
+            primary
+            type="submit"
+            label="Enviar"
+          />
+        </form>
       </Paper>
     );
   }
