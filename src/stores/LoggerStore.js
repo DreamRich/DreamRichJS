@@ -9,8 +9,8 @@ class LoggerStore extends ReduceStore {
   getInitialState() { return {};}
 
   reduce = (state, action) => {
-    console.info(`action to: ${action.actionType}`);
-    console.info('action data: ', action.data);
+    console.log(`action to: ${action.actionType}`);
+    console.info('action data: ', action);
     return state;
   }
 }

@@ -21,7 +21,8 @@ export class Auth{
   }
 
   static refreshToken(){
-    AppDispatcher.dispatch({actionType: ActionType.REFRESH_LOGIN,
+    AppDispatcher.dispatch({
+      actionType: ActionType.REFRESH_LOGIN,
       data: {token: Auth.getAuth()}
     });
   }
@@ -55,6 +56,16 @@ export class Auth{
     );
   }
 
+  static autoLogin() {
+    if(Auth.isAuthenticated()){
+      Auth.updateDate();
+      AppDispatcher.dispatch({
+        actionType: ActionType.REFRESH_LOGIN,
+        data: {token: Auth.getAuth()}
+      });
+    }
+  }
+
   static getAuth(){
     return localStorage.getItem('token');
   }
@@ -70,7 +81,7 @@ export class Auth{
   static deauthenticate(){
     console.log('Deauthenticate');
     clearInterval(Auth.loginCheck);
-    clearTimeout(Auth.login_timeout);
+    clearTimeout(Auth.loginTimeout);
     return localStorage.removeItem('token');
   }
 

@@ -55,7 +55,7 @@ class Header extends React.Component {
 
   render() {
 
-    const {styles, handleChangeRequestNavDrawer} = this.props;
+    const {styles, handleChangeRequestNavDrawer, auth} = this.props;
 
     const style = {
       menuButton: {
@@ -90,8 +90,8 @@ class Header extends React.Component {
             open={this.state.openMenu}
           >
             <MenuItem>
-              { !this.state.auth && makeMenuItem('allow_any','/login/','Login')}
-              { this.state.auth && <MenuItem 
+              { !auth && makeMenuItem('allow_any','/login/','Login')}
+              { auth && <MenuItem 
                 primaryText={'Sign out'}
                 onClick={this.handleSigout}
               /> }

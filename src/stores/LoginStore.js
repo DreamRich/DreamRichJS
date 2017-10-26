@@ -46,6 +46,11 @@ class LoginStore extends ReduceStore {
         }
       );
       return state;
+
+    case ActionType.LOGIN.SUCCESS:
+      Auth.authenticate(action.data);
+      return state;
+
     default:
       return state;
     }

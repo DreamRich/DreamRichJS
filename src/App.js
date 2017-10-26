@@ -24,15 +24,14 @@ class App extends Component {
     const body = document.getElementsByTagName('body')[0];
     body.onmousemove = Auth.updateDate;
     body.onkeyup = Auth.updateDate;
+    Auth.autoLogin();
   }
 
   componentWillUnmout = () => this.state.listener.remove()
 
-  handleChangeRequestNavDrawer = () => {
-    AppDispatcher.dispatch({
-      actionType: ActionType.APP.SWITCHNAVDRAWER,
-    });
-  }
+  handleChangeRequestNavDrawer = () => AppDispatcher.dispatch({
+    actionType: ActionType.APP.SWITCHNAVDRAWER,
+  })
 
   handleToggle = () => AppDispatcher.dispatch({
     actionType: ActionType.APP.MENUTOGGLE, })
@@ -55,13 +54,14 @@ class App extends Component {
 
     return (
       <div className="App">
+        <Header styles={styles.header}
+          handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer}
+          auth={this.state.auth}
+        />
+        <SidebarMenu  navDrawerOpen={this.state.navDrawerOpen} />
         <div style={styles.container}>
           <Routers />
         </div>
-        <Header styles={styles.header}
-          handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer}
-        />
-        <SidebarMenu  navDrawerOpen={this.state.navDrawerOpen} />
       </div>
     );
   }
