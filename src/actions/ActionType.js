@@ -3,6 +3,10 @@ const actionTypes = {
     SWITCHNAVDRAWER: 'app/drawer_toggle',
     MENUTOGGLE: 'app/menu_toggle',
   },
+  MENU: {
+    TOGGLEMENU: 'menu/toggle_side_menu',
+    REQUESTCHANGE: 'menu/change_side_menu',
+  },
   LOGIN: {
     POST: 'login/post',
     FAIL: 'login/fail',

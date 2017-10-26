@@ -6,6 +6,8 @@ import Routers from './routes/Routers';
 import AppStore from './stores/AppStore';
 import AppDispatcher from './AppDispatcher';
 import ActionType from './actions/ActionType';
+import {Auth} from './auth/Auth';
+import LoggerStore from './stores/LoggerStore';  // eslint-disable-line no-unused-vars
 
 class App extends Component {
   constructor(props) {
@@ -13,9 +15,16 @@ class App extends Component {
     this.state = AppStore.getState();
   }
 
-  componentWillMount = () => this.setState({
-    listener: AppStore.addListener(this.handleChange)
-  })
+  componentWillMount = () => {
+    this.setState({
+      listener: AppStore.addListener(this.handleChange)
+    });
+
+    /* Add validation to logout when user don not make some moviment */
+    const body = document.getElementsByTagName('body')[0];
+    body.onmousemove = Auth.updateDate;
+    body.onkeyup = Auth.updateDate;
+  }
 
   componentWillUnmout = () => this.state.listener.remove()
 
@@ -50,7 +59,7 @@ class App extends Component {
           <Routers />
         </div>
         <Header styles={styles.header}
-          handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer.bind(this)}
+          handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer}
         />
         <SidebarMenu  navDrawerOpen={this.state.navDrawerOpen} />
       </div>
