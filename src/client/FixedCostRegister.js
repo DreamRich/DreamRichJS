@@ -16,13 +16,13 @@ class FixedCostRegister extends Component {
 
   addCost = () => {
     AppDispatcher.dispatch({
-      actionType: ActionType.FIXEDCOST.ADD
+      action: ActionType.FIXEDCOST.ADD
     });
   }
 
   removeCost = (key) => {
     AppDispatcher.dispatch({
-      actionType: ActionType.FIXEDCOST.REMOVE,
+      action: ActionType.FIXEDCOST.REMOVE,
       key: key
     });
   }
@@ -33,7 +33,7 @@ class FixedCostRegister extends Component {
     });
 
     AppDispatcher.dispatch({
-      actionType: ActionType.FIXEDCOST.TYPE
+      action: ActionType.FIXEDCOST.TYPE
     });
   }
 
@@ -48,7 +48,7 @@ class FixedCostRegister extends Component {
   submitBase = (event) => {
     event.preventDefault();
     AppDispatcher.dispatch({
-      actionType: ActionType.FIXEDCOST.MANAGER
+      action: ActionType.FIXEDCOST.MANAGER
     });
   }
 

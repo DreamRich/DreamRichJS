@@ -33,7 +33,7 @@ export default class LoginForm extends Component{
 
   handleSubmit = (data) => {
     AppDispatcher.dispatch({
-      actionType: ActionType.LOGIN.POST,
+      action: ActionType.LOGIN.POST,
       data: data,
     });
   }

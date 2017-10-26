@@ -30,11 +30,11 @@ class App extends Component {
   componentWillUnmout = () => this.state.listener.remove()
 
   handleChangeRequestNavDrawer = () => AppDispatcher.dispatch({
-    actionType: ActionType.APP.SWITCHNAVDRAWER,
+    action: ActionType.APP.SWITCHNAVDRAWER,
   })
 
   handleToggle = () => AppDispatcher.dispatch({
-    actionType: ActionType.APP.MENUTOGGLE, })
+    action: ActionType.APP.MENUTOGGLE, })
 
   handleChange = () => this.setState(AppStore.getState())
 

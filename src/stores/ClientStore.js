@@ -13,7 +13,7 @@ class ClientStore extends ReduceStore {
   getInitialState(){ return {id: undefined}; }
 
   reduce = (state, action) => {
-    switch (action.actionType) {
+    switch (action.action) {
     case ActionType.CLIENT.ACTIVE:
       /* This if - else with state.id was added only because the form doesn't
        * have validation on the fields... and may cause a resubmition in form
@@ -26,7 +26,7 @@ class ClientStore extends ReduceStore {
           action.data,
           (data) => {
             AppDispatcher.dispatch({
-              actionType: ActionType.CLIENT.ACTIVESUCCESS,
+              action: ActionType.CLIENT.ACTIVESUCCESS,
               id: data.id
             });
           }
@@ -34,7 +34,7 @@ class ClientStore extends ReduceStore {
       } else {
         setTimeout(() =>
           AppDispatcher.dispatch({
-            actionType: ActionType.CLIENT.ACTIVESUCCESS,
+            action: ActionType.CLIENT.ACTIVESUCCESS,
             id: state.id
           }), 1000);
       }

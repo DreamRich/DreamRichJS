@@ -11,7 +11,7 @@ class MenuStore extends ReduceStore {
   getInitialState(){ return {openMenu: false}; }
 
   reduce = (state, action) => {
-    switch (action.actionType) {
+    switch (action.action) {
     case ActionType.MENU.REQUESTCHANGE:
       return {...state, openMenu: action.openMenu};
 

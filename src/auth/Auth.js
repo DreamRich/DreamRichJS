@@ -8,7 +8,7 @@ export class Auth{
     const quarterHour = minute*15;
     const now = Date.now();
     if (now > Auth.lastVerify+quarterHour){
-      AppDispatcher.dispatch({actionType: ActionType.LOGOUT });
+      AppDispatcher.dispatch({action: ActionType.LOGOUT });
     } else {
       console.info('Time to logout (minute): '
         + (Auth.lastVerify + quarterHour - Date.now())/minute
@@ -22,7 +22,7 @@ export class Auth{
 
   static refreshToken(){
     AppDispatcher.dispatch({
-      actionType: ActionType.REFRESH_LOGIN,
+      action: ActionType.REFRESH_LOGIN,
       data: {token: Auth.getAuth()}
     });
   }
@@ -60,7 +60,7 @@ export class Auth{
     if(Auth.isAuthenticated()){
       Auth.updateDate();
       AppDispatcher.dispatch({
-        actionType: ActionType.REFRESH_LOGIN,
+        action: ActionType.REFRESH_LOGIN,
         data: {token: Auth.getAuth()}
       });
     }

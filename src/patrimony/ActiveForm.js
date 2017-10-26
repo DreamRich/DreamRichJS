@@ -16,7 +16,7 @@ export default class ActiveForm extends Component {
 
   componentWillMount = () => {
     AppDispatcher.dispatch({
-      actionType: ActionType.ACTIVE.TYPE
+      action: ActionType.ACTIVE.TYPE
     });
   }
 

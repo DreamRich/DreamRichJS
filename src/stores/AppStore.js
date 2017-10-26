@@ -16,7 +16,7 @@ class AppStore extends ReduceStore {
   }
 
   reduce = (state, action) => {
-    switch (action.actionType) {
+    switch (action.action) {
     case ActionType.APP.SWITCHNAVDRAWER:
       return {...state, navDrawerOpen: !state.navDrawerOpen};
 

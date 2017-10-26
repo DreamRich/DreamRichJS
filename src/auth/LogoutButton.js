@@ -6,7 +6,7 @@ export default class LogoutButton extends Component{
 
   render(){
     return (<button onClick={
-      () => { AppDispatcher.dispatch({actionType: ActionType.LOGOUT}); }
+      () => { AppDispatcher.dispatch({action: ActionType.LOGOUT}); }
     } >logout</button>
     );
   }

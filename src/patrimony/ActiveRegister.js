@@ -32,20 +32,20 @@ export default class ActiveRegister extends Component {
   submitBase = (event) => {
     event.preventDefault();
     AppDispatcher.dispatch({
-      actionType: ActionType.ACTIVE.MANAGER,
+      action: ActionType.ACTIVE.MANAGER,
       data: {patrimony_id: 1/*this.props.patrimony_id*/}
     });
   }
 
   add = () => {
     AppDispatcher.dispatch({
-      actionType: ActionType.ACTIVE.ADD
+      action: ActionType.ACTIVE.ADD
     });
   }
 
   remove = (id) => {
     AppDispatcher.dispatch({
-      actionType: ActionType.ACTIVE.REMOVE,
+      action: ActionType.ACTIVE.REMOVE,
       id: id
     });
   }

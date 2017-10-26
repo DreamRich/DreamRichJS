@@ -23,7 +23,7 @@ export default class ClientSubForm extends Component {
     console.log(this.props.name);
     AppDispatcher.dispatch(
       {
-        actionType: this.props.action,
+        action: this.props.action,
         data: data,
         route: routeMap[this.props.name]
       });

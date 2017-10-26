@@ -36,7 +36,7 @@ class Header extends React.Component {
 
   handleOnRequestChange = (value) => {
     AppDispatcher.dispatch({
-      actionType: ActionType.MENU.REQUESTCHANGE,
+      action: ActionType.MENU.REQUESTCHANGE,
       openMenu: value,
     });
   }
@@ -46,7 +46,7 @@ class Header extends React.Component {
   }
 
   handleSigout = () => AppDispatcher.dispatch({
-    actionType: ActionType.LOGOUT
+    action: ActionType.LOGOUT
   })
 
   componentWillMount = () => this.setState({updateId: MenuStore.addListener(this.handleUpdate) })

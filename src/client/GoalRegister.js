@@ -16,13 +16,13 @@ class GoalRegister extends Component {
 
   addGoal = () => {
     AppDispatcher.dispatch({
-      actionType: ActionType.GOAL.ADD
+      action: ActionType.GOAL.ADD
     });
   }
 
   removeGoal = (key) => {
     AppDispatcher.dispatch({
-      actionType: ActionType.GOAL.REMOVE,
+      action: ActionType.GOAL.REMOVE,
       key: key
     });
   }
@@ -33,7 +33,7 @@ class GoalRegister extends Component {
     });
 
     AppDispatcher.dispatch({
-      actionType: ActionType.GOAL.TYPE
+      action: ActionType.GOAL.TYPE
     });
   }
 
@@ -48,7 +48,7 @@ class GoalRegister extends Component {
   submitBase = (event) => {
     event.preventDefault();
     AppDispatcher.dispatch({
-      actionType: ActionType.GOAL.MANAGER
+      action: ActionType.GOAL.MANAGER
     });
   }
 

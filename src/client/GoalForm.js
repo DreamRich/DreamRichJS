@@ -27,7 +27,7 @@ export default class GoalForm extends Component {
 
   onChangeHasEnd = (event, value) => {
     AppDispatcher.dispatch({
-      actionType: ActionType.GOAL.HASEND,
+      action: ActionType.GOAL.HASEND,
       hasEnd: value
     });
   }

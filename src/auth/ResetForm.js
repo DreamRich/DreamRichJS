@@ -34,7 +34,7 @@ export default class ResetForm extends Component{
 
   componentWillUnmount = () => {
     AppDispatcher.dispatch({
-      actionType: ActionType.PASSWORD.UNMOUNT
+      action: ActionType.PASSWORD.UNMOUNT
     });
     this.state.listener.remove();
   }
@@ -46,7 +46,7 @@ export default class ResetForm extends Component{
 
   handleSubmit = (data) => {
     AppDispatcher.dispatch({
-      actionType: ActionType.PASSWORD.RESET,
+      action: ActionType.PASSWORD.RESET,
       data: data,
     });
   }
@@ -101,7 +101,7 @@ export default class ResetForm extends Component{
           open={this.state.snack}
           message={this.state.message}
           autoHideDuration={9000}
-          onRequestClose={() => AppDispatcher.dispatch({actionType: ActionType.PASSWORD.SNACKCLOSE})}
+          onRequestClose={() => AppDispatcher.dispatch({action: ActionType.PASSWORD.SNACKCLOSE})}
         />
       </section>
     );

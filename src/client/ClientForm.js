@@ -12,7 +12,7 @@ export default class ClientForm extends Component {
 
   submitForm = (data) => {
     AppDispatcher.dispatch({
-      actionType: ActionType.CLIENT.ACTIVE,
+      action: ActionType.CLIENT.ACTIVE,
       data: data
     });
   }

@@ -20,7 +20,7 @@ class FixedCostStore extends ReduceStore {
 
   reduce = (state, action) => {
     let new_array;
-    switch (action.actionType) {
+    switch (action.action) {
     case ActionType.FIXEDCOST.ADD:
       new_array = state.costs.slice();
       new_array.push(state.idx);
@@ -37,7 +37,7 @@ class FixedCostStore extends ReduceStore {
         routeMap.cost_manager,
         {},
         (data) => AppDispatcher.dispatch({
-          actionType: ActionType.FIXEDCOST.SUCCESS,
+          action: ActionType.FIXEDCOST.SUCCESS,
           id: data.id
         })
       );
@@ -50,7 +50,7 @@ class FixedCostStore extends ReduceStore {
       getData(
         routeMap.cost_type,
         (data) => AppDispatcher.dispatch({
-          actionType: ActionType.FIXEDCOST.TYPESUCCESS,
+          action: ActionType.FIXEDCOST.TYPESUCCESS,
           types: data
         })
       );

@@ -24,12 +24,12 @@ class ActiveStore extends ReduceStore {
 
   reduce = (state, action) => {
     let actives;
-    switch (action.actionType) {
+    switch (action.action) {
     case ActionType.ACTIVE.MANAGER:
       postData(routeMap.active_manager,
         action.data,
         (data) => AppDispatcher.dispatch({
-          actionType: ActionType.ACTIVE.SUCCESS,
+          action: ActionType.ACTIVE.SUCCESS,
           id: data.id,
           actives: data.actives,
         })
@@ -39,7 +39,7 @@ class ActiveStore extends ReduceStore {
     case ActionType.ACTIVE.GETMANAGER:
       getData(`${routeMap.active_manager}${action.id}/`,
         (data) => AppDispatcher.dispatch({
-          actionType: ActionType.ACTIVE.SUCCESS,
+          action: ActionType.ACTIVE.SUCCESS,
           actives: data.actives})
       );
       return state;
@@ -55,7 +55,7 @@ class ActiveStore extends ReduceStore {
     case ActionType.ACTIVE.TYPE:
       getData(routeMap.active_type,
         (data) => AppDispatcher.dispatch({
-          actionType: ActionType.ACTIVE.TYPESUCCESS,
+          action: ActionType.ACTIVE.TYPESUCCESS,
           types: data
         })
       );

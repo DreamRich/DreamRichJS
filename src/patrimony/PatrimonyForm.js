@@ -7,7 +7,7 @@ import AppDispatcher from '../AppDispatcher';
 export default class PatrimonyForm extends Component {
 
   submitForm = (data) => AppDispatcher.dispatch({
-    actionType: ActionType.PATRIMONY.FORM,
+    action: ActionType.PATRIMONY.FORM,
     data: data,
   })
 

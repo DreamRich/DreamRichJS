@@ -17,7 +17,7 @@ export default class ActiveProfit extends Component {
     });
     const id = this.props.match.params.id;
     AppDispatcher.dispatch({
-      actionType: ActionType.ACTIVE.GETMANAGER,
+      action: ActionType.ACTIVE.GETMANAGER,
       id: id
     });
   }

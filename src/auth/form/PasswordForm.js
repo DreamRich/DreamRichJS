@@ -23,7 +23,7 @@ export default class PasswordForm extends Component{
 
   componentWillUnmount = () => {
     AppDispatcher.dispatch({
-      actionType: ActionType.PASSWORD.UNMOUNT
+      action: ActionType.PASSWORD.UNMOUNT
     });
     this.state.listener.remove();
   }
@@ -35,7 +35,7 @@ export default class PasswordForm extends Component{
   handleForm = (data) => {
     data.userid = this.props.userid;
     AppDispatcher.dispatch({
-      actionType: ActionType.PASSWORD.CHANGE,
+      action: ActionType.PASSWORD.CHANGE,
       data: data,
     });
   }
@@ -119,7 +119,7 @@ export default class PasswordForm extends Component{
           open={this.state.snack}
           message={this.state.message}
           autoHideDuration={9000}
-          onRequestClose={() => AppDispatcher.dispatch({actionType: ActionType.PASSWORD.SNACKCLOSE})}
+          onRequestClose={() => AppDispatcher.dispatch({action: ActionType.PASSWORD.SNACKCLOSE})}
         />
       </section>
     );
