@@ -8,6 +8,8 @@ import AppDispatcher from '../../AppDispatcher';
 import CircularProgress from 'material-ui/CircularProgress';
 import Snackbar from 'material-ui/Snackbar';
 import ActionType from '../../actions/ActionType';
+import { Row, Col } from 'react-flexbox-grid';
+import CardForms from '../../layout/CardForms';
 
 export default class PasswordForm extends Component{
 
@@ -38,42 +40,74 @@ export default class PasswordForm extends Component{
     });
   }
 
+  getFormyText(){
+    const listForms = [
+      {
+        type: 'text', name: 'username', disable: true, value: this.props.username, floatingLabelText: 'Usuário'
+      },
+      {
+        type: 'password', name: 'password', required: true, hintText: 'Digite sua senha antiga', floatingLabelText: 'Senha Antiga'
+      },
+      {
+        type: 'password', name: 'new_password', required: true, hintText: 'Digite sua nova senha', floatingLabelText: 'Senha Nova'
+      },
+      {
+        type: 'password', name: 'new_password_confirmation', required: true, hintText: 'Confirme sua nova senha', floatingLabelText: 'Confirmação'
+      },
+    ];
+
+    let listFormsy = listForms.map((form,index) => {
+      return (
+        <FormsyText key={'formsyTextPassword'+index}
+          type={form.type}
+          name={form.name}
+          disabled={form.disable}
+          required={form.required}
+          value={form.value}
+          floatingLabelText={form.floatingLabelText}
+        />
+      );
+    });
+
+    return listFormsy;
+  }
+
+  getContentCard(){
+    const formysTextList = this.getFormyText();
+
+    let listColumns = formysTextList.map((form,index)=>{
+      return (
+        <Col xs key={'listColumnsPassword'+index}>
+          {formysTextList[index]}
+        </Col>
+      );
+    });
+
+    return (
+      <div>
+        <Row>
+          {listColumns}
+        </Row>
+        <Row>
+          <RaisedButton primary style={{marginTop: '30px'}} label="ALTERAR" type="submit"/>
+        </Row>
+      </div>
+    );
+  }
+
   getForm = () => {
 
-    return (<Formsy.Form ref={ (form) => {this.form = form;} }
-      onValidSubmit={this.handleForm}
-    >
-      <FormsyText type="text"
-        name="username"
-        disabled
-        value={this.props.username}
-        floatingLabelText="Usuário" />
-      <br/>
-      <br/>
-      <FormsyText type="password"
-        name="password"
-        required
-        hintText="Digite sua senha antiga" 
-        floatingLabelText="Senha" />
-      <br/>
-      <br/>
-      <FormsyText type="password"
-        name="new_password"
-        required
-        hintText="Digite sua nova senha"
-        floatingLabelText="Nova senha" />
-      <br/>
-      <br/>
-      <FormsyText type="password"
-        name="new_password_confirmation"
-        required
-        hintText="Confirme sua nova senha"
-        floatingLabelText="Confirmação" />
-      <br />
-      <br/>
-      <RaisedButton primary label="ALTERAR" type="submit"/>
-    </Formsy.Form>);
-
+    return (
+      <Formsy.Form ref={ (form) => {this.form = form;} }
+        onValidSubmit={this.handleForm}
+      >
+        <CardForms
+          titleCard="Alteração de senha"
+          subtitleCard="Preencha os campos a seguir para alterar sua senha."
+          contentCard={this.getContentCard()}
+        />
+      </Formsy.Form>
+    );
   }
 
   render(){

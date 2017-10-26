@@ -64,14 +64,6 @@ class ActiveStore extends ReduceStore {
     case ActionType.ACTIVE.TYPESUCCESS:
       return {...state, types: action.types};
 
-    case ActionType.ACTIVE.PROFIT:
-      var profit = {...state.profit, ...action.data};
-      return {...state, profit, totalProfit: this.calculate(profit)};
-
-    case ActionType.ACTIVE.DELETEPROFIT:
-      delete state.profit[action.index];
-      return {...state, totalProfit: this.calculate(profit)};
-
     case ActionType.ACTIVE.ADD:
       actives = state.actives.slice();
       actives.push(state.idx);
@@ -84,15 +76,6 @@ class ActiveStore extends ReduceStore {
     default:
       return state;
     }
-  }
-  calculate = (profit) =>{
-    let sum = 0;
-    for(var key in profit){
-      if( profit.hasOwnProperty(key) ){
-        sum+=Number(profit[key].value);
-      }
-    }
-    return sum;
   }
 }
 

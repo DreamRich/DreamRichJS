@@ -18,7 +18,7 @@ const request = (url, meta, handleData=noneFunction, handleOk=noneFunction, hand
       }
     })
     .then((data) => {
-      if (data.detail === 'Signature has expired.' 
+      if (data.detail === 'Signature has expired.'
       || data.detail === 'Invalid signature.'){
         alert('Sua sessão expirou!');
         Auth.deauthenticate();

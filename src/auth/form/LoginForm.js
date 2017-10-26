@@ -12,29 +12,26 @@ export default class LoginForm extends Component{
 
   constructor(props){
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-
     Formsy.addValidationRule('userExist', () => {
       return this.state.userExist;
     });
 
     this.invalidMessage = 'Usuário e/ou senha inválidos.';
+    this.state = LoginStore.getInitialState();
   }
 
-  componentWillMount = () => {
-    this.setState({...LoginStore.getState(), listener: LoginStore.addListener(this.validateForm)} );
-  }
+  componentWillMount = () => this.setState({
+    listener: LoginStore.addListener(this.validateForm)
+  })
 
   validateForm = () => {
     this.setState(LoginStore.getState());
     this.form.validateForm();
   }
 
-  componentWillUnmount = () => {
-    this.state.listener.remove();
-  }
+  componentWillUnmount = () => this.state.listener.remove()
 
-  handleSubmit(data){
+  handleSubmit = (data) => {
     AppDispatcher.dispatch({
       actionType: ActionType.LOGIN.POST,
       data: data,
@@ -43,9 +40,10 @@ export default class LoginForm extends Component{
 
   render(){
     return (
-      <Formsy.Form ref={ (form) => {this.form = form;}}
+      <Formsy.Form ref={ (form) => {this.form = form;} }
+        onValidSubmit={this.handleSubmit}
         onInvalid={() => {this.setState({userExist: true});} }
-        onValidSubmit={this.handleSubmit}>
+      >
         <FormsyText type="text"
           name="username"
           required
@@ -55,6 +53,7 @@ export default class LoginForm extends Component{
           validationError={' '}
         />
         <br/>
+
         <FormsyText type="password"
           name="password"
           required
@@ -62,11 +61,11 @@ export default class LoginForm extends Component{
           floatingLabelText="Senha"
           validations = "userExist"
           validationError={this.invalidMessage} />
+
         <br/><br/>
-        <RaisedButton primary label="ENTRAR" type="submit"/>
+        <RaisedButton backgroundColor='#324356' labelColor='#FFFFFF' label="ENTRAR" type="submit" style={{marginBottom: '30px', marginTop: '30px'}}/>
         <br/><br/>
       </Formsy.Form>
-
     );
   }
 }

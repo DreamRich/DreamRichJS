@@ -85,7 +85,7 @@ export default class GridTable extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div>
         <ReactDataGrid
           enableCellSelect={true}
           columns={this.state._columns}

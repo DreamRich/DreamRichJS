@@ -1,10 +1,13 @@
 const actionTypes = {
+  APP: {
+    SWITCHNAVDRAWER: 'app/drawer_toggle',
+    MENUTOGGLE: 'app/menu_toggle',
+  },
   LOGIN: {
     POST: 'login/post',
     FAIL: 'login/fail',
     SUCCESS: 'login/success',
   },
-
   LOGOUT: 'logout',
   PASSWORD: {
     CHANGE: 'password/change',

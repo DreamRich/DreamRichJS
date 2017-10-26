@@ -22,7 +22,7 @@ export default class ResetForm extends Component{
       return this.state.emailExist;
     });
 
-    this.invalidMessage = {isEmail: 'E-mail inválido', 
+    this.invalidMessage = {isEmail: 'E-mail inválido',
       emailExist: 'E-mail não cadastrado'};
     this.sendedMessage = 'Informe o endereço de e-mail associado à sua conta e enviaremos instruções para a recuperação de sua senha.';
     this.unsendedMessage = 'Confira sua caixa de entrada. As instruções para a recuperação de sua senha foram enviadas para: ';
@@ -101,7 +101,8 @@ export default class ResetForm extends Component{
           open={this.state.snack}
           message={this.state.message}
           autoHideDuration={9000}
-          onRequestClose={() => AppDispatcher.dispatch({actionType: ActionType.PASSWORD.SNACKCLOSE})}/>
+          onRequestClose={() => AppDispatcher.dispatch({actionType: ActionType.PASSWORD.SNACKCLOSE})}
+        />
       </section>
     );
   }

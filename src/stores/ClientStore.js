@@ -32,10 +32,10 @@ class ClientStore extends ReduceStore {
           }
         );
       } else {
-        setTimeout(() => 
+        setTimeout(() =>
           AppDispatcher.dispatch({
             actionType: ActionType.CLIENT.ACTIVESUCCESS,
-            id: state.id 
+            id: state.id
           }), 1000);
       }
       return {...state, id: undefined};

@@ -12,7 +12,7 @@ const routeMap = {
   regular_cost: '/api/financial_planning/regular_cost/',
   cost_manager: '/api/financial_planning/cost_manager/',
   state: '/api/client/state/',
-  goals_flow_dic:  '/api/goal/dic/1/',
+  goals_flow_dic:  '/api/goal/goal_manager/1/',
   patrimony: '/api/patrimony/',
   active: '/api/patrimony/active/',
   active_manager: '/api/patrimony/active_manager/',

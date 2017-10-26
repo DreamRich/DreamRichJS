@@ -1,24 +1,20 @@
 'use strict';
-
 import {ReduceStore} from 'flux/utils';
 import AppDispatcher from '../AppDispatcher';
-import {Auth} from '../auth/Auth';
-import LoginStore from './LoginStore';
 import ActionType from '../actions/ActionType';
 
 class AppStore extends ReduceStore {
   constructor(){ super(AppDispatcher); }
 
-  getInitialState(){ return {auth: false}; }
+  getInitialState(){ return {navDrawerOpen: false, open: false}; }
 
   reduce = (state, action) => {
     switch (action.actionType) {
-    case ActionType.LOGIN.SUCCESS:
-      Auth.authenticate(action.data);
-      return {auth: true};
-    case ActionType.LOGOUT:
-      AppDispatcher.waitFor([LoginStore.getDispatchToken()]);
-      return {auth: false};
+    case ActionType.APP.SWITCHNAVDRAWER:
+      return {...state, navDrawerOpen: !state.navDrawerOpen};
+
+    case ActionType.APP.MENUTOGGLE:
+      return {...state, open: !state.open};
     default:
       return state;
     }
