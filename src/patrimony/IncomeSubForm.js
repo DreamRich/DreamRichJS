@@ -7,6 +7,10 @@ import FormsyToggleYesNo from '../components/FormsyToggleYesNo';
 
 export default class IncomeSubForm extends Component {
 
+  static propTypes = {
+    parent_id: PropTypes.number
+  }
+
   render = () => {
     return(
       <ClientSubForm
@@ -41,6 +45,3 @@ export default class IncomeSubForm extends Component {
   }
 }
 
-IncomeSubForm.propTypes = {
-  parent_id: PropTypes.number
-};

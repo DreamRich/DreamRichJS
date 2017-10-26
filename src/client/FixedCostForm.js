@@ -19,6 +19,11 @@ export default class FixedCostForm extends Component {
     super(props);
   }
 
+  static propTypes = {
+    id: PropTypes.number,
+    types: PropTypes.array,
+  }
+
   getOptions = () => {
     return this.props.types.map( (type) => 
       <MenuItem key={type.id} value={type.id} primaryText={type.name} /> 
@@ -57,7 +62,4 @@ export default class FixedCostForm extends Component {
   }
 }
 
-FixedCostForm.propTypes = {
-  id: PropTypes.number,
-  types: PropTypes.array,
-};
+

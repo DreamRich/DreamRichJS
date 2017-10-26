@@ -7,6 +7,10 @@ import FormsyToggleYesNo from '../components/FormsyToggleYesNo';
 
 export default class RealeStateSubForm extends Component {
 
+  static propTypes = {
+    parent_id: PropTypes.number
+  }
+
   render = () => {
     return(
       <ClientSubForm
@@ -36,6 +40,3 @@ export default class RealeStateSubForm extends Component {
   }
 }
 
-RealeStateSubForm.propTypes = {
-  parent_id: PropTypes.number
-};

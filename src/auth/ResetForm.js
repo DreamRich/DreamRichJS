@@ -28,6 +28,10 @@ export default class ResetForm extends Component{
     this.unsendedMessage = 'Confira sua caixa de entrada. As instruções para a recuperação de sua senha foram enviadas para: ';
   }
 
+  static propTypes = {
+    email: PropTypes.string,
+  }
+
   componentWillMount = () => {
     this.setState({...PasswordStore.getState(), listener: PasswordStore.addListener(this.handleUpdate)} );
   }
@@ -107,6 +111,3 @@ export default class ResetForm extends Component{
     );
   }
 }
-ResetForm.propTypes = {
-  email: PropTypes.string,
-};

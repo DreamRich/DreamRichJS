@@ -15,6 +15,10 @@ export default class ActiveRegister extends Component {
     this.state = ActiveStore.getState();
   }
 
+  static propTypes = {
+    patrimony_id: PropTypes.number,
+  }
+
   componentWillMount = () => {
     this.setState({
       listener: ActiveStore.addListener(this.handleUpdate)
@@ -86,6 +90,3 @@ export default class ActiveRegister extends Component {
   }
 }
 
-ActiveRegister.propTypes = {
-  patrimony_id: PropTypes.number,
-};

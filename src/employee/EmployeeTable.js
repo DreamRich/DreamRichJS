@@ -8,10 +8,9 @@ import {putData, postData, deleteData} from '../resources/Requests';
 export default class EmployeeTable extends GridTable {
   constructor(props) {
     super(props);
-    this.handleAddRow = this.handleAddRow.bind(this);
   }
 
-  getColumns() {
+  getColumns = () => {
     return [
       { key: 'first_name', name: 'Name', sortable: true, filterable: true, resizable: true, editable: true },
       { key: 'last_name', name: 'Surname', sortable: true, filterable: true, resizable: true, editable: true },
@@ -22,9 +21,9 @@ export default class EmployeeTable extends GridTable {
     ];
   }
 
-  getRoute(){ return '/api/employee/employee/'; }
+  getRoute = () => '/api/employee/employee/'
 
-  handleDeletion(id, idx){
+  handleDeletion = (id, idx) => {
     const confirmation = confirm('A deleção não poderá ser desfeita\n'+
       'Você confirma a deleção?');
     if(confirmation){
@@ -43,7 +42,7 @@ export default class EmployeeTable extends GridTable {
     }
   }
 
-  getActions(register, idx) {
+  getActions(register, idx){
     if(register !== undefined && register !== null){
       return (
         <FlatButton
@@ -57,7 +56,7 @@ export default class EmployeeTable extends GridTable {
   }
 
 
-  handleAddRow() {
+  handleAddRow = () => {
     const newRow = {
       first_name: '', last_name: ''/*, telephone: ''*/, email: '',
       cpf: '', actions: ''
@@ -68,7 +67,7 @@ export default class EmployeeTable extends GridTable {
   }
 
 
-  createOrUpdate(data, newField){
+  createOrUpdate = (data, newField) => {
     const changedData = Object.assign(data, newField);
     if( changedData['email'] !== ''
       && changedData['first_name'] !== ''
@@ -107,10 +106,10 @@ export default class EmployeeTable extends GridTable {
     return changedData;
   }
 
-  getToolbar() {
-    return (<Toolbar
-      enableFilter={true}
-      onAddRow={this.handleAddRow} />);
+  getToolbar(){
+    return (
+      <Toolbar enableFilter={true} onAddRow={this.handleAddRow} />
+    );
   }
 
 }

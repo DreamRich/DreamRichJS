@@ -26,8 +26,11 @@ const styleText = {
 
 export default class SidebarMenu extends React.Component {
 
-  render() {
+  static propTypes = {
+    navDrawerOpen: PropTypes.bool.isRequired,
+  }
 
+  render() {
     return (
       <div>
         <MuiThemeProvider muiTheme={muiTheme}>
@@ -50,6 +53,3 @@ export default class SidebarMenu extends React.Component {
   }
 }
 
-SidebarMenu.propTypes = {
-  navDrawerOpen: PropTypes.bool.isRequired,
-};

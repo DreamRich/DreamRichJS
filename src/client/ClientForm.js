@@ -9,6 +9,11 @@ export default class ClientForm extends Component {
   constructor(props){
     super(props);
   }
+  static propTypes = {
+    title: PropTypes.string,
+    name: PropTypes.string,
+    children: PropTypes.element,
+  }
 
   submitForm = (data) => {
     AppDispatcher.dispatch({
@@ -32,9 +37,3 @@ export default class ClientForm extends Component {
     );
   }
 }
-
-ClientForm.propTypes = {
-  title: PropTypes.string,
-  name: PropTypes.string,
-  children: PropTypes.element,
-};

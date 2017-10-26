@@ -16,6 +16,10 @@ export default class PasswordForm extends Component{
   constructor(props){
     super(props);
   }
+  static propTypes = {
+    userid: PropTypes.string,
+    username: PropTypes.string
+  }
 
   componentWillMount = () => {
     this.setState({...PasswordStore.getState(), listener: PasswordStore.addListener(this.handleUpdate)} );
@@ -125,7 +129,4 @@ export default class PasswordForm extends Component{
     );
   }
 }
-PasswordForm.propTypes = {
-  userid: PropTypes.string,
-  username: PropTypes.string
-};
+

@@ -12,24 +12,20 @@ export default class GridTable extends Component {
       _columns: this.getColumns(),
       rows: [], filters: {}, sortDirection: null,
       sortColumn: null, open: false, message: ''};
-    this.getRows = this.getRows.bind(this);
-    this.handleGridRowsUpdated = this.handleGridRowsUpdated.bind(this);
   }
 
   /* Need override */
-  getColumns(){return [];}
+  getColumns = () => {return [];}
 
   /* Need override */
-  getRoute(){return '';}
+  getRoute = () => {return '';}
 
   /* Need override */
-  getActions(register, idx){ register, idx; return null; }
+  getActions = (register, idx) => { register, idx; return null; }
 
-  createOrUpdate(row, updated){
-    row; updated;
-  }
+  createOrUpdate = (row, updated) => { row; updated; }
 
-  handleGridRowsUpdated(updates) {
+  handleGridRowsUpdated = (updates) => {
     const { fromRow, toRow, updated } = updates;
     let rows = this.state.rows.slice();
     console.log(fromRow, toRow);
@@ -43,17 +39,15 @@ export default class GridTable extends Component {
     this.setState({ rows });
   }
 
-  componentWillMount(){ getData(this.getRoute(), (data) => this.setState({rows: data}));}
-
-  getRows() {
-    return Data.Selectors.getRows(this.state);
+  componentWillMount = () => { 
+    getData(this.getRoute(), (data) => this.setState({rows: data}));
   }
 
-  getSize(){
-    return this.getRows().length;
-  }
+  getRows = () => Data.Selectors.getRows(this.state)
 
-  rowGetter(i) {
+  getSize = () => this.getRows().length
+
+  rowGetter = (i) => {
     const row = this.getRows()[i];
     if(row !== undefined && row !== null){
       row['actions'] = this.getActions(row, i);
@@ -61,7 +55,7 @@ export default class GridTable extends Component {
     return row;
   }
 
-  handleFilterChange(filter) {
+  handleFilterChange = (filter) => {
     let newFilters = Object.assign({}, this.state.filters);
     if (filter.filterTerm) {
       newFilters[filter.column.key] = filter;
@@ -71,19 +65,16 @@ export default class GridTable extends Component {
     this.setState({ filters: newFilters });
   }
 
-  onClearFilters() {
-    this.setState({filters: {} });
-  }
+  onClearFilters = () => this.setState({filters: {} })
 
-  handleSort(sortColumn, sortDirection){
-    this.setState({ sortColumn: sortColumn, sortDirection: sortDirection });
-  }
+  handleSort = (sortColumn, sortDirection) => this.setState({ 
+    sortColumn: sortColumn,
+    sortDirection: sortDirection 
+  })
 
-  handleRequestClose(){
-    this.setState({ open: false });
-  }
+  handleRequestClose = () => this.setState({ open: false })
 
-  render() {
+  render = () => {
     return (
       <div>
         <ReactDataGrid

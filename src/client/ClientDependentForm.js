@@ -13,9 +13,13 @@ var {
   wordsError,
 } = errorMessages;
 
-class ClientDependentForm extends Component {
+export default class ClientDependentForm extends Component {
   constructor(props){
     super(props);
+  }
+
+  static propTypes = {
+    parent_id: PropTypes.number,
   }
 
   state = {
@@ -117,9 +121,3 @@ class ClientDependentForm extends Component {
     );
   }
 }
-
-export default ClientDependentForm;
-
-ClientDependentForm.propTypes = {
-  parent_id: PropTypes.number,
-};

@@ -6,6 +6,12 @@ import {FormsyText , /*FormsyCheckbox, FormsyDate*/} from 'formsy-material-ui/li
 
 export default class ExtraSubForm extends Component {
 
+  static propTypes = {
+    parent_id: PropTypes.number,
+    title: PropTypes.string,
+    name: PropTypes.string,
+  }
+
   render = () => {
     return(
       <ClientSubForm
@@ -29,9 +35,3 @@ export default class ExtraSubForm extends Component {
     );
   }
 }
-
-ExtraSubForm.propTypes = {
-  parent_id: PropTypes.number,
-  title: PropTypes.string,
-  name: PropTypes.string,
-};

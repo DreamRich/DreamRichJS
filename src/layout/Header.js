@@ -28,7 +28,7 @@ class Header extends React.Component {
     this.state = MenuStore.getState();
   }
 
-  propTypes = {
+  static propTypes = {
     auth: PropTypes.bool,
     styles: PropTypes.object,
     handleChangeRequestNavDrawer: PropTypes.func

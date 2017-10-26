@@ -54,6 +54,14 @@ export default class ClientField extends Component {
     sponse: false,
   }
 
+  static propTypes = {
+    title: PropTypes.string,
+    subtitleCard: PropTypes.string,
+    canSubmit: PropTypes.bool,
+    selectOption: PropTypes.bool,
+  }
+
+
   submit = () => {
     this.baseForm.submit();
   }
@@ -158,10 +166,3 @@ export default class ClientField extends Component {
     );
   }
 }
-
-ClientField.propTypes = {
-  title: PropTypes.string,
-  subtitleCard: PropTypes.string,
-  canSubmit: PropTypes.bool,
-  selectOption: PropTypes.bool,
-};

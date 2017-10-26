@@ -9,6 +9,15 @@ export default class ClientSubForm extends Component {
     super(props);
   }
 
+  static propTypes = {
+    title: PropTypes.string,
+    parent_id: PropTypes.number,
+    parent_name: PropTypes.string,
+    name: PropTypes.string,
+    children: PropTypes.element,
+    action: PropTypes.string,
+  }
+
   componentDidUpdate = (prevProps) => {
     if (prevProps.parent_id === undefined &&
         this.props.parent_id !== undefined) {
@@ -43,11 +52,3 @@ export default class ClientSubForm extends Component {
   }
 }
 
-ClientSubForm.propTypes = {
-  title: PropTypes.string,
-  parent_id: PropTypes.number,
-  parent_name: PropTypes.string,
-  name: PropTypes.string,
-  children: PropTypes.element,
-  action: PropTypes.string,
-};

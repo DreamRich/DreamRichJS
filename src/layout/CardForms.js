@@ -18,6 +18,12 @@ export default class CardForms extends Component {
     super(props);
   }
 
+  static propTypes = {
+    titleCard: PropTypes.string,
+    subtitleCard: PropTypes.string,
+    contentCard: PropTypes.object,
+  }
+
   render = () => {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
@@ -35,8 +41,4 @@ export default class CardForms extends Component {
   }
 }
 
-CardForms.propTypes = {
-  titleCard: PropTypes.string,
-  subtitleCard: PropTypes.string,
-  contentCard: PropTypes.object,
-};
+

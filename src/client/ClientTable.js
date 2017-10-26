@@ -12,7 +12,7 @@ export default class ClientTable extends GridTable {
     super(props);
   }
 
-  getColumns(){
+  getColumns = () => {
     return [
       { key: 'name', name: 'Name', sortable: true, filterable: true, resizable: true },
       { key: 'telephone', name: 'Telefone', sortable: true, filterable: true, resizable: true },
@@ -22,7 +22,7 @@ export default class ClientTable extends GridTable {
     ];
   }
 
-  getRoute(){ return '/api/client/active/'; }
+  getRoute = () => '/api/client/active/'
 
   getActions(register) {
     if(register !== undefined && register !== null){

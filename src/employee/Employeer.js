@@ -6,7 +6,7 @@ import {Route, Switch} from 'react-router-dom';
 
 export default class Employeer extends Component {
 
-  render() {
+  render = () => {
     return (
       <div>
         <Link to="/employee/common">Common</Link>

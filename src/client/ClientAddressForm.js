@@ -44,6 +44,10 @@ export default class ClientAddressForm extends Component {
     super(props);
   }
 
+  static propTypes = {
+    id: PropTypes.number,
+  }
+
   getContentCard(){
     const formysTextList = makeFormysTextList(dataAddressSubForm,'adressform');
 
@@ -86,6 +90,4 @@ export default class ClientAddressForm extends Component {
   }
 }
 
-ClientAddressForm.propTypes = {
-  id: PropTypes.number,
-};
+

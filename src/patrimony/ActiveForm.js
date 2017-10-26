@@ -14,6 +14,11 @@ export default class ActiveForm extends Component {
     super(props);
   }
 
+  static propTypes = {
+    parent_id: PropTypes.number,
+    types: PropTypes.array,
+  }
+
   componentWillMount = () => {
     AppDispatcher.dispatch({
       action: ActionType.ACTIVE.TYPE
@@ -63,8 +68,4 @@ export default class ActiveForm extends Component {
   }
 }
 
-ActiveForm.propTypes = {
-  parent_id: PropTypes.number,
-  types: PropTypes.array,
-};
 

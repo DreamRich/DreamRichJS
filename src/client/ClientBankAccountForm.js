@@ -14,7 +14,9 @@ export default class ClientBankAccountForm extends Component {
   constructor(props){
     super(props);
   }
-
+  static propTypes = {
+    id: PropTypes.number,
+  }
   getContentCard(){
     return (
       <Row around="xs">
@@ -55,6 +57,4 @@ export default class ClientBankAccountForm extends Component {
   }
 }
 
-ClientBankAccountForm.propTypes = {
-  id: PropTypes.number,
-};
+

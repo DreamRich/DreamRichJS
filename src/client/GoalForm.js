@@ -19,6 +19,12 @@ export default class GoalForm extends Component {
     super(props);
   }
 
+  static propTypes = {
+    id: PropTypes.number,
+    types: PropTypes.array,
+    hasEndDate: PropTypes.bool,
+  }
+
   getOptions = () => {
     return this.props.types.map( (type) =>
       <MenuItem key={type.id} value={type.id} primaryText={type.name} />
@@ -91,8 +97,3 @@ export default class GoalForm extends Component {
   }
 }
 
-GoalForm.propTypes = {
-  id: PropTypes.number,
-  types: PropTypes.array,
-  hasEndDate: PropTypes.bool,
-};

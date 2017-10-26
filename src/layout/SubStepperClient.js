@@ -8,7 +8,7 @@ import {
   StepContent,
 } from 'material-ui/Stepper';
 
-class SubStepperClient extends React.Component {
+export default class SubStepperClient extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,6 +19,11 @@ class SubStepperClient extends React.Component {
 
     this.handleNext = this.handleNext.bind(this);
     this.handlePrev = this.handlePrev.bind(this);
+  }
+
+  static propTypes = {
+    stepsNumber: PropTypes.number,
+    listInformationSteps: PropTypes.array,
   }
 
   handleNext = () => {
@@ -92,10 +97,3 @@ class SubStepperClient extends React.Component {
     );
   }
 }
-
-export default SubStepperClient;
-
-SubStepperClient.propTypes = {
-  stepsNumber: PropTypes.number,
-  listInformationSteps: PropTypes.array,
-};

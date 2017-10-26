@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 export default class ActiveProfit extends Component {
 
-  propTypes = {
+  static propTypes = {
     match: {params: {id: PropTypes.number,}}
   }
 
