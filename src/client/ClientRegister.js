@@ -70,7 +70,7 @@ class ClientRegister extends Component {
   }
 
   render() {
-    let subtitleCard = 'Insira as informações correspondentes as informações básicas do cliente.';
+    let subtitleCard = 'Insira as informações básicas do cliente.';
     let listInformationSteps = [
       {
         text: 'Cadastrar Cliente',
@@ -86,7 +86,7 @@ class ClientRegister extends Component {
         formComponent:
           <SponseForm
             title='Cônjuge'
-            subtitleCard={subtitleCard}
+            subtitleCard={'Insira as informações do cônjuge deste cliente'}
             canSubmit={this.state.canSubmit}
           />
       },

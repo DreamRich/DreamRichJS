@@ -24,6 +24,7 @@ const actionTypes = {
   CLIENT: {
     SUBMIT: 'client/can_submit_form',
     POSTMULTIFORM: 'client/create_multiline_form',
+    POSTMULTIFORMSUCCESS: 'client/create_multiline_form_success',
     ADDRESSTYPE: 'client/address_types',
     DATAFORM: 'client/form_initial_data',
     COUNTRIES: 'client/countries',

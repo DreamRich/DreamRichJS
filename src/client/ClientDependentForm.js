@@ -103,6 +103,7 @@ export default class ClientDependentForm extends Component {
       ' caso haja).');
     let labelRemove='O cliente possui não dependentes? '+
       '(Desmarque o quadrado ao lado caso não haja).';
+    console.log(this.state.dependents);
 
     return (
       <div>
@@ -120,6 +121,7 @@ export default class ClientDependentForm extends Component {
                 title="Dependente"
                 parent_name='active_client_id'
                 parent_id={this.props.id}
+                index={index}
                 canSubmit={this.props.canSubmit}
               >
                 <CardForm

@@ -48,25 +48,31 @@ class ClientStore extends ReduceStore {
       );
       return {...state, canSubmit: false};
 
+    case ActionType.CLIENT.POSTFORMSUCCESS:
+      return {...state,
+        [action.state]: action.data,
+        stepIndex: state.stepIndex + 1
+      };
+
     case ActionType.CLIENT.POSTMULTIFORM:
       postData(
         action.route,
         action.data,
         (data) => {
           AppDispatcher.dispatch({
-            action: ActionType.CLIENT.POSTFORMSUCCESS,
+            action: ActionType.CLIENT.POSTMULTIFORMSUCCESS,
             data: data,
             state: action.state,
+            index: action.index
           });
         }
       );
       return {...state, canSubmit: false};
 
-    case ActionType.CLIENT.POSTFORMSUCCESS:
-      return {...state,
-        [action.state]: action.data,
-        stepIndex: state.stepIndex + 1
-      };
+    case ActionType.CLIENT.POSTMULTIFORMSUCCESS:
+      delete state.dependents[action.index];
+      state.dependents[action.data.id] = action.data;
+      return {...state};
 
     case ActionType.CLIENT.SETSTEP:
       return {...state, stepIndex: action.stepIndex};

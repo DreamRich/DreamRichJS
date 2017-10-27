@@ -17,6 +17,7 @@ export default class ClientSubForm extends Component {
     children: PropTypes.element,
     action: PropTypes.string,
     canSubmit: PropTypes.bool,
+    index: PropTypes.number,
   }
 
   componentDidUpdate = (prevProps) => {
@@ -33,9 +34,10 @@ export default class ClientSubForm extends Component {
     AppDispatcher.dispatch(
       {
         action: this.props.action,
-        data: data,
         route: routeMap[this.props.name],
+        data: data,
         state: this.props.name,
+        index: this.props.index,
       });
   }
 
