@@ -15,11 +15,12 @@ class ClientStore extends ReduceStore {
 
   getInitialState(){
     return {
+      sponse: false,
       canSubmit: false,
       stepIndex: 0,
       countries: [],
       states: [],
-      addressType: [''],
+      addressType: [],
       active_client: {},
     };
   }
@@ -31,13 +32,13 @@ class ClientStore extends ReduceStore {
     case ActionType.CLIENT.SUBMIT:
       return {...state, canSubmit: true};
 
-    case ActionType.CLIENT.ACTIVE:
+    case ActionType.CLIENT.POSTFORM:
       postData(
         action.route,
         action.data,
         (data) => {
           AppDispatcher.dispatch({
-            action: ActionType.CLIENT.ACTIVESUCCESS,
+            action: ActionType.CLIENT.POSTFORMSUCCESS,
             data: data,
             state: action.state,
           });
@@ -45,7 +46,7 @@ class ClientStore extends ReduceStore {
       );
       return {...state, canSubmit: false};
 
-    case ActionType.CLIENT.ACTIVESUCCESS:
+    case ActionType.CLIENT.POSTFORMSUCCESS:
       return {...state,
         [action.state]: action.data,
         stepIndex: state.stepIndex + 1

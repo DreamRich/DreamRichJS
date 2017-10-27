@@ -8,7 +8,7 @@ import FormsyDate from '../utils/formsyComponents/FormsyDate';
 import PropTypes from 'prop-types';
 import makeFormysTextList from '../utils/MakeFormysTextList';
 import CardForm from '../layout/CardForm';
-import Checkbox from 'material-ui/Checkbox';
+// import Checkbox from 'material-ui/Checkbox';
 import ActionType from '../actions/ActionType';
 
 var {
@@ -17,7 +17,7 @@ var {
   emailError,
 } = errorMessages;
 
-var dataClient = [
+export const personData = [
   {
     name: 'name',validations: 'isWords', validationError: wordsError,
     hintText: 'Nome do cliente', floatingLabelText: 'Nome', value: 'asd',
@@ -54,21 +54,10 @@ export default class ClientForm extends Component {
     title: PropTypes.string,
     subtitleCard: PropTypes.string,
     canSubmit: PropTypes.bool,
-    selectOption: PropTypes.bool,
-    action: PropTypes.string,
-  }
-
-  state = {
-    sponse: false,
-  }
-
-  switchSponse = () => {
-    const sponse = !this.state.sponse;
-    this.setState({sponse});
   }
 
   getContentCard(){
-    const formsyList = makeFormysTextList(dataClient,'clientform');
+    const formsyList = makeFormysTextList(personData,'clientform');
 
     return (
       <Row around="xs">
@@ -109,45 +98,14 @@ export default class ClientForm extends Component {
     );
   }
 
-  getSelectOption(selectOption,isChecked,labelOption){
-    if(selectOption){
-      return (
-        <Checkbox
-          label={labelOption}
-          checked={isChecked}
-          onClick={this.switchSponse}
-          style={{margin: '30px 0px 30px 0px'}}
-        />
-      );
-    }
-  }
-
   render(){
-    //let subtitleCard = 'Insira as informações correspondentes as informações básicas do cônjuge.';
-    let labelAdd='O cliente possui cônjuge? (Marque o quadrado ao lado caso haja).';
-    let labelRemove='O cliente possui cônjuge? (Desmarque o quadrado ao lado caso não haja).';
-
-    const sponseForm = (
-      this.state.sponse ? (
-        <div>
-          {this.getSelectOption(this.props.selectOption, true, labelRemove)}
-          <ClientSubForm
-            name="client"
-            parent_name="active_client_id"
-            parent_id={this.state.id}
-          />
-        </div>
-      ) : (
-        this.getSelectOption(this.props.selectOption, false, labelAdd)
-      )
-    );
 
     return (
       <div>
         <ClientSubForm
           title="Dados"
           name="active_client"
-          action={ActionType.CLIENT.ACTIVE}
+          action={ActionType.CLIENT.POSTFORM}
           canSubmit={this.props.canSubmit}
         >
           <CardForm
@@ -156,7 +114,6 @@ export default class ClientForm extends Component {
             contentCard={this.getContentCard()}
           />
         </ClientSubForm>
-        {sponseForm}
       </div>
     );
   }

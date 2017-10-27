@@ -67,14 +67,14 @@ export default class SubStepperClient extends React.Component {
     return (
       <div style={{margin: '12px 0'}}>
         <RaisedButton
-          label="Salvar as informações deste formulário"
+          label="Salvar e próximo"
           primary={true}
           onClick={this.handleNext.bind(this, step)}
           style={{float: 'right'}}
         />
         {step > 0 && (
           <RaisedButton
-            label="Voltar para o formulário anterior"
+            label="Formulário anterior"
             onClick={this.handlePrev}
             style={{float: 'left'}}
           />

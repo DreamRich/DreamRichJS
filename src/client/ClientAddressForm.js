@@ -147,7 +147,7 @@ export default class ClientAddressForm extends Component {
         parent_name='active_client_id'
         parent_id={this.props.id}
         canSubmit={this.props.canSubmit}
-        action={ActionType.CLIENT.ACTIVE}
+        action={ActionType.CLIENT.POSTFORM}
       >
         <CardForm
           titleCard="Endereço"

@@ -12,6 +12,7 @@ import ClientDependentForm from './ClientDependentForm';
 import ClientBankAccountForm from './ClientBankAccountForm';
 import ClientAddressForm from './ClientAddressForm';
 import ClientForm from './ClientForm';
+import SponseForm from './SponseForm';
 import SubStepperClient from '../layout/SubStepperClient';
 // import routeMap from '../routes/RouteMap';
 
@@ -77,8 +78,15 @@ class ClientRegister extends Component {
           <ClientForm
             title='Cliente'
             subtitleCard={subtitleCard}
-            ref={ref => this.form = ref}
-            selectOption={true}
+            canSubmit={this.state.canSubmit}
+          />
+      },
+      {
+        text: 'Cadastrar Cônjuge (Opcional)',
+        formComponent:
+          <SponseForm
+            title='Cônjuge'
+            subtitleCard={subtitleCard}
             canSubmit={this.state.canSubmit}
           />
       },
@@ -97,7 +105,7 @@ class ClientRegister extends Component {
         formComponent: <ClientBankAccountForm id={this.state.active_client.id} canSubmit={this.state.canSubmit} />
       },
       {
-        text: 'Dependentes',
+        text: 'Dependentes (Opcional)',
         formComponent:
           <ClientDependentForm
             parent_id={this.state.active_client.id} canSubmit={this.state.canSubmit}
@@ -109,7 +117,10 @@ class ClientRegister extends Component {
       <div style={{width:'auto'}}>
         {this.getDivider()}
 
-        <SubStepperClient stepsNumber={3} listInformationSteps={listInformationSteps}/>
+        <SubStepperClient 
+          stepsNumber={listInformationSteps.length}
+          listInformationSteps={listInformationSteps}
+        />
 
         {this.getDivider()}
       </div>

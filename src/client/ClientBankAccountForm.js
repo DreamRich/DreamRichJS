@@ -5,6 +5,7 @@ import ClientSubForm from './ClientSubForm';
 import errorMessages from '../utils/FormsErrorMessages';
 import { Row, Col } from 'react-flexbox-grid';
 import CardForm from '../layout/CardForm';
+import ActionType from '../actions/ActionType';
 
 var {
   numericError,
@@ -14,9 +15,12 @@ export default class ClientBankAccountForm extends Component {
   constructor(props){
     super(props);
   }
+
   static propTypes = {
     id: PropTypes.number,
+    canSubmit: PropTypes.bool,
   }
+
   getContentCard(){
     return (
       <Row around="xs">
@@ -25,14 +29,14 @@ export default class ClientBankAccountForm extends Component {
             name="agency"
             validations="isNumeric"
             validationError={numericError}
-            hintText="Agência da conta bancária"
+            hintText="Agência da conta bancária "
             floatingLabelText="Agência"
           />
         </Col>
         <Col xs>
           <FormsyText
             name="account"
-            hintText="Número da conta bancária"
+            hintText="Número da conta bancária "
             floatingLabelText="Conta"
           />
         </Col>
@@ -46,6 +50,8 @@ export default class ClientBankAccountForm extends Component {
         name="bank_account"
         parent_name='active_client_id'
         parent_id={this.props.id}
+        canSubmit={this.props.canSubmit}
+        action={ActionType.CLIENT.POSTFORM}
       >
         <CardForm
           titleCard="Conta Bancária"
