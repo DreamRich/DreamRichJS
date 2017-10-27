@@ -32,6 +32,7 @@ export default class SubStepperClient extends React.Component {
   }
 
   handleChange = () => {
+    // Only get some attributes from store
     const { stepIndex, active_client: {id} } = ClientStore.getState();
     if (stepIndex < this.props.stepsNumber || stepIndex >= 0) {
       this.setState({stepIndex, id});
@@ -45,6 +46,7 @@ export default class SubStepperClient extends React.Component {
   }
 
   handleNext = () => {
+    // Only go to next form if have more steps :)
     let {stepIndex} = this.state;
     if (stepIndex < this.props.stepsNumber) {
       AppDispatcher.dispatch({
@@ -64,6 +66,7 @@ export default class SubStepperClient extends React.Component {
   })
 
   renderStepActions(step) {
+    // To reduce the lines of code amount of getContentSteps
     return (
       <div style={{margin: '12px 0'}}>
         <RaisedButton
@@ -85,9 +88,11 @@ export default class SubStepperClient extends React.Component {
 
   getContentSteps(){
     let stepsList = [];
+    // Only enable click in some step if have the dependency of main form
+    // this is a id in the state
     stepsList = this.props.listInformationSteps.map((obj, index) => {
       return(
-        <Step key={obj.text} disabled={this.state.id === 'asdf'}>
+        <Step key={obj.text} disabled={this.state.id === undefined}>
           <StepButton onClick={() => this.setStep(index)}>
             {obj.text}
           </StepButton>

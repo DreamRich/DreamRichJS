@@ -9,7 +9,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 import Snackbar from 'material-ui/Snackbar';
 import ActionType from '../../actions/ActionType';
 import { Row, Col } from 'react-flexbox-grid';
-import CardForm from '../../layout/CardForm';
+import CardForm from '../../components/CardForm';
 
 export default class PasswordForm extends Component{
 

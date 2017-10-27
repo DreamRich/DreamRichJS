@@ -10,7 +10,7 @@ import Employeer from '../employee/Employeer';
 import PatrimonyRegister from '../patrimony/PatrimonyRegister';
 import ClientRegister from '../client/ClientRegister';
 import StepperClient from '../layout/StepperClient';
-import FixedCostRegister from '../client/FixedCostRegister';
+import RegularCostRegister from '../client/RegularCostRegister';
 import {Auth} from '../auth/Auth';
 import GoalChart from '../goal/GoalChart';
 import GoalRegister from '../client/GoalRegister';
@@ -23,7 +23,7 @@ export default class Routers extends Component{
     return (
       <Switch>
         <Route exact path="/" render={ () => <h1>Home</h1> } />
-        <AuthorizedRoute exact permission="change_own_client_data" path="/register/fixed_cost" component={ FixedCostRegister } />
+        <AuthorizedRoute exact permission="change_own_client_data" path="/register/fixed_cost" component={ RegularCostRegister } />
         <AuthorizedRoute exact permission="change_own_client_data" path="/register/goal" component={ GoalRegister } />
         <AuthorizedRoute exact permission="change_own_client_data" path="/register/active" component={ ActiveRegister } />
         <AuthorizedRoute exact permission="change_own_client_data" path="/register/patrimony" component={ PatrimonyRegister } />

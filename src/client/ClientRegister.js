@@ -8,11 +8,11 @@ import ActionType from '../actions/ActionType';
 import AppDispatcher from '../AppDispatcher';
 import ClientStore from '../stores/ClientStore';
 import '../stylesheet/RegisterForms.sass';
-import ClientDependentForm from './ClientDependentForm';
-import ClientBankAccountForm from './ClientBankAccountForm';
-import ClientAddressForm from './ClientAddressForm';
-import ClientForm from './ClientForm';
-import SponseForm from './SponseForm';
+import ClientDependentForm from './form/ClientDependentForm';
+import ClientBankAccountForm from './form/ClientBankAccountForm';
+import ClientAddressForm from './form/ClientAddressForm';
+import ClientForm from './form/ClientForm';
+import ClientSponseForm from './form/ClientSponseForm';
 import SubStepperClient from '../layout/SubStepperClient';
 // import routeMap from '../routes/RouteMap';
 
@@ -84,7 +84,7 @@ class ClientRegister extends Component {
       {
         text: 'Cadastrar Cônjuge (Opcional)',
         formComponent:
-          <SponseForm
+          <ClientSponseForm
             title='Cônjuge'
             subtitleCard={'Insira as informações do cônjuge deste cliente'}
             canSubmit={this.state.canSubmit}

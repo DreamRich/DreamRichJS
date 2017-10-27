@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import AppDispatcher from '../AppDispatcher';
-import ActionType from '../actions/ActionType';
+import AppDispatcher from '../../AppDispatcher';
+import ActionType from '../../actions/ActionType';
 import PropTypes from 'prop-types';
 //import routeMap from '../routes/RouteMap';
 //import Formsy from 'formsy-react';
 import {FormsySelect, FormsyText , FormsyToggle/*, FormsyDate*/} from 'formsy-material-ui/lib';
-import errorMessages from '../utils/FormsErrorMessages';
-import ClientSubForm from './ClientSubForm';
+import errorMessages from '../../utils/FormsErrorMessages';
+import SubForm from '../../components/SubForm';
 import MenuItem from 'material-ui/MenuItem';
 
 var {
@@ -41,7 +41,7 @@ export default class GoalForm extends Component {
   render = () => {
     return (
       <div>
-        <ClientSubForm
+        <SubForm
           name="goal"
           action={ActionType.GOAL.SUBFORM}
           parent_id={this.props.id}
@@ -91,7 +91,7 @@ export default class GoalForm extends Component {
               floatingLabelText="Valor"
             />
           </div>
-        </ClientSubForm>
+        </SubForm>
       </div>
     );
   }

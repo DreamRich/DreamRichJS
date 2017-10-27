@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import ClientSubForm from './ClientSubForm';
+import SubForm from '../../components/SubForm';
 // import {routeMap} from '../routes/RouteMap';
 // import {getData} from '../resources/Requests';
-import makeFormysTextList from '../utils/MakeFormysTextList';
-import ActionType from '../actions/ActionType';
-import AppDispatcher from '../AppDispatcher';
-import errorMessages from '../utils/FormsErrorMessages';
+import makeFormysTextList from '../../utils/MakeFormysTextList';
+import ActionType from '../../actions/ActionType';
+import AppDispatcher from '../../AppDispatcher';
+import errorMessages from '../../utils/FormsErrorMessages';
 import { Row, Col } from 'react-flexbox-grid';
-import CardForm from '../layout/CardForm';
+import CardForm from '../../components/CardForm';
 import {FormsySelect, FormsyAutoComplete} from 'formsy-material-ui/lib';
 import MenuItem from 'material-ui/MenuItem';
 
@@ -76,6 +76,7 @@ export default class ClientAddressForm extends Component {
   }
 
   convertRegionToOptions = (listData) => {
+    // Convert data from backend in MenuOptions
     const listMenuItems = listData.map((region, index) => {
       const primaryText = `${region.name} - ${region.abbreviation}`;
       return (
@@ -142,7 +143,7 @@ export default class ClientAddressForm extends Component {
   render = () => {
 
     return (
-      <ClientSubForm
+      <SubForm
         name='address'
         parent_name='active_client_id'
         parent_id={this.props.id}
@@ -154,7 +155,7 @@ export default class ClientAddressForm extends Component {
           subtitleCard="Insira as informações correspondentes ao endereço."
           contentCard={this.getContentCard()}
         />
-      </ClientSubForm>
+      </SubForm>
 
     );
   }

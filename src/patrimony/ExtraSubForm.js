@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ClientSubForm from '../client/ClientSubForm.js';
+import SubForm from '../components/SubForm.js';
 import ActionType from '../actions/ActionType.js';
 import PropTypes from 'prop-types';
 import {FormsyText , /*FormsyCheckbox, FormsyDate*/} from 'formsy-material-ui/lib';
@@ -14,7 +14,7 @@ export default class ExtraSubForm extends Component {
 
   render = () => {
     return(
-      <ClientSubForm
+      <SubForm
         title={this.props.title}
         parent_id={this.props.parent_id}
         parent_name="patrimony_id"
@@ -31,7 +31,7 @@ export default class ExtraSubForm extends Component {
             floatingLabelText="Valor"
             hintText="Valor do patrimônio" />
         </div>
-      </ClientSubForm>
+      </SubForm>
     );
   }
 }

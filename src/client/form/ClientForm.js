@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
 import IconButton from 'material-ui/IconButton';
 import FileFileUpload from 'material-ui/svg-icons/file/file-upload';
-import errorMessages from '../utils/FormsErrorMessages';
+import errorMessages from '../../utils/FormsErrorMessages';
 import { Row, Col } from 'react-flexbox-grid';
-import ClientSubForm from './ClientSubForm';
-import FormsyDate from '../utils/formsyComponents/FormsyDate';
+import SubForm from '../../components/SubForm';
+import FormsyDate from '../../utils/formsyComponents/FormsyDate';
 import PropTypes from 'prop-types';
-import makeFormysTextList from '../utils/MakeFormysTextList';
-import CardForm from '../layout/CardForm';
+import makeFormysTextList from '../../utils/MakeFormysTextList';
+import CardForm from '../../components/CardForm';
 // import Checkbox from 'material-ui/Checkbox';
-import ActionType from '../actions/ActionType';
+import ActionType from '../../actions/ActionType';
 
 var {
   wordsError,
@@ -102,7 +102,7 @@ export default class ClientForm extends Component {
 
     return (
       <div>
-        <ClientSubForm
+        <SubForm
           title="Dados"
           name="active_client"
           action={ActionType.CLIENT.POSTFORM}
@@ -113,7 +113,7 @@ export default class ClientForm extends Component {
             subtitleCard={this.props.subtitleCard}
             contentCard={this.getContentCard()}
           />
-        </ClientSubForm>
+        </SubForm>
       </div>
     );
   }

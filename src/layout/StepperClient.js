@@ -2,7 +2,7 @@ import React from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import ClientRegister from '../client/ClientRegister';
-import FixedCostRegister from '../client/FixedCostRegister';
+import RegularCostRegister from '../client/RegularCostRegister';
 import GoalRegister from '../client/GoalRegister';
 import PatrimonyRegister from '../patrimony/PatrimonyRegister';
 
@@ -21,7 +21,7 @@ class StepperClient extends React.Component {
 
     this.forms = [
       <ClientRegister key={1} />,
-      <FixedCostRegister key={2} />,
+      <RegularCostRegister key={2} />,
       <div key={3} >Renda para fora de patrimonio</div>,
       <PatrimonyRegister key={4} />,
       <div key={5} >Proteção </div>,

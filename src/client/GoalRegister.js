@@ -5,7 +5,7 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import GoalStore from '../stores/GoalStore';
 import '../stylesheet/RegisterForms.sass';
-import GoalForm from './GoalForm';
+import GoalForm from './form/GoalForm';
 
 class GoalRegister extends Component {
 

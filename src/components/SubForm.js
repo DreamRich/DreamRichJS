@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {routeMap} from '../routes/RouteMap';
 import Formsy from 'formsy-react';
 
-export default class ClientSubForm extends Component {
+export default class SubForm extends Component {
   constructor(props){
     super(props);
   }

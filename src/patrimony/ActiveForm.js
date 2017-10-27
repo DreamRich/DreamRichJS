@@ -4,7 +4,7 @@ import ActionType from '../actions/ActionType';
 import AppDispatcher from '../AppDispatcher';
 import MenuItem from 'material-ui/MenuItem';
 import PropTypes from 'prop-types';
-import ClientSubForm from '../client/ClientSubForm';
+import SubForm from '../components/SubForm';
 //import RaisedButton from 'material-ui/RaisedButton';
 
 
@@ -33,7 +33,7 @@ export default class ActiveForm extends Component {
 
   render = () => {
     return (
-      <ClientSubForm
+      <SubForm
         title="Ativo"
         parent_id={this.props.parent_id}
         parent_name="active_manager_id"
@@ -63,7 +63,7 @@ export default class ActiveForm extends Component {
           hintText='100.0'
           onChange={this.onRateChange}
         />
-      </ClientSubForm>
+      </SubForm>
     );
   }
 }

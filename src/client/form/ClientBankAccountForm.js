@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {FormsyText} from 'formsy-material-ui/lib';
-import ClientSubForm from './ClientSubForm';
-import errorMessages from '../utils/FormsErrorMessages';
+import SubForm from '../../components/SubForm';
+import errorMessages from '../../utils/FormsErrorMessages';
 import { Row, Col } from 'react-flexbox-grid';
-import CardForm from '../layout/CardForm';
-import ActionType from '../actions/ActionType';
+import CardForm from '../../components/CardForm';
+import ActionType from '../../actions/ActionType';
 
 var {
   numericError,
@@ -46,7 +46,7 @@ export default class ClientBankAccountForm extends Component {
 
   render = () => {
     return (
-      <ClientSubForm
+      <SubForm
         name="bank_account"
         parent_name='active_client_id'
         parent_id={this.props.id}
@@ -58,7 +58,7 @@ export default class ClientBankAccountForm extends Component {
           subtitleCard="Insira as informações correspondentes a conta bancária."
           contentCard={this.getContentCard()}
         />
-      </ClientSubForm>
+      </SubForm>
     );
   }
 }

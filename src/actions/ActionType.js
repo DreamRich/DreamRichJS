@@ -37,7 +37,7 @@ const actionTypes = {
     REMOVEDEPENDENT: 'client/remove_dependent',
   },
   REFRESH_LOGIN: 'refresh_token',
-  FIXEDCOST: {
+  REGULARCOST: {
     ADD: 'fixed_cost/add',
     REMOVE: 'fixed_cost/remove',
     MANAGER: 'fixed_cost/submit_form',

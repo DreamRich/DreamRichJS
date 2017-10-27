@@ -6,7 +6,7 @@ import ActionType from '../actions/ActionType';
 import {postData, getData} from '../resources/Requests';
 import {/*getUrl, */routeMap} from '../routes/RouteMap';
 
-class FixedCostStore extends ReduceStore {
+class RegularCostStore extends ReduceStore {
   constructor(){ super(AppDispatcher); }
 
   getInitialState(){
@@ -21,45 +21,45 @@ class FixedCostStore extends ReduceStore {
   reduce = (state, action) => {
     let new_array;
     switch (action.action) {
-    case ActionType.FIXEDCOST.ADD:
+    case ActionType.REGULARCOST.ADD:
       new_array = state.costs.slice();
       new_array.push(state.idx);
       return {...state, costs: new_array, idx: state.idx + 1};
 
-    case ActionType.FIXEDCOST.REMOVE:
+    case ActionType.REGULARCOST.REMOVE:
       new_array = state.costs.slice();
       return {...state,
         costs: new_array.filter( element => element !== action.key )
       };
 
-    case ActionType.FIXEDCOST.MANAGER:
+    case ActionType.REGULARCOST.MANAGER:
       postData(
         routeMap.cost_manager,
         {},
         (data) => AppDispatcher.dispatch({
-          action: ActionType.FIXEDCOST.SUCCESS,
+          action: ActionType.REGULARCOST.SUCCESS,
           id: data.id
         })
       );
       return state;
 
-    case ActionType.FIXEDCOST.SUCCESS:
+    case ActionType.REGULARCOST.SUCCESS:
       return {...state, id: action.id};
 
-    case ActionType.FIXEDCOST.TYPE:
+    case ActionType.REGULARCOST.TYPE:
       getData(
         routeMap.cost_type,
         (data) => AppDispatcher.dispatch({
-          action: ActionType.FIXEDCOST.TYPESUCCESS,
+          action: ActionType.REGULARCOST.TYPESUCCESS,
           types: data
         })
       );
       return state;
 
-    case ActionType.FIXEDCOST.TYPESUCCESS:
+    case ActionType.REGULARCOST.TYPESUCCESS:
       return {...state, types: action.types};
 
-    case ActionType.FIXEDCOST.SUBFORM:
+    case ActionType.REGULARCOST.SUBFORM:
       postData(action.route, action.data, (e) => console.log(e));
       return state;
 
@@ -69,4 +69,4 @@ class FixedCostStore extends ReduceStore {
   }
 }
 
-export default new FixedCostStore();
+export default new RegularCostStore();
