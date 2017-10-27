@@ -21,6 +21,7 @@ const routeMap = {
   income: '/api/patrimony/income/',
   company: '/api/patrimony/companyparticipation/',
   equipament: '/api/patrimony/equipment/',
+  address_type: '/api/client/address/type_of_address/',
 };
 
 const valid_formats = ['json', 'html', 'xml'];

@@ -25,12 +25,16 @@ export default class SubStepperClient extends React.Component {
 
   componentWillMount = () => {
     this.setState({listener: ClientStore.addListener(this.handleChange)});
+    AppDispatcher.dispatch({
+      action: ActionType.CLIENT.SETSTEP,
+      stepIndex: 0
+    });
   }
 
   handleChange = () => {
-    const { stepIndex } = ClientStore.getState();
+    const { stepIndex, active_client: {id} } = ClientStore.getState();
     if (stepIndex < this.props.stepsNumber || stepIndex >= 0) {
-      this.setState({stepIndex});
+      this.setState({stepIndex, id});
     } else {
       this.setStep(this.state.stepIndex);
     }
@@ -83,8 +87,8 @@ export default class SubStepperClient extends React.Component {
     let stepsList = [];
     stepsList = this.props.listInformationSteps.map((obj, index) => {
       return(
-        <Step key={obj.text}>
-          <StepButton onClick={() => this.setState({stepIndex: index})}>
+        <Step key={obj.text} disabled={this.state.id === undefined}>
+          <StepButton onClick={() => this.setStep(index)}>
             {obj.text}
           </StepButton>
           <StepContent>

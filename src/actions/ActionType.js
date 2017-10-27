@@ -23,6 +23,11 @@ const actionTypes = {
   },
   CLIENT: {
     SUBMIT: 'client/can_submit_form',
+    ADDRESSTYPE: 'client/address_types',
+    DATAFORM: 'client/form_initial_data',
+    COUNTRIES: 'client/countries',
+    STATES: 'client/states',
+    STATESUCCESS: 'client/states_success',
     ACTIVE: 'client/create_active',
     ACTIVESUCCESS: 'client/create_active_success',
     SUBFORM: 'client/create_subforms',
