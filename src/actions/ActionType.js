@@ -23,6 +23,7 @@ const actionTypes = {
   },
   CLIENT: {
     SUBMIT: 'client/can_submit_form',
+    POSTMULTIFORM: 'client/create_multiline_form',
     ADDRESSTYPE: 'client/address_types',
     DATAFORM: 'client/form_initial_data',
     COUNTRIES: 'client/countries',
@@ -31,6 +32,8 @@ const actionTypes = {
     POSTFORM: 'client/create_active',
     POSTFORMSUCCESS: 'client/create_active_success',
     SUBFORM: 'client/create_subforms',
+    ADDDEPENDENT: 'client/add_dependent',
+    REMOVEDEPENDENT: 'client/remove_dependent',
   },
   REFRESH_LOGIN: 'refresh_token',
   FIXEDCOST: {

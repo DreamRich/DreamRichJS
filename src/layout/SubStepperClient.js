@@ -87,7 +87,7 @@ export default class SubStepperClient extends React.Component {
     let stepsList = [];
     stepsList = this.props.listInformationSteps.map((obj, index) => {
       return(
-        <Step key={obj.text} disabled={this.state.id === undefined}>
+        <Step key={obj.text} disabled={this.state.id === 'asdf'}>
           <StepButton onClick={() => this.setStep(index)}>
             {obj.text}
           </StepButton>

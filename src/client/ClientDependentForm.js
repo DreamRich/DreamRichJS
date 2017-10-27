@@ -8,6 +8,8 @@ import { Row, Col } from 'react-flexbox-grid';
 import Checkbox from 'material-ui/Checkbox';
 import CardForm from '../layout/CardForm';
 import ActionType from '../actions/ActionType';
+import ClientStore from '../stores/ClientStore';
+import AppDispatcher from '../AppDispatcher';
 
 var {
   wordsError,
@@ -16,38 +18,37 @@ var {
 export default class ClientDependentForm extends Component {
   constructor(props){
     super(props);
+    const {dependents, key} = ClientStore.getState();
+    this.state = {dependents, key};
   }
 
   static propTypes = {
-    parent_id: PropTypes.number,
+    id: PropTypes.number,
+    canSubmit: PropTypes.bool,
   }
 
-  state = {
-    dependents: [],
-    key: 0
+  componentWillMount = () => {
+    this.setState({ listener: ClientStore.addListener(this.handleChange)});
   }
 
-  componentWillReceiveProps(nextProps){
-    console.log(nextProps);
-    if (nextProps.parent_id!== undefined) {
-      this.setState({id: nextProps.parent_id});
-    }
+  componentWillUnmount = () => {
+    this.state.listener.remove();
   }
 
-  addDependent = () => {
-    this.setState({
-      dependents: [...this.state.dependents,
-        this.state.key],
-      key: this.state.key + 1
-    });
+  handleChange = () => {
+    const {dependents, key} = ClientStore.getState();
+    this.setState({dependents, key});
   }
 
-  removeDependent = (key) => {
-    const array = this.state.dependents.slice();
-    this.setState({
-      dependents: array.filter(e => e !== key),
-    });
-  }
+
+  addDependent = () => AppDispatcher.dispatch({
+    action: ActionType.CLIENT.ADDDEPENDENT
+  })
+
+  removeDependent = (key) => AppDispatcher.dispatch({
+    action: ActionType.CLIENT.REMOVEDEPENDENT,
+    key: key,
+  })
 
   getContentCard(){
     return (
@@ -91,30 +92,46 @@ export default class ClientDependentForm extends Component {
     );
   }
 
+  getDependentsKeys = () => Object.keys(this.state.dependents)
+
   render = () => {
-    let subtitleCard = 'Insira as informações correspondentes as informações do dependente.';
-    let labelAdd='O cliente possui dependentes? (Marque o quadrado ao lado caso haja).';
-    let labelRemove='O cliente possui não dependentes? (Desmarque o quadrado ao lado caso não haja).';
+    let subtitleCard = 'Insira as informações correspondentes as ' +
+     'informações do dependente.';
+    let labelAdd = (this.state.dependents.length === 0 ?
+      'O cliente possui dependentes? (Marque o quadrado ao lado caso haja).' :
+      'O cliente possui mais dependentes? (Marque o quadrado ao lado' +
+      ' caso haja).');
+    let labelRemove='O cliente possui não dependentes? '+
+      '(Desmarque o quadrado ao lado caso não haja).';
 
     return (
       <div>
-        {this.state.dependents.map(e =>
-          <div key={e}>
-            {this.getSelectOption(this.removeDependent.bind(this, e), true,labelRemove)}
-            <ClientSubForm
-              name="dependent"
-              action={ActionType.CLIENT.SUBFORM}
-              title="Dependente"
-              parent_name='active_client_id'
-              parent_id={this.props.parent_id}>
-              <CardForm
-                titleCard='Dependentes'
-                subtitleCard={subtitleCard}
-                contentCard={this.getContentCard()}
-              />
-            </ClientSubForm>
-          </div>
-        )}
+        {this.getDependentsKeys().map( (index) => {
+          //const dependent = this.state.dependents[index];
+          console.log(index);
+          return (
+            <div key={index}>
+              {this.getSelectOption(
+                this.removeDependent.bind(this, index), true, labelRemove)
+              }
+              <ClientSubForm
+                name="dependent"
+                action={ActionType.CLIENT.POSTMULTIFORM}
+                title="Dependente"
+                parent_name='active_client_id'
+                parent_id={this.props.id}
+                canSubmit={this.props.canSubmit}
+              >
+                <CardForm
+                  titleCard='Dependentes'
+                  subtitleCard={subtitleCard}
+                  contentCard={this.getContentCard()}
+                />
+              </ClientSubForm>
+            </div>
+          );
+        })
+        }
 
         {this.getSelectOption(this.addDependent, false, labelAdd)}
       </div>

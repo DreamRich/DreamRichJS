@@ -22,6 +22,8 @@ class ClientStore extends ReduceStore {
       states: [],
       addressType: [],
       active_client: {},
+      dependents: {},
+      key: 0,
     };
   }
 
@@ -33,6 +35,20 @@ class ClientStore extends ReduceStore {
       return {...state, canSubmit: true};
 
     case ActionType.CLIENT.POSTFORM:
+      postData(
+        action.route,
+        action.data,
+        (data) => {
+          AppDispatcher.dispatch({
+            action: ActionType.CLIENT.POSTFORMSUCCESS,
+            data: data,
+            state: action.state,
+          });
+        }
+      );
+      return {...state, canSubmit: false};
+
+    case ActionType.CLIENT.POSTMULTIFORM:
       postData(
         action.route,
         action.data,
@@ -94,6 +110,15 @@ class ClientStore extends ReduceStore {
         })
       );
       return state;
+
+    case ActionType.CLIENT.ADDDEPENDENT:
+      state.dependents[state.key+1] = {};
+      return {...state, key: state.key+1};
+
+    case ActionType.CLIENT.REMOVEDEPENDENT:
+      var {dependents} = state;
+      delete dependents[action.key];
+      return {...state, dependents};
 
     default:
       return state;

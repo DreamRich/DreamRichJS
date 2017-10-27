@@ -41,14 +41,11 @@ export default class ClientSubForm extends Component {
 
   render = () => {
     return (
-      <div>
-        <h2>{this.props.title}</h2>
-        <Formsy.Form
-          ref={(ref) => {this.form = ref; }}
-          onValidSubmit={this.submitForm}>
-          {this.props.children}
-        </Formsy.Form>
-      </div>
+      <Formsy.Form
+        ref={(ref) => {this.form = ref; }}
+        onValidSubmit={this.submitForm}>
+        {this.props.children}
+      </Formsy.Form>
     );
   }
 }

@@ -102,13 +102,17 @@ class ClientRegister extends Component {
       },
       {
         text: 'Cadastrar Conta bancária',
-        formComponent: <ClientBankAccountForm id={this.state.active_client.id} canSubmit={this.state.canSubmit} />
+        formComponent: <ClientBankAccountForm 
+          id={this.state.active_client.id}
+          canSubmit={this.state.canSubmit}
+        />
       },
       {
         text: 'Dependentes (Opcional)',
         formComponent:
           <ClientDependentForm
-            parent_id={this.state.active_client.id} canSubmit={this.state.canSubmit}
+            id={this.state.active_client.id}
+            canSubmit={this.state.canSubmit}
           />
       }
     ];
