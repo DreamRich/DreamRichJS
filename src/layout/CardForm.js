@@ -11,7 +11,7 @@ import {Card, CardTitle, CardText} from 'material-ui/Card';
  },
 }); */
 
-export default class CardForms extends Component {
+export default class CardForm extends Component {
   constructor(props){
     super(props);
   }
@@ -37,5 +37,3 @@ export default class CardForms extends Component {
     );
   }
 }
-
-

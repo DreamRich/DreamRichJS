@@ -22,6 +22,7 @@ const actionTypes = {
     UNMOUNT: 'password/unmount'
   },
   CLIENT: {
+    SUBMIT: 'client/can_submit_form',
     ACTIVE: 'client/create_active',
     ACTIVESUCCESS: 'client/create_active_success',
     SUBFORM: 'client/create_subforms',

@@ -101,7 +101,7 @@ class DefineFormsyDate extends Component {
             hintText='Ex: 01/01/1970'
             validationError='Insira uma data válida'
             validations={{
-              matchRegexp:/^(0?[1-9]|[12][0-9]|3[01])(0?[1-9]|1[012])\d{4}$/
+              matchRegexp:/^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[012])\/\d{4}$/
             }}
             requiredError={requiredError}
             {...rest}

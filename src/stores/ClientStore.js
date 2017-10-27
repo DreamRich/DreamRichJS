@@ -5,43 +5,40 @@ import AppDispatcher from '../AppDispatcher';
 import {postData} from '../resources/Requests';
 //import {Auth} from '../auth/Auth';
 import ActionType from '../actions/ActionType';
-import {/*getUrl, */routeMap} from '../routes/RouteMap';
+// import {/*getUrl, */routeMap} from '../routes/RouteMap';
 
 class ClientStore extends ReduceStore {
   constructor(){ super(AppDispatcher); }
 
-  getInitialState(){ return {id: undefined}; }
+  getInitialState(){ 
+    return {canSubmit: false, stepIndex: 0 };
+  }
 
   reduce = (state, action) => {
+    console.log(state);
     switch (action.action) {
+    case ActionType.CLIENT.SUBMIT:
+      return {...state, canSubmit: true};
+
     case ActionType.CLIENT.ACTIVE:
-      /* This if - else with state.id was added only because the form doesn't
-       * have validation on the fields... and may cause a resubmition in form
-       * it should be unnecessary when the validations have been implemented
-       * #TODO: remove this if - else after validations in fields
-       */
-      if(!state.id){
-        postData(
-          routeMap.active_client,
-          action.data,
-          (data) => {
-            AppDispatcher.dispatch({
-              action: ActionType.CLIENT.ACTIVESUCCESS,
-              id: data.id
-            });
-          }
-        );
-      } else {
-        setTimeout(() =>
+      postData(
+        action.route,
+        action.data,
+        (data) => {
           AppDispatcher.dispatch({
             action: ActionType.CLIENT.ACTIVESUCCESS,
-            id: state.id
-          }), 1000);
-      }
-      return {...state, id: undefined};
+            data: data,
+            state: action.state
+          });
+        }
+      );
+      return {...state, canSubmit: false};
 
     case ActionType.CLIENT.ACTIVESUCCESS:
-      return {...state, id: action.id};
+      return {...state, id: action.id, stepIndex: state.stepIndex+1};
+
+    case ActionType.CLIENT.SETSTEP:
+      return {...state, stepIndex: action.stepIndex};
 
     case ActionType.CLIENT.SUBFORM:
       postData(action.route, action.data, (e) => console.log(e));

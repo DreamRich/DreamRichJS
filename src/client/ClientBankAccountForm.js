@@ -4,7 +4,7 @@ import {FormsyText} from 'formsy-material-ui/lib';
 import ClientSubForm from './ClientSubForm';
 import errorMessages from '../utils/FormsErrorMessages';
 import { Row, Col } from 'react-flexbox-grid';
-import CardForms from '../layout/CardForms';
+import CardForm from '../layout/CardForm';
 
 var {
   numericError,
@@ -47,7 +47,7 @@ export default class ClientBankAccountForm extends Component {
         parent_name='active_client_id'
         parent_id={this.props.id}
       >
-        <CardForms
+        <CardForm
           titleCard="Conta Bancária"
           subtitleCard="Insira as informações correspondentes a conta bancária."
           contentCard={this.getContentCard()}

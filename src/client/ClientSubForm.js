@@ -16,25 +16,25 @@ export default class ClientSubForm extends Component {
     name: PropTypes.string,
     children: PropTypes.element,
     action: PropTypes.string,
+    canSubmit: PropTypes.bool,
   }
 
   componentDidUpdate = (prevProps) => {
-    if (prevProps.parent_id === undefined &&
-        this.props.parent_id !== undefined) {
-      console.log(prevProps, 'previous');
-      console.log(this.props, 'next');
-      setTimeout(this.form.submit, 200);
+    if (!prevProps.canSubmit &&
+        this.props.canSubmit) {
+      this.form.submit();
     }
   }
 
   submitForm = (data) => {
-    data[this.props.parent_name] = this.props.parent_id;
-    console.log(this.props.name);
+    if (this.props.parent_name) {
+      data[this.props.parent_name] = this.props.parent_id;
+    }
     AppDispatcher.dispatch(
       {
         action: this.props.action,
         data: data,
-        route: routeMap[this.props.name]
+        route: routeMap[this.props.name],
       });
   }
 

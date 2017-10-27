@@ -4,7 +4,7 @@ import ClientSubForm from './ClientSubForm';
 import makeFormysTextList from '../utils/MakeFormysTextList';
 import errorMessages from '../utils/FormsErrorMessages';
 import { Row, Col } from 'react-flexbox-grid';
-import CardForms from '../layout/CardForms';
+import CardForm from '../layout/CardForm';
 
 
 var {
@@ -79,7 +79,7 @@ export default class ClientAddressForm extends Component {
         parent_name='active_client_id'
         parent_id={this.props.id}
       >
-        <CardForms
+        <CardForm
           titleCard="Endereço"
           subtitleCard="Insira as informações correspondentes ao endereço."
           contentCard={this.getContentCard()}

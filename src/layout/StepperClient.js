@@ -2,6 +2,10 @@ import React from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import ClientRegister from '../client/ClientRegister';
+import FixedCostRegister from '../client/FixedCostRegister';
+import GoalRegister from '../client/GoalRegister';
+import PatrimonyRegister from '../patrimony/PatrimonyRegister';
+
 import Paper from 'material-ui/Paper';
 
 import {
@@ -15,8 +19,13 @@ class StepperClient extends React.Component {
   constructor(props) {
     super(props);
 
-    this.handleNext = this.handleNext.bind(this);
-    this.handlePrev = this.handlePrev.bind(this);
+    this.forms = [
+      <ClientRegister key={1} />,
+      <FixedCostRegister key={2} />,
+      <div key={3} >Renda para fora de patrimonio</div>,
+      <PatrimonyRegister key={4} />,
+      <div key={5} >Proteção </div>,
+      <GoalRegister key={6} />];
   }
 
   state = {
@@ -24,47 +33,11 @@ class StepperClient extends React.Component {
   };
 
   getStepContent(stepIndex) {
-    switch (stepIndex) {
-    case 0:
-      return (
-        <ClientRegister />
-      );
-
-    case 1:
-      return (
-        <p>
-        </p>
-      );
-
-    case 2:
-      return (
-        <p>
-          {'2 form'}
-        </p>
-      );
-
-    case 3:
-      return (
-        <p>
-          {'3 form'}
-        </p>
-      );
-    case 4:
-      return (
-        <p>
-          {'4 form'}
-        </p>
-      );
-    case 5:
-      return (
-        <p>
-          {'5 form'}
-        </p>
-      );
-    }
+    const maxSteps = this.forms.length;
+    return this.forms[stepIndex % maxSteps];
   }
 
-  handleNext() {
+  handleNext = () => {
     const {stepIndex} = this.state;
 
     if (stepIndex < 6) {
@@ -72,7 +45,7 @@ class StepperClient extends React.Component {
     }
   }
 
-  handlePrev() {
+  handlePrev = () => {
     const {stepIndex} = this.state;
 
     if (stepIndex > 0) {
@@ -111,13 +84,14 @@ class StepperClient extends React.Component {
         {this.getStepContent(stepIndex)}
 
         <div style={{marginBottom: '7%'}}>
-          <FlatButton
-            label="Voltar para o passo anterior"
-            disabled={stepIndex === 0}
-            onClick={this.handlePrev}
-            backgroundColor='#ebebeb'
-            style={{float: 'left'}}
-          />
+          {stepIndex > 0 &&
+            <FlatButton
+              label="Voltar para o passo anterior"
+              onClick={this.handlePrev}
+              backgroundColor='#ebebeb'
+              style={{float: 'left'}}
+            />
+          }
           <RaisedButton
             label={stepIndex === 6 ? 'Finalizar' : 'Seguir para o passo seguinte'}
             primary={true}

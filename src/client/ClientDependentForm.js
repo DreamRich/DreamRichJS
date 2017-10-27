@@ -6,7 +6,7 @@ import ClientSubForm from './ClientSubForm';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-flexbox-grid';
 import Checkbox from 'material-ui/Checkbox';
-import CardForms from '../layout/CardForms';
+import CardForm from '../layout/CardForm';
 import ActionType from '../actions/ActionType';
 
 var {
@@ -107,7 +107,7 @@ export default class ClientDependentForm extends Component {
               title="Dependente"
               parent_name='active_client_id'
               parent_id={this.props.parent_id}>
-              <CardForms
+              <CardForm
                 titleCard='Dependentes'
                 subtitleCard={subtitleCard}
                 contentCard={this.getContentCard()}

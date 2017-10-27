@@ -10,7 +10,7 @@ export default class EmployeeTable extends GridTable {
     super(props);
   }
 
-  getColumns = () => {
+  getColumns() {
     return [
       { key: 'first_name', name: 'Name', sortable: true, filterable: true, resizable: true, editable: true },
       { key: 'last_name', name: 'Surname', sortable: true, filterable: true, resizable: true, editable: true },

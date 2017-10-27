@@ -15,13 +15,15 @@ export default class GridTable extends Component {
   }
 
   /* Need override */
-  getColumns = () => {return [];}
+  getColumns() {return [];}
 
   /* Need override */
   getRoute = () => {return '';}
 
-  /* Need override */
-  getActions = (register, idx) => { register, idx; return null; }
+  /* Need override 
+   * Using arrow function the table doens't work
+   */
+  getActions(register, idx) { register, idx; return null; }
 
   createOrUpdate = (row, updated) => { row; updated; }
 

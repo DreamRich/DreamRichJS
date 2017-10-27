@@ -12,7 +12,10 @@ export default class ClientTable extends GridTable {
     super(props);
   }
 
-  getColumns = () => {
+  getRoute = () => '/api/client/active/'
+
+  // Using arrow function the table doens't work
+  getColumns() {
     return [
       { key: 'name', name: 'Name', sortable: true, filterable: true, resizable: true },
       { key: 'telephone', name: 'Telefone', sortable: true, filterable: true, resizable: true },
@@ -22,8 +25,7 @@ export default class ClientTable extends GridTable {
     ];
   }
 
-  getRoute = () => '/api/client/active/'
-
+  // This form is necessary to avoid react/missing-displayName warning
   getActions(register) {
     if(register !== undefined && register !== null){
       return (
@@ -37,6 +39,7 @@ export default class ClientTable extends GridTable {
     return null;
   }
 
+  // This form is necessary to avoid react/missing-displayName warning
   getToolbar(){
     return (
       <Toolbar enableFilter={true} />

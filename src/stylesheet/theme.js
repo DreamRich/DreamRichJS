@@ -1,14 +1,15 @@
 
 // http://www.material-ui.com/#/customization/colors
-import {blueGrey900} from 'material-ui/styles/colors';
+import {blueGrey900, grey100} from 'material-ui/styles/colors';
 
 
 // https://github.com/callemall/material-ui/blob/master/src/styles/getMuiTheme.js
 const button = {
-  //  raisedButton: {
-  //    primaryColor: '#00D0A7',
-  //    primaryTextColor: '#fff',
-  //  },
+  raisedButton: {
+    color: grey100,
+    //    primaryColor: '#00D0A7',
+    //    primaryTextColor: '#fff',
+  },
   //  flatButton: {
   //    primaryTextColor: '#00D0A7',
   //  },

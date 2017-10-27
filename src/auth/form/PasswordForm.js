@@ -9,7 +9,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 import Snackbar from 'material-ui/Snackbar';
 import ActionType from '../../actions/ActionType';
 import { Row, Col } from 'react-flexbox-grid';
-import CardForms from '../../layout/CardForms';
+import CardForm from '../../layout/CardForm';
 
 export default class PasswordForm extends Component{
 
@@ -105,7 +105,7 @@ export default class PasswordForm extends Component{
       <Formsy.Form ref={ (form) => {this.form = form;} }
         onValidSubmit={this.handleForm}
       >
-        <CardForms
+        <CardForm
           titleCard="Alteração de senha"
           subtitleCard="Preencha os campos a seguir para alterar sua senha."
           contentCard={this.getContentCard()}

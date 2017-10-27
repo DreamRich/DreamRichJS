@@ -11,7 +11,7 @@ const makeFormysTextList = (dataList, textKey) => {
         hintText={data.hintText}
         floatingLabelText={data.floatingLabelText}
         value={data.value}
-        updateImmediately={data.isUpdate}
+        //updateImmediately={data.isUpdate}
         key={textKey+index}
       />
     );
