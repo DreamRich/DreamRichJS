@@ -79,6 +79,7 @@ class ClientRegister extends Component {
             title='Cliente'
             subtitleCard={subtitleCard}
             canSubmit={this.state.canSubmit}
+            client={this.state.active_client}
           />
       },
       {

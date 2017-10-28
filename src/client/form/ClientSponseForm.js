@@ -10,7 +10,7 @@ import makeFormysTextList from '../../utils/MakeFormysTextList';
 import CardForm from '../../components/CardForm';
 // import Checkbox from 'material-ui/Checkbox';
 import ActionType from '../../actions/ActionType';
-import {personData} from './ClientForm';
+import {personFields} from './ClientForm';
 
 // var {
 //   wordsError,
@@ -29,7 +29,7 @@ export default class SponseForm extends Component {
 
   getContentCard(){
     // This form use the same field as client form
-    const formsyList = makeFormysTextList(personData,'clientform');
+    const formsyList = makeFormysTextList(personFields,'clientform');
 
     return (
       <Row around="xs">

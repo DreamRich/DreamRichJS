@@ -17,7 +17,7 @@ var {
   emailError,
 } = errorMessages;
 
-export const personData = [
+export const personFields = [
   {
     name: 'name',validations: 'isWords', validationError: wordsError,
     hintText: 'Nome do cliente', floatingLabelText: 'Nome', value: 'asd',
@@ -54,10 +54,13 @@ export default class ClientForm extends Component {
     title: PropTypes.string,
     subtitleCard: PropTypes.string,
     canSubmit: PropTypes.bool,
+    client: PropTypes.object,
   }
 
   getContentCard(){
-    const formsyList = makeFormysTextList(personData,'clientform');
+    const formsyList = makeFormysTextList(
+      personFields, 'clientform', this.props.client
+    );
 
     return (
       <Row around="xs">

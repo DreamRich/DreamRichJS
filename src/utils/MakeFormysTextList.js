@@ -1,17 +1,18 @@
 import React from 'react';
 import {FormsyText} from 'formsy-material-ui/lib';
 
-const makeFormysTextList = (dataList, textKey) => {
-  let formsyTextList = dataList.map((data,index)=>{
+const makeFormysTextList = (fieldList, textKey, data) => {
+  const formsyTextList = fieldList.map((field, index) => {
+    const fieldValue = (data !== undefined ? data[field.name] : field.value);
     return (
       <FormsyText
-        name={data.name}
-        validations={data.validations}
-        validationError={data.validationError}
-        hintText={data.hintText}
-        floatingLabelText={data.floatingLabelText}
-        value={data.value}
-        //updateImmediately={data.isUpdate}
+        name={field.name}
+        validations={field.validations}
+        validationError={field.validationError}
+        hintText={field.hintText}
+        floatingLabelText={field.floatingLabelText}
+        value={fieldValue}
+        //updateImmediately={field.isUpdate}
         key={textKey+index}
       />
     );
