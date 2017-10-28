@@ -31,6 +31,25 @@ class ClientStore extends ReduceStore {
     console.log(state);
     switch (action.action) {
 
+    
+    case ActionType.CLIENT.ID:
+      getData(
+        routeMap.active_client + action.id + '/',
+        (data) => {
+          AppDispatcher.dispatch({
+            action: ActionType.CLIENT.GETFORMSUCCESS,
+            data: data,
+            state: 'active_client',
+          });
+        }
+      );
+      return state;
+
+    case ActionType.CLIENT.GETFORMSUCCESS:
+      return {...state, active_client: action.data, address: action.data.address, 
+        dependent: action.data.dependent, bank_account: action.data.bank_account, sponse: action.data.sponse};
+
+
     case ActionType.CLIENT.SUBMIT:
       return {...state, canSubmit: true};
 
@@ -47,6 +66,8 @@ class ClientStore extends ReduceStore {
         }
       );
       return {...state, canSubmit: false};
+
+    
 
     case ActionType.CLIENT.POSTFORMSUCCESS:
       return {...state,

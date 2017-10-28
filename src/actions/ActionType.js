@@ -32,9 +32,12 @@ const actionTypes = {
     STATESUCCESS: 'client/states_success',
     POSTFORM: 'client/create_active',
     POSTFORMSUCCESS: 'client/create_active_success',
+    GETFORMSUCCESS: 'client/get_active_success',
     SUBFORM: 'client/create_subforms',
     ADDDEPENDENT: 'client/add_dependent',
     REMOVEDEPENDENT: 'client/remove_dependent',
+    ID: 'client/get_client_data',
+
   },
   REFRESH_LOGIN: 'refresh_token',
   REGULARCOST: {

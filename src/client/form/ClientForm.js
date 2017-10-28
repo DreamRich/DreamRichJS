@@ -57,6 +57,10 @@ export default class ClientForm extends Component {
     client: PropTypes.object,
   }
 
+  static defaultProps = {
+    client: {},
+  }
+
   getContentCard(){
     const formsyList = makeFormysTextList(
       personFields, 'clientform', this.props.client
