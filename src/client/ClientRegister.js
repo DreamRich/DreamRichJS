@@ -79,7 +79,7 @@ class ClientRegister extends Component {
             title='Cliente'
             subtitleCard={subtitleCard}
             canSubmit={this.state.canSubmit}
-            client={this.state.active_client}
+            data={this.state.active_client}
           />
       },
       {
@@ -89,6 +89,7 @@ class ClientRegister extends Component {
             title='Cônjuge'
             subtitleCard={'Insira as informações do cônjuge deste cliente'}
             canSubmit={this.state.canSubmit}
+            data={this.state.sponse}
           />
       },
       {
@@ -99,6 +100,7 @@ class ClientRegister extends Component {
           countries={this.state.countries}
           states={this.state.states}
           addressType={this.state.addressType}
+          data={this.state.address}
         />
       },
       {
@@ -106,6 +108,7 @@ class ClientRegister extends Component {
         formComponent: <ClientBankAccountForm 
           id={this.state.active_client.id}
           canSubmit={this.state.canSubmit}
+          data={this.state.bank_account}
         />
       },
       {

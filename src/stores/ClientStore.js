@@ -22,8 +22,7 @@ class ClientStore extends ReduceStore {
       states: [],
       addressType: [],
       active_client: {},
-      dependents: {},
-      key: 0,
+      dependents: [],
     };
   }
 
@@ -31,7 +30,6 @@ class ClientStore extends ReduceStore {
     console.log(state);
     switch (action.action) {
 
-    
     case ActionType.CLIENT.ID:
       getData(
         routeMap.active_client + action.id + '/',
@@ -46,9 +44,7 @@ class ClientStore extends ReduceStore {
       return state;
 
     case ActionType.CLIENT.GETFORMSUCCESS:
-      return {...state, active_client: action.data, address: action.data.address, 
-        dependent: action.data.dependent, bank_account: action.data.bank_account, sponse: action.data.sponse};
-
+      return {...state, ...this.getClientState(action.data)};
 
     case ActionType.CLIENT.SUBMIT:
       return {...state, canSubmit: true};
@@ -91,8 +87,13 @@ class ClientStore extends ReduceStore {
       return {...state, canSubmit: false};
 
     case ActionType.CLIENT.POSTMULTIFORMSUCCESS:
-      delete state.dependents[action.index];
-      state.dependents[action.data.id] = action.data;
+      state.dependents.find( (dependent, index) => {
+        if (dependent.index === action.index){
+          action.data.index = index;
+          state.dependents[index] = action.data;
+          return true;
+        }
+      });
       return {...state};
 
     case ActionType.CLIENT.SETSTEP:
@@ -139,17 +140,48 @@ class ClientStore extends ReduceStore {
       return state;
 
     case ActionType.CLIENT.ADDDEPENDENT:
-      state.dependents[state.key+1] = {};
-      return {...state, key: state.key+1};
+      state.dependents.push(
+        {index: this.getLastIndex(state) + 1}
+      );
+      return {...state};
 
     case ActionType.CLIENT.REMOVEDEPENDENT:
-      var {dependents} = state;
-      delete dependents[action.key];
-      return {...state, dependents};
+      var dependents = state.dependents.slice();
+      return {...state, dependents: dependents.filter(
+        e => e.index !== action.key
+      )};
 
     default:
       return state;
     }
+  }
+
+  getLastIndex = (state) => {
+    const index = state.dependents.length-1;
+    const lastDependent = state.dependents[index];
+    return lastDependent === undefined ? 0 : lastDependent.index;
+  }
+
+  getClientState = (data) => {
+    if (data !== undefined && data !== null) {
+      const address = data.addresses[data.addresses.length-1];
+      const dependents = data.dependents.map(
+        dependent => {
+          dependent.index = dependent.id;
+          return dependent;
+        });
+      const bank_account = data.bank_account;
+      const sponse = data.spouse;
+      delete data['addresses'];
+      delete data['dependents'];
+      delete data['bank_account'];
+      delete data['spouse'];
+
+      const active_client = data;
+      console.log({active_client, dependents, bank_account, sponse, address});
+      return {active_client, dependents, bank_account, sponse, address};
+    }
+    return {};
   }
 
 }

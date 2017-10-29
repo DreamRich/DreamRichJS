@@ -60,12 +60,14 @@ export default class ClientAddressForm extends Component {
     states: PropTypes.array,
     addressType: PropTypes.array,
     canSubmit: PropTypes.bool,
+    data: PropTypes.object,
   }
 
   static defaultProps = {
     countries: [],
     states: [],
     addressType: [],
+    data: {},
   }
 
   fetchStates = (selectedCountry) => {
@@ -87,7 +89,9 @@ export default class ClientAddressForm extends Component {
   }
 
   getContentCard(){
-    const formysTextList = makeFormysTextList(dataAddressSubForm,'adressform');
+    const formysTextList = makeFormysTextList(
+      dataAddressSubForm, 'adressform', this.props.data
+    );
 
     const listColumns = formysTextList.map((form,index)=>{
       return (

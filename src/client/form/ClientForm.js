@@ -20,31 +20,31 @@ var {
 export const personFields = [
   {
     name: 'name',validations: 'isWords', validationError: wordsError,
-    hintText: 'Nome do cliente', floatingLabelText: 'Nome', value: 'asd',
+    hintText: 'Nome do cliente', floatingLabelText: 'Nome',
   },
   {
     name: 'surname',validations: 'isWords', validationError: wordsError,
-    hintText: 'Sobrenome do cliente', floatingLabelText: 'Sobrenome', value: 'asd',
+    hintText: 'Sobrenome do cliente', floatingLabelText: 'Sobrenome',
   },
   {
     name: 'cpf',validations: 'isNumeric', validationError: numericError,
-    hintText: 'Apenas números', floatingLabelText: 'CPF', value: '33044946425', isUpdate: 'true'
+    hintText: 'Apenas números', floatingLabelText: 'CPF', isUpdate: 'true'
   },
   {
     name: 'profession',validations: 'isWords', validationError: wordsError,
-    hintText: 'Profissão do cliente', floatingLabelText: 'Profissão', value: 'asd',
+    hintText: 'Profissão do cliente', floatingLabelText: 'Profissão',
   },
   {
     name: 'telephone', hintText: 'Telefone do cliente',
-    floatingLabelText: 'Telefone', value: '(61) 98131-4508', isUpdate: 'true'
+    floatingLabelText: 'Telefone', isUpdate: 'true'
   },
   {
     name: 'email',validations: 'isEmail', validationError: emailError,
-    hintText: 'E-mail do cliente', floatingLabelText: 'E-mail', value: 'asd@gmail.com',
+    hintText: 'E-mail do cliente', floatingLabelText: 'E-mail',
   },
   {
     name: 'hometown',validations: 'isWords', validationError: wordsError,
-    hintText: 'Onde o cliente nasceu?', floatingLabelText: 'Cidade natal', value: 'asdac',
+    hintText: 'Onde o cliente nasceu?', floatingLabelText: 'Cidade natal',
   },
 ];
 
@@ -54,16 +54,16 @@ export default class ClientForm extends Component {
     title: PropTypes.string,
     subtitleCard: PropTypes.string,
     canSubmit: PropTypes.bool,
-    client: PropTypes.object,
+    data: PropTypes.object,
   }
 
   static defaultProps = {
-    client: {},
+    data: {},
   }
 
   getContentCard(){
     const formsyList = makeFormysTextList(
-      personFields, 'clientform', this.props.client
+      personFields, 'clientform', this.props.data
     );
 
     return (

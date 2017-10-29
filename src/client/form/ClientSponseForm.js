@@ -25,11 +25,14 @@ export default class SponseForm extends Component {
     title: PropTypes.string,
     subtitleCard: PropTypes.string,
     canSubmit: PropTypes.bool,
+    data: PropTypes.object,
   }
 
   getContentCard(){
     // This form use the same field as client form
-    const formsyList = makeFormysTextList(personFields,'clientform');
+    const formsyList = makeFormysTextList(
+      personFields,'sponseform', this.props.data
+    );
 
     return (
       <Row around="xs">

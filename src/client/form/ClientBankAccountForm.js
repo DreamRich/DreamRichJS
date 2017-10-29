@@ -19,6 +19,11 @@ export default class ClientBankAccountForm extends Component {
   static propTypes = {
     id: PropTypes.number,
     canSubmit: PropTypes.bool,
+    data: PropTypes.object,
+  }
+
+  static defaultProps = {
+    data: {},
   }
 
   getContentCard(){
@@ -31,6 +36,7 @@ export default class ClientBankAccountForm extends Component {
             validationError={numericError}
             hintText="Agência da conta bancária "
             floatingLabelText="Agência"
+            value={this.props.data.agency}
           />
         </Col>
         <Col xs>
@@ -38,6 +44,7 @@ export default class ClientBankAccountForm extends Component {
             name="account"
             hintText="Número da conta bancária "
             floatingLabelText="Conta"
+            value={this.props.data.account}
           />
         </Col>
       </Row>

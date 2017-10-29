@@ -18,8 +18,8 @@ var {
 export default class ClientDependentForm extends Component {
   constructor(props){
     super(props);
-    const {dependents, key} = ClientStore.getState();
-    this.state = {dependents, key};
+    const {dependents} = ClientStore.getState();
+    this.state = {dependents};
   }
 
   static propTypes = {
@@ -36,8 +36,8 @@ export default class ClientDependentForm extends Component {
   }
 
   handleChange = () => {
-    const {dependents, key} = ClientStore.getState();
-    this.setState({dependents, key});
+    const {dependents} = ClientStore.getState();
+    this.setState({dependents});
   }
 
 
@@ -50,7 +50,7 @@ export default class ClientDependentForm extends Component {
     key: key,
   })
 
-  getContentCard(){
+  getContentCard(dependent){
     return (
       <Row around="xs">
         <Col xs>
@@ -60,6 +60,7 @@ export default class ClientDependentForm extends Component {
             validationError={wordsError}
             hintText="Nome do dependente"
             floatingLabelText="Nome"
+            value={dependent.name}
           />
         </Col>
         <Col xs>
@@ -69,6 +70,7 @@ export default class ClientDependentForm extends Component {
             validationError={wordsError}
             hintText="Sobrenome do dependente"
             floatingLabelText="Sobrenome"
+            value={dependent.surname}
           />
         </Col>
         <Col xs>
@@ -92,8 +94,6 @@ export default class ClientDependentForm extends Component {
     );
   }
 
-  getDependentsKeys = () => Object.keys(this.state.dependents)
-
   render = () => {
     let subtitleCard = 'Insira as informações correspondentes as ' +
      'informações do dependente.';
@@ -103,13 +103,13 @@ export default class ClientDependentForm extends Component {
       ' caso haja).');
     let labelRemove='O cliente possui não dependentes? '+
       '(Desmarque o quadrado ao lado caso não haja).';
-    console.log(this.state.dependents);
 
     return (
       <div>
-        {this.getDependentsKeys().map( (index) => {
+        {this.state.dependents.map( (dependent) => {
           //const dependent = this.state.dependents[index];
-          console.log(index);
+          //console.log(index);
+          const index = dependent.index;
           return (
             <div key={index}>
               {this.getSelectOption(
@@ -127,7 +127,7 @@ export default class ClientDependentForm extends Component {
                 <CardForm
                   titleCard='Dependentes'
                   subtitleCard={subtitleCard}
-                  contentCard={this.getContentCard()}
+                  contentCard={this.getContentCard(dependent)}
                 />
               </SubForm>
             </div>
