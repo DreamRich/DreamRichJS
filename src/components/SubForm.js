@@ -27,10 +27,6 @@ export default class SubForm extends Component {
     }
   }
 
-  componentDidMount = () => {
-    console.log(this.form);
-  }
-
   submitForm = (data) => {
     if (this.props.parent_name) {
       data[this.props.parent_name] = this.props.parent_id;

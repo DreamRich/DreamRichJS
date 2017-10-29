@@ -63,7 +63,6 @@ class PasswordStore extends ReduceStore {
       return {...state, send: true};
 
     case ActionType.PASSWORD.RESET:
-      console.log(state, action);
       getData('/api/auth/password/?email='+action.data.email,
         () => {},
         (responseStatus) => {

@@ -79,6 +79,7 @@ export default class ClientForm extends Component {
           <FormsyDate
             name="birthday"
             floatingLabelText="Data de Nascimento"
+            value={this.props.data.birthday}
           />
           <p>
             Enviar identidade:

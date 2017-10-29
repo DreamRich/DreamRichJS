@@ -37,7 +37,6 @@ export default class ActiveProfit extends Component {
         {
           this.state.actives.map( (item, idx) => {
             const type = (item.active_type !== undefined ? item.active_type.name : '');
-            console.log(type);
             return (
               <div key={idx}>
                 <label>{type} {item.name}: {item.value} {item.equivalent_rate}</label>

@@ -32,11 +32,15 @@ class StepperClient extends React.Component {
   }
   
   static propTypes = {
-    match: {params: {id: PropTypes.number,}}
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        id: PropTypes.string,
+      }),
+    }),
   }
+
   componentDidMount = () => {
     const id = this.props.match.params.id;
-    console.log(id);
     AppDispatcher.dispatch({
       action: ActionType.CLIENT.ID,
       id: id

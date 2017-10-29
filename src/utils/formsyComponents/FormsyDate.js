@@ -1,3 +1,4 @@
+'use strict';
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {HOC} from 'formsy-react';
@@ -16,7 +17,7 @@ reference:
 class DefineFormsyDate extends Component {
 
   static propTypes = {
-    value: PropTypes.object,
+    value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     getValue: PropTypes.func,
     setValue: PropTypes.func,
     defaultDate: PropTypes.object,
@@ -28,6 +29,20 @@ class DefineFormsyDate extends Component {
     validationError: PropTypes.string,
     validationErrors: PropTypes.object,
     validations: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+
+    getErrorMessage: PropTypes.func,
+    getErrorMessages: PropTypes.func,
+    hasValue: PropTypes.func,
+    isFormDisabled: PropTypes.func,
+    isFormSubmitted: PropTypes.func,
+    isPristine: PropTypes.func,
+    isRequired: PropTypes.func,
+    isValid: PropTypes.func,
+    isValidValue: PropTypes.func,
+    resetValue: PropTypes.func,
+    setValidations: PropTypes.func,
+    showError: PropTypes.func,
+    showRequired: PropTypes.func,
   };
 
   constructor(props){
@@ -41,16 +56,20 @@ class DefineFormsyDate extends Component {
     dateSubmit: null // For submitting
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     const { defaultDate } = this.props;
     const value = this.props.getValue();
 
     if (typeof value === 'undefined' && typeof defaultDate !== 'undefined') {
       this.props.setValue(defaultDate);
     }
+
   }
 
-  componentWillReceiveProps(newProps) {
+  componentWillReceiveProps = (newProps) => {
+    /* Check if this code is really necessary, the transition used is with
+     * setting the value in new props to 3 states of this component
+     */
     if (newProps.value) {
       if (!this.props.value || !datesEq(this.props.value, newProps.value)) {
         this.props.setValue(newProps.value);
@@ -61,10 +80,25 @@ class DefineFormsyDate extends Component {
       }
     }
 
+    /* This is the code to verify the new prop date. This not require
+     * the creation of compare1 and compare2 in datesEq(date1, date2)
+     */
+    if (newProps.value) {
+      const oldDate = new Date(this.props.value);
+      const newDate = new Date(newProps.value);
+
+      if (!this.state.selectedDate && !datesEq(oldDate, newDate)) {
+        console.log('aloha');
+        this.handleChangeDatePicker(null, newDate);
+      }
+    }
+
     function datesEq(date1, date2) {
-      return date1.getFullYear() === date2.getFullYear() &&
-        date1.getDate() === date2.getDate() &&
-        date1.getDay() === date2.getDay();
+      const compare1 = new Date(date1);
+      const compare2 = new Date(date2);
+      return compare1.getFullYear() === compare2.getFullYear() &&
+        compare1.getDate() === compare2.getDate() &&
+        compare1.getDay() === compare2.getDay();
     }
   }
 
@@ -78,13 +112,27 @@ class DefineFormsyDate extends Component {
 
   render() {
 
+    // Do it to avoid warning of props
     const {
       name,
-      defaultDate, // eslint-disable-line no-unused-vars
-      validations, // eslint-disable-line no-unused-vars
-      validationErrors, // eslint-disable-line no-unused-vars
-      validationError, // eslint-disable-line no-unused-vars
-      requiredError, // eslint-disable-line no-unused-vars
+      defaultDate,
+      requiredError,
+      getErrorMessage, // eslint-disable-line no-unused-vars
+      getErrorMessages, // eslint-disable-line no-unused-vars
+      getValue, // eslint-disable-line no-unused-vars
+      hasValue, // eslint-disable-line no-unused-vars
+      isFormDisabled, // eslint-disable-line no-unused-vars
+      isFormSubmitted, // eslint-disable-line no-unused-vars
+      isPristine, // eslint-disable-line no-unused-vars
+      isRequired, // eslint-disable-line no-unused-vars
+      isValid, // eslint-disable-line no-unused-vars
+      isValidValue, // eslint-disable-line no-unused-vars
+      resetValue, // eslint-disable-line no-unused-vars
+      setValidations, // eslint-disable-line no-unused-vars
+      setValue, // eslint-disable-line no-unused-vars
+      showError, // eslint-disable-line no-unused-vars
+      showRequired, // eslint-disable-line no-unused-vars
+      value, // eslint-disable-line no-unused-vars
       ...rest } = this.props;
 
     return (

@@ -133,7 +133,6 @@ export default class ClientAddressForm extends Component {
     const statesOptions = this.convertRegionToOptions(this.props.states);
     let searchText = this.props.data.type_of_address;
     if (this.state.searchText !== undefined && this.state.searchText !== null) {
-      console.log('xxx', this.state.searchText, this.state.searchText !== undefined, this.state.searchText !== null);
       searchText = this.state.searchText;
     }
 

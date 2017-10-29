@@ -15,7 +15,7 @@ class ClientStore extends ReduceStore {
 
   getInitialState(){
     return {
-      sponse: false,
+      sponse: {},
       canSubmit: false,
       stepIndex: 0,
       countries: [],
