@@ -29,9 +29,10 @@ export default class SponseForm extends Component {
   }
 
   getContentCard(){
+    const sponseFields = personFields.filter( field => field.name !== 'email');
     // This form use the same field as client form
     const formsyList = makeFormysTextList(
-      personFields,'sponseform', this.props.data
+      sponseFields,'sponseform', this.props.data
     );
 
     return (

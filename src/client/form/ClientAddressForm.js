@@ -6,6 +6,7 @@ import SubForm from '../../components/SubForm';
 import makeFormysTextList from '../../utils/MakeFormysTextList';
 import ActionType from '../../actions/ActionType';
 import AppDispatcher from '../../AppDispatcher';
+import ClientStore from '../../stores/ClientStore';
 import errorMessages from '../../utils/FormsErrorMessages';
 import { Row, Col } from 'react-flexbox-grid';
 import CardForm from '../../components/CardForm';
@@ -24,16 +25,12 @@ const dataAddressSubForm = [
     hintText: 'Apenas números', floatingLabelText: 'CEP', isUpdate: 'true',
   },
   {
-    name: 'details',validations: 'isWords', validationError: wordsError,
-    hintText: 'Detalhes do endereço', floatingLabelText: 'Detalhes',
-  },
-  {
     name: 'number',validations: 'isNumeric', validationError: numericError,
     hintText: 'Número do lote', floatingLabelText: 'Número', isUpdate: 'true',
   },
   {
-    name: 'complement',validations: 'isWords', validationError: wordsError,
-    hintText: 'Complemento do endereço', floatingLabelText: 'Complemento',
+    name: 'complement', hintText: 'Complemento do endereço',
+    floatingLabelText: 'Complemento',
   },
   {
     name: 'neighborhood',validations: 'isWords', validationError: wordsError,
@@ -50,10 +47,6 @@ const dataAddressSubForm = [
 
 export default class ClientAddressForm extends Component {
 
-  constructor(props){
-    super(props);
-  }
-
   static propTypes = {
     id: PropTypes.number,
     countries: PropTypes.array,
@@ -67,10 +60,30 @@ export default class ClientAddressForm extends Component {
     countries: [],
     states: [],
     addressType: [],
-    data: {},
+    data: {state: {}},
   }
 
-  fetchStates = (selectedCountry) => {
+  updateSearch = (e, searchText) => {
+    AppDispatcher.dispatch({
+      action: ActionType.CLIENT.ADDRESSTEXT,
+      searchText: searchText
+    });
+  }
+
+  handleUpdate = () => {
+    const {searchText} = ClientStore.getState();
+    this.setState({searchText});
+  }
+
+  componentWillMount = () => this.setState({
+    listener: ClientStore.addListener(this.handleUpdate)
+  })
+
+  componentWillUnmount = () => {
+    this.state.listener.remove();
+  }
+
+  fetchStates = (e, selectedCountry) => {
     AppDispatcher.dispatch({
       action: ActionType.CLIENT.STATES,
       country: selectedCountry
@@ -88,6 +101,18 @@ export default class ClientAddressForm extends Component {
     return listMenuItems;
   }
 
+  getStateList = () => {
+
+    const hasStateList = this.props.states.find(
+      state => state.id === this.props.data.state.id
+    );
+
+    if (hasStateList === undefined && this.props.data.state.id !== undefined) {
+      this.fetchStates(null, this.props.data.state.country_id);
+    }
+
+  }
+
   getContentCard(){
     const formysTextList = makeFormysTextList(
       dataAddressSubForm, 'adressform', this.props.data
@@ -100,8 +125,18 @@ export default class ClientAddressForm extends Component {
         </Col>
       );
     });
+
     const contriesOptions = this.convertRegionToOptions(this.props.countries);
+
+    this.getStateList();
+
     const statesOptions = this.convertRegionToOptions(this.props.states);
+    let searchText = this.props.data.type_of_address;
+    if (this.state.searchText !== undefined && this.state.searchText !== null) {
+      console.log('xxx', this.state.searchText, this.state.searchText !== undefined, this.state.searchText !== null);
+      searchText = this.state.searchText;
+    }
+
 
     return (
       <div>
@@ -110,7 +145,8 @@ export default class ClientAddressForm extends Component {
             name="country"
             floatingLabelText="País"
             maxHeight={300}
-            onChange={(event, selectedCountry) => this.fetchStates(selectedCountry)}
+            onChange={this.fetchStates}
+            value={this.props.data.state.country_id}
           >
             {contriesOptions}
           </FormsySelect>
@@ -118,7 +154,7 @@ export default class ClientAddressForm extends Component {
             name="state_id"
             floatingLabelText="Estado"
             maxHeight={300}
-            onChange={(event, selectedState) => this.setState({selectedState})}
+            value={this.props.data.state.id}
           >
             {statesOptions}
           </FormsySelect>
@@ -138,6 +174,8 @@ export default class ClientAddressForm extends Component {
             validationError={wordsError}
             hintText="Casa, apartamento, etc."
             floatingLabelText="Tipo de Endereço"
+            searchText={searchText}
+            onChange={this.updateSearch}
           />
         </Row>
       </div>
@@ -164,5 +202,3 @@ export default class ClientAddressForm extends Component {
     );
   }
 }
-
-

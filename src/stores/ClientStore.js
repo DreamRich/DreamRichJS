@@ -23,11 +23,11 @@ class ClientStore extends ReduceStore {
       addressType: [],
       active_client: {},
       dependents: [],
+      searchText: undefined,
     };
   }
 
   reduce = (state, action) => {
-    console.log(state);
     switch (action.action) {
 
     case ActionType.CLIENT.ID:
@@ -62,8 +62,6 @@ class ClientStore extends ReduceStore {
         }
       );
       return {...state, canSubmit: false};
-
-    
 
     case ActionType.CLIENT.POSTFORMSUCCESS:
       return {...state,
@@ -151,6 +149,9 @@ class ClientStore extends ReduceStore {
         e => e.index !== action.key
       )};
 
+    case ActionType.CLIENT.ADDRESSTEXT:
+      return {...state, searchText: action.searchText};
+
     default:
       return state;
     }
@@ -163,24 +164,26 @@ class ClientStore extends ReduceStore {
   }
 
   getClientState = (data) => {
+    // Get data from a action and mount a array of data for a client
     if (data !== undefined && data !== null) {
-      const address = data.addresses[data.addresses.length-1];
+      const address = data.addresses[data.addresses.length-1] || {state: {}};
+      const bank_account = data.bank_account || {};
+      const sponse = data.spouse || {};
       const dependents = data.dependents.map(
         dependent => {
           dependent.index = dependent.id;
           return dependent;
         });
-      const bank_account = data.bank_account;
-      const sponse = data.spouse;
       delete data['addresses'];
       delete data['dependents'];
       delete data['bank_account'];
       delete data['spouse'];
 
       const active_client = data;
-      console.log({active_client, dependents, bank_account, sponse, address});
+
       return {active_client, dependents, bank_account, sponse, address};
     }
+
     return {};
   }
 
