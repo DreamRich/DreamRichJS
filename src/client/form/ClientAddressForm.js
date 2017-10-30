@@ -6,7 +6,7 @@ import SubForm from '../../components/SubForm';
 import makeFormysTextList from '../../utils/MakeFormysTextList';
 import ActionType from '../../actions/ActionType';
 import AppDispatcher from '../../AppDispatcher';
-import ClientStore from '../../stores/ClientStore';
+import AddressStore from '../../stores/AddressStore';
 import errorMessages from '../../utils/FormsErrorMessages';
 import { Row, Col } from 'react-flexbox-grid';
 import CardForm from '../../components/CardForm';
@@ -49,19 +49,15 @@ export default class ClientAddressForm extends Component {
 
   static propTypes = {
     id: PropTypes.number,
-    countries: PropTypes.array,
-    states: PropTypes.array,
-    addressType: PropTypes.array,
     canSubmit: PropTypes.bool,
     data: PropTypes.object,
   }
 
   static defaultProps = {
-    countries: [],
-    states: [],
-    addressType: [],
     data: {state: {}},
   }
+
+  state = AddressStore.getState()
 
   updateSearch = (e, searchText) => {
     AppDispatcher.dispatch({
@@ -71,12 +67,11 @@ export default class ClientAddressForm extends Component {
   }
 
   handleUpdate = () => {
-    const {searchText} = ClientStore.getState();
-    this.setState({searchText});
+    this.setState(AddressStore.getState());
   }
 
   componentWillMount = () => this.setState({
-    listener: ClientStore.addListener(this.handleUpdate)
+    listener: AddressStore.addListener(this.handleUpdate)
   })
 
   componentWillUnmount = () => {
@@ -103,7 +98,7 @@ export default class ClientAddressForm extends Component {
 
   getStateList = () => {
 
-    const hasStateList = this.props.states.find(
+    const hasStateList = this.state.states.find(
       state => state.id === this.props.data.state.id
     );
 
@@ -126,11 +121,11 @@ export default class ClientAddressForm extends Component {
       );
     });
 
-    const contriesOptions = this.convertRegionToOptions(this.props.countries);
+    const contriesOptions = this.convertRegionToOptions(this.state.countries);
 
     this.getStateList();
 
-    const statesOptions = this.convertRegionToOptions(this.props.states);
+    const statesOptions = this.convertRegionToOptions(this.state.states);
     let searchText = this.props.data.type_of_address;
     if (this.state.searchText !== undefined && this.state.searchText !== null) {
       searchText = this.state.searchText;
@@ -167,7 +162,7 @@ export default class ClientAddressForm extends Component {
         </Row>
         <Row>
           <FormsyAutoComplete
-            dataSource={this.props.addressType}
+            dataSource={this.state.addressType}
             name="type_of_address"
             validations="isWords"
             validationError={wordsError}

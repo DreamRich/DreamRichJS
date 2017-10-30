@@ -97,9 +97,6 @@ class ClientRegister extends Component {
         formComponent: <ClientAddressForm 
           id={this.state.active_client.id}
           canSubmit={this.state.canSubmit}
-          countries={this.state.countries}
-          states={this.state.states}
-          addressType={this.state.addressType}
           data={this.state.address}
         />
       },

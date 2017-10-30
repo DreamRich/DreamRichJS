@@ -38,6 +38,7 @@ const actionTypes = {
     REMOVEDEPENDENT: 'client/remove_dependent',
     ID: 'client/get_client_data',
     ADDRESSTEXT: 'client/change_address_type_text',
+    SETSTEP: 'client/change_step',
   },
   REFRESH_LOGIN: 'refresh_token',
   REGULARCOST: {

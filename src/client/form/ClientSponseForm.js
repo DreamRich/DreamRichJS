@@ -58,7 +58,7 @@ export default class SponseForm extends Component {
   render(){
     return (
       <SubForm
-        name="client"
+        name="sponse"
         parent_name="active_client_id"
         parent_id={this.props.id}
         action={ActionType.CLIENT.POSTFORM}

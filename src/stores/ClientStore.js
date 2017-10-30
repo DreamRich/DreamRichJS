@@ -2,7 +2,7 @@
 
 import {ReduceStore} from 'flux/utils';
 import AppDispatcher from '../AppDispatcher';
-import {postData, getData} from '../resources/Requests';
+import {postData, getData, postOrPutStrategy} from '../resources/Requests';
 //import {Auth} from '../auth/Auth';
 import ActionType from '../actions/ActionType';
 import {routeMap} from '../routes/RouteMap';
@@ -18,9 +18,6 @@ class ClientStore extends ReduceStore {
       sponse: {},
       canSubmit: false,
       stepIndex: 0,
-      countries: [],
-      states: [],
-      addressType: [],
       active_client: {},
       dependents: [],
       searchText: undefined,
@@ -50,7 +47,8 @@ class ClientStore extends ReduceStore {
       return {...state, canSubmit: true};
 
     case ActionType.CLIENT.POSTFORM:
-      postData(
+      postOrPutStrategy(
+        state[action.state],
         action.route,
         action.data,
         (data) => {
@@ -101,42 +99,6 @@ class ClientStore extends ReduceStore {
       postData(action.route, action.data, (e) => console.log(e));
       return state;
 
-    case ActionType.CLIENT.STATES:
-      getData(
-        `${routeMap.state}?country_id=${action.country}`,
-        (states) => AppDispatcher.dispatch({
-          action: ActionType.CLIENT.STATESUCCESS,
-          data: states,
-        })
-      );
-      return state;
-
-    case ActionType.CLIENT.COUNTRIES:
-      return {...state, countries: action.data};
-
-    case ActionType.CLIENT.ADDRESSTYPE:
-      return {...state, addressType: action.data};
-
-    case ActionType.CLIENT.STATESUCCESS:
-      return {...state, states: action.data};
-
-    case ActionType.CLIENT.DATAFORM:
-      getData(
-        routeMap.address_type,
-        (addressType) => AppDispatcher.dispatch({
-          action: ActionType.CLIENT.ADDRESSTYPE,
-          data: addressType,
-        })
-      );
-      getData(
-        routeMap.country,
-        (countries) => AppDispatcher.dispatch({
-          action: ActionType.CLIENT.COUNTRIES,
-          data: countries,
-        })
-      );
-      return state;
-
     case ActionType.CLIENT.ADDDEPENDENT:
       state.dependents.push(
         {index: this.getLastIndex(state) + 1}
@@ -148,9 +110,6 @@ class ClientStore extends ReduceStore {
       return {...state, dependents: dependents.filter(
         e => e.index !== action.key
       )};
-
-    case ActionType.CLIENT.ADDRESSTEXT:
-      return {...state, searchText: action.searchText};
 
     default:
       return state;
