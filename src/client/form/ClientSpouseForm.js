@@ -18,7 +18,7 @@ import {personFields} from './ClientForm';
 //   emailError,
 // } = errorMessages;
 
-export default class SponseForm extends Component {
+export default class SpouseForm extends Component {
 
   static propTypes = {
     id: PropTypes.number,
@@ -29,10 +29,10 @@ export default class SponseForm extends Component {
   }
 
   getContentCard(){
-    const sponseFields = personFields.filter( field => field.name !== 'email');
+    const spouseFields = personFields.filter( field => field.name !== 'email');
     // This form use the same field as client form
     const formsyList = makeFormysTextList(
-      sponseFields,'sponseform', this.props.data
+      spouseFields,'spouseform', this.props.data
     );
 
     return (
@@ -58,7 +58,7 @@ export default class SponseForm extends Component {
   render(){
     return (
       <SubForm
-        name="sponse"
+        name="spouse"
         parent_name="active_client_id"
         parent_id={this.props.id}
         action={ActionType.CLIENT.POSTFORM}

@@ -15,7 +15,7 @@ class ClientStore extends ReduceStore {
 
   getInitialState(){
     return {
-      sponse: {},
+      spouse: {},
       canSubmit: false,
       stepIndex: 0,
       active_client: {},
@@ -128,7 +128,7 @@ class ClientStore extends ReduceStore {
     if (data !== undefined && data !== null) {
       const address = data.addresses[data.addresses.length-1] || {state: {}};
       const bank_account = data.bank_account || {};
-      const sponse = data.spouse || {};
+      const spouse = data.spouse || {};
       const dependents = data.dependents.map(
         dependent => {
           dependent.index = dependent.id;
@@ -141,7 +141,7 @@ class ClientStore extends ReduceStore {
 
       const active_client = data;
 
-      return {active_client, dependents, bank_account, sponse, address};
+      return {active_client, dependents, bank_account, spouse, address};
     }
 
     return {};

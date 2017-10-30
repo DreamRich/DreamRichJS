@@ -1,6 +1,6 @@
 const routeMap = {
   active_client: '/api/client/active/',
-  sponse: '/api/client/',
+  spouse: '/api/client/',
   address: '/api/client/address/',
   bank_account: '/api/client/bank-account/',
   country: '/api/client/country/',

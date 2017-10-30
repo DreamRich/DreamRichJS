@@ -12,7 +12,7 @@ import ClientDependentForm from './form/ClientDependentForm';
 import ClientBankAccountForm from './form/ClientBankAccountForm';
 import ClientAddressForm from './form/ClientAddressForm';
 import ClientForm from './form/ClientForm';
-import ClientSponseForm from './form/ClientSponseForm';
+import ClientSpouseForm from './form/ClientSpouseForm';
 import SubStepperClient from '../layout/SubStepperClient';
 // import routeMap from '../routes/RouteMap';
 
@@ -85,11 +85,11 @@ class ClientRegister extends Component {
       {
         text: 'Cadastrar Cônjuge (Opcional)',
         formComponent:
-          <ClientSponseForm
+          <ClientSpouseForm
             title='Cônjuge'
             subtitleCard={'Insira as informações do cônjuge deste cliente'}
             canSubmit={this.state.canSubmit}
-            data={this.state.sponse}
+            data={this.state.spouse}
           />
       },
       {
