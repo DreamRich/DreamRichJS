@@ -78,6 +78,10 @@ export default class ClientAddressForm extends Component {
     this.state.listener.remove();
   }
 
+  componentDidMount = () => {
+    setTimeout(this.getStateList, 0);
+  }
+
   fetchStates = (e, selectedCountry) => {
     AppDispatcher.dispatch({
       action: ActionType.CLIENT.STATES,
@@ -123,8 +127,6 @@ export default class ClientAddressForm extends Component {
 
     const contriesOptions = this.convertRegionToOptions(this.state.countries);
 
-    this.getStateList();
-
     const statesOptions = this.convertRegionToOptions(this.state.states);
     let searchText = this.props.data.type_of_address;
     if (this.state.searchText !== undefined && this.state.searchText !== null) {
@@ -169,6 +171,7 @@ export default class ClientAddressForm extends Component {
             hintText="Casa, apartamento, etc."
             floatingLabelText="Tipo de Endereço"
             searchText={searchText}
+            defaultValue={searchText}
             onChange={this.updateSearch}
           />
         </Row>

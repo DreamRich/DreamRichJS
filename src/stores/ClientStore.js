@@ -68,7 +68,8 @@ class ClientStore extends ReduceStore {
       };
 
     case ActionType.CLIENT.POSTMULTIFORM:
-      postData(
+      postOrPutStrategy(
+        state.dependents.find( dependent => action.index === dependent.index),
         action.route,
         action.data,
         (data) => {

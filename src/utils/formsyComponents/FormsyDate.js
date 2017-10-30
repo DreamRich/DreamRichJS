@@ -91,7 +91,6 @@ class DefineFormsyDate extends Component {
       const newDate = new Date(newProps.value);
 
       if (!this.state.selectedDate && !datesEq(oldDate, newDate)) {
-        console.log('aloha');
         this.handleChangeDatePicker(null, newDate);
       }
     }

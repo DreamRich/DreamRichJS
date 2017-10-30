@@ -86,19 +86,15 @@ const deleteData = (url, handleOk) => {
 const postOrPutStrategy = (actualData, url, data,
   handleData=noneFunction, handleFail=noneFunction,
   handleOk=noneFunction) => {
-  console.log(actualData);
   if (actualData) {
     const id = actualData.id;
 
     if (!id){
-      console.info('post');
       postData(url, data, handleData, handleFail, handleOk);
     } else {
-      console.info('put');
       putData(`${url}${id}/`, data, handleData);
     }
   } else {
-    console.info('post');
     postData(url, data, handleData, handleFail, handleOk);
   }
 };
