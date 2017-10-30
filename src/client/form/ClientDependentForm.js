@@ -96,13 +96,13 @@ export default class ClientDependentForm extends Component {
   }
 
   render = () => {
-    let subtitleCard = 'Insira as informações correspondentes as ' +
+    const subtitleCard = 'Insira as informações correspondentes as ' +
      'informações do dependente.';
-    let labelAdd = (this.state.dependents.length === 0 ?
+    const labelAdd = (this.state.dependents.length === 0 ?
       'O cliente possui dependentes? (Marque o quadrado ao lado caso haja).' :
       'O cliente possui mais dependentes? (Marque o quadrado ao lado' +
       ' caso haja).');
-    let labelRemove='O cliente possui não dependentes? '+
+    const labelRemove='O cliente possui não dependentes? '+
       '(Desmarque o quadrado ao lado caso não haja).';
 
     return (

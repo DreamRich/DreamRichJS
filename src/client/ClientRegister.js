@@ -13,7 +13,7 @@ import ClientBankAccountForm from './form/ClientBankAccountForm';
 import ClientAddressForm from './form/ClientAddressForm';
 import ClientForm from './form/ClientForm';
 import ClientSpouseForm from './form/ClientSpouseForm';
-import SubStepperClient from '../layout/SubStepperClient';
+import SubStepperClient from '../client/SubStepperClient';
 // import routeMap from '../routes/RouteMap';
 
 class ClientRegister extends Component {
