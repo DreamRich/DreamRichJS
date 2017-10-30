@@ -77,6 +77,7 @@ export default class ClientDependentForm extends Component {
           <FormsyDate
             name="birthday"
             floatingLabelText="Data de Nascimento"
+            value={dependent.birthday}
           />
         </Col>
       </Row>

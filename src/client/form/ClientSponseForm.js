@@ -48,6 +48,7 @@ export default class SponseForm extends Component {
           <FormsyDate
             name="birthday"
             floatingLabelText="Data de Nascimento"
+            value={this.props.data.birthday}
           />
         </Col>
       </Row>

@@ -1,3 +1,4 @@
+'use strict';
 import '../stylesheet/Table.sass';
 import React, {Component} from 'react';
 import ReactDataGrid from 'react-data-grid';
@@ -30,8 +31,6 @@ export default class GridTable extends Component {
   handleGridRowsUpdated = (updates) => {
     const { fromRow, toRow, updated } = updates;
     let rows = this.state.rows.slice();
-    console.log(fromRow, toRow);
-    console.log(updated);
 
     if(fromRow == toRow){
       const row = rows[fromRow];

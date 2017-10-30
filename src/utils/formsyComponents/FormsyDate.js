@@ -64,6 +64,9 @@ class DefineFormsyDate extends Component {
       this.props.setValue(defaultDate);
     }
 
+    if (this.props.value) {
+      this.handleChangeDatePicker(null, new Date(this.props.value));
+    }
   }
 
   componentWillReceiveProps = (newProps) => {
@@ -103,10 +106,11 @@ class DefineFormsyDate extends Component {
   }
 
   handleChangeDatePicker = (event, date) => {
+    const utcDate = new Date(date.getTime()+date.getTimezoneOffset()*60000);
     this.setState({
-      selectedDate: date,
-      dateText: format(date, 'DD/MM/YYYY'),
-      dateSubmit: date.toISOString().slice(0, 10)
+      selectedDate: utcDate,
+      dateText: format(utcDate, 'DD/MM/YYYY'),
+      dateSubmit: utcDate.toISOString().slice(0, 10)
     });
   }
 
