@@ -49,6 +49,7 @@ const actionTypes = {
     TYPE: 'fixed_cost/types',
     TYPESUCCESS: 'fixed_cost/types_success',
     SUBFORM: 'fixed_cost/create_subforms',
+    SUBFORMSUCCESS: 'fixed_cost/success_subforms',
   },
   GOAL:{
     ADD: 'goal/add',

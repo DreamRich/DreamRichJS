@@ -6,6 +6,7 @@ import {postData, getData, postOrPutStrategy} from '../resources/Requests';
 //import {Auth} from '../auth/Auth';
 import ActionType from '../actions/ActionType';
 import {routeMap} from '../routes/RouteMap';
+import getLastIndex from '../utils/getLastIndex';
 // import {/*getUrl, */routeMap} from '../routes/RouteMap';
 
 class ClientStore extends ReduceStore {
@@ -102,13 +103,12 @@ class ClientStore extends ReduceStore {
 
     case ActionType.CLIENT.ADDDEPENDENT:
       state.dependents.push(
-        {index: this.getLastIndex(state) + 1}
+        {index: getLastIndex(state.dependents) + 1}
       );
       return {...state};
 
     case ActionType.CLIENT.REMOVEDEPENDENT:
-      var dependents = state.dependents.slice();
-      return {...state, dependents: dependents.filter(
+      return {...state, dependents: state.dependents.filter(
         e => e.index !== action.key
       )};
 
@@ -117,11 +117,6 @@ class ClientStore extends ReduceStore {
     }
   }
 
-  getLastIndex = (state) => {
-    const index = state.dependents.length-1;
-    const lastDependent = state.dependents[index];
-    return lastDependent === undefined ? 0 : lastDependent.index;
-  }
 
   getClientState = (data) => {
     // Get data from a action and mount a array of data for a client
