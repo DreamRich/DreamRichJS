@@ -44,36 +44,35 @@ class PasswordStore extends ReduceStore {
   }
 
   reduce = (state, action) => {
-    switch (action.actionType) {
+    switch (action.action) {
     case ActionType.PASSWORD.CHANGE:
       postData('/api/auth/password/',
         action.data,
         () => {},
         (responseStatus) => {
           state = this.buildPasswordFormMessage(responseStatus, state);
-          AppDispatcher.dispatch({actionType: ActionType.PASSWORD.FAIL,
+          AppDispatcher.dispatch({action: ActionType.PASSWORD.FAIL,
             data: state});
         },
         (responseStatus) => {
           state = this.buildPasswordFormMessage(responseStatus, state);
-          AppDispatcher.dispatch({actionType: ActionType.PASSWORD.SUCCESS,
+          AppDispatcher.dispatch({action: ActionType.PASSWORD.SUCCESS,
             data: state});
         }
       );
       return {...state, send: true};
 
     case ActionType.PASSWORD.RESET:
-      console.log(state, action);
       getData('/api/auth/password/?email='+action.data.email,
         () => {},
         (responseStatus) => {
           state = this.buildResetFormMessage(responseStatus, state);
-          AppDispatcher.dispatch({actionType: ActionType.PASSWORD.SUCCESS,
+          AppDispatcher.dispatch({action: ActionType.PASSWORD.SUCCESS,
             data: state});
         },
         (responseStatus) => {
           state = this.buildResetFormMessage(responseStatus, state);
-          AppDispatcher.dispatch({actionType: ActionType.PASSWORD.FAIL,
+          AppDispatcher.dispatch({action: ActionType.PASSWORD.FAIL,
             data: state});
         },
         false

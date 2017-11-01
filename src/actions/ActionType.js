@@ -1,10 +1,17 @@
 const actionTypes = {
+  APP: {
+    SWITCHNAVDRAWER: 'app/drawer_toggle',
+    MENUTOGGLE: 'app/menu_toggle',
+  },
+  MENU: {
+    TOGGLEMENU: 'menu/toggle_side_menu',
+    REQUESTCHANGE: 'menu/change_side_menu',
+  },
   LOGIN: {
     POST: 'login/post',
     FAIL: 'login/fail',
     SUCCESS: 'login/success',
   },
-
   LOGOUT: 'logout',
   PASSWORD: {
     CHANGE: 'password/change',
@@ -15,12 +22,26 @@ const actionTypes = {
     UNMOUNT: 'password/unmount'
   },
   CLIENT: {
-    ACTIVE: 'client/create_active',
-    ACTIVESUCCESS: 'client/create_active_success',
+    SUBMIT: 'client/can_submit_form',
+    POSTMULTIFORM: 'client/create_multiline_form',
+    POSTMULTIFORMSUCCESS: 'client/create_multiline_form_success',
+    ADDRESSTYPE: 'client/address_types',
+    DATAFORM: 'client/form_initial_data',
+    COUNTRIES: 'client/countries',
+    STATES: 'client/states',
+    STATESUCCESS: 'client/states_success',
+    POSTFORM: 'client/create_active',
+    POSTFORMSUCCESS: 'client/create_active_success',
+    GETFORMSUCCESS: 'client/get_active_success',
     SUBFORM: 'client/create_subforms',
+    ADDDEPENDENT: 'client/add_dependent',
+    REMOVEDEPENDENT: 'client/remove_dependent',
+    ID: 'client/get_client_data',
+    ADDRESSTEXT: 'client/change_address_type_text',
+    SETSTEP: 'client/change_step',
   },
   REFRESH_LOGIN: 'refresh_token',
-  FIXEDCOST: {
+  REGULARCOST: {
     ADD: 'fixed_cost/add',
     REMOVE: 'fixed_cost/remove',
     MANAGER: 'fixed_cost/submit_form',
@@ -38,6 +59,22 @@ const actionTypes = {
     TYPESUCCESS: 'goal/types_success',
     HASEND: 'goal/form_toggle',
     SUBFORM: 'goal/create_subforms',
+  },
+  PATRIMONY: {
+    FORM: 'patrimony/create_form',
+    SUBFORM: 'patrimony/create_subforms',
+    SUCCESS: 'patrimony/success',
+  },
+  ACTIVE: {
+    TYPE: 'active/types',
+    TYPESUCCESS: 'active/types_success',
+    FORM: 'active/create_form',
+    SUCCESS: 'active/manager_success_form',
+    MANAGER: 'active/create_manager',
+    GETMANAGER: 'active/obtain_manager',
+    DELETEPROFIT: 'active/remove_active',
+    ADD: 'active/add_active_list',
+    REMOVE: 'active/remove_active_list',
   },
 };
 

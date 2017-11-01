@@ -5,12 +5,14 @@ import {NotAuthorizedRoute} from './Router';
 import PropTypes from 'prop-types';
 
 export default class AuthorizedRoute extends Component{
+  static propTypes = {
+    permission: PropTypes.string,
+  }
+
   render() {
     return (
       Auth.hasPermission(this.props.permission) ? (<Route {...this.props} />) : (<NotAuthorizedRoute />)
     );
   }
 }
-AuthorizedRoute.propTypes = {
-  permission: PropTypes.string,
-};
+

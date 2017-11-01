@@ -1,15 +1,24 @@
 $gray-bg: rgb(250, 250, 250)
-$text: rgb(100, 100, 100)
+$text: rgb(140, 140, 140)
 $box-border: rgb(200, 200, 200)
+
+
+body
+  background-color: $gray-bg
+  margin: 0px
+
+a
+  text-decoration: none
 
 .App
   font-family: Roboto
   width: 100%
   height: 100%
-  margin: 0px
+  margin: 0 auto;
   padding: 0px
-  background-color: $gray-bg
-  text-align: center
+
+.col-xs
+  flex-basis: 50%
 
 .main-title
   font-family: Roboto
@@ -17,7 +26,7 @@ $box-border: rgb(200, 200, 200)
   font-weight: 900
   line-height: 1.5
   color: $box-border
-  margin-botton: 48px
+  margin-bottom: 48px
   margin-top: 48px
 
 .subtitle
@@ -26,12 +35,16 @@ $box-border: rgb(200, 200, 200)
   font-size: 36px
   font-weight: 300
   line-height: 1.33
-  text-align: center
   color: $text
 
-.container
-  width: 90%
-  margin: auto
+.steps-title
+  font-family: Roboto
+  font-size: 48px
+  font-weight: 300
+  line-height: 1.0
+  color: $box-border
+  margin-bottom: 48px
+  margin-top: 18px
 
 .button-left
   width: 100%
@@ -44,6 +57,23 @@ $box-border: rgb(200, 200, 200)
 .button-cont
   width: 100%
 
+.AppBar
+  position: fixed !important
+  top: 0px !important
+  overflow: hidden !important
+  max-height: 57px !important
+
+.MenuItem
+  color: white !important
+  text-align: left !important
+  font-size: 14px !important
+
+.Divider
+  margin-top: 25px !important
+  margin-bottom: 30px !important
+
 section
   width: 50%
   margin: auto
+
+

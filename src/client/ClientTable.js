@@ -1,7 +1,7 @@
-/** This file implements a Grid table defined in src/layout
+/** This file implements a Grid table defined in src/component
  * Only override the necessary methods to it work.
  */
-import GridTable from '../layout/GridTable';
+import GridTable from '../components/GridTable';
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {Toolbar} from 'react-data-grid-addons';
@@ -12,32 +12,37 @@ export default class ClientTable extends GridTable {
     super(props);
   }
 
-  getColumns(){
+  getRoute = () => '/api/client/active/'
+
+  // Using arrow function the table doens't work
+  getColumns() {
     return [
       { key: 'name', name: 'Name', sortable: true, filterable: true, resizable: true },
       { key: 'telephone', name: 'Telefone', sortable: true, filterable: true, resizable: true },
       { key: 'email', name: 'Email', sortable: true, filterable: true, resizable: true },
-      { key: 'cpf', name: 'cpf', sortable: true, filterable: true, resizable: true },
+      { key: 'cpf', name: 'CPF', sortable: true, filterable: true, resizable: true },
       { key: 'actions', name: 'Actions', locked: true, filterable: false, resizable: false }
     ];
   }
 
-  getRoute(){ return '/api/client/active/'; }
-
+  // This form is necessary to avoid react/missing-displayName warning
   getActions(register) {
     if(register !== undefined && register !== null){
       return (
-        <FlatButton 
+        <FlatButton
           primary
-          label=">" 
+          label=">"
           containerElement={ <Link to={`/client/${register.id}`} /> }
-        />);
+        />
+      );
     }
     return null;
   }
 
+  // This form is necessary to avoid react/missing-displayName warning
   getToolbar(){
-    return (<Toolbar enableFilter={true} />);
+    return (
+      <Toolbar enableFilter={true} />
+    );
   }
-
 }

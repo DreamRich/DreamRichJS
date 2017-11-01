@@ -5,7 +5,7 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import GoalStore from '../stores/GoalStore';
 import '../stylesheet/RegisterForms.sass';
-import GoalForm from './GoalForm';
+import GoalForm from './form/GoalForm';
 
 class GoalRegister extends Component {
 
@@ -16,24 +16,24 @@ class GoalRegister extends Component {
 
   addGoal = () => {
     AppDispatcher.dispatch({
-      actionType: ActionType.GOAL.ADD
+      action: ActionType.GOAL.ADD
     });
   }
 
   removeGoal = (key) => {
     AppDispatcher.dispatch({
-      actionType: ActionType.GOAL.REMOVE,
+      action: ActionType.GOAL.REMOVE,
       key: key
     });
   }
 
   componentWillMount = () => {
-    this.setState({...this.state,
+    this.setState({
       listener: GoalStore.addListener(this.handleChange)
     });
 
     AppDispatcher.dispatch({
-      actionType: ActionType.GOAL.TYPE
+      action: ActionType.GOAL.TYPE
     });
   }
 
@@ -48,7 +48,7 @@ class GoalRegister extends Component {
   submitBase = (event) => {
     event.preventDefault();
     AppDispatcher.dispatch({
-      actionType: ActionType.GOAL.MANAGER
+      action: ActionType.GOAL.MANAGER
     });
   }
 

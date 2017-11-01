@@ -1,57 +1,42 @@
 import React, {Component} from 'react';
-import {getUrl} from '../routes/RouteMap.js';
-import {getHeader} from '../resources/Headers.js';
+import Divider from 'material-ui/Divider';
+// import RaisedButton from 'material-ui/RaisedButton';
+//import {getData} from '../resources/Headers.js';
 import '../stylesheet/RegisterForms.sass';
-
 import MenuItem from 'material-ui/MenuItem';
-import Paper from 'material-ui/Paper';
-import RaisedButton from 'material-ui/RaisedButton';
-import {FormsyText, FormsySelect, FormsyAutoComplete} from 'formsy-material-ui/lib';
-import {FormsyDate} from '../utils/formsyComponents/FormsyComponents';
-import errorMessages from '../utils/FormsErrorMessages';
+import ActionType from '../actions/ActionType';
+import AppDispatcher from '../AppDispatcher';
 import ClientStore from '../stores/ClientStore';
 import '../stylesheet/RegisterForms.sass';
-import ClientSubForm from './ClientSubForm';
-import ClientForm from './ClientForm';
-import ClientDependentForm from './ClientDependentForm';
-import ActionType from '../actions/ActionType';
-
-var {
-  wordsError,
-  numericError,
-  emailError
-} = errorMessages;
+import ClientDependentForm from './form/ClientDependentForm';
+import ClientBankAccountForm from './form/ClientBankAccountForm';
+import ClientAddressForm from './form/ClientAddressForm';
+import ClientForm from './form/ClientForm';
+import ClientSpouseForm from './form/ClientSpouseForm';
+import SubStepperClient from '../client/SubStepperClient';
+// import routeMap from '../routes/RouteMap';
 
 class ClientRegister extends Component {
 
   constructor(props){
     super(props);
+
+    this.state = ClientStore.getState();
   }
 
-  state = {
-    canSubmit: true,
-    sponse: false,
-
-    countryListMenuItems: [],
-    stateListMenuItems: [],
-    type_of_address: [''],
-    selectedCountry: null,
-    selectedState: null,  // State region
-  }
-
-  enableButton = () => {
-    this.setState({
-      canSubmit: true,
-    });
-  }
+  //state = {
+  //  selectedCountry: null,
+  //  selectedState: null,  // State region
+  //}
 
   componentWillMount = () => {
     this.setState({listener: ClientStore.addListener(this.handleChange)});
-    this.fetchCountrys();
-    fetch('/api/client/address/type_of_address/', {
-      headers: getHeader()
-    }).then((response) => response.json()).then( (type_of_address) =>
-      this.setState({type_of_address}));
+  }
+
+  componentDidMount = () => {
+    AppDispatcher.dispatch({
+      action: ActionType.CLIENT.DATAFORM
+    });
   }
 
   componentWillUnmount = () => {
@@ -59,11 +44,7 @@ class ClientRegister extends Component {
   }
 
   handleChange = () => {
-    /* This timeout is to prevent the update action launch together with
-     * react dipatcher and throw error of Invariant Violation Dispatch.dispatch
-     */
-    setTimeout(() =>
-      this.setState(ClientStore.getState()), 500);
+    this.setState(ClientStore.getState());
   }
 
   // Convert ordinary Array to MenuItem Array to use in drop down list
@@ -79,300 +60,76 @@ class ClientRegister extends Component {
     return listMenuItems;
   }
 
-  fetchStates = (selectedCountry) => {
-    var stateListArray = {};
-    var url = `${getUrl('state')}${'?country_id'}=${selectedCountry}`;
 
-    fetch(url, {
-      method: 'get',
-      headers: getHeader(),
-      mode: 'cors',
-      cache: 'default'
-    })
-      .then((response) => {
-        if(response.ok) {
-          console.log('State list was gotten from API');
-          stateListArray = response.json();
-        } else {
-          throw new Error ('Couldn\'t get state list from API');
-        }
-
-        return stateListArray;
-      })
-      .then((stateListArray) => {
-        let stateListMenuItems = this.convertRegionToMenuItens(stateListArray);
-        this.setState({stateListMenuItems});
-      })
-      .catch((error) => {
-        console.error(error.message);
-      });
+  getDivider = () => {
+    return (<Divider className='Divider' />);
   }
 
-  fetchCountrys = () => {
-    var countryListArray = {};
-
-    fetch(getUrl('country'), {
-      method: 'get',
-      headers: getHeader(),
-      mode: 'cors',
-      cache: 'default'
-    })
-      .then((response) => {
-        if(response.ok) {
-          console.log('Country list was gotten from API');
-          countryListArray = response.json();
-        } else {
-          throw new Error ('Couldn\'t get country list from API');
-        }
-
-        return countryListArray;
-      })
-      .then((countryListArray) => {
-        let countryListMenuItems = this.convertRegionToMenuItens(countryListArray);
-        this.setState({countryListMenuItems});
-      })
-      .catch((error) => {
-        console.error(error.message);
-      });
-  }
-
-  getClientsFields = () => {
-    return (
-      <div>
-        <FormsyText
-          name="name"
-          validations="isWords"
-          validationError={wordsError}
-          hintText="Nome do cliente"
-          floatingLabelText="Nome"
-          value="asd"
-        />
-        <FormsyText
-          name="surname"
-          validations="isWords"
-          validationError={wordsError}
-          hintText="Sobrenome do cliente"
-          floatingLabelText="Sobrenome"
-          value="asd"
-        />
-        <FormsyDate
-          name="birthday"
-          floatingLabelText="Data de Nascimento"
-        />
-        <FormsyText
-          name="profession"
-          validations="isWords"
-          validationError={wordsError}
-          hintText="Profissão do cliente"
-          floatingLabelText="Profissão"
-          value="asd"
-        />
-        <FormsyText
-          name="cpf"
-          validations="isNumeric"
-          validationError={numericError}
-          hintText="Apenas números"
-          floatingLabelText="CPF"
-          value="33044946425"
-          updateImmediately
-        />
-        <FormsyText
-          name="telephone"
-          hintText="Telefone do cliente"
-          floatingLabelText="Telefone"
-          value="(61) 98131-4508"
-          updateImmediately
-        />
-        <FormsyText
-          name="email"
-          validations="isEmail"
-          validationError={emailError}
-          hintText="E-mail do cliente"
-          floatingLabelText="E-mail"
-          value="asd@gmail.com"
-        />
-        <FormsyText
-          name="hometown"
-          validations="isWords"
-          validationError={wordsError}
-          hintText="Onde o cliente nasceu?"
-          floatingLabelText="Cidade natal"
-          value="asdac"
-        />
-      </div>
-    );
-  }
-
-  switchSponse = () => {
-    const sponse = !this.state.sponse;
-    this.setState({sponse});
+  submit = () => {
+    this.form.submit();
   }
 
   render() {
-    const sponseForm = (
-      this.state.sponse ? (
-        <ClientSubForm
-          name="client"
-          action={ActionType.CLIENT.SUBFORM}
-          title="Cônjuge"
-          parent_name="active_client_id"
-          parent_id={this.state.id}
-        >
-          <div>
-            {this.getClientsFields()}
-            <RaisedButton onClick={this.switchSponse} > 
-              Remove Sponse 
-            </RaisedButton>
-          </div>
-        </ClientSubForm>) : (<div>
-        <h2> Cônjuge </h2> 
-        <RaisedButton onClick={this.switchSponse}>
-          Add 
-        </RaisedButton>
-      </div>)
-    );
+    let subtitleCard = 'Insira as informações básicas do cliente.';
+    let listInformationSteps = [
+      {
+        text: 'Cadastrar Cliente',
+        formComponent:
+          <ClientForm
+            title='Cliente'
+            subtitleCard={subtitleCard}
+            canSubmit={this.state.canSubmit}
+            data={this.state.active_client}
+          />
+      },
+      {
+        text: 'Cadastrar Cônjuge (Opcional)',
+        formComponent:
+          <ClientSpouseForm
+            title='Cônjuge'
+            subtitleCard={'Insira as informações do cônjuge deste cliente'}
+            canSubmit={this.state.canSubmit}
+            data={this.state.spouse}
+          />
+      },
+      {
+        text: 'Cadastrar Endereço',
+        formComponent: <ClientAddressForm 
+          id={this.state.active_client.id}
+          canSubmit={this.state.canSubmit}
+          data={this.state.address}
+        />
+      },
+      {
+        text: 'Cadastrar Conta bancária',
+        formComponent: <ClientBankAccountForm 
+          id={this.state.active_client.id}
+          canSubmit={this.state.canSubmit}
+          data={this.state.bank_account}
+        />
+      },
+      {
+        text: 'Dependentes (Opcional)',
+        formComponent:
+          <ClientDependentForm
+            id={this.state.active_client.id}
+            canSubmit={this.state.canSubmit}
+          />
+      }
+    ];
 
     return (
-      <div>
-        <h1> Cadastro de Cliente </h1>
+      <div style={{width:'auto'}}>
+        {this.getDivider()}
 
-        <Paper className="Paper">
+        <SubStepperClient 
+          stepsNumber={listInformationSteps.length}
+          listInformationSteps={listInformationSteps}
+        />
 
-          <div>
-            <ClientForm
-              title="Cliente"
-              ref={(ref) => {this.baseForm = ref;}}
-            >
-              {this.getClientsFields()}
-            </ClientForm>
-          </div>
-          {sponseForm}
-
-          <ClientSubForm
-            name='address'
-            action={ActionType.CLIENT.SUBFORM}
-            title='Endereço'
-            parent_name='active_client_id'
-            parent_id={this.state.id}
-          >
-            <div>
-              <FormsySelect
-                name="country"
-                floatingLabelText="País"
-                maxHeight={300}
-                onChange={(event, selectedCountry) => this.fetchStates(selectedCountry)}
-              >
-                {this.state.countryListMenuItems}
-              </FormsySelect>
-              <FormsySelect
-                name="state"
-                floatingLabelText="Estado"
-                maxHeight={300}
-                onChange={(event, selectedState) => this.setState({selectedState})}
-              >
-                {this.state.stateListMenuItems}
-              </FormsySelect>
-              <FormsyText
-                name="state_id"
-                className="Hidden"
-                value={this.state.selectedState}
-              />
-
-              <FormsyText
-                name="cep"
-                //validations="isNumeric"
-                //validationError={numericError}
-                hintText="Apenas números"
-                floatingLabelText="CEP"
-                updateImmediately
-              />
-              <FormsyText
-                name="city"
-                validations="isWords"
-                validationError={wordsError}
-                hintText="Cidade do endereço"
-                floatingLabelText="Cidade"
-                updateImmediately
-              />
-              <FormsyText
-                name="detail"
-                validations="isWords" 
-                validationError={wordsError}
-                hintText="Detalhes do endereço"
-                floatingLabelText="Detalhes"
-              />
-              <FormsyText
-                name="number"
-                validations="isNumeric"
-                validationError={numericError}
-                hintText="Número do lote"
-                floatingLabelText="Número"
-                updateImmediately
-              />
-              <FormsyText
-                name="complement"
-                validations="isWords" 
-                validationError={wordsError}
-                hintText="Complemento do endereço"
-                floatingLabelText="Complemento"
-              />
-              <FormsyText
-                name="neighborhood"
-                validations="isWords" 
-                validationError={wordsError}
-                hintText="Bairro do endereço"
-                floatingLabelText="Bairro"
-              />
-              <FormsyAutoComplete
-                dataSource={this.state.type_of_address}
-                name="type_of_address"
-                validations="isWords" 
-                validationError={wordsError}
-                hintText="Casa, apartamento, etc."
-                floatingLabelText="Tipo de Endereço"
-              />
-            </div>
-          </ClientSubForm>
-
-          <ClientSubForm
-            name="bank_account"
-            title="Conta Bancária"
-            action={ActionType.CLIENT.SUBFORM}
-            parent_name='active_client_id'
-            parent_id={this.state.id}
-          >
-            <div>
-              <FormsyText
-                name="agency"
-                validations="isNumeric"
-                validationError={numericError}
-                hintText="Agência da conta bancária"
-                floatingLabelText="Agência"
-              />
-              <FormsyText
-                name="account"
-                hintText="Número da conta bancária"
-                floatingLabelText="Conta"
-              />
-            </div>
-          </ClientSubForm>
-
-          <ClientDependentForm
-            parent_id={this.state.id}
-          />
-
-          <RaisedButton
-            primary
-            type="submit"
-            label="Enviar"
-            onClick={() => this.baseForm.submit()}
-            disabled={!this.state.canSubmit}
-          />
-
-        </Paper>
-
+        {this.getDivider()}
       </div>
-    ); 
+    );
   }
 }
 

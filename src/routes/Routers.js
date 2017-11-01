@@ -7,12 +7,15 @@ import ResetForm from '../auth/ResetForm';
 import {AuthorizedRoute, NotFoundRoute} from './Router';
 import ClientTable from '../client/ClientTable';
 import Employeer from '../employee/Employeer';
-import PatrimonyForm from '../patrimony/PatrimonyForm';
+import PatrimonyRegister from '../patrimony/PatrimonyRegister';
 import ClientRegister from '../client/ClientRegister';
-import FixedCostRegister from '../client/FixedCostRegister';
+import StepperClient from '../client/StepperClient';
+import RegularCostRegister from '../client/RegularCostRegister';
 import {Auth} from '../auth/Auth';
 import GoalChart from '../goal/GoalChart';
 import GoalRegister from '../client/GoalRegister';
+import ActiveRegister from '../patrimony/ActiveRegister';
+import ActiveProfit from '../patrimony/ActiveProfit';
 
 export default class Routers extends Component{
 
@@ -20,19 +23,21 @@ export default class Routers extends Component{
     return (
       <Switch>
         <Route exact path="/" render={ () => <h1>Home</h1> } />
-        <AuthorizedRoute permission="change_own_client_data" path="/register/fixed_cost" exact component={ FixedCostRegister } />
-        <AuthorizedRoute permission="change_own_client_data" path="/register/goal" exact component={ GoalRegister } />
-        <AuthorizedRoute permission="see_all_basic_client_data" exact path="/client" component={ ClientTable } />
+        <AuthorizedRoute exact permission="change_own_client_data" path="/register/fixed_cost" component={ RegularCostRegister } />
+        <AuthorizedRoute exact permission="change_own_client_data" path="/register/goal" component={ GoalRegister } />
+        <AuthorizedRoute exact permission="change_own_client_data" path="/register/active" component={ ActiveRegister } />
+        <AuthorizedRoute exact permission="change_own_client_data" path="/register/patrimony" component={ PatrimonyRegister } />
+        <AuthorizedRoute exact permission="change_own_client_data" path="/patrimony/active/:id" component={ ActiveProfit } />
+        <AuthorizedRoute exact permission="see_all_basic_client_data" path="/client" component={ ClientTable } />
         <AuthorizedRoute permission="see_employee_data" path="/employee" component={ Employeer } />
         <Route exact path="/login" component={ LoginPage } />
         <AuthorizedRoute permission="change_own_client_data" exact path="/register/client" component={ ClientRegister } />
+        <AuthorizedRoute permission="change_own_client_data" exact path="/register/steps/:id?" component={ StepperClient } />
         <Route path="/logout" component={ LogoutButton } />
         <AuthorizedRoute permission="allow_any" path="/login/changepassword" render={ () => <PasswordForm userid={Auth.getUserId()} username={Auth.getUserName()} /> } />
         <AuthorizedRoute permission="allow_any" path="/goals" component={ GoalChart } />
 
         <Route path="/login/resetpassword" render={ () => <ResetForm email="marcelohpf@hotmail.com" /> } />
-        <Route path="/logout" component={ LogoutButton } />
-        <Route path="/patrimony" component={ PatrimonyForm } />
         <Route component={ NotFoundRoute } />
       </Switch>
     );

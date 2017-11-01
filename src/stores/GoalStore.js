@@ -21,7 +21,7 @@ class GoalStore extends ReduceStore {
 
   reduce = (state, action) => {
     let new_array;
-    switch (action.actionType) {
+    switch (action.action) {
     case ActionType.GOAL.ADD:
       new_array = state.goals.slice();
       new_array.push(state.idx);
@@ -38,7 +38,7 @@ class GoalStore extends ReduceStore {
         routeMap.goal_manager,
         {},
         (data) => AppDispatcher.dispatch({
-          actionType: ActionType.GOAL.SUCCESS,
+          action: ActionType.GOAL.SUCCESS,
           id: data.id
         })
       );
@@ -51,7 +51,7 @@ class GoalStore extends ReduceStore {
       getData(
         routeMap.goal_type,
         (data) => AppDispatcher.dispatch({
-          actionType: ActionType.GOAL.TYPESUCCESS,
+          action: ActionType.GOAL.TYPESUCCESS,
           types: data
         })
       );

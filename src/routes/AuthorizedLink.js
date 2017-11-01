@@ -4,6 +4,10 @@ import {Link} from 'react-router-dom';
 import {Auth} from '../auth/Auth';
 
 export default class AuthorizedLink extends Component{
+  static propTypes = {
+    permission: PropTypes.string,
+  }
+
   render() {
     const {permission, ...props} = this.props;
     return (
@@ -11,6 +15,4 @@ export default class AuthorizedLink extends Component{
     );
   }
 }
-AuthorizedLink.propTypes = {
-  permission: PropTypes.string,
-};
+

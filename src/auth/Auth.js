@@ -8,7 +8,7 @@ export class Auth{
     const quarterHour = minute*15;
     const now = Date.now();
     if (now > Auth.lastVerify+quarterHour){
-      AppDispatcher.dispatch({actionType: ActionType.LOGOUT });
+      AppDispatcher.dispatch({action: ActionType.LOGOUT });
     } else {
       console.info('Time to logout (minute): '
         + (Auth.lastVerify + quarterHour - Date.now())/minute
@@ -21,8 +21,8 @@ export class Auth{
   }
 
   static refreshToken(){
-    alert('Refresh login token');
-    AppDispatcher.dispatch({actionType: ActionType.REFRESH_LOGIN,
+    AppDispatcher.dispatch({
+      action: ActionType.REFRESH_LOGIN,
       data: {token: Auth.getAuth()}
     });
   }
@@ -36,7 +36,7 @@ export class Auth{
       clearInterval(Auth.loginCheck);
       clearTimeout(Auth.loginTimeout);
       Auth.loginTimeout = setTimeout(Auth.refreshToken, 1000*60*4);
-      Auth.loginCheck = setInterval(Auth.checkAuth, 1000);
+      Auth.loginCheck = setInterval(Auth.checkAuth, 10000);
       localStorage.setItem('token', token.token);
       localStorage.setItem('username', token.username);
       localStorage.setItem('userid', token.id);
@@ -45,12 +45,25 @@ export class Auth{
   }
 
   static isAuthenticated(){
-    return localStorage.getItem('token') !== undefined && localStorage.getItem('token') !== null;
+    return (localStorage.getItem('token') != 'undefined'
+      && localStorage.getItem('token') != 'null'
+      && localStorage.getItem('token') != undefined
+      && localStorage.getItem('token') != null);
   }
   static hasPermission(permission){
     return Auth.isAuthenticated() && (
       localStorage.getItem('permissions').split(',').map(e=> e.trim()).find(e=> e===permission)
     );
+  }
+
+  static autoLogin() {
+    if(Auth.isAuthenticated()){
+      Auth.updateDate();
+      AppDispatcher.dispatch({
+        action: ActionType.REFRESH_LOGIN,
+        data: {token: Auth.getAuth()}
+      });
+    }
   }
 
   static getAuth(){
@@ -68,7 +81,7 @@ export class Auth{
   static deauthenticate(){
     console.log('Deauthenticate');
     clearInterval(Auth.loginCheck);
-    clearTimeout(Auth.login_timeout);
+    clearTimeout(Auth.loginTimeout);
     return localStorage.removeItem('token');
   }
 

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Title from '../layout/Title';
-import Subtitle from '../layout/Subtitle';
+import Title from '../components/Title';
+import Subtitle from '../components/Subtitle';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import {Link} from 'react-router-dom';
@@ -22,10 +22,14 @@ export default class ResetForm extends Component{
       return this.state.emailExist;
     });
 
-    this.invalidMessage = {isEmail: 'E-mail inválido', 
+    this.invalidMessage = {isEmail: 'E-mail inválido',
       emailExist: 'E-mail não cadastrado'};
     this.sendedMessage = 'Informe o endereço de e-mail associado à sua conta e enviaremos instruções para a recuperação de sua senha.';
     this.unsendedMessage = 'Confira sua caixa de entrada. As instruções para a recuperação de sua senha foram enviadas para: ';
+  }
+
+  static propTypes = {
+    email: PropTypes.string,
   }
 
   componentWillMount = () => {
@@ -34,7 +38,7 @@ export default class ResetForm extends Component{
 
   componentWillUnmount = () => {
     AppDispatcher.dispatch({
-      actionType: ActionType.PASSWORD.UNMOUNT
+      action: ActionType.PASSWORD.UNMOUNT
     });
     this.state.listener.remove();
   }
@@ -46,7 +50,7 @@ export default class ResetForm extends Component{
 
   handleSubmit = (data) => {
     AppDispatcher.dispatch({
-      actionType: ActionType.PASSWORD.RESET,
+      action: ActionType.PASSWORD.RESET,
       data: data,
     });
   }
@@ -101,11 +105,9 @@ export default class ResetForm extends Component{
           open={this.state.snack}
           message={this.state.message}
           autoHideDuration={9000}
-          onRequestClose={() => AppDispatcher.dispatch({actionType: ActionType.PASSWORD.SNACKCLOSE})}/>
+          onRequestClose={() => AppDispatcher.dispatch({action: ActionType.PASSWORD.SNACKCLOSE})}
+        />
       </section>
     );
   }
 }
-ResetForm.propTypes = {
-  email: PropTypes.string,
-};

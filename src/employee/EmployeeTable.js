@@ -1,14 +1,13 @@
 // import {Link} from 'react-router-dom';
 import React from 'react';
 import {Toolbar} from 'react-data-grid-addons';
-import GridTable from '../layout/GridTable';
+import GridTable from '../components/GridTable';
 import FlatButton from 'material-ui/FlatButton';
 import {putData, postData, deleteData} from '../resources/Requests';
 
 export default class EmployeeTable extends GridTable {
   constructor(props) {
     super(props);
-    this.handleAddRow = this.handleAddRow.bind(this);
   }
 
   getColumns() {
@@ -22,9 +21,9 @@ export default class EmployeeTable extends GridTable {
     ];
   }
 
-  getRoute(){ return '/api/employee/employee/'; }
+  getRoute = () => '/api/employee/employee/'
 
-  handleDeletion(id, idx){
+  handleDeletion = (id, idx) => {
     const confirmation = confirm('A deleção não poderá ser desfeita\n'+
       'Você confirma a deleção?');
     if(confirmation){
@@ -43,10 +42,10 @@ export default class EmployeeTable extends GridTable {
     }
   }
 
-  getActions(register, idx) {
+  getActions(register, idx){
     if(register !== undefined && register !== null){
       return (
-        <FlatButton 
+        <FlatButton
           secondary
           onClick={this.handleDeletion.bind(this, register.id, idx)}
           label="X"
@@ -57,7 +56,7 @@ export default class EmployeeTable extends GridTable {
   }
 
 
-  handleAddRow() {
+  handleAddRow = () => {
     const newRow = {
       first_name: '', last_name: ''/*, telephone: ''*/, email: '',
       cpf: '', actions: ''
@@ -68,7 +67,7 @@ export default class EmployeeTable extends GridTable {
   }
 
 
-  createOrUpdate(data, newField){
+  createOrUpdate = (data, newField) => {
     const changedData = Object.assign(data, newField);
     if( changedData['email'] !== ''
       && changedData['first_name'] !== ''
@@ -107,10 +106,10 @@ export default class EmployeeTable extends GridTable {
     return changedData;
   }
 
-  getToolbar() {
-    return (<Toolbar
-      enableFilter={true}
-      onAddRow={this.handleAddRow} />);
+  getToolbar(){
+    return (
+      <Toolbar enableFilter={true} onAddRow={this.handleAddRow} />
+    );
   }
 
 }

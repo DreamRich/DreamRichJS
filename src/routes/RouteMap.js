@@ -1,6 +1,6 @@
 const routeMap = {
   active_client: '/api/client/active/',
-  client: '/api/client/',
+  spouse: '/api/client/',
   address: '/api/client/address/',
   bank_account: '/api/client/bank-account/',
   country: '/api/client/country/',
@@ -12,7 +12,16 @@ const routeMap = {
   regular_cost: '/api/financial_planning/regular_cost/',
   cost_manager: '/api/financial_planning/cost_manager/',
   state: '/api/client/state/',
-  goals_flow_dic:  '/api/goal/dic/1/',
+  goals_flow_dic:  '/api/goal/goal_manager/1/',
+  patrimony: '/api/patrimony/',
+  active: '/api/patrimony/active/',
+  active_manager: '/api/patrimony/active_manager/',
+  active_type: '/api/patrimony/active_type/',
+  realestate: '/api/patrimony/realestate/',
+  income: '/api/patrimony/income/',
+  company: '/api/patrimony/companyparticipation/',
+  equipament: '/api/patrimony/equipment/',
+  address_type: '/api/client/address/type_of_address/',
 };
 
 const valid_formats = ['json', 'html', 'xml'];

@@ -1,27 +1,25 @@
 import React, {Component} from 'react';
 import {Form} from 'formsy-react';
 import {FormsyText} from 'formsy-material-ui/lib';
-import {Auth} from '../auth/Auth';
+import ActionType from '../actions/ActionType';
+import AppDispatcher from '../AppDispatcher';
 
-export default class Employeer extends Component {
+export default class PatrimonyForm extends Component {
 
-  submit(data){
-    fetch('/api/patrimony/',
-      {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: Auth.getHeader(),
-      }
-    ).then((e) => e.json()) 
-      .then((e) => console.log(e));
+  submitForm = (data) => AppDispatcher.dispatch({
+    action: ActionType.PATRIMONY.FORM,
+    data: data,
+  })
+
+  submit = () => {
+    this.form.submit();
   }
 
-  render() {
+  render = () => {
     return (
-      <Form onValidSubmit={this.submit}
-        onValid={() => true}
-        onInvalid={() => true}
-        onInvalidSubmit={() => console.log('problem')}
+      <Form
+        ref={ref => this.form = ref}
+        onValidSubmit={this.submitForm}
       >
         <FormsyText
           name='fgts'
@@ -30,7 +28,6 @@ export default class Employeer extends Component {
           hintText='O quanto você recebe de fgts?'
           floatingLabelText='FGTS'
         />
-        <button type='submit'>x</button>
       </Form>
     );
   }

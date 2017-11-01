@@ -3,37 +3,37 @@ import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
-import FixedCostStore from '../stores/FixedCostStore';
+import RegularCostStore from '../stores/RegularCostStore';
 import '../stylesheet/RegisterForms.sass';
-import FixedCostForm from './FixedCostForm';
+import RegularCostForm from './form/RegularCostForm';
 
-class FixedCostRegister extends Component {
+export default class RegularCostRegister extends Component {
 
   constructor(props){
     super(props);
-    this.state = FixedCostStore.getState();
+    this.state = RegularCostStore.getState();
   }
 
   addCost = () => {
     AppDispatcher.dispatch({
-      actionType: ActionType.FIXEDCOST.ADD
+      action: ActionType.REGULARCOST.ADD
     });
   }
 
   removeCost = (key) => {
     AppDispatcher.dispatch({
-      actionType: ActionType.FIXEDCOST.REMOVE,
+      action: ActionType.REGULARCOST.REMOVE,
       key: key
     });
   }
 
   componentWillMount = () => {
     this.setState({...this.state,
-      listener: FixedCostStore.addListener(this.handleChange)
+      listener: RegularCostStore.addListener(this.handleChange)
     });
 
     AppDispatcher.dispatch({
-      actionType: ActionType.FIXEDCOST.TYPE
+      action: ActionType.REGULARCOST.TYPE
     });
   }
 
@@ -42,13 +42,13 @@ class FixedCostRegister extends Component {
   }
 
   handleChange = () => {
-    this.setState(FixedCostStore.getState());
+    this.setState(RegularCostStore.getState());
   }
 
   submitBase = (event) => {
     event.preventDefault();
     AppDispatcher.dispatch({
-      actionType: ActionType.FIXEDCOST.MANAGER
+      action: ActionType.REGULARCOST.MANAGER
     });
   }
 
@@ -62,7 +62,7 @@ class FixedCostRegister extends Component {
 
           {this.state.costs.map( key => 
             <div key={key}>
-              <FixedCostForm
+              <RegularCostForm
                 id={this.state.id}
                 types={this.state.types}
               />
@@ -95,5 +95,3 @@ class FixedCostRegister extends Component {
     );
   }
 }
-
-export default FixedCostRegister;

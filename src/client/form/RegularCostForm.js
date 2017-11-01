@@ -1,22 +1,27 @@
 import React, {Component} from 'react';
 //import AppDispatcher from '../AppDispatcher';
-import ActionType from '../actions/ActionType';
+import ActionType from '../../actions/ActionType';
 import PropTypes from 'prop-types';
 //import routeMap from '../routes/RouteMap';
 //import Formsy from 'formsy-react';
 import {FormsyText} from 'formsy-material-ui/lib';
-import errorMessages from '../utils/FormsErrorMessages';
-import ClientSubForm from './ClientSubForm';
+import errorMessages from '../../utils/FormsErrorMessages';
+import SubForm from '../../components/SubForm';
 import MenuItem from 'material-ui/MenuItem';
 import {FormsySelect} from 'formsy-material-ui/lib';
 
 var {
   numericError,
 } = errorMessages;
-export default class FixedCostForm extends Component {
+export default class RegularCostForm extends Component {
 
   constructor(props){
     super(props);
+  }
+
+  static propTypes = {
+    id: PropTypes.number,
+    types: PropTypes.array,
   }
 
   getOptions = () => {
@@ -28,9 +33,9 @@ export default class FixedCostForm extends Component {
   render = () => {
     return (
       <div>
-        <ClientSubForm
+        <SubForm
           name="regular_cost"
-          action={ActionType.FIXEDCOST.SUBFORM}
+          action={ActionType.REGULARCOST.SUBFORM}
           parent_id={this.props.id}
           parent_name='cost_manager_id'
           title="cost"
@@ -51,13 +56,10 @@ export default class FixedCostForm extends Component {
               floatingLabelText="Valor"
             />
           </div>
-        </ClientSubForm>
+        </SubForm>
       </div>
     );
   }
 }
 
-FixedCostForm.propTypes = {
-  id: PropTypes.number,
-  types: PropTypes.array,
-};
+

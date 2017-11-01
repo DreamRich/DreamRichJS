@@ -18,7 +18,7 @@ const request = (url, meta, handleData=noneFunction, handleOk=noneFunction, hand
       }
     })
     .then((data) => {
-      if (data.detail === 'Signature has expired.' 
+      if (data.detail === 'Signature has expired.'
       || data.detail === 'Invalid signature.'){
         alert('Sua sessão expirou!');
         Auth.deauthenticate();
@@ -83,4 +83,20 @@ const deleteData = (url, handleOk) => {
   );
 };
 
-export {getData, postData, putData, deleteData};
+const postOrPutStrategy = (actualData, url, data,
+  handleData=noneFunction, handleFail=noneFunction,
+  handleOk=noneFunction) => {
+  if (actualData) {
+    const id = actualData.id;
+
+    if (!id){
+      postData(url, data, handleData, handleFail, handleOk);
+    } else {
+      putData(`${url}${id}/`, data, handleData);
+    }
+  } else {
+    postData(url, data, handleData, handleFail, handleOk);
+  }
+};
+
+export {postOrPutStrategy, getData, postData, putData, deleteData};
