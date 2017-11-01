@@ -20,10 +20,10 @@ export default class RegularCostRegister extends Component {
     });
   }
 
-  removeCost = (key) => {
+  removeCost = (index) => {
     AppDispatcher.dispatch({
       action: ActionType.REGULARCOST.REMOVE,
-      key: key
+      index: index
     });
   }
 
@@ -45,8 +45,15 @@ export default class RegularCostRegister extends Component {
     this.setState(RegularCostStore.getState());
   }
 
-  submitBase = (event) => {
-    event.preventDefault();
+  submit = () => {
+    AppDispatcher.dispatch({
+      action: ActionType.REGULARCOST.SUBMIT
+    });
+  }
+
+  componentDidMount = () => {
+    // Create a regular cost when mount component because
+    // create it when create regular costs cause Invariant Violation
     AppDispatcher.dispatch({
       action: ActionType.REGULARCOST.MANAGER
     });
@@ -60,16 +67,19 @@ export default class RegularCostRegister extends Component {
         <Paper className="Paper">
 
 
-          {this.state.costs.map( key => 
-            <div key={key}>
+          {this.state.costs.map( cost =>
+            <div key={cost.index}>
               <RegularCostForm
-                id={this.state.id}
+                id={this.state.regularCostManager.id}
                 types={this.state.types}
+                canSubmit={this.state.canSubmit}
+                data={cost}
+                index={cost.index}
               />
               <RaisedButton
                 primary
                 label="remove"
-                onClick={this.removeCost.bind(this, key)}
+                onClick={this.removeCost.bind(this, cost.index)}
               />
             </div>
           )}
@@ -79,15 +89,12 @@ export default class RegularCostRegister extends Component {
             onClick={this.addCost}
           />
 
-          <form 
-            onSubmit={this.submitBase}
-          >
-            <RaisedButton
-              primary
-              type="submit"
-              label="Enviar"
-            />
-          </form>
+          <RaisedButton
+            primary
+            type="submit"
+            label="Enviar"
+            onClick={this.submit}
+          />
 
         </Paper>
 

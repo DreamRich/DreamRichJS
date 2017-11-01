@@ -37,7 +37,7 @@ class RegularCostStore extends ReduceStore {
 
     case ActionType.REGULARCOST.MANAGER:
       postOrPutStrategy(
-        action.regularCostManager,
+        state.regularCostManager,
         routeMap.cost_manager,
         {},
         (data) => AppDispatcher.dispatch({
@@ -49,7 +49,8 @@ class RegularCostStore extends ReduceStore {
       return state;
 
     case ActionType.REGULARCOST.SUCCESS:
-      return {...state, [action.state]: action.data, canSubmit: true};
+      delete action.data['regular_costs'];
+      return {...state, [action.state]: action.data};
 
     case ActionType.REGULARCOST.TYPE:
       getData(
@@ -64,6 +65,9 @@ class RegularCostStore extends ReduceStore {
     case ActionType.REGULARCOST.TYPESUCCESS:
       return {...state, types: action.types};
 
+    case ActionType.REGULARCOST.SUBMIT:
+      return {...state, canSubmit: true};
+
     case ActionType.REGULARCOST.SUBFORM:
       postOrPutStrategy(
         state.costs.find( cost => action.index === cost.index),
@@ -71,16 +75,16 @@ class RegularCostStore extends ReduceStore {
         action.data,
         (data) => {
           AppDispatcher.dispatch({
-            action: ActionType.CLIENT.SUBFORMSUCCESS,
+            action: ActionType.REGULARCOST.SUBFORMSUCCESS,
             data: data,
             state: action.state,
             index: action.index
           });
         }
       );
-      return {...state, canSubmit: false};
+      return state;
 
-    case ActionType.CLIENT.SUBFORMSUCCESS:
+    case ActionType.REGULARCOST.SUBFORMSUCCESS:
       state.costs.find( (cost, index) => {
         if (cost.index === action.index){
           action.data.index = index;
@@ -88,7 +92,7 @@ class RegularCostStore extends ReduceStore {
           return true;
         }
       });
-      return {...state};
+      return {...state, canSubmit: false};
 
     default:
       return state;
