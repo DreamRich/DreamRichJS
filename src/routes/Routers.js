@@ -31,7 +31,7 @@ export default class Routers extends Component{
         <AuthorizedRoute permission="see_employee_data" path="/employee" component={ Employeer } />
         <AuthorizedRoute permission="change_own_client_data" exact path="/register/steps/:id?" component={ StepperClient } />
         <AuthorizedRoute permission="see_own_client_data" path="/active_chart" component={ ActiveChart } />
-        <AuthorizedRoute permission="see_own_client_data" path="/goals" component={ GoalChart } />
+        <AuthorizedRoute permission="see_own_client_data" path="/goals/:id?" component={ GoalChart } />
         <AuthorizedRoute permission="allow_any" path="/login/changepassword"
           render={ () => <PasswordForm userid={Auth.getUserId()} username={Auth.getUserName()} /> } />
 
