@@ -25,7 +25,8 @@ export default class LoginForm extends Component{
   })
 
   validateForm = () => {
-    this.setState(LoginStore.getState());
+    const {userExist} = LoginStore.getState();
+    this.setState({userExist});
     this.form.validateForm();
   }
 
