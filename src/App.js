@@ -58,7 +58,7 @@ class App extends Component {
           handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer}
           auth={this.state.auth}
         />
-        <SidebarMenu  navDrawerOpen={this.state.navDrawerOpen} />
+        <SidebarMenu auth={this.state.auth} navDrawerOpen={this.state.navDrawerOpen} />
         <div style={styles.container}>
           <Routers />
         </div>
