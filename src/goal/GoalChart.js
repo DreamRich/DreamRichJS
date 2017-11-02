@@ -84,7 +84,6 @@ export default class GoalChart extends Component {
   }
 
   componentDidMount() {
-    console.log('a'+this.props.match.params.id);
     getData(
       routeMap.financial_planning + this.props.match.params.id + '/respective_clients/',
       (data) => {
