@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
-import Paper from 'material-ui/Paper';
+// import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import RegularCostStore from '../stores/RegularCostStore';
 import '../stylesheet/RegisterForms.sass';
 import RegularCostForm from './form/RegularCostForm';
+import getSelectOption from '../utils/getSelectOption';
 
 export default class RegularCostRegister extends Component {
 
@@ -60,43 +61,34 @@ export default class RegularCostRegister extends Component {
   }
 
   render() {
+    const labelRemove = 'Tenho este custo fixo?';
+    const labelAdd = (this.state.costs.length === 0 ?
+      'Possui custo fixo? (Marque o quadrado ao lado caso haja).' :
+      'Possui mais custos fixos? (Marque o quadrado ao lado caso haja).');
     return (
       <div>
-        <h1> Cadastro de custo fixo </h1>
+        {this.state.costs.map( cost =>
+          <div key={cost.index}>
+            {getSelectOption(
+              this.removeCost.bind(this, cost.index), true, labelRemove)
+            }
+            <RegularCostForm
+              id={this.state.regularCostManager.id}
+              types={this.state.types}
+              canSubmit={this.state.canSubmit}
+              data={cost}
+              index={cost.index}
+            />
+          </div>
+        )}
+        {getSelectOption(this.addCost, false, labelAdd)}
 
-        <Paper className="Paper">
-
-
-          {this.state.costs.map( cost =>
-            <div key={cost.index}>
-              <RegularCostForm
-                id={this.state.regularCostManager.id}
-                types={this.state.types}
-                canSubmit={this.state.canSubmit}
-                data={cost}
-                index={cost.index}
-              />
-              <RaisedButton
-                primary
-                label="remove"
-                onClick={this.removeCost.bind(this, cost.index)}
-              />
-            </div>
-          )}
-          <RaisedButton
-            primary
-            label="add"
-            onClick={this.addCost}
-          />
-
-          <RaisedButton
-            primary
-            type="submit"
-            label="Enviar"
-            onClick={this.submit}
-          />
-
-        </Paper>
+        <RaisedButton
+          primary
+          label="Salvar"
+          style={{float: 'right'}}
+          onClick={this.submit}
+        />
 
       </div>
     );

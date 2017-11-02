@@ -39,7 +39,7 @@ class App extends Component {
   handleChange = () => this.setState(AppStore.getState())
 
   render = () => {
-    let { navDrawerOpen } = this.state;
+    const { navDrawerOpen } = this.state;
     const paddingLeftDrawerOpen = 250;
 
     const styles = {
