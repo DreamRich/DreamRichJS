@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import IconButton from 'material-ui/IconButton';
-import FileFileUpload from 'material-ui/svg-icons/file/file-upload';
 import errorMessages from '../../utils/FormsErrorMessages';
 import { Row, Col } from 'react-flexbox-grid';
 import SubForm from '../../components/SubForm';
@@ -68,39 +66,15 @@ export default class ClientForm extends Component {
 
     return (
       <Row around="xs">
+        {formsyList}
         <Col xs>
-          {formsyList.slice(0,3)}
-        </Col>
-        <Col xs>
-          {formsyList.slice(3,6)}
-        </Col>
-        <Col xs>
-          {formsyList.slice(6,8)}
           <FormsyDate
             name="birthday"
             floatingLabelText="Data de Nascimento"
             value={this.props.data.birthday}
           />
-          <p>
-            Enviar identidade:
-            <IconButton
-              name="id_document"
-              tooltip="Documento de Identificação"
-              touch={true}
-              tooltipPosition="top-left">
-              <FileFileUpload />
-            </IconButton>
-          </p>
-          <p>
-            Enviar Comprovante de Residência:
-            <IconButton
-              name="proof_of_address"
-              tooltip="Comprovante de Residência"
-              touch={true}
-              tooltipPosition="top-left">
-              <FileFileUpload />
-            </IconButton>
-          </p>
+        </Col>
+        <Col xs>
         </Col>
       </Row>
     );

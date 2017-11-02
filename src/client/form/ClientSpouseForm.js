@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 // import IconButton from 'material-ui/IconButton';
 // import FileFileUpload from 'material-ui/svg-icons/file/file-upload';
 // import errorMessages from '../utils/FormsErrorMessages';
-import { Row, Col } from 'react-flexbox-grid';
+import { Row } from 'react-flexbox-grid';
 import SubForm from '../../components/SubForm';
 import FormsyDate from '../../utils/formsyComponents/FormsyDate';
 import PropTypes from 'prop-types';
@@ -37,20 +37,12 @@ export default class SpouseForm extends Component {
 
     return (
       <Row around="xs">
-        <Col xs>
-          {formsyList.slice(0,3)}
-        </Col>
-        <Col xs>
-          {formsyList.slice(3,6)}
-        </Col>
-        <Col xs>
-          {formsyList.slice(6,8)}
-          <FormsyDate
-            name="birthday"
-            floatingLabelText="Data de Nascimento"
-            value={this.props.data.birthday}
-          />
-        </Col>
+        {formsyList}
+        <FormsyDate
+          name="birthday"
+          floatingLabelText="Data de Nascimento"
+          value={this.props.data.birthday}
+        />
       </Row>
     );
   }

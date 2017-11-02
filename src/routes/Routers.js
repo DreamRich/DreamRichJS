@@ -6,6 +6,9 @@ import ResetForm from '../auth/ResetForm';
 import {AuthorizedRoute, NotFoundRoute} from './Router';
 import ClientTable from '../client/ClientTable';
 import Employeer from '../employee/Employeer';
+import PatrimonyRegister from '../patrimony/PatrimonyRegister';
+import ClientRegister from '../client/ClientRegister';
+import ClientDashboard from '../dashboard/ClientDashboard';
 import StepperClient from '../client/StepperClient';
 import {Auth} from '../auth/Auth';
 import GoalChart from '../goal/GoalChart';
@@ -23,6 +26,11 @@ export default class Routers extends Component{
         <AuthorizedRoute exact permission="change_own_client_data" path="/patrimony/active/:id" component={ ActiveProfit } />
         <AuthorizedRoute exact permission="see_all_basic_client_data" path="/client" component={ ClientTable } />
         <AuthorizedRoute permission="see_employee_data" path="/employee" component={ Employeer } />
+        <Route exact path="/login" component={ LoginPage } />
+        <AuthorizedRoute permission="change_own_client_data" exact path="/register/client" component={ ClientRegister } />
+
+        <AuthorizedRoute permission="change_own_client_data" exact path="/dashboard" component={ ClientDashboard } />
+
         <AuthorizedRoute permission="change_own_client_data" exact path="/register/steps/:id?" component={ StepperClient } />
         <AuthorizedRoute permission="see_own_client_data" path="/active_chart" component={ ActiveChart } />
         <AuthorizedRoute permission="see_own_client_data" path="/goals/:id?" component={ GoalChart } />
