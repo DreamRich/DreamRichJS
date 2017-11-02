@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
+import {Redirect, withRouter} from 'react-router';
+import { Row, Col } from 'react-flexbox-grid';
 import Title from '../components/Title';
 import Subtitle from '../components/Subtitle';
 import LoginForm from './form/LoginForm';
-import { Row, Col } from 'react-flexbox-grid';
-import {withRouter} from 'react-router';
-import PropTypes from 'prop-types';
 import LoginStore from '../stores/LoginStore';
 
 // import {AuthorizedRoute, AuthorizedLink} from './routes/Router';
@@ -14,7 +14,7 @@ class LoginPage extends Component{
 
   static propTypes = {
     history: PropTypes.object,
-    from: PropTypes.string,
+    location: PropTypes.object,
   }
 
   componentWillMount = () => this.setState({
@@ -25,14 +25,16 @@ class LoginPage extends Component{
 
   handleChange = () => {
     const {auth} = LoginStore.getState();
-
-    if (auth) {
-      this.props.history.replace(this.props.from || '/');
-    }
-
+    this.setState({auth});
   }
 
   render(){
+    if (this.state.auth) {
+      const state = this.props.location.state;
+      const to = (state && state.from ? state.from : {pathname: '/'});
+      return <Redirect to={to} />;
+    }
+
     return (
       <Row>
         <Col xs={12}>

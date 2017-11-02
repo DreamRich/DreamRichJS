@@ -2,4 +2,10 @@
 
 import {Dispatcher} from 'flux';
 
-export default new Dispatcher();
+class AppDispatcher extends Dispatcher {
+  dispatchDefer = (objectPayload) => {
+    setTimeout(this.dispatch.bind(this), 0, objectPayload);
+  }
+}
+
+export default new AppDispatcher();
