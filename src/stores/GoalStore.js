@@ -3,7 +3,8 @@
 import {ReduceStore} from 'flux/utils';
 import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
-import {postData, getData} from '../resources/Requests';
+import {postOrPutStrategy, getData} from '../resources/Requests';
+import getLastIndex from '../utils/getLastIndex';
 import {/*getUrl, */routeMap} from '../routes/RouteMap';
 
 class GoalStore extends ReduceStore {
@@ -11,41 +12,47 @@ class GoalStore extends ReduceStore {
 
   getInitialState(){
     return {
-      goals: [0],
-      idx: 1,
-      id: undefined,
+      goals: [{index: 0}],
+      goalManager: {},
       types: [],
-      hasEndDate: false
     };
   }
 
   reduce = (state, action) => {
-    let new_array;
+    let goals;
     switch (action.action) {
     case ActionType.GOAL.ADD:
-      new_array = state.goals.slice();
-      new_array.push(state.idx);
-      return {...state, goals: new_array, idx: state.idx + 1};
+      goals = state.goals.slice();
+      goals.push({
+        index: getLastIndex(state.goals) + 1,
+        has_end_date: false,
+      });
+      return {...state, goals: goals};
 
     case ActionType.GOAL.REMOVE:
-      new_array = state.goals.slice();
+      goals = state.goals.slice();
       return {...state,
-        goals: new_array.filter( element => element !== action.key )
+        goals: goals.filter( element => element.index !== action.index )
       };
 
     case ActionType.GOAL.MANAGER:
-      postData(
+      postOrPutStrategy(
+        state.goalManager,
         routeMap.goal_manager,
         {},
         (data) => AppDispatcher.dispatch({
           action: ActionType.GOAL.SUCCESS,
-          id: data.id
+          data: data,
+          state: 'goalManager'
         })
       );
       return state;
 
     case ActionType.GOAL.SUCCESS:
-      return {...state, id: action.id};
+      delete action.data['goals'];
+      delete action.data['goals_flow_dic'];
+      delete action.data['year_init_to_year_end'];
+      return {...state, [action.state]: action.data};
 
     case ActionType.GOAL.TYPE:
       getData(
@@ -61,11 +68,43 @@ class GoalStore extends ReduceStore {
       return {...state, types: action.types};
 
     case ActionType.GOAL.HASEND:
-      return {...state, hasEndDate: action.hasEnd};
+      goals = state.goals.slice();
+      goals.find( (goal, index) => {
+        if (goal.index == action.index) {
+          goals[index].has_end_date = action.hasEnd;
+          return true;
+        }
+      });
+      return {...state, goals: goals};
+
+    case ActionType.GOAL.SUBMIT:
+      return {...state, canSubmit: true};
 
     case ActionType.GOAL.SUBFORM:
-      postData(action.route, action.data, (e) => console.log(e));
+      postOrPutStrategy(
+        state.goals.find( goal => action.index === goal.index),
+        action.route,
+        action.data,
+        (data) => {
+          AppDispatcher.dispatch({
+            action: ActionType.GOAL.SUBFORMSUCCESS,
+            data: data,
+            state: action.state,
+            index: action.index
+          });
+        }
+      );
       return state;
+
+    case ActionType.GOAL.SUBFORMSUCCESS:
+      state.goals.find( (goal, index) => {
+        if (goal.index === action.index){
+          action.data.index = index;
+          state.goals[index] = action.data;
+          return true;
+        }
+      });
+      return {...state, canSubmit: false};
 
     default:
       return state;

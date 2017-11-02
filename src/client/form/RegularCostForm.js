@@ -36,7 +36,7 @@ export default class RegularCostForm extends Component {
   }
 
   getContentCard = () => {
-    const cost_type = this.props.data.cost_type || {};
+    const costType = this.props.data.cost_type || {};
     return (
       <Row around="xs">
         <Col xs>
@@ -44,7 +44,7 @@ export default class RegularCostForm extends Component {
             name="cost_type_id"
             floatingLabelText="Tipo"
             maxHeight={300}
-            value={cost_type.id}
+            value={costType.id}
           >
             {this.getOptions()}
           </FormsySelect>

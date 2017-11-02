@@ -29,7 +29,7 @@ export default class RegularCostRegister extends Component {
   }
 
   componentWillMount = () => {
-    this.setState({...this.state,
+    this.setState({
       listener: RegularCostStore.addListener(this.handleChange)
     });
 

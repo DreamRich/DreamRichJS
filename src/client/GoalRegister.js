@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
-import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import GoalStore from '../stores/GoalStore';
 import '../stylesheet/RegisterForms.sass';
 import GoalForm from './form/GoalForm';
+import getSelectOption from '../utils/getSelectOption';
 
-class GoalRegister extends Component {
+export default class GoalRegister extends Component {
 
   constructor(props){
     super(props);
@@ -20,10 +20,10 @@ class GoalRegister extends Component {
     });
   }
 
-  removeGoal = (key) => {
+  removeGoal = (index) => {
     AppDispatcher.dispatch({
       action: ActionType.GOAL.REMOVE,
-      key: key
+      index: index
     });
   }
 
@@ -41,62 +41,54 @@ class GoalRegister extends Component {
     this.state.listener.remove();
   }
 
-  handleChange = () => {
-    this.setState(GoalStore.getState());
-  }
-
-  submitBase = (event) => {
-    event.preventDefault();
+  componentDidMount = () => {
+    // Create a regular cost when mount component because
+    // create it when create regular costs cause Invariant Violation
     AppDispatcher.dispatch({
       action: ActionType.GOAL.MANAGER
     });
   }
 
+
+  handleChange = () => {
+    this.setState(GoalStore.getState());
+  }
+
+  submit = () => {
+    AppDispatcher.dispatch({
+      action: ActionType.GOAL.SUBMIT
+    });
+  }
+
   render() {
+    const labelRemove = 'Tenho este objetivo?';
+    const labelAdd = (this.state.goals.length === 0 ?
+      'Possui um objetivo? (Marque o quadrado ao lado caso haja).' :
+      'Possui mais objetivos? (Marque o quadrado ao lado caso haja).');
     return (
       <div>
-        <h1> Cadastro de objetivos </h1>
-
-        <Paper className="Paper">
-
-
-          {this.state.goals.map( key => 
-            <div key={key}>
-
-              <GoalForm
-                id={this.state.id}
-                types={this.state.types}
-                hasEndDate={this.state.hasEndDate}
-              />
-
-              <RaisedButton
-                primary
-                label="remove"
-                onClick={this.removeGoal.bind(this, key)}
-              />
-            </div>
-          )}
-          <RaisedButton
-            primary
-            label="add"
-            onClick={this.addGoal}
-          />
-
-          <form 
-            onSubmit={this.submitBase}
-          >
-            <RaisedButton
-              primary
-              type="submit"
-              label="Enviar"
+        {this.state.goals.map( goal =>
+          <div key={goal.index}>
+            {getSelectOption(
+              this.removeGoal.bind(this, goal.index), true, labelRemove)
+            }
+            <GoalForm
+              id={this.state.goalManager.id}
+              types={this.state.types}
+              data={goal}
+              index={goal.index}
+              canSubmit={this.state.canSubmit}
             />
-          </form>
-
-        </Paper>
-
+          </div>
+        )}
+        {getSelectOption(this.addGoal, false, labelAdd)}
+        <RaisedButton
+          primary
+          label="Salvar"
+          onClick={this.submit}
+        />
       </div>
     );
   }
-}
 
-export default GoalRegister;
+}
