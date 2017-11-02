@@ -53,6 +53,7 @@ export default class ClientForm extends Component {
     subtitleCard: PropTypes.string,
     canSubmit: PropTypes.bool,
     data: PropTypes.object,
+    isDisable: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -61,20 +62,20 @@ export default class ClientForm extends Component {
 
   getContentCard(){
     const formsyList = makeFormysTextList(
-      personFields, 'clientform', this.props.data
+      personFields, 'clientform', this.props.data, this.props.isDisable
     );
 
     return (
       <Row around="xs">
         {formsyList}
-        <Col xs>
+        <Col xs={6}>
           <FormsyDate
             name="birthday"
             floatingLabelText="Data de Nascimento"
             value={this.props.data.birthday}
           />
         </Col>
-        <Col xs>
+        <Col xs={2}>
         </Col>
       </Row>
     );

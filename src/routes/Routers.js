@@ -9,7 +9,7 @@ import ClientTable from '../client/ClientTable';
 import Employeer from '../employee/Employeer';
 import PatrimonyRegister from '../patrimony/PatrimonyRegister';
 import ClientRegister from '../client/ClientRegister';
-import ClientDashboard from '../dashboard/ClientDashboard';
+import ClientDashboard from '../client/ClientDashboard';
 import StepperClient from '../client/StepperClient';
 import RegularCostRegister from '../client/RegularCostRegister';
 import {Auth} from '../auth/Auth';

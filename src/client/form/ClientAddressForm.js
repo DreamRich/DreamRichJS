@@ -137,43 +137,43 @@ export default class ClientAddressForm extends Component {
     return (
       <div>
         <Row>
-          <FormsySelect
-            name="country"
-            floatingLabelText="País"
-            maxHeight={300}
-            onChange={this.fetchStates}
-            value={this.props.data.state.country_id}
-          >
-            {contriesOptions}
-          </FormsySelect>
-          <FormsySelect
-            name="state_id"
-            floatingLabelText="Estado"
-            maxHeight={300}
-            value={this.props.data.state.id}
-          >
-            {statesOptions}
-          </FormsySelect>
-          {listColumns[6]}
-        </Row>
-        <Row>
-          {listColumns.slice(0,3)}
-        </Row>
-        <Row>
-          {listColumns.slice(3,6)}
-        </Row>
-        <Row>
-          <FormsyAutoComplete
-            dataSource={this.state.addressType}
-            name="type_of_address"
-            validations="isWords"
-            validationError={wordsError}
-            hintText="Casa, apartamento, etc."
-            floatingLabelText="Tipo de Endereço"
-            searchText={searchText}
-            defaultValue={searchText}
-            onChange={this.updateSearch}
-          />
+          <Col xs key={'FormsySelectAddressCountry'}>
+            <FormsySelect
+              name="country"
+              floatingLabelText="País"
+              maxHeight={300}
+              onChange={this.fetchStates}
+              value={this.props.data.state.country_id}
+            >
+              {contriesOptions}
+            </FormsySelect>
+          </Col>
+          <Col xs key={'FormsySelectAddressState'}>
+            <FormsySelect
+              name="state_id"
+              floatingLabelText="Estado"
+              maxHeight={300}
+              value={this.props.data.state.id}
+            >
+              {statesOptions}
+            </FormsySelect>
+          </Col>
+
+          {listColumns}
+
+          <Col xs key={'FormsyAutoCompleteAddress'}>
+            <FormsyAutoComplete
+              dataSource={this.state.addressType}
+              name="type_of_address"
+              validations="isWords"
+              validationError={wordsError}
+              hintText="Casa, apartamento, etc."
+              floatingLabelText="Tipo de Endereço"
+              searchText={searchText}
+              defaultValue={searchText}
+              onChange={this.updateSearch}
+            />
+          </Col>
         </Row>
       </div>
     );
@@ -195,7 +195,6 @@ export default class ClientAddressForm extends Component {
           contentCard={this.getContentCard()}
         />
       </SubForm>
-
     );
   }
 }

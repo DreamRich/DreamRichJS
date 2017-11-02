@@ -36,7 +36,7 @@ export default class SpouseForm extends Component {
     );
 
     return (
-      <Row around="xs">
+      <Row>
         {formsyList}
         <FormsyDate
           name="birthday"

@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-//import {getData} from '../resources/Headers.js';
 import '../stylesheet/RegisterForms.sass';
-import MenuItem from 'material-ui/MenuItem';
 import ActionType from '../actions/ActionType';
 import AppDispatcher from '../AppDispatcher';
 import ClientStore from '../stores/ClientStore';
@@ -11,7 +9,6 @@ import ClientBankAccountForm from '../client/form/ClientBankAccountForm';
 import ClientAddressForm from '../client/form/ClientAddressForm';
 import ClientForm from '../client/form/ClientForm';
 import ClientSpouseForm from '../client/form/ClientSpouseForm';
-//import CardForm from '../components/CardForm';
 import { Row, Col } from 'react-flexbox-grid';
 
 class ClientDashboard extends Component {
@@ -40,19 +37,6 @@ class ClientDashboard extends Component {
     this.setState(ClientStore.getState());
   }
 
-  // Convert ordinary Array to MenuItem Array to use in drop down list
-  convertRegionToMenuItens = (list) => {
-    var listMenuItems = list.map((region, index) => {
-      let primaryText = `${region.name} - ${region.abbreviation}`;
-
-      return (
-        <MenuItem key={index} value={region.id} primaryText={primaryText} />
-      );
-    });
-
-    return listMenuItems;
-  }
-
   render() {
     let subtitleCard = 'Informações básicas do cliente.';
 
@@ -64,6 +48,7 @@ class ClientDashboard extends Component {
               title='Cliente'
               subtitleCard={subtitleCard}
               data={this.state.active_client}
+              isDisable={true}
             />
           </Col>
           <Col xs>
@@ -75,13 +60,13 @@ class ClientDashboard extends Component {
           </Col>
         </Row>
         <Row around="xs" style={{marginTop: '30px'}}>
-          <Col xs>
+          <Col xs={9}>
             <ClientAddressForm
               id={this.state.active_client.id}
               data={this.state.address}
             />
           </Col>
-          <Col xs>
+          <Col xs={3}>
             <ClientBankAccountForm
               id={this.state.active_client.id}
               data={this.state.bank_account}
