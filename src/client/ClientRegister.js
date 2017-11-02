@@ -66,6 +66,7 @@ class ClientRegister extends Component {
             subtitleCard={subtitleCard}
             canSubmit={this.state.canSubmit}
             data={this.state.active_client}
+            isDisable={false}
           />
       },
       {
@@ -81,7 +82,8 @@ class ClientRegister extends Component {
       },
       {
         text: 'Cadastrar Endereço',
-        formComponent: <ClientAddressForm 
+        formComponent:
+        <ClientAddressForm
           id={this.state.active_client.id}
           canSubmit={this.state.canSubmit}
           data={this.state.address}
@@ -89,7 +91,8 @@ class ClientRegister extends Component {
       },
       {
         text: 'Cadastrar Conta bancária',
-        formComponent: <ClientBankAccountForm 
+        formComponent:
+        <ClientBankAccountForm
           id={this.state.active_client.id}
           canSubmit={this.state.canSubmit}
           data={this.state.bank_account}
@@ -109,7 +112,7 @@ class ClientRegister extends Component {
       <div style={{width:'auto'}}>
         {this.getDivider()}
 
-        <SubStepperClient 
+        <SubStepperClient
           stepsNumber={listInformationSteps.length}
           listInformationSteps={listInformationSteps}
         />

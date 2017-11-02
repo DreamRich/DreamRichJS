@@ -8,7 +8,7 @@ import ClientTable from '../client/ClientTable';
 import Employeer from '../employee/Employeer';
 import PatrimonyRegister from '../patrimony/PatrimonyRegister';
 import ClientRegister from '../client/ClientRegister';
-import ClientDashboard from '../dashboard/ClientDashboard';
+import ClientDashboard from '../client/ClientDashboard';
 import StepperClient from '../client/StepperClient';
 import {Auth} from '../auth/Auth';
 import GoalChart from '../goal/GoalChart';

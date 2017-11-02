@@ -2,7 +2,7 @@ import React from 'react';
 import {FormsyText} from 'formsy-material-ui/lib';
 import { Col } from 'react-flexbox-grid';
 
-const makeFormysTextList = (fieldList, textKey, data) => {
+const makeFormysTextList = (fieldList, textKey, data, isDisable) => {
   const formsyTextList = fieldList.map((field, index) => {
     const fieldValue = (data !== undefined ? data[field.name] : field.value);
     return (
@@ -16,7 +16,7 @@ const makeFormysTextList = (fieldList, textKey, data) => {
           value={fieldValue}
           updateImmediately={field.isUpdate}
           key={textKey+index}
-          disabled={field.disable}
+          disabled={isDisable}
         />
       </Col>
     );
