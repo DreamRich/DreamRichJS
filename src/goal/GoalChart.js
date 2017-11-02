@@ -6,6 +6,10 @@ import addFunnel from 'highcharts/modules/funnel';
 import PropTypes from 'prop-types';
 
 export default class GoalChart extends Component {
+  
+  static propTypes = {
+    match: {params : {id: PropTypes.number,}}
+  }
 
   constructor(props) {
     super(props);
@@ -23,7 +27,7 @@ export default class GoalChart extends Component {
   mountChart(data_flow, fp_id) {
     addFunnel(Highcharts);
     getData(
-      routeMap.total_resource_for_annual_goals + fp_id + '/',
+      routeMap.financial_planning + fp_id + '/',
       (data) => {
         const total_resource_for_annual_goals = {
           type : 'spline',
@@ -80,8 +84,9 @@ export default class GoalChart extends Component {
   }
 
   componentDidMount() {
+    console.log('a'+this.props.match.params.id);
     getData(
-      routeMap.total_resource_for_annual_goals + id +'/respective_clients/',
+      routeMap.financial_planning + this.props.match.params.id + '/respective_clients/',
       (data) => {
         this.getGoalsData(data['gm'], data['fp']);
       }

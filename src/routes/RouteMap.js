@@ -23,8 +23,7 @@ const routeMap = {
   equipament: '/api/patrimony/equipment/',
   address_type: '/api/client/address/type_of_address/',
   goals_flow_dic:  '/api/goal/goal_manager/',
-  total_resource_for_annual_goals: '/api/financial_planning/financial_planning/',
-  current_fa: '/api/financial_planning/financial_planning/14/respective_clients/',
+  financial_planning: '/api/financial_planning/financial_planning/',
 };
 
 const valid_formats = ['json', 'html', 'xml'];
