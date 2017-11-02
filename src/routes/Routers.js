@@ -9,6 +9,7 @@ import ClientTable from '../client/ClientTable';
 import Employeer from '../employee/Employeer';
 import PatrimonyRegister from '../patrimony/PatrimonyRegister';
 import ClientRegister from '../client/ClientRegister';
+import ClientDashboard from '../dashboard/ClientDashboard';
 import StepperClient from '../client/StepperClient';
 import RegularCostRegister from '../client/RegularCostRegister';
 import {Auth} from '../auth/Auth';
@@ -32,6 +33,9 @@ export default class Routers extends Component{
         <AuthorizedRoute permission="see_employee_data" path="/employee" component={ Employeer } />
         <Route exact path="/login" component={ LoginPage } />
         <AuthorizedRoute permission="change_own_client_data" exact path="/register/client" component={ ClientRegister } />
+
+        <AuthorizedRoute permission="change_own_client_data" exact path="/dashboard" component={ ClientDashboard } />
+
         <AuthorizedRoute permission="change_own_client_data" exact path="/register/steps/:id?" component={ StepperClient } />
         <Route path="/logout" component={ LogoutButton } />
         <AuthorizedRoute permission="allow_any" path="/login/changepassword" render={ () => <PasswordForm userid={Auth.getUserId()} username={Auth.getUserName()} /> } />
