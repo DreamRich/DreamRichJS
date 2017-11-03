@@ -3,7 +3,7 @@
 import {ReduceStore} from 'flux/utils';
 import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
-import {postOrPutStrategy, getData} from '../resources/Requests';
+import {postData, postOrPutStrategy, getData} from '../resources/Requests';
 import getLastIndex from '../utils/getLastIndex';
 import {/*getUrl, */routeMap} from '../routes/RouteMap';
 
@@ -44,16 +44,17 @@ class GoalStore extends ReduceStore {
       };
 
     case ActionType.GOAL.MANAGER:
-      postOrPutStrategy(
-        state.goalManager,
-        routeMap.goal_manager,
-        {},
-        (data) => AppDispatcher.dispatch({
-          action: ActionType.GOAL.SUCCESS,
-          data: data,
-          state: 'goalManager'
-        })
-      );
+      if (!state.goalManager.id) {
+        postData(
+          routeMap.goal_manager,
+          {},
+          (data) => AppDispatcher.dispatch({
+            action: ActionType.GOAL.SUCCESS,
+            data: data,
+            state: 'goalManager'
+          })
+        );
+      }
       return state;
 
     case ActionType.GOAL.SUCCESS:

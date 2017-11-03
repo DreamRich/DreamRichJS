@@ -3,7 +3,7 @@
 import {ReduceStore} from 'flux/utils';
 import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
-import {getData, postOrPutStrategy} from '../resources/Requests';
+import {postData, getData, postOrPutStrategy} from '../resources/Requests';
 import getLastIndex from '../utils/getLastIndex';
 import {/*getUrl, */routeMap} from '../routes/RouteMap';
 
@@ -44,16 +44,17 @@ class RegularCostStore extends ReduceStore {
       };
 
     case ActionType.REGULARCOST.MANAGER:
-      postOrPutStrategy(
-        state.regularCostManager,
-        routeMap.cost_manager,
-        {},
-        (data) => AppDispatcher.dispatch({
-          action: ActionType.REGULARCOST.SUCCESS,
-          data: data,
-          state: 'regularCostManager'
-        })
-      );
+      if (!state.regularCostManager.id) {
+        postData(
+          routeMap.cost_manager,
+          {},
+          (data) => AppDispatcher.dispatch({
+            action: ActionType.REGULARCOST.SUCCESS,
+            data: data,
+            state: 'regularCostManager'
+          })
+        );
+      }
       return state;
 
     case ActionType.REGULARCOST.SUCCESS:
