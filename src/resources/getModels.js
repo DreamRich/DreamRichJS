@@ -16,6 +16,19 @@ const getClient = (id) => {
   );
 };
 
+const getRegularCostManager = (id) => {
+  getData(
+    `${routeMap.cost_manager}${id}/`,
+    (data) => {
+      AppDispatcher.dispatch({
+        action: ActionType.REGULARCOST.GETFORMSUCCESS,
+        data: data,
+        state: 'regularCostManager',
+      });
+    }
+  );
+};
+
 const getFinancialPlanning = (id) => {
   getData(`${routeMap.financial_planning}/${id}/`,
     (data) => {
@@ -24,6 +37,9 @@ const getFinancialPlanning = (id) => {
         data: data,
       });
       getClient(data.active_client_id);
+      if (data.cost_manager_id) {
+        getRegularCostManager(data.cost_manager_id);
+      }
       // others gets
     });
 };

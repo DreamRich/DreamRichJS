@@ -99,7 +99,7 @@ class GoalStore extends ReduceStore {
     case ActionType.GOAL.SUBFORMSUCCESS:
       state.goals.find( (goal, index) => {
         if (goal.index === action.index){
-          action.data.index = index;
+          action.data.index = action.index;
           state.goals[index] = action.data;
           return true;
         }
