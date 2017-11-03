@@ -27,11 +27,11 @@ class LoginStore extends ReduceStore {
       return state;
 
     case ActionType.LOGIN.FAIL:
-      return {userExist: false};
+      return {userExist: false, auth: false};
 
     case ActionType.LOGOUT:
       Auth.deauthenticate();
-      return state;
+      return {...state, auth: false};
 
     case ActionType.REFRESH_LOGIN:
       postData('/api/auth/refresh/',
@@ -49,7 +49,7 @@ class LoginStore extends ReduceStore {
 
     case ActionType.LOGIN.SUCCESS:
       Auth.authenticate(action.data);
-      return state;
+      return {...state, userExist: true, auth: true};
 
     default:
       return state;

@@ -25,10 +25,6 @@ export default class SubStepperClient extends React.Component {
 
   componentWillMount = () => {
     this.setState({listener: ClientStore.addListener(this.handleChange)});
-    AppDispatcher.dispatch({
-      action: ActionType.CLIENT.SETSTEP,
-      stepIndex: 0
-    });
   }
 
   handleChange = () => {
@@ -43,6 +39,10 @@ export default class SubStepperClient extends React.Component {
 
   componentWillUnmount = () => {
     this.state.listener.remove();
+    AppDispatcher.dispatch({
+      action: ActionType.CLIENT.SETSTEP,
+      stepIndex: 0
+    });
   }
 
   handleNext = () => {

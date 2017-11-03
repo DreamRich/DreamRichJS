@@ -34,7 +34,7 @@ class ClientRegister extends Component {
   }
 
   componentDidMount = () => {
-    AppDispatcher.dispatch({
+    AppDispatcher.dispatchDefer({
       action: ActionType.CLIENT.DATAFORM
     });
   }

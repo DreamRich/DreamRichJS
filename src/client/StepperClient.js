@@ -30,7 +30,7 @@ class StepperClient extends React.Component {
       <div key={5} >Proteção </div>,
       <GoalRegister key={6} />];
   }
-  
+
   static propTypes = {
     match: PropTypes.shape({
       params: PropTypes.shape({
@@ -41,11 +41,12 @@ class StepperClient extends React.Component {
 
   componentDidMount = () => {
     const id = this.props.match.params.id;
-    AppDispatcher.dispatch({
+    AppDispatcher.dispatchDefer({
       action: ActionType.CLIENT.ID,
       id: id
     });
   }
+
   state = {
     stepIndex: 0,
   };

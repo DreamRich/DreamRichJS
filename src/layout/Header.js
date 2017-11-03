@@ -13,6 +13,8 @@ import Menu from 'material-ui/svg-icons/navigation/menu';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import ActionType from '../actions/ActionType';
 import AppDispatcher from '../AppDispatcher';
+//import {withRouter} from 'react-router';
+import LogoutComponent from '../auth/LogoutComponent';
 
 // TODO: Make css in a extern file
 // const muiTheme = getMuiTheme({
@@ -44,10 +46,6 @@ class Header extends React.Component {
   handleUpdate = () => {
     this.setState(MenuStore.getState());
   }
-
-  handleSigout = () => AppDispatcher.dispatch({
-    action: ActionType.LOGOUT
-  })
 
   componentWillMount = () => this.setState({updateId: MenuStore.addListener(this.handleUpdate) })
 
@@ -90,11 +88,10 @@ class Header extends React.Component {
             open={this.state.openMenu}
           >
             <MenuItem>
-              { !auth && makeMenuItem('allow_any','/login/','Login')}
-              { auth && <MenuItem 
-                primaryText={'Sign out'}
-                onClick={this.handleSigout}
-              /> }
+              {!auth && makeMenuItem('allow_any','/login/','Login')}
+              { auth &&
+                <LogoutComponent />
+              }
             </MenuItem>
             {makeMenuItem('allow_any','/login/changepassword','Change Password')}
           </IconMenu>

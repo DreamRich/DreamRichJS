@@ -50,6 +50,7 @@ export class Auth{
       && localStorage.getItem('token') != undefined
       && localStorage.getItem('token') != null);
   }
+
   static hasPermission(permission){
     return Auth.isAuthenticated() && (
       localStorage.getItem('permissions').split(',').map(e=> e.trim()).find(e=> e===permission)
