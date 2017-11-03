@@ -8,6 +8,8 @@ import {FormsySelect, FormsyText , FormsyToggle/*, FormsyDate*/} from 'formsy-ma
 import errorMessages from '../../utils/FormsErrorMessages';
 import SubForm from '../../components/SubForm';
 import MenuItem from 'material-ui/MenuItem';
+import CardForm from '../../components/CardForm';
+import { Row, Col } from 'react-flexbox-grid';
 
 var {
   numericError,
@@ -21,8 +23,10 @@ export default class GoalForm extends Component {
 
   static propTypes = {
     id: PropTypes.number,
+    data: PropTypes.object,
     types: PropTypes.array,
-    hasEndDate: PropTypes.bool,
+    index: PropTypes.number,
+    canSubmit: PropTypes.bool,
   }
 
   getOptions = () => {
@@ -34,65 +38,88 @@ export default class GoalForm extends Component {
   onChangeHasEnd = (event, value) => {
     AppDispatcher.dispatch({
       action: ActionType.GOAL.HASEND,
-      hasEnd: value
+      hasEnd: value,
+      index: this.props.index,
     });
+  }
+  getCardContent = () => {
+    const goalType = this.props.data.goal_type || {};
+    return (
+      <Row around="xs">
+        <Col xs>
+          <FormsySelect
+            name="goal_type_id"
+            floatingLabelText="Tipo"
+            maxHeight={300}
+            value={goalType.id}
+          >
+            {this.getOptions()}
+          </FormsySelect>
+        </Col>
+        <Col xs>
+          <FormsyToggle
+            name='has_end_date'
+            label='Tem fim?'
+            labelPosition='left'
+            onChange={this.onChangeHasEnd}
+            defaultToggled={this.props.data.has_end_date}
+          />
+          <div>
+            <FormsyText
+              name='year_init'
+              floatingLabelText='Ano de início do objetivo'
+              validations="isNumeric"
+              validationError={numericError}
+              value={this.props.data.year_init}
+            />
+            {this.props.data.has_end_date && <FormsyText
+              name='year_end'
+              floatingLabelText='Ano de fim do objetivo'
+              validations="isNumeric"
+              validationError={numericError}
+              value={this.props.data.year_end}
+            /> }
+          </div>
+        </Col>
+        <Col xs>
+          <FormsyText
+            name="periodicity"
+            validations="isNumeric"
+            validationError={numericError}
+            hintText="Em anos. Ex: 10"
+            floatingLabelText="Periodicidade"
+            value={this.props.data.periodicity}
+          />
+          <FormsyText
+            name="value"
+            validations="isNumeric"
+            validationError={numericError}
+            hintText="Valor em R$. Ex.: 000.00"
+            floatingLabelText="Valor"
+            value={this.props.data.value}
+          />
+        </Col>
+      </Row>
+    );
   }
 
   render = () => {
     return (
-      <div>
-        <SubForm
-          name="goal"
-          action={ActionType.GOAL.SUBFORM}
-          parent_id={this.props.id}
-          parent_name='goal_manager_id'
-          title="Goal"
-        >
-          <div>
-            <FormsySelect
-              name="goal_type_id"
-              floatingLabelText="Tipo"
-              maxHeight={300}
-            >
-              {this.getOptions()}
-            </FormsySelect>
-            <FormsyToggle
-              name='has_end_date'
-              label='Tem fim?'
-              labelPosition='left'
-              onChange={this.onChangeHasEnd}
-            />
-            <div>
-              <FormsyText
-                name='year_init'
-                floatingLabelText='Ano de início do objetivo'
-                validations="isNumeric"
-                validationError={numericError}
-              />
-              {this.props.hasEndDate && <FormsyText
-                name='year_end'
-                floatingLabelText='Ano de fim do objetivo'
-                validations="isNumeric"
-                validationError={numericError}
-              /> }
-            </div>
-            <FormsyText
-              name="periodicity"
-              validations="isNumeric"
-              validationError={numericError}
-              hintText="Em anos. Ex: 10"
-              floatingLabelText="Periodicidade"
-            />
-            <FormsyText
-              name="value"
-              validations="isNumeric"
-              validationError={numericError}
-              hintText="Valor em R$. Ex.: 000.00"
-              floatingLabelText="Valor"
-            />
-          </div>
-        </SubForm>
-      </div>
+      <SubForm
+        name="goal"
+        action={ActionType.GOAL.SUBFORM}
+        parent_id={this.props.id}
+        parent_name='goal_manager_id'
+        title="Goal"
+        index={this.props.index}
+        canSubmit={this.props.canSubmit}
+      >
+        <CardForm
+          titleCard="Objetivo"
+          subtitleCard="Insira as informações do objetivo"
+          contentCard={this.getCardContent()}
+        />
+      </SubForm>
     );
   }
 }

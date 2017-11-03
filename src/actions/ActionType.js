@@ -53,6 +53,7 @@ const actionTypes = {
     SUBFORMSUCCESS: 'regular_cost/success_subforms',
   },
   GOAL:{
+    SUBMIT: 'goal/can_submit_forms',
     ADD: 'goal/add',
     REMOVE: 'goal/remove',
     MANAGER: 'goal/submit_form',
@@ -61,6 +62,7 @@ const actionTypes = {
     TYPESUCCESS: 'goal/types_success',
     HASEND: 'goal/form_toggle',
     SUBFORM: 'goal/create_subforms',
+    SUBFORMSUCCESS: 'goal/success_subforms',
   },
   PATRIMONY: {
     FORM: 'patrimony/create_form',
