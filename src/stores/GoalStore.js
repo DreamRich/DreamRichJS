@@ -115,6 +115,9 @@ class GoalStore extends ReduceStore {
       });
       return {...state, canSubmit: false};
 
+    case ActionType.RESETFORMSTORES:
+      return {...state, goals: [{index: 0}], goalManager: {}};
+
     default:
       return state;
     }

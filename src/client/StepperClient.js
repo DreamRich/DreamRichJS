@@ -6,8 +6,8 @@ import RegularCostRegister from '../client/RegularCostRegister';
 import GoalRegister from '../client/GoalRegister';
 import PatrimonyRegister from '../patrimony/PatrimonyRegister';
 import PropTypes from 'prop-types';
-// import AppDispatcher from '../AppDispatcher';
-// import ActionType from '../actions/ActionType';
+import AppDispatcher from '../AppDispatcher';
+import ActionType from '../actions/ActionType';
 import {getFinancialPlanning} from '../resources/getModels';
 import RegisterStore from '../stores/RegisterStore';
 
@@ -45,6 +45,10 @@ class StepperClient extends React.Component {
     const id = this.props.match.params.id;
     if (id) {
       getFinancialPlanning(id);
+    } else {
+      AppDispatcher.dispatch({
+        action: ActionType.RESETFORMSTORES
+      });
     }
   }
 

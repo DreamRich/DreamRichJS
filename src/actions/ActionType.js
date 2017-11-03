@@ -87,6 +87,7 @@ const actionTypes = {
     STORE: 'register/get_financial_planning',
     FINANCIALPLANNING: 'register/submit_financial_planning',
   },
+  RESETFORMSTORES: 'reset_stores_forms',
 };
 
 export default actionTypes;

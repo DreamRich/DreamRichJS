@@ -59,6 +59,9 @@ const getFinancialPlanning = (id) => {
   getData(`${routeMap.financial_planning}${id}/`,
     (data) => {
       AppDispatcher.dispatch({
+        action: ActionType.RESETFORMSTORES,
+      });
+      AppDispatcher.dispatch({
         action: ActionType.REGISTER.STORE,
         data: data,
       });

@@ -64,6 +64,9 @@ class RegisterStore extends ReduceStore {
     case ActionType.REGISTER.STORE:
       return {...state, financialPlanning: action.data};
 
+    case ActionType.RESETFORMSTORES:
+      return {stepIndex: 0, financialPlanning: {}};
+
     default:
       return state;
     }

@@ -43,6 +43,9 @@ class PatrimonyStore extends ReduceStore {
     case ActionType.PATRIMONY.SUCCESS:
       return {...state, id: action.id};
 
+    case ActionType.RESETFORMSTORES:
+      return {...state, patrimony: {}};
+
     default:
       return state;
     }

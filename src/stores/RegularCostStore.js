@@ -103,6 +103,9 @@ class RegularCostStore extends ReduceStore {
       });
       return {...state, canSubmit: false};
 
+    case ActionType.RESETFORMSTORES:
+      return {...state, costs: [{index: 0}], regularCostManager: {}};
+
     default:
       return state;
     }
