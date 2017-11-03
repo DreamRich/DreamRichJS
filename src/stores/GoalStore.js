@@ -21,6 +21,14 @@ class GoalStore extends ReduceStore {
   reduce = (state, action) => {
     let goals;
     switch (action.action) {
+
+    case ActionType.GOAL.GETFORMSUCCESS:
+      goals = action.data.goals.map(
+        goal => { goal.index = goal.id; return goal;}
+      );
+      delete action.data['goals'];
+      return {...state, goalManager: action.data, goals};
+
     case ActionType.GOAL.ADD:
       goals = state.goals.slice();
       goals.push({

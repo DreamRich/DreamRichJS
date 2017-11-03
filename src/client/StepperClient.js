@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 // import AppDispatcher from '../AppDispatcher';
 // import ActionType from '../actions/ActionType';
 import {getFinancialPlanning} from '../resources/getModels';
+import RegisterStore from '../stores/RegisterStore';
 
 import Paper from 'material-ui/Paper';
 
@@ -47,9 +48,7 @@ class StepperClient extends React.Component {
     }
   }
 
-  state = {
-    stepIndex: 0,
-  };
+  state = RegisterStore.getState()
 
   getStepContent(stepIndex) {
     const maxSteps = this.forms.length;

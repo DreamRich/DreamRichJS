@@ -51,6 +51,7 @@ const actionTypes = {
     TYPESUCCESS: 'regular_cost/types_success',
     SUBFORM: 'regular_cost/create_subforms',
     SUBFORMSUCCESS: 'regular_cost/success_subforms',
+    GETFORMSUCCESS: 'regular_cost/get_regular_cost_success',
   },
   GOAL:{
     SUBMIT: 'goal/can_submit_forms',
@@ -63,11 +64,13 @@ const actionTypes = {
     HASEND: 'goal/form_toggle',
     SUBFORM: 'goal/create_subforms',
     SUBFORMSUCCESS: 'goal/success_subforms',
+    GETFORMSUCCESS: 'goal/get_goal_success',
   },
   PATRIMONY: {
     FORM: 'patrimony/create_form',
     SUBFORM: 'patrimony/create_subforms',
     SUCCESS: 'patrimony/success',
+    GETFORMSUCCESS: 'patrimony/get_patrimony_success',
   },
   ACTIVE: {
     TYPE: 'active/types',
@@ -82,6 +85,7 @@ const actionTypes = {
   },
   REGISTER: {
     STORE: 'register/get_financial_planning',
+    FINANCIALPLANNING: 'register/submit_financial_planning',
   },
 };
 

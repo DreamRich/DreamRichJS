@@ -22,6 +22,7 @@ class RegularCostStore extends ReduceStore {
   reduce = (state, action) => {
     let costs;
     switch (action.action) {
+
     case ActionType.REGULARCOST.GETFORMSUCCESS:
       costs = action.data.regular_costs.map(
         cost => { cost.index = cost.id; return cost;}
