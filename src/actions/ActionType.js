@@ -80,6 +80,9 @@ const actionTypes = {
     ADD: 'active/add_active_list',
     REMOVE: 'active/remove_active_list',
   },
+  REGISTER: {
+    STORE: 'register/get_financial_planning',
+  },
 };
 
 export default actionTypes;
