@@ -5,11 +5,11 @@ import errorMessages from '../../utils/FormsErrorMessages';
 import SubForm from '../../components/SubForm';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-flexbox-grid';
-import Checkbox from 'material-ui/Checkbox';
 import CardForm from '../../components/CardForm';
 import ActionType from '../../actions/ActionType';
 import ClientStore from '../../stores/ClientStore';
 import AppDispatcher from '../../AppDispatcher';
+import getSelectOption from '../../utils/getSelectOption';
 
 var {
   wordsError,
@@ -84,16 +84,6 @@ export default class ClientDependentForm extends Component {
     );
   }
 
-  getSelectOption(selectOption,isChecked,labelOption){
-    return (
-      <Checkbox
-        label={labelOption}
-        checked={isChecked}
-        onClick={selectOption}
-        style={{margin: '30px 0px 30px 0px'}}
-      />
-    );
-  }
 
   render = () => {
     const subtitleCard = 'Insira as informações correspondentes as ' +
@@ -113,7 +103,7 @@ export default class ClientDependentForm extends Component {
           const index = dependent.index;
           return (
             <div key={index}>
-              {this.getSelectOption(
+              {getSelectOption(
                 this.removeDependent.bind(this, index), true, labelRemove)
               }
               <SubForm
@@ -136,7 +126,7 @@ export default class ClientDependentForm extends Component {
         })
         }
 
-        {this.getSelectOption(this.addDependent, false, labelAdd)}
+        {getSelectOption(this.addDependent, false, labelAdd)}
       </div>
     );
   }
