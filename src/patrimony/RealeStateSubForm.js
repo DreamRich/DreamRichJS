@@ -1,41 +1,31 @@
 import React, {Component} from 'react';
-import SubForm from '../components/SubForm.js';
-import ActionType from '../actions/ActionType.js';
 import PropTypes from 'prop-types';
-import {FormsyText, /* FormsyCheckbox, FormsyDate*/} from 'formsy-material-ui/lib';
 import FormsyToggleYesNo from '../components/FormsyToggleYesNo';
+import ExtraSubForm from './ExtraSubForm';
 
 export default class RealeStateSubForm extends Component {
 
   static propTypes = {
-    parent_id: PropTypes.number
+    parent_id: PropTypes.number,
+    data: PropTypes.object,
+    index: PropTypes.number,
+    canSubmit: PropTypes.bool,
   }
 
   render = () => {
     return(
-      <SubForm
-        title="Bens imobiliários"
-        parent_id={this.props.parent_id}
-        parent_name="patrimony_id"
-        name="realestate"
-        action={ActionType.PATRIMONY.SUBFORM}
+      <ExtraSubForm
+        {...this.props}
+        name='realestates'
+        title='Bens imóveis'
       >
-        <div>
-          <FormsyText
-            name="name"
-            floatingLabelText="Nome"
-            hintText="Nome do bem" />
-          <FormsyText
-            name="value"
-            floatingLabelText="Valor"
-            hintText="Valor do bem" />
-          <FormsyToggleYesNo
-            name="salable"
-            label="É vendavel?"
-            labelPosition='left'
-          />
-        </div>
-      </SubForm>
+        <FormsyToggleYesNo
+          name="salable"
+          label="É vendavel?"
+          labelPosition='left'
+          value={this.props.data.salable}
+        />
+      </ExtraSubForm>
     );
   }
 }

@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import RaisedButton from 'material-ui/RaisedButton';
-import PatrimonyForm from './PatrimonyForm';
-import IncomeForm from './IncomeForm';
+// import PatrimonyForm from './PatrimonyForm';
 import {
   Step,
   Stepper,
@@ -11,17 +10,22 @@ import {
 } from 'material-ui/Stepper';
 import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
+import RealeStateSubForm from './RealeStateSubForm.js';
+import ExtraSubForm from './ExtraSubForm';
 import PatrimonyStore from '../stores/PatrimonyStore';
+import ActiveForm from './ActiveForm';
 
-export default class IncomeSubStepper extends React.Component {
+export default class AssetSubStepper extends React.Component {
 
   static propTypes = {
     stepsNumber: PropTypes.number,
-    patrimony: PropTypes.shape({
-      id: PropTypes.number,
-    }),
-    incomes: PropTypes.array,
+    realestates: PropTypes.array,
+    companyparticipations: PropTypes.array,
+    equipments: PropTypes.array,
+    activemanager: PropTypes.object,
+    actives: PropTypes.array,
     canSubmit: PropTypes.bool,
+    id: PropTypes.number,
   }
 
   state = {stepIndex: 0}
@@ -32,9 +36,9 @@ export default class IncomeSubStepper extends React.Component {
 
   handleChange = () => {
     // Only get some attributes from store
-    const { stepIndex, patrimony: {id} } = PatrimonyStore.getState();
+    const { stepIndex } = PatrimonyStore.getState();
     if (stepIndex < this.props.stepsNumber || stepIndex >= 0) {
-      this.setState({stepIndex, id});
+      this.setState({stepIndex});
     } else {
       this.setStep(this.state.stepIndex);
     }
@@ -91,18 +95,34 @@ export default class IncomeSubStepper extends React.Component {
 
   getContentSteps(){
     const listInformationSteps = [
-      {text: 'FGTS',
-        formComponent:
-          <PatrimonyForm
-            data={this.props.patrimony}
-            canSubmit={this.props.canSubmit}
-          />
+      {text: 'Bens imóveis',
+        formComponent: <RealeStateSubForm
+          parent_id={this.state.id}
+          data={this.props.realestates}
+        />
       },
-      {text: 'Receitas',
+      {text: 'Participação em empresas',
+        formComponent: <ExtraSubForm
+          parent_id={this.state.id}
+          name='companyparticipations'
+          title="Participação em empresa"
+          data={this.props.companyparticipations}
+        />
+      },
+      {text: 'Equipamentos',
+        formComponent: <ExtraSubForm
+          parent_id={this.state.id}
+          name='equipments'
+          title="Equipamentos"
+          data={this.props.equipments}
+        />
+      },
+      {text: 'Ativos',
         formComponent:
-          <IncomeForm
-            parent_id={this.props.patrimony.id}
-            data={this.props.incomes}
+          <ActiveForm
+            parent_id={this.props.id}
+            manager={this.props.activemanager}
+            data={this.props.actives}
             canSubmit={this.props.canSubmit}
           />
       }
@@ -111,7 +131,7 @@ export default class IncomeSubStepper extends React.Component {
     // this is a id in the state
     const stepsList = listInformationSteps.map((obj, index) => {
       return (
-        <Step key={obj.text} disabled={this.state.id === undefined}>
+        <Step key={obj.text} disabled={this.props.id === undefined}>
           <StepButton onClick={() => this.setStep(index)}>
             {obj.text}
           </StepButton>

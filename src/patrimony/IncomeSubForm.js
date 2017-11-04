@@ -49,7 +49,7 @@ export default class IncomeSubForm extends Component {
         title="Receitas"
         parent_id={this.props.parent_id}
         parent_name="patrimony_id"
-        name="income"
+        name="incomes"
         action={ActionType.PATRIMONY.POSTMULTIFORM}
         canSubmit={this.props.canSubmit}
         index={this.props.index}

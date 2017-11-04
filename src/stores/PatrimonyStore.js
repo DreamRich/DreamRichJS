@@ -6,6 +6,7 @@ import {/*postData,*/ postOrPutStrategy} from '../resources/Requests';
 import ActionType from '../actions/ActionType';
 //import {routeMap} from '../routes/RouteMap';
 import getLastIndex from '../utils/getLastIndex';
+import addIndex from '../utils/addIndexItem';
 
 class PatrimonyStore extends ReduceStore {
   constructor(){ super(AppDispatcher); }
@@ -25,11 +26,7 @@ class PatrimonyStore extends ReduceStore {
     switch (action.action) {
 
     case ActionType.PATRIMONY.GETFORMSUCCESS:
-      arr = action.data.incomes.map( item => {
-        item.index = item.id;
-        return item;
-      });
-      return {...state, patrimony: action.data, income: arr};
+      return {...state, ...this.getPatrimonyData(action.data)};
 
     case ActionType.PATRIMONY.SUBMIT:
       return {...state, canSubmit: action.canSubmit};
@@ -100,6 +97,31 @@ class PatrimonyStore extends ReduceStore {
       return state;
     }
   }
+
+  getPatrimonyData = (data) => {
+    const arrays = ['incomes', 'realestates', 'equipments',
+      'companyparticipations'];
+
+    /* Create a new object with keys in arrays and add the index
+     * in each object to render correctly in forms
+    */
+    const newState = {};
+    arrays.forEach( item => {
+      if (data[item]) {
+        newState[item] = data[item].map(addIndex);
+      }
+      delete data[item];
+    });
+
+    newState.activemanager = data.activemanager;
+    newState.actives = data.activemanager.actives.map(addIndex);
+    delete newState.activemanager['actives'];
+    delete data['activemanager'];
+    newState.patrimony = data;
+    return newState;
+
+  }
+
 }
 
 export default new PatrimonyStore();

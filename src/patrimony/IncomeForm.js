@@ -9,7 +9,7 @@ export default class IncomeForm extends Component {
 
   static propTypes = {
     parent_id: PropTypes.number,
-    data: PropTypes.array.isRequired,
+    data: PropTypes.array,
     canSubmit: PropTypes.bool,
   }
 

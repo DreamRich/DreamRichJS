@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 // import RaisedButton from 'material-ui/RaisedButton';
-import RealeStateSubForm from './RealeStateSubForm.js';
-import ExtraSubForm from './ExtraSubForm';
 import PatrimonyStore from '../stores/PatrimonyStore';
 import PropTypes from 'prop-types';
 import IncomeSubStepper from './IncomeSubStepper';
+import AssetSubStepper from './AssetSubStepper';
 
 export default class PatrimonyRegister extends Component {
 
@@ -33,26 +32,20 @@ export default class PatrimonyRegister extends Component {
           patrimony={this.state.patrimony}
           stepsNumber={2}
           canSubmit={this.state.canSubmit}
-          income={this.state.income}
+          incomes={this.state.incomes}
         />
       );
     } else {
       return (
-        <div>
-          <RealeStateSubForm
-            parent_id={this.state.id}
-          />
-          <ExtraSubForm
-            parent_id={this.state.id}
-            name='company'
-            title="Participação em empresa"
-          />
-          <ExtraSubForm
-            parent_id={this.state.id}
-            name='equipament'
-            title="Equipamentos"
-          />
-        </div>
+        <AssetSubStepper
+          id={this.state.patrimony.id}
+          stepsNumber={4}
+          realestates={this.state.realestates}
+          equipments={this.state.equipments}
+          companyparticipations={this.state.companyparticipations}
+          activemanager={this.state.activemanager}
+          actives={this.state.actives}
+        />
       );
     }
   }

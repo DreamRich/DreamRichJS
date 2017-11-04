@@ -10,6 +10,10 @@ export default class ExtraSubForm extends Component {
     parent_id: PropTypes.number,
     title: PropTypes.string,
     name: PropTypes.string,
+    data: PropTypes.object,
+    index: PropTypes.number,
+    children: PropTypes.element,
+    canSubmit: PropTypes.bool,
   }
 
   render = () => {
@@ -19,17 +23,23 @@ export default class ExtraSubForm extends Component {
         parent_id={this.props.parent_id}
         parent_name="patrimony_id"
         name={this.props.name}
-        action={ActionType.PATRIMONY.SUBFORM}
+        action={ActionType.PATRIMONY.POSTMULTIFORM}
+        canSubmit={this.props.canSubmit}
       >
         <div>
           <FormsyText
             name="name"
             floatingLabelText="Nome"
-            hintText="" />
+            hintText="Nome do patrimonio"
+            value={this.props.data.name}
+          />
           <FormsyText
             name="value"
             floatingLabelText="Valor"
-            hintText="Valor do patrimônio" />
+            hintText="Valor do patrimônio"
+            value={this.props.data.value}
+          />
+          {this.props.children}
         </div>
       </SubForm>
     );

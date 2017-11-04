@@ -1,71 +1,92 @@
 import React, {Component} from 'react';
-import {FormsyText, FormsySelect} from 'formsy-material-ui/lib';
+import ActiveSubForm from './ActiveSubForm';
 import ActionType from '../actions/ActionType';
 import AppDispatcher from '../AppDispatcher';
-import MenuItem from 'material-ui/MenuItem';
+import ActiveStore from '../stores/ActiveStore';
+import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
-import SubForm from '../components/SubForm';
-//import RaisedButton from 'material-ui/RaisedButton';
+import RaisedButton from 'material-ui/RaisedButton';
 
 
 export default class ActiveForm extends Component {
 
   constructor(props) {
     super(props);
+    this.state = ActiveStore.getState();
   }
 
   static propTypes = {
-    parent_id: PropTypes.number,
-    types: PropTypes.array,
+    patrimony_id: PropTypes.number,
   }
 
   componentWillMount = () => {
-    AppDispatcher.dispatch({
-      action: ActionType.ACTIVE.TYPE
+    this.setState({
+      listener: ActiveStore.addListener(this.handleUpdate)
     });
   }
 
-  getOptions = () => {
-    return this.props.types.map( (type) =>
-      <MenuItem key={type.id} value={type.id} primaryText={type.name} />
-    );
+  componentWillUnmount = () => {
+    this.state.listener.remove();
+  }
+
+  handleUpdate = () => {
+    this.setState(ActiveStore.getState());
+  }
+
+  submitBase = (event) => {
+    event.preventDefault();
+    AppDispatcher.dispatch({
+      action: ActionType.ACTIVE.MANAGER,
+      data: {patrimony_id: 1/*this.props.patrimony_id*/}
+    });
+  }
+
+  add = () => {
+    AppDispatcher.dispatch({
+      action: ActionType.ACTIVE.ADD
+    });
+  }
+
+  remove = (id) => {
+    AppDispatcher.dispatch({
+      action: ActionType.ACTIVE.REMOVE,
+      id: id
+    });
   }
 
   render = () => {
     return (
-      <SubForm
-        title="Ativo"
-        parent_id={this.props.parent_id}
-        parent_name="active_manager_id"
-        name='active'
-        action={ActionType.ACTIVE.FORM}
-      >
-        <FormsySelect
-          name="active_type_id"
-          floatingLabelText="Tipo"
-          maxHeight={300}
+      <Paper className="Paper">
+        {this.state.actives_idx.map( idx => 
+          <div key={idx}>
+            <ActiveSubForm
+              parent_id={this.state.id}
+              types={this.state.types}
+            />
+            <RaisedButton
+              primary 
+              onClick={this.remove.bind(this, idx)} 
+              label='Remover'
+            />
+          </div>
+        )}
+        <RaisedButton
+          primary 
+          type='submit'
+          onClick={this.add} 
+          label='Adicionar'
+        />
+        <form 
+          onSubmit={this.submitBase}
         >
-          {this.getOptions()}
-        </FormsySelect>
-        <FormsyText
-          name='name'
-          floatingLabelText='Nome'
-          hintText='Nome de referência'
-        />
-        <FormsyText
-          name='value'
-          floatingLabelText='Valor investido'
-          hintText='000.00'
-        />
-        <FormsyText
-          name='rate'
-          floatingLabelText='Taxa (%CDI)'
-          hintText='100.0'
-          onChange={this.onRateChange}
-        />
-      </SubForm>
+          <RaisedButton
+            primary
+            type="submit"
+            label="Enviar"
+          />
+        </form>
+      </Paper>
     );
   }
 }
-
 
