@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import PatrimonyForm from './PatrimonyForm';
 // import RaisedButton from 'material-ui/RaisedButton';
 import RealeStateSubForm from './RealeStateSubForm.js';
-import IncomeSubForm from './IncomeSubForm.js';
 import ExtraSubForm from './ExtraSubForm';
 import PatrimonyStore from '../stores/PatrimonyStore';
 import PropTypes from 'prop-types';
+import IncomeSubStepper from './IncomeSubStepper';
 
 export default class PatrimonyRegister extends Component {
 
@@ -30,12 +29,12 @@ export default class PatrimonyRegister extends Component {
   render() {
     if (this.props.main) {
       return (
-        <div>
-          <PatrimonyForm />
-          <IncomeSubForm
-            parent_id={this.state.id}
-          />
-        </div>
+        <IncomeSubStepper
+          patrimony={this.state.patrimony}
+          stepsNumber={2}
+          canSubmit={this.state.canSubmit}
+          income={this.state.income}
+        />
       );
     } else {
       return (
