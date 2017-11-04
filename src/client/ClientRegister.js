@@ -56,8 +56,8 @@ class ClientRegister extends Component {
   getDivider = () => <Divider className='Divider' />
 
   render() {
-    let subtitleCard = 'Insira as informações básicas do cliente.';
-    let listInformationSteps = [
+    const subtitleCard = 'Insira as informações básicas do cliente.';
+    const listInformationSteps = [
       {
         text: 'Cadastrar Cliente',
         formComponent:
