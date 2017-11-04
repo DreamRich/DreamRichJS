@@ -70,8 +70,8 @@ class ClientRegister extends Component {
   }
 
   render() {
-    let subtitleCard = 'Insira as informações básicas do cliente.';
-    let listInformationSteps = [
+    const subtitleCard = 'Insira as informações básicas do cliente.';
+    const listInformationSteps = [
       {
         text: 'Cadastrar Cliente',
         formComponent:

@@ -4,41 +4,52 @@ import ActionType from '../actions/ActionType';
 import AppDispatcher from '../AppDispatcher';
 import ClientStore from '../stores/ClientStore';
 import '../stylesheet/RegisterForms.sass';
-import ClientDependentForm from '../client/form/ClientDependentForm';
 import ClientBankAccountForm from '../client/form/ClientBankAccountForm';
 import ClientAddressForm from '../client/form/ClientAddressForm';
 import ClientForm from '../client/form/ClientForm';
 import ClientSpouseForm from '../client/form/ClientSpouseForm';
 import { Row, Col } from 'react-flexbox-grid';
 
+import {getFinancialPlanning} from '../resources/getModels';
+import _ from 'underscore';
+import PropTypes from 'prop-types';
+
 class ClientDashboard extends Component {
 
-  constructor(props){
-    super(props);
+  state = ClientStore.getState()
 
-    this.state = ClientStore.getState();
-  }
+  componentWillMount = () => this.setState({
+    listener: ClientStore.addListener(this.handleChange)
+  })
 
-  componentWillMount = () => {
-    this.setState({listener: ClientStore.addListener(this.handleChange)});
+  componentWillUnmount = () => this.state.listener.remove()
+
+  handleChange = () => this.setState(ClientStore.getState())
+
+  static propTypes = {
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        id: PropTypes.string,
+      }),
+    }),
   }
 
   componentDidMount = () => {
+    const id = this.props.match.params.id;
+    getFinancialPlanning(id);
     AppDispatcher.dispatch({
       action: ActionType.CLIENT.DATAFORM
     });
   }
 
-  componentWillUnmount = () => {
-    this.state.listener.remove();
-  }
-
-  handleChange = () => {
-    this.setState(ClientStore.getState());
-  }
-
   render() {
-    let subtitleCard = 'Informações básicas do cliente.';
+
+    console.log(this.state.spouse);
+    const spouse = ( !_.isEmpty(this.state.spouse)  ? <ClientSpouseForm
+      title='Cônjuge'
+      subtitleCard={'Informações do cônjuge deste cliente'}
+      data={this.state.spouse}
+    /> : <h1>Adicionar</h1>);
 
     return (
       <div>
@@ -46,17 +57,13 @@ class ClientDashboard extends Component {
           <Col xs>
             <ClientForm
               title='Cliente'
-              subtitleCard={subtitleCard}
+              subtitleCard='Informações básicas do cliente.'
               data={this.state.active_client}
               isDisable={true}
             />
           </Col>
           <Col xs>
-            <ClientSpouseForm
-              title='Cônjuge'
-              subtitleCard={'Informações do cônjuge deste cliente'}
-              data={this.state.spouse}
-            />
+            {spouse}
           </Col>
         </Row>
         <Row around="xs" style={{marginTop: '30px'}}>
@@ -73,10 +80,12 @@ class ClientDashboard extends Component {
             />
           </Col>
         </Row>
-        <Row around="xs">
-          <ClientDependentForm
-            id={this.state.active_client.id}
-          />
+        <Row around="xs" style={{marginTop: '30px'}}>
+          + dependente?
+          <Col xs={9}>
+            ...
+
+          </Col>
         </Row>
       </div>
     );

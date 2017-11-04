@@ -33,7 +33,7 @@ export default class Routers extends Component{
         <Route exact path="/login" component={ LoginPage } />
         <AuthorizedRoute permission="change_own_client_data" exact path="/register/client" component={ ClientRegister } />
 
-        <AuthorizedRoute permission="change_own_client_data" exact path="/dashboard" component={ ClientDashboard } />
+        <AuthorizedRoute permission="change_own_client_data" exact path="/dashboard/:id" component={ ClientDashboard } />
 
         <AuthorizedRoute permission="change_own_client_data" exact path="/register/steps/:id?" component={ StepperClient } />
         <AuthorizedRoute permission="allow_any" path="/goals" component={ GoalChart } />
