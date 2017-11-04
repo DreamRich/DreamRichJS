@@ -11,12 +11,17 @@ class PatrimonyStore extends ReduceStore {
 
   getInitialState(){
     return {
-      id: undefined
+      id: undefined,
+      patrimony: {},
     };
   }
 
   reduce = (state, action) => {
     switch (action.action) {
+
+    case ActionType.PATRIMONY.GETFORMSUCCESS:
+      return {...state, patrimony: action.data};
+
     case ActionType.PATRIMONY.FORM:
       postData(
         routeMap.patrimony,
@@ -37,6 +42,9 @@ class PatrimonyStore extends ReduceStore {
 
     case ActionType.PATRIMONY.SUCCESS:
       return {...state, id: action.id};
+
+    case ActionType.RESETFORMSTORES:
+      return {...state, patrimony: {}};
 
     default:
       return state;

@@ -42,15 +42,19 @@ const actionTypes = {
   },
   REFRESH_LOGIN: 'refresh_token',
   REGULARCOST: {
-    ADD: 'fixed_cost/add',
-    REMOVE: 'fixed_cost/remove',
-    MANAGER: 'fixed_cost/submit_form',
-    SUCCESS: 'fixed_cost/form_success',
-    TYPE: 'fixed_cost/types',
-    TYPESUCCESS: 'fixed_cost/types_success',
-    SUBFORM: 'fixed_cost/create_subforms',
+    SUBMIT: 'regular_cost/can_submit_forms',
+    ADD: 'regular_cost/add',
+    REMOVE: 'regular_cost/remove',
+    MANAGER: 'regular_cost/submit_form',
+    SUCCESS: 'regular_cost/form_success',
+    TYPE: 'regular_cost/types',
+    TYPESUCCESS: 'regular_cost/types_success',
+    SUBFORM: 'regular_cost/create_subforms',
+    SUBFORMSUCCESS: 'regular_cost/success_subforms',
+    GETFORMSUCCESS: 'regular_cost/get_regular_cost_success',
   },
   GOAL:{
+    SUBMIT: 'goal/can_submit_forms',
     ADD: 'goal/add',
     REMOVE: 'goal/remove',
     MANAGER: 'goal/submit_form',
@@ -59,11 +63,14 @@ const actionTypes = {
     TYPESUCCESS: 'goal/types_success',
     HASEND: 'goal/form_toggle',
     SUBFORM: 'goal/create_subforms',
+    SUBFORMSUCCESS: 'goal/success_subforms',
+    GETFORMSUCCESS: 'goal/get_goal_success',
   },
   PATRIMONY: {
     FORM: 'patrimony/create_form',
     SUBFORM: 'patrimony/create_subforms',
     SUCCESS: 'patrimony/success',
+    GETFORMSUCCESS: 'patrimony/get_patrimony_success',
   },
   ACTIVE: {
     TYPE: 'active/types',
@@ -76,6 +83,11 @@ const actionTypes = {
     ADD: 'active/add_active_list',
     REMOVE: 'active/remove_active_list',
   },
+  REGISTER: {
+    STORE: 'register/get_financial_planning',
+    FINANCIALPLANNING: 'register/submit_financial_planning',
+  },
+  RESETFORMSTORES: 'reset_stores_forms',
 };
 
 export default actionTypes;

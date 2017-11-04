@@ -8,6 +8,7 @@ const routeMap = {
   goal: '/api/goal/goal/',
   goal_manager: '/api/goal/goal_manager/',
   goal_type: '/api/goal/goal_type/',
+  financial_planning: '/api/financial_planning/financial_planning/',
   cost_type: '/api/financial_planning/cost_type/',
   regular_cost: '/api/financial_planning/regular_cost/',
   cost_manager: '/api/financial_planning/cost_manager/',
@@ -22,6 +23,7 @@ const routeMap = {
   company: '/api/patrimony/companyparticipation/',
   equipament: '/api/patrimony/equipment/',
   address_type: '/api/client/address/type_of_address/',
+  total_resource_for_annual_goals: '/api/financial_planning/financial_planning/14/',
 };
 
 const valid_formats = ['json', 'html', 'xml'];

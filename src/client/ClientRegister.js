@@ -34,7 +34,7 @@ class ClientRegister extends Component {
   }
 
   componentDidMount = () => {
-    AppDispatcher.dispatch({
+    AppDispatcher.dispatchDefer({
       action: ActionType.CLIENT.DATAFORM
     });
   }
@@ -89,6 +89,7 @@ class ClientRegister extends Component {
           <ClientSpouseForm
             title='Cônjuge'
             subtitleCard={'Insira as informações do cônjuge deste cliente'}
+            id={this.state.active_client.id}
             canSubmit={this.state.canSubmit}
             data={this.state.spouse}
           />

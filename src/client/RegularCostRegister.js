@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
-import Paper from 'material-ui/Paper';
+// import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import RegularCostStore from '../stores/RegularCostStore';
 import '../stylesheet/RegisterForms.sass';
 import RegularCostForm from './form/RegularCostForm';
+import getSelectOption from '../utils/getSelectOption';
 
 export default class RegularCostRegister extends Component {
 
@@ -20,15 +21,15 @@ export default class RegularCostRegister extends Component {
     });
   }
 
-  removeCost = (key) => {
+  removeCost = (index) => {
     AppDispatcher.dispatch({
       action: ActionType.REGULARCOST.REMOVE,
-      key: key
+      index: index
     });
   }
 
   componentWillMount = () => {
-    this.setState({...this.state,
+    this.setState({
       listener: RegularCostStore.addListener(this.handleChange)
     });
 
@@ -45,51 +46,49 @@ export default class RegularCostRegister extends Component {
     this.setState(RegularCostStore.getState());
   }
 
-  submitBase = (event) => {
-    event.preventDefault();
+  submit = () => {
+    AppDispatcher.dispatch({
+      action: ActionType.REGULARCOST.SUBMIT
+    });
+  }
+
+  componentDidMount = () => {
+    // Create a regular cost when mount component because
+    // create it when create regular costs cause Invariant Violation
     AppDispatcher.dispatch({
       action: ActionType.REGULARCOST.MANAGER
     });
   }
 
   render() {
+    const labelRemove = 'Tenho este custo fixo?';
+    const labelAdd = (this.state.costs.length === 0 ?
+      'Possui custo fixo? (Marque o quadrado ao lado caso haja).' :
+      'Possui mais custos fixos? (Marque o quadrado ao lado caso haja).');
     return (
       <div>
-        <h1> Cadastro de custo fixo </h1>
-
-        <Paper className="Paper">
-
-
-          {this.state.costs.map( key => 
-            <div key={key}>
-              <RegularCostForm
-                id={this.state.id}
-                types={this.state.types}
-              />
-              <RaisedButton
-                primary
-                label="remove"
-                onClick={this.removeCost.bind(this, key)}
-              />
-            </div>
-          )}
-          <RaisedButton
-            primary
-            label="add"
-            onClick={this.addCost}
-          />
-
-          <form 
-            onSubmit={this.submitBase}
-          >
-            <RaisedButton
-              primary
-              type="submit"
-              label="Enviar"
+        {this.state.costs.map( cost =>
+          <div key={cost.index}>
+            {getSelectOption(
+              this.removeCost.bind(this, cost.index), true, labelRemove)
+            }
+            <RegularCostForm
+              id={this.state.regularCostManager.id}
+              types={this.state.types}
+              canSubmit={this.state.canSubmit}
+              data={cost}
+              index={cost.index}
             />
-          </form>
+          </div>
+        )}
+        {getSelectOption(this.addCost, false, labelAdd)}
 
-        </Paper>
+        <RaisedButton
+          primary
+          label="Salvar"
+          style={{float: 'right'}}
+          onClick={this.submit}
+        />
 
       </div>
     );

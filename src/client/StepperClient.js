@@ -8,6 +8,8 @@ import PatrimonyRegister from '../patrimony/PatrimonyRegister';
 import PropTypes from 'prop-types';
 import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
+import {getFinancialPlanning} from '../resources/getModels';
+import RegisterStore from '../stores/RegisterStore';
 
 import Paper from 'material-ui/Paper';
 
@@ -21,7 +23,7 @@ import ArrowForwardIcon from 'material-ui/svg-icons/navigation/arrow-forward';
 class StepperClient extends React.Component {
   constructor(props) {
     super(props);
-    
+ 
     this.forms = [
       <ClientRegister key={1} />,
       <RegularCostRegister key={2} />,
@@ -30,7 +32,7 @@ class StepperClient extends React.Component {
       <div key={5} >Proteção </div>,
       <GoalRegister key={6} />];
   }
-  
+
   static propTypes = {
     match: PropTypes.shape({
       params: PropTypes.shape({
@@ -41,14 +43,16 @@ class StepperClient extends React.Component {
 
   componentDidMount = () => {
     const id = this.props.match.params.id;
-    AppDispatcher.dispatch({
-      action: ActionType.CLIENT.ID,
-      id: id
-    });
+    if (id) {
+      getFinancialPlanning(id);
+    } else {
+      AppDispatcher.dispatch({
+        action: ActionType.RESETFORMSTORES
+      });
+    }
   }
-  state = {
-    stepIndex: 0,
-  };
+
+  state = RegisterStore.getState()
 
   getStepContent(stepIndex) {
     const maxSteps = this.forms.length;

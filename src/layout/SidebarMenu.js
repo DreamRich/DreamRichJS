@@ -7,6 +7,10 @@ import makeMenuItem from '../utils/makeMenuItem';
 import PersonAdd from 'material-ui/svg-icons/social/person-add';
 // import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {white} from 'material-ui/styles/colors';
+import {Link} from 'react-router-dom';
+import MenuItem from 'material-ui/MenuItem';
+import LogoutComponent from '../auth/LogoutComponent';
+import {AuthorizedLink} from '../routes/Router';
 
 
 //{makeMenuItem('change_own_client_data','/register/client','New Client', <PersonAdd color={white} />, styleText)}
@@ -28,6 +32,7 @@ export default class SidebarMenu extends React.Component {
 
   static propTypes = {
     navDrawerOpen: PropTypes.bool.isRequired,
+    auth: PropTypes.bool.isRequired,
   }
 
   render() {
@@ -43,8 +48,23 @@ export default class SidebarMenu extends React.Component {
           <PersonAdd color={white} />,styleText, 'MenuItem')}
         {makeMenuItem('allow_any','/goals','Goal',
           <PersonAdd color={white} />,styleText, 'MenuItem')}
-        {makeMenuItem('allow_any','/login','Login',
-          <PersonAdd color={white} />,styleText, 'MenuItem')}
+
+        {!this.props.auth && <Link to='/login'>
+          <MenuItem 
+            className='MenuItem'
+            leftIcon={<PersonAdd color={white} />}
+            primaryText='Login'
+          />
+        </Link>
+        }
+        <AuthorizedLink permission='allow_any'
+          to={{}}>
+          <LogoutComponent 
+            className='MenuItem'
+            leftIcon={<PersonAdd color={white} />}
+            primaryText='Sign out'
+          />
+        </AuthorizedLink>
       </Drawer>
     );
   }

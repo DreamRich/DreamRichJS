@@ -2,10 +2,11 @@
 
 import {ReduceStore} from 'flux/utils';
 import AppDispatcher from '../AppDispatcher';
-import {postData, getData, postOrPutStrategy} from '../resources/Requests';
+import {postData, postOrPutStrategy} from '../resources/Requests';
 //import {Auth} from '../auth/Auth';
 import ActionType from '../actions/ActionType';
-import {routeMap} from '../routes/RouteMap';
+//import {routeMap} from '../routes/RouteMap';
+import getLastIndex from '../utils/getLastIndex';
 // import {/*getUrl, */routeMap} from '../routes/RouteMap';
 
 class ClientStore extends ReduceStore {
@@ -26,19 +27,6 @@ class ClientStore extends ReduceStore {
 
   reduce = (state, action) => {
     switch (action.action) {
-
-    case ActionType.CLIENT.ID:
-      getData(
-        routeMap.active_client + action.id + '/',
-        (data) => {
-          AppDispatcher.dispatch({
-            action: ActionType.CLIENT.GETFORMSUCCESS,
-            data: data,
-            state: 'active_client',
-          });
-        }
-      );
-      return state;
 
     case ActionType.CLIENT.GETFORMSUCCESS:
       return {...state, ...this.getClientState(action.data)};
@@ -102,26 +90,26 @@ class ClientStore extends ReduceStore {
 
     case ActionType.CLIENT.ADDDEPENDENT:
       state.dependents.push(
-        {index: this.getLastIndex(state) + 1}
+        {index: getLastIndex(state.dependents) + 1}
       );
       return {...state};
 
     case ActionType.CLIENT.REMOVEDEPENDENT:
-      var dependents = state.dependents.slice();
-      return {...state, dependents: dependents.filter(
+      return {...state, dependents: state.dependents.filter(
         e => e.index !== action.key
       )};
+
+    case ActionType.RESETFORMSTORES:
+      return {...state,
+        dependents: [{index: 0}],
+        spouse: {},
+        active_client: {}};
 
     default:
       return state;
     }
   }
 
-  getLastIndex = (state) => {
-    const index = state.dependents.length-1;
-    const lastDependent = state.dependents[index];
-    return lastDependent === undefined ? 0 : lastDependent.index;
-  }
 
   getClientState = (data) => {
     // Get data from a action and mount a array of data for a client

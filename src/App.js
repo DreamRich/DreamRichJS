@@ -39,7 +39,7 @@ class App extends Component {
   handleChange = () => this.setState(AppStore.getState())
 
   render = () => {
-    let { navDrawerOpen } = this.state;
+    const { navDrawerOpen } = this.state;
     const paddingLeftDrawerOpen = 250;
 
     const styles = {
@@ -58,7 +58,7 @@ class App extends Component {
           handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer}
           auth={this.state.auth}
         />
-        <SidebarMenu  navDrawerOpen={this.state.navDrawerOpen} />
+        <SidebarMenu auth={this.state.auth} navDrawerOpen={this.state.navDrawerOpen} />
         <div style={styles.container}>
           <Routers />
         </div>

@@ -1,15 +1,40 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
+import {Redirect, withRouter} from 'react-router';
+import { Row, Col } from 'react-flexbox-grid';
 import Title from '../components/Title';
 import Subtitle from '../components/Subtitle';
 import LoginForm from './form/LoginForm';
-import { Row, Col } from 'react-flexbox-grid';
+import LoginStore from '../stores/LoginStore';
 
 // import {AuthorizedRoute, AuthorizedLink} from './routes/Router';
 
-export default class LoginPage extends Component{
+class LoginPage extends Component{
+
+  static propTypes = {
+    history: PropTypes.object,
+    location: PropTypes.object,
+  }
+
+  componentWillMount = () => this.setState({
+    listener: LoginStore.addListener(this.handleChange)
+  });
+
+  componentWillUnmount = () => this.state.listener.remove()
+
+  handleChange = () => {
+    const {auth} = LoginStore.getState();
+    this.setState({auth});
+  }
 
   render(){
+    if (this.state.auth) {
+      const state = this.props.location.state;
+      const to = (state && state.from ? state.from : {pathname: '/'});
+      return <Redirect to={to} />;
+    }
+
     return (
       <Row>
         <Col xs={12}>
@@ -26,3 +51,5 @@ export default class LoginPage extends Component{
     );
   }
 }
+
+export default withRouter(LoginPage);
