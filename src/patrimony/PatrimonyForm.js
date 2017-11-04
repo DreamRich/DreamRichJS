@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Form} from 'formsy-react';
+import Formsy from 'formsy-react';
 import {FormsyText} from 'formsy-material-ui/lib';
 import ActionType from '../actions/ActionType';
 import AppDispatcher from '../AppDispatcher';
@@ -17,7 +17,7 @@ export default class PatrimonyForm extends Component {
 
   render = () => {
     return (
-      <Form
+      <Formsy.Form
         ref={ref => this.form = ref}
         onValidSubmit={this.submitForm}
       >
@@ -28,7 +28,7 @@ export default class PatrimonyForm extends Component {
           hintText='O quanto você recebe de fgts?'
           floatingLabelText='FGTS'
         />
-      </Form>
+      </Formsy.Form>
     );
   }
 }

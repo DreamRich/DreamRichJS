@@ -25,10 +25,10 @@ class StepperClient extends React.Component {
     super(props);
  
     this.forms = [
+      <PatrimonyRegister key={3} />,
+      <PatrimonyRegister key={4} main={false}/>,
       <ClientRegister key={1} />,
       <RegularCostRegister key={2} />,
-      <div key={3} >Renda para fora de patrimonio</div>,
-      <PatrimonyRegister key={4} />,
       <div key={5} >Proteção </div>,
       <GoalRegister key={6} />];
   }
@@ -62,7 +62,7 @@ class StepperClient extends React.Component {
   handleNext = () => {
     const {stepIndex} = this.state;
 
-    if (stepIndex < 6) {
+    if (stepIndex < 5) {
       this.setState({stepIndex: stepIndex + 1});
     }
   }
@@ -115,7 +115,7 @@ class StepperClient extends React.Component {
             />
           }
           <RaisedButton
-            label={stepIndex === 6 ? 'Finalizar' : 'Seguir para o passo seguinte'}
+            label={stepIndex === 5 ? 'Finalizar' : 'Seguir para o passo seguinte'}
             primary={true}
             onClick={this.handleNext}
             style={{float: 'right'}}
