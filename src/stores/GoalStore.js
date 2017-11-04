@@ -3,7 +3,7 @@
 import {ReduceStore} from 'flux/utils';
 import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
-import {postOrPutStrategy, getData} from '../resources/Requests';
+import {postData, postOrPutStrategy, getData} from '../resources/Requests';
 import getLastIndex from '../utils/getLastIndex';
 import {/*getUrl, */routeMap} from '../routes/RouteMap';
 
@@ -21,6 +21,14 @@ class GoalStore extends ReduceStore {
   reduce = (state, action) => {
     let goals;
     switch (action.action) {
+
+    case ActionType.GOAL.GETFORMSUCCESS:
+      goals = action.data.goals.map(
+        goal => { goal.index = goal.id; return goal;}
+      );
+      delete action.data['goals'];
+      return {...state, goalManager: action.data, goals};
+
     case ActionType.GOAL.ADD:
       goals = state.goals.slice();
       goals.push({
@@ -36,16 +44,17 @@ class GoalStore extends ReduceStore {
       };
 
     case ActionType.GOAL.MANAGER:
-      postOrPutStrategy(
-        state.goalManager,
-        routeMap.goal_manager,
-        {},
-        (data) => AppDispatcher.dispatch({
-          action: ActionType.GOAL.SUCCESS,
-          data: data,
-          state: 'goalManager'
-        })
-      );
+      if (!state.goalManager.id) {
+        postData(
+          routeMap.goal_manager,
+          {},
+          (data) => AppDispatcher.dispatch({
+            action: ActionType.GOAL.SUCCESS,
+            data: data,
+            state: 'goalManager'
+          })
+        );
+      }
       return state;
 
     case ActionType.GOAL.SUCCESS:
@@ -99,12 +108,15 @@ class GoalStore extends ReduceStore {
     case ActionType.GOAL.SUBFORMSUCCESS:
       state.goals.find( (goal, index) => {
         if (goal.index === action.index){
-          action.data.index = index;
+          action.data.index = action.index;
           state.goals[index] = action.data;
           return true;
         }
       });
       return {...state, canSubmit: false};
+
+    case ActionType.RESETFORMSTORES:
+      return {...state, goals: [{index: 0}], goalManager: {}};
 
     default:
       return state;

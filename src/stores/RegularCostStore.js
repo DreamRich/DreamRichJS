@@ -3,7 +3,7 @@
 import {ReduceStore} from 'flux/utils';
 import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
-import {getData, postOrPutStrategy} from '../resources/Requests';
+import {postData, getData, postOrPutStrategy} from '../resources/Requests';
 import getLastIndex from '../utils/getLastIndex';
 import {/*getUrl, */routeMap} from '../routes/RouteMap';
 
@@ -22,6 +22,14 @@ class RegularCostStore extends ReduceStore {
   reduce = (state, action) => {
     let costs;
     switch (action.action) {
+
+    case ActionType.REGULARCOST.GETFORMSUCCESS:
+      costs = action.data.regular_costs.map(
+        cost => { cost.index = cost.id; return cost;}
+      );
+      delete action.data['regular_costs'];
+      return {...state, regularCostManager: action.data, costs};
+
     case ActionType.REGULARCOST.ADD:
       costs = state.costs.slice();
       costs.push({index: getLastIndex(state.costs) + 1});
@@ -36,16 +44,17 @@ class RegularCostStore extends ReduceStore {
       };
 
     case ActionType.REGULARCOST.MANAGER:
-      postOrPutStrategy(
-        state.regularCostManager,
-        routeMap.cost_manager,
-        {},
-        (data) => AppDispatcher.dispatch({
-          action: ActionType.REGULARCOST.SUCCESS,
-          data: data,
-          state: 'regularCostManager'
-        })
-      );
+      if (!state.regularCostManager.id) {
+        postData(
+          routeMap.cost_manager,
+          {},
+          (data) => AppDispatcher.dispatch({
+            action: ActionType.REGULARCOST.SUCCESS,
+            data: data,
+            state: 'regularCostManager'
+          })
+        );
+      }
       return state;
 
     case ActionType.REGULARCOST.SUCCESS:
@@ -87,12 +96,15 @@ class RegularCostStore extends ReduceStore {
     case ActionType.REGULARCOST.SUBFORMSUCCESS:
       state.costs.find( (cost, index) => {
         if (cost.index === action.index){
-          action.data.index = index;
+          action.data.index = cost.id;
           state.costs[index] = action.data;
           return true;
         }
       });
       return {...state, canSubmit: false};
+
+    case ActionType.RESETFORMSTORES:
+      return {...state, costs: [{index: 0}], regularCostManager: {}};
 
     default:
       return state;
