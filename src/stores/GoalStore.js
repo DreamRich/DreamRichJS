@@ -103,7 +103,7 @@ class GoalStore extends ReduceStore {
           });
         }
       );
-      return state;
+      return {...state, canSubmit: false};
 
     case ActionType.GOAL.SUBFORMSUCCESS:
       state.goals.find( (goal, index) => {

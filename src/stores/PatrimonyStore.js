@@ -55,6 +55,9 @@ class PatrimonyStore extends ReduceStore {
         [action.state]: action.data,
         stepIndex: state.stepIndex + 1};
 
+    case ActionType.PATRIMONY.MANAGERSUCCESS:
+      return {...state, activemanager: action.data};
+
     case ActionType.PATRIMONY.POSTMULTIFORM:
       item = state[action.state].find( item => item.index === action.index);
       postOrPutStrategy(
@@ -120,8 +123,9 @@ class PatrimonyStore extends ReduceStore {
       delete data[item];
     });
 
-    newState.activemanager = data.activemanager;
-    newState.actives = data.activemanager.actives.map(addIndex);
+    console.log(data);
+    newState.activemanager = data.activemanager || {actives: []};
+    newState.actives = newState.activemanager.actives.map(addIndex);
     delete newState.activemanager['actives'];
     delete data['activemanager'];
     newState.patrimony = data;

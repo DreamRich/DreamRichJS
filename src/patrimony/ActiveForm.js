@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ActiveSubForm from './ActiveSubForm';
-import ActionType from '../actions/ActionType';
-import AppDispatcher from '../AppDispatcher';
+// import ActionType from '../actions/ActionType';
+// import AppDispatcher from '../AppDispatcher';
 // import ActiveStore from '../stores/ActiveStore';
 // import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import MultiForm from './MultiForm';
 import PatrimonyStore from '../stores/PatrimonyStore';
 import {getActiveTypes} from '../resources/getFormData';
+import {postActiveManager} from '../resources/saveModels';
 
 const ActiveMultiForm = MultiForm(ActiveSubForm);
 
@@ -23,14 +24,13 @@ export default class ActiveForm extends Component {
   }
 
   componentWillMount = () => {
-    const {types} = PatrimonyStore.getState();
+    const {types, activemanager} = PatrimonyStore.getState();
     if (!types || types.length === 0) {
       getActiveTypes();
     }
-    AppDispatcher.dispatch({
-      action: ActionType.ACTIVE.MANAGER,
-      data: {patrimony_id: this.props.parent_id}
-    });
+    if (!activemanager) {
+      postActiveManager(this.props.parent_id);
+    }
   }
 
   render = () => {

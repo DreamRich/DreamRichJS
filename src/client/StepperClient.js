@@ -25,10 +25,10 @@ class StepperClient extends React.Component {
     super(props);
  
     this.forms = [
-      <PatrimonyRegister key={3} />,
-      <PatrimonyRegister key={4} main={false}/>,
       <ClientRegister key={1} />,
       <RegularCostRegister key={2} />,
+      <PatrimonyRegister key={3} />,
+      <PatrimonyRegister key={4} main={false}/>,
       <div key={5} >Proteção </div>,
       <GoalRegister key={6} />];
   }
