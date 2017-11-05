@@ -16,7 +16,10 @@ class PatrimonyStore extends ReduceStore {
       patrimony: {},
       canSubmit: false,
       stepIndex: 0,
-      income: [{index: 0}],
+      incomes: [{index: 0}],
+      realestates: [{index: 0}],
+      companyparticipations: [{index: 0}],
+      equipments: [{index: 0}],
     };
   }
 

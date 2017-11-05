@@ -10,7 +10,7 @@ import {
 } from 'material-ui/Stepper';
 import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
-import RealeStateSubForm from './RealeStateSubForm.js';
+import RealeStateForm from './RealeStateForm.js';
 import ExtraSubForm from './ExtraSubForm';
 import PatrimonyStore from '../stores/PatrimonyStore';
 import ActiveForm from './ActiveForm';
@@ -96,9 +96,10 @@ export default class AssetSubStepper extends React.Component {
   getContentSteps(){
     const listInformationSteps = [
       {text: 'Bens imóveis',
-        formComponent: <RealeStateSubForm
+        formComponent: <RealeStateForm
           parent_id={this.state.id}
           data={this.props.realestates}
+          name='realestates'
         />
       },
       {text: 'Participação em empresas',
