@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import '../stylesheet/RegisterForms.sass';
 import ActionType from '../actions/ActionType';
 import AppDispatcher from '../AppDispatcher';
 import ClientStore from '../stores/ClientStore';
@@ -9,10 +8,7 @@ import ClientAddressForm from '../client/form/ClientAddressForm';
 import ClientForm from '../client/form/ClientForm';
 import ClientSpouseForm from '../client/form/ClientSpouseForm';
 import { Row, Col } from 'react-flexbox-grid';
-
-import {getFinancialPlanning} from '../resources/getModels';
 import _ from 'underscore';
-import PropTypes from 'prop-types';
 
 class ClientDashboard extends Component {
 
@@ -26,17 +22,7 @@ class ClientDashboard extends Component {
 
   handleChange = () => this.setState(ClientStore.getState())
 
-  static propTypes = {
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        id: PropTypes.string,
-      }),
-    }),
-  }
-
   componentDidMount = () => {
-    const id = this.props.match.params.id;
-    getFinancialPlanning(id);
     AppDispatcher.dispatch({
       action: ActionType.CLIENT.DATAFORM
     });
@@ -44,13 +30,14 @@ class ClientDashboard extends Component {
 
   render() {
 
-    console.log(this.state.spouse);
     const spouse = (
-      !_.isEmpty(this.state.spouse)  ? <ClientSpouseForm
-        title='Cônjuge'
-        subtitleCard={'Informações do cônjuge deste cliente'}
-        data={this.state.spouse}
-      /> : <h1>Adicionar</h1>
+      !_.isEmpty(this.state.spouse) ?
+        <ClientSpouseForm
+          title='Cônjuge'
+          subtitleCard={'Informações do cônjuge deste cliente'}
+          data={this.state.spouse}
+          isDisable={true}
+        /> : <h1>Adicionar</h1>
     );
 
     return (
@@ -71,14 +58,18 @@ class ClientDashboard extends Component {
         <Row around="xs" style={{marginTop: '30px'}}>
           <Col xs={9}>
             <ClientAddressForm
+              title='Endereço'
+              subtitle='Informações correspondentes ao endereço.'
               id={this.state.active_client.id}
               data={this.state.address}
+              isDisable={true}
             />
           </Col>
           <Col xs={3}>
             <ClientBankAccountForm
               id={this.state.active_client.id}
               data={this.state.bank_account}
+              isDisable={true}
             />
           </Col>
         </Row>
@@ -86,7 +77,6 @@ class ClientDashboard extends Component {
           + dependente?
           <Col xs={9}>
             ...
-
           </Col>
         </Row>
       </div>

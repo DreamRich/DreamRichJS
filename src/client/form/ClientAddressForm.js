@@ -50,7 +50,10 @@ export default class ClientAddressForm extends Component {
   static propTypes = {
     id: PropTypes.number,
     canSubmit: PropTypes.bool,
+    isDisable: PropTypes.bool,
     data: PropTypes.object,
+    title: PropTypes.string,
+    subtitle: PropTypes.string,
   }
 
   static defaultProps = {
@@ -114,7 +117,7 @@ export default class ClientAddressForm extends Component {
 
   getContentCard(){
     const formysTextList = makeFormysTextList(
-      dataAddressSubForm, 'adressform', this.props.data
+      dataAddressSubForm, 'adressform', this.props.data, this.props.isDisable
     );
 
     const listColumns = formysTextList.map((form,index)=>{
@@ -190,8 +193,8 @@ export default class ClientAddressForm extends Component {
         action={ActionType.CLIENT.POSTFORM}
       >
         <CardForm
-          titleCard="Endereço"
-          subtitleCard="Insira as informações correspondentes ao endereço."
+          titleCard={this.props.title}
+          subtitleCard={this.props.subtitle}
           contentCard={this.getContentCard()}
         />
       </SubForm>

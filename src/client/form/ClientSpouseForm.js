@@ -26,13 +26,14 @@ export default class SpouseForm extends Component {
     subtitleCard: PropTypes.string,
     canSubmit: PropTypes.bool,
     data: PropTypes.object,
+    isDisable: PropTypes.bool,
   }
 
   getContentCard(){
     const spouseFields = personFields.filter( field => field.name !== 'email');
     // This form use the same field as client form
     const formsyList = makeFormysTextList(
-      spouseFields,'spouseform', this.props.data
+      spouseFields,'spouseform', this.props.data, this.props.isDisable
     );
 
     return (

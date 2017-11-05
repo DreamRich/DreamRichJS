@@ -144,7 +144,7 @@ class DefineFormsyDate extends Component {
           name='text'
           id={this.props.name + '_field'}
           style={{width:180}}
-          disabled={this.isFormDisabled}
+          disabled={this.props.isFormDisabled}
           errorText={this.getErrorMessage}
           value={this.state.dateText}
           hintText='Ex: 01/01/1970'
@@ -170,6 +170,7 @@ class DefineFormsyDate extends Component {
             default={defaultDate}
             fullWidth
             mode='landscape'
+            disable={this.props.isFormDisabled}
             autoOk
           />
           <FormsyText

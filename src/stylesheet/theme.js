@@ -1,4 +1,3 @@
-
 // http://www.material-ui.com/#/customization/colors
 import {blueGrey900, grey100} from 'material-ui/styles/colors';
 
@@ -36,7 +35,7 @@ const palette = {
     primary1Color: blueGrey900, //cyan500,
     //primary2Color: cyan700,
     //primary3Color: grey400,
-    //accent1Color: pinkA200,
+    accent1Color: '#FCD638',
     //accent2Color: grey100,
     //accent3Color: grey500,
     //textColor: darkBlack,
@@ -44,7 +43,7 @@ const palette = {
     //alternateTextColor: white,
     //canvasColor: white,
     //borderColor: grey300,
-    //disabledColor: fade(darkBlack, 0.3),
+    disabledColor: '#000000',
     //pickerHeaderColor: cyan500,
     //clockCircleColor: fade(darkBlack, 0.07),
     //shadowColor: fullBlack,

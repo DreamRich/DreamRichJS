@@ -70,14 +70,13 @@ class ClientRegister extends Component {
   }
 
   render() {
-    const subtitleCard = 'Insira as informações básicas do cliente.';
     const listInformationSteps = [
       {
         text: 'Cadastrar Cliente',
         formComponent:
           <ClientForm
             title='Cliente'
-            subtitleCard={subtitleCard}
+            subtitleCard={'Insira as informações básicas do cliente.'}
             canSubmit={this.state.canSubmit}
             data={this.state.active_client}
             isDisable={false}
@@ -98,6 +97,8 @@ class ClientRegister extends Component {
         text: 'Cadastrar Endereço',
         formComponent:
         <ClientAddressForm
+          title='Endereço'
+          subtitle={'Insira as informações correspondentes ao endereço do cliente'}
           id={this.state.active_client.id}
           canSubmit={this.state.canSubmit}
           data={this.state.address}

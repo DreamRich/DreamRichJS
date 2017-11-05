@@ -73,6 +73,7 @@ export default class ClientForm extends Component {
             name="birthday"
             floatingLabelText="Data de Nascimento"
             value={this.props.data.birthday}
+            isFormDisabled={this.props.isDisable}
           />
         </Col>
         <Col xs={2}>
