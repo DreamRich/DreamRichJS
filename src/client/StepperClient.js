@@ -12,6 +12,7 @@ import {getFinancialPlanning} from '../resources/getModels';
 import RegisterStore from '../stores/RegisterStore';
 import ArrowForwardIcon from 'material-ui/svg-icons/navigation/arrow-forward';
 import Paper from 'material-ui/Paper';
+import Divider from 'material-ui/Divider';
 import {
   Step,
   Stepper,
@@ -51,6 +52,10 @@ class StepperClient extends React.Component {
   }
 
   state = RegisterStore.getState()
+
+  getDivider = () => {
+    return (<Divider className='Divider' />);
+  }
 
   getStepContent(stepIndex) {
     const maxSteps = this.forms.length;
@@ -101,7 +106,9 @@ class StepperClient extends React.Component {
           </Stepper>
         </Paper>
 
+        {this.getDivider()}
         {this.getStepContent(stepIndex)}
+        {this.getDivider()}
 
         <div style={{marginBottom: '7%'}}>
           {stepIndex > 0 &&

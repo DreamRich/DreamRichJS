@@ -121,7 +121,7 @@ export default class ClientDependentForm extends Component {
       <Card className='Card' >
         <CardTitle
           title='Dependente'
-          subtitleCard={subtitleCard}
+          subtitle={subtitleCard}
         />
         <CardText>
           <div>
