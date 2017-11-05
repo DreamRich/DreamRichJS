@@ -24,16 +24,9 @@ export default class ActiveForm extends Component {
 
   componentWillMount = () => {
     const {types} = PatrimonyStore.getState();
-    console.log(!types, types.length === 0);
-    console.log(types);
     if (!types || types.length === 0) {
       getActiveTypes();
-    } else {
-      console.log('ok');
     }
-  }
-
-  submitBase = () => {
     AppDispatcher.dispatch({
       action: ActionType.ACTIVE.MANAGER,
       data: {patrimony_id: this.props.parent_id}

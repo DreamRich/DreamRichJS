@@ -3,6 +3,8 @@ import SubForm from '../components/SubForm.js';
 import ActionType from '../actions/ActionType.js';
 import PropTypes from 'prop-types';
 import {FormsyText , /*FormsyCheckbox, FormsyDate*/} from 'formsy-material-ui/lib';
+import CardForm from '../components/CardForm';
+import { Row, Col } from 'react-flexbox-grid';
 
 export default class ExtraSubForm extends Component {
 
@@ -16,6 +18,29 @@ export default class ExtraSubForm extends Component {
     canSubmit: PropTypes.bool,
   }
 
+  getContentCard = () => (<div>
+    <Row around="xs">
+      <Col xs>
+        <FormsyText
+          name="name"
+          floatingLabelText="Nome"
+          hintText="Nome do patrimonio"
+          value={this.props.data.name}
+        />
+      </Col>
+      <Col xs>
+        <FormsyText
+          name="value"
+          floatingLabelText="Valor"
+          hintText="Valor do patrimônio"
+          value={this.props.data.value}
+        />
+      </Col>
+    </Row>
+    {this.props.children}
+  </div>
+  )
+
   render = () => {
     return(
       <SubForm
@@ -27,21 +52,11 @@ export default class ExtraSubForm extends Component {
         canSubmit={this.props.canSubmit}
         index={this.props.index}
       >
-        <div>
-          <FormsyText
-            name="name"
-            floatingLabelText="Nome"
-            hintText="Nome do patrimonio"
-            value={this.props.data.name}
-          />
-          <FormsyText
-            name="value"
-            floatingLabelText="Valor"
-            hintText="Valor do patrimônio"
-            value={this.props.data.value}
-          />
-          {this.props.children}
-        </div>
+        <CardForm
+          titleCard={this.props.title}
+          subtitleCard='Insira as informações abaixo'
+          contentCard={this.getContentCard()}
+        />
       </SubForm>
     );
   }

@@ -90,7 +90,6 @@ export default class IncomeSubStepper extends React.Component {
   }
 
   getContentSteps(){
-    console.log(this.props.incomes);
     const listInformationSteps = [
       {text: 'FGTS',
         formComponent:
