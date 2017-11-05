@@ -25,9 +25,9 @@ export default class GoalChart extends Component {
     getData(
       routeMap.total_resource_for_annual_goals,
       (data) => {
-        const total_resource_for_annual_goals = { 
+        const total_resource_for_annual_goals = {
           type : 'spline',
-          name : 'bla',
+          name : 'Recurso Para Objetivo',
           data : [],
           marker: {
             lineWidth: 2,
@@ -68,7 +68,7 @@ export default class GoalChart extends Component {
         );
       }
     );
-  }  
+  }
 
   componentDidMount() {
     getData(
