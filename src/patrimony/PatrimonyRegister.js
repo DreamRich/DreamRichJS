@@ -45,6 +45,7 @@ export default class PatrimonyRegister extends Component {
           companyparticipations={this.state.companyparticipations}
           activemanager={this.state.activemanager}
           actives={this.state.actives}
+          canSubmit={this.state.canSubmit}
         />
       );
     }

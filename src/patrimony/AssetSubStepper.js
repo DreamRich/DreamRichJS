@@ -11,7 +11,8 @@ import {
 import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
 import RealeStateForm from './RealeStateForm.js';
-import ExtraSubForm from './ExtraSubForm';
+import CompanyParticipationForm from './CompanyParticipationForm';
+import EquipmentForm from './EquipmentForm';
 import PatrimonyStore from '../stores/PatrimonyStore';
 import ActiveForm from './ActiveForm';
 
@@ -97,25 +98,37 @@ export default class AssetSubStepper extends React.Component {
     const listInformationSteps = [
       {text: 'Bens imóveis',
         formComponent: <RealeStateForm
-          parent_id={this.state.id}
+          parent_id={this.props.id}
+          labelAdd='Possui bens imóveis? (Marque o quadrado ao lado)'
+          labelAdded='Possui outro bem imóvel? (Marque o quadrado ao lado)'
+          labelRemove='Possuo este bem.'
           data={this.props.realestates}
           name='realestates'
+          canSubmit={this.props.canSubmit}
         />
       },
       {text: 'Participação em empresas',
-        formComponent: <ExtraSubForm
-          parent_id={this.state.id}
+        formComponent: <CompanyParticipationForm
+          parent_id={this.props.id}
+          labelAdd='Possui participação em empresas? (Marque o quadrado ao lado)'
+          labelAdded='Possui mais participações? (Marque o quadrado ao lado)'
+          labelRemove='Tenho participação nesta empresa.'
           name='companyparticipations'
           title="Participação em empresa"
           data={this.props.companyparticipations}
+          canSubmit={this.props.canSubmit}
         />
       },
       {text: 'Equipamentos',
-        formComponent: <ExtraSubForm
-          parent_id={this.state.id}
+        formComponent: <EquipmentForm
+          parent_id={this.props.id}
           name='equipments'
           title="Equipamentos"
+          labelAdd='Possui equipamentos? (Marque o quadrado ao lado)'
+          labelAdded='Possui outro equipamento? (Marque o quadrado ao lado)'
+          labelRemove='Possuo este equipamento.'
           data={this.props.equipments}
+          canSubmit={this.props.canSubmit}
         />
       },
       {text: 'Ativos',

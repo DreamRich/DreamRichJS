@@ -25,6 +25,7 @@ export default class ExtraSubForm extends Component {
         name={this.props.name}
         action={ActionType.PATRIMONY.POSTMULTIFORM}
         canSubmit={this.props.canSubmit}
+        index={this.props.index}
       >
         <div>
           <FormsyText

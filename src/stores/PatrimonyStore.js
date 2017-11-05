@@ -56,6 +56,7 @@ class PatrimonyStore extends ReduceStore {
 
     case ActionType.PATRIMONY.POSTMULTIFORM:
       item = state[action.state].find( item => item.index === action.index);
+      console.log(item);
       postOrPutStrategy(
         item,
         action.route,
