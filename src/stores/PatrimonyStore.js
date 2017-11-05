@@ -20,6 +20,7 @@ class PatrimonyStore extends ReduceStore {
       realestates: [{index: 0}],
       companyparticipations: [{index: 0}],
       equipments: [{index: 0}],
+      types: [],
     };
   }
 
@@ -56,7 +57,6 @@ class PatrimonyStore extends ReduceStore {
 
     case ActionType.PATRIMONY.POSTMULTIFORM:
       item = state[action.state].find( item => item.index === action.index);
-      console.log(item);
       postOrPutStrategy(
         item,
         action.route,
@@ -96,6 +96,9 @@ class PatrimonyStore extends ReduceStore {
     case ActionType.PATRIMONY.REMOVE:
       arr = state[action.state].filter( item => item.index !== action.index );
       return {...state, [action.state]: arr};
+
+    case ActionType.PATRIMONY.TYPESUCCESS:
+      return {...state, types: action.types};
 
     default:
       return state;

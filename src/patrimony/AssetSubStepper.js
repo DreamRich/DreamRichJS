@@ -27,13 +27,16 @@ export default class AssetSubStepper extends React.Component {
     actives: PropTypes.array,
     canSubmit: PropTypes.bool,
     id: PropTypes.number,
+    types: PropTypes.array,
   }
 
   state = {stepIndex: 0}
 
-  componentWillMount = () => this.setState({
-    listener: PatrimonyStore.addListener(this.handleChange)
-  })
+  componentWillMount = () => {
+    this.setState({
+      listener: PatrimonyStore.addListener(this.handleChange)
+    });
+  }
 
   handleChange = () => {
     // Only get some attributes from store
@@ -96,7 +99,7 @@ export default class AssetSubStepper extends React.Component {
 
   getContentSteps(){
     const listInformationSteps = [
-      {text: 'Bens imóveis',
+      {text: 'Bem imóvel',
         formComponent: <RealeStateForm
           parent_id={this.props.id}
           labelAdd='Possui bens imóveis? (Marque o quadrado ao lado)'
@@ -107,7 +110,7 @@ export default class AssetSubStepper extends React.Component {
           canSubmit={this.props.canSubmit}
         />
       },
-      {text: 'Participação em empresas',
+      {text: 'Participação em empresa',
         formComponent: <CompanyParticipationForm
           parent_id={this.props.id}
           labelAdd='Possui participação em empresas? (Marque o quadrado ao lado)'
@@ -119,7 +122,7 @@ export default class AssetSubStepper extends React.Component {
           canSubmit={this.props.canSubmit}
         />
       },
-      {text: 'Equipamentos',
+      {text: 'Equipamento',
         formComponent: <EquipmentForm
           parent_id={this.props.id}
           name='equipments'
@@ -131,12 +134,13 @@ export default class AssetSubStepper extends React.Component {
           canSubmit={this.props.canSubmit}
         />
       },
-      {text: 'Ativos',
+      {text: 'Ativo',
         formComponent:
           <ActiveForm
             parent_id={this.props.id}
             manager={this.props.activemanager}
             data={this.props.actives}
+            types={this.props.types}
             canSubmit={this.props.canSubmit}
           />
       }
