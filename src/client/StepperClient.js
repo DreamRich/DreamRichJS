@@ -10,20 +10,18 @@ import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
 import {getFinancialPlanning} from '../resources/getModels';
 import RegisterStore from '../stores/RegisterStore';
-
+import ArrowForwardIcon from 'material-ui/svg-icons/navigation/arrow-forward';
 import Paper from 'material-ui/Paper';
-
 import {
   Step,
   Stepper,
   StepLabel,
 } from 'material-ui/Stepper';
-import ArrowForwardIcon from 'material-ui/svg-icons/navigation/arrow-forward';
 
 class StepperClient extends React.Component {
   constructor(props) {
     super(props);
- 
+
     this.forms = [
       <ClientRegister key={1} />,
       <RegularCostRegister key={2} />,
