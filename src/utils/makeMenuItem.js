@@ -1,23 +1,24 @@
 import React from 'react';
-import MenuItem from 'material-ui/MenuItem';
+import {List, ListItem} from 'material-ui/List';
 import {AuthorizedLink} from '../routes/Router';
-
 
 const noneUnderline = {
   textDecoration: 'none'
 };
 
-const  makeMenuItem = (permission,path,primaryText,leftIcon,style, className) => {
-  const menuProps = (leftIcon ? {primaryText, leftIcon, style, className} : {primaryText, style, className});
+const  makeMenuItem = (permission, path, primaryText, leftIcon, className) => {
+  const menuProps = (leftIcon ? {primaryText, leftIcon, className} : {primaryText, className});
   return (
-    <AuthorizedLink 
-      permission={permission}
-      to={path}
-      style={noneUnderline}>
-      <MenuItem 
-        {...menuProps}
-      />
-    </AuthorizedLink>
+    <List>
+      <AuthorizedLink
+        permission={permission}
+        to={path}
+        style={noneUnderline}>
+        <ListItem
+          {...menuProps}
+        />
+      </AuthorizedLink>
+    </List>
   );
 };
 

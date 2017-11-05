@@ -45,11 +45,13 @@ class ClientDashboard extends Component {
   render() {
 
     console.log(this.state.spouse);
-    const spouse = ( !_.isEmpty(this.state.spouse)  ? <ClientSpouseForm
-      title='Cônjuge'
-      subtitleCard={'Informações do cônjuge deste cliente'}
-      data={this.state.spouse}
-    /> : <h1>Adicionar</h1>);
+    const spouse = (
+      !_.isEmpty(this.state.spouse)  ? <ClientSpouseForm
+        title='Cônjuge'
+        subtitleCard={'Informações do cônjuge deste cliente'}
+        data={this.state.spouse}
+      /> : <h1>Adicionar</h1>
+    );
 
     return (
       <div>
