@@ -147,6 +147,7 @@ export default class ClientAddressForm extends Component {
               maxHeight={300}
               onChange={this.fetchStates}
               value={this.props.data.state.country_id}
+              disabled={this.props.isDisable}
             >
               {contriesOptions}
             </FormsySelect>
@@ -157,6 +158,7 @@ export default class ClientAddressForm extends Component {
               floatingLabelText="Estado"
               maxHeight={300}
               value={this.props.data.state.id}
+              disabled={this.props.isDisable}
             >
               {statesOptions}
             </FormsySelect>
@@ -175,6 +177,7 @@ export default class ClientAddressForm extends Component {
               searchText={searchText}
               defaultValue={searchText}
               onChange={this.updateSearch}
+              disabled={this.props.isDisable}
             />
           </Col>
         </Row>
