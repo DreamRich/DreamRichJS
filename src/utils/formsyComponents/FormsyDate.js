@@ -7,6 +7,7 @@ import ActionDateRange from 'material-ui/svg-icons/action/date-range';
 import {FormsyText} from 'formsy-material-ui/lib';
 import format from 'date-fns/format';
 import '../../stylesheet/RegisterForms.sass';
+import { Col } from 'react-flexbox-grid';
 
 /*
 reference:
@@ -139,13 +140,13 @@ class DefineFormsyDate extends Component {
 
     return (
       // Name will define which field will be submitted
-      <div>
+      <Col xs>
         <FormsyText
           name='text'
           id={this.props.name + '_field'}
-          style={{width:180}}
           disabled={this.props.isFormDisabled}
           errorText={this.getErrorMessage}
+          style={{width:150}}
           value={this.state.dateText}
           hintText='Ex: 01/01/1970'
           validationError='Insira uma data válida'
@@ -168,7 +169,7 @@ class DefineFormsyDate extends Component {
             value={this.state.selectedDate}
             ref={picker => { this.datePicker = picker;}}
             default={defaultDate}
-            fullWidth
+            fullWidth={true}
             mode='landscape'
             disable={this.props.isFormDisabled}
             autoOk
@@ -179,7 +180,7 @@ class DefineFormsyDate extends Component {
             value={this.state.dateSubmit}
           />
         </div>
-      </div>
+      </Col>
     );
   }
 }
