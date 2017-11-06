@@ -42,6 +42,7 @@ export default class GoalForm extends Component {
       index: this.props.index,
     });
   }
+
   getCardContent = () => {
     const goalType = this.props.data.goal_type || {};
     return (

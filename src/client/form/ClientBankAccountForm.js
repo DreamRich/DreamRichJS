@@ -28,6 +28,8 @@ export default class ClientBankAccountForm extends Component {
   }
 
   getContentCard(){
+    console.log('Arroz');
+    console.log(this.props.isDisable);
     return (
       <Row around="xs">
         <Col xs>
@@ -38,7 +40,7 @@ export default class ClientBankAccountForm extends Component {
             hintText="Agência da conta bancária "
             floatingLabelText="Agência"
             value={this.props.data.agency}
-            disable={this.props.isDisable}
+            disabled={this.props.isDisable}
           />
         </Col>
         <Col xs>
@@ -47,7 +49,7 @@ export default class ClientBankAccountForm extends Component {
             hintText="Número da conta bancária "
             floatingLabelText="Conta"
             value={this.props.data.account}
-            disable={this.props.isDisable}
+            disabled={this.props.isDisable}
           />
         </Col>
       </Row>
