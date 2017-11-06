@@ -49,7 +49,6 @@ export default class GoalRegister extends Component {
     });
   }
 
-
   handleChange = () => {
     this.setState(GoalStore.getState());
   }
