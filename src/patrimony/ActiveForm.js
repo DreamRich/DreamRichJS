@@ -24,11 +24,12 @@ export default class ActiveForm extends Component {
   }
 
   componentWillMount = () => {
-    const {types, activemanager} = PatrimonyStore.getState();
+    const {types, activemanager: {id}} = PatrimonyStore.getState();
     if (!types || types.length === 0) {
       getActiveTypes();
     }
-    if (!activemanager) {
+    console.log(id, this.props.manager);
+    if (!id) {
       postActiveManager(this.props.parent_id);
     }
   }

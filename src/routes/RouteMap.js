@@ -23,6 +23,7 @@ const routeMap = {
   companyparticipations: '/api/patrimony/companyparticipation/',
   equipments: '/api/patrimony/equipment/',
   address_type: '/api/client/address/type_of_address/',
+  arrearanges: '/api/patrimony/arrearage/',
   total_resource_for_annual_goals: '/api/financial_planning/financial_planning/14/',
 };
 

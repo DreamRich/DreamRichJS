@@ -12,6 +12,7 @@ import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
 import RealeStateForm from './RealeStateForm.js';
 import CompanyParticipationForm from './CompanyParticipationForm';
+import ArrearageForm from './ArrearageForm';
 import EquipmentForm from './EquipmentForm';
 import PatrimonyStore from '../stores/PatrimonyStore';
 import ActiveForm from './ActiveForm';
@@ -25,6 +26,7 @@ export default class AssetSubStepper extends React.Component {
     equipments: PropTypes.array,
     activemanager: PropTypes.object,
     actives: PropTypes.array,
+    arrearanges: PropTypes.array,
     canSubmit: PropTypes.bool,
     id: PropTypes.number,
     types: PropTypes.array,
@@ -135,15 +137,25 @@ export default class AssetSubStepper extends React.Component {
         />
       },
       {text: 'Ativo',
-        formComponent:
-          <ActiveForm
-            parent_id={this.props.id}
-            manager={this.props.activemanager}
-            data={this.props.actives}
-            types={this.props.types}
-            canSubmit={this.props.canSubmit}
-          />
-      }
+        formComponent: <ActiveForm
+          parent_id={this.props.id}
+          manager={this.props.activemanager}
+          data={this.props.actives}
+          types={this.props.types}
+          canSubmit={this.props.canSubmit}
+        />
+      },
+      {text: 'Dívidas',
+        formComponent: <ArrearageForm
+          parent_id={this.props.id}
+          name='arrearanges'
+          data={this.props.arrearanges}
+          canSubmit={this.props.canSubmit}
+          labelAdd='Possui financiamentos? (Marque o quadrado ao lado)'
+          labelAdded='Possui outro financialmento? (Marque o quadrado ao lado)'
+          labelRemove='Este financiamento está ativo.'
+        />
+      },
     ];
     // Only enable click in some step if have the dependency of main form
     // this is a id in the state

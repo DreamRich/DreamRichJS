@@ -19,8 +19,11 @@ class PatrimonyStore extends ReduceStore {
       incomes: [{index: 0}],
       realestates: [{index: 0}],
       companyparticipations: [{index: 0}],
+      arrearanges: [{index: 0}],
       equipments: [{index: 0}],
       types: [],
+      actives: [{index: 0}],
+      activemanager: {},
     };
   }
 
@@ -110,7 +113,7 @@ class PatrimonyStore extends ReduceStore {
 
   getPatrimonyData = (data) => {
     const arrays = ['incomes', 'realestates', 'equipments',
-      'companyparticipations'];
+      'companyparticipations', 'arrearanges'];
 
     /* Create a new object with keys in arrays and add the index
      * in each object to render correctly in forms

@@ -115,7 +115,7 @@ export default class IncomeSubStepper extends React.Component {
     // this is a id in the state
     const stepsList = listInformationSteps.map((obj, index) => {
       return (
-        <Step key={obj.text} disabled={this.state.id === undefined}>
+        <Step key={obj.text} disabled={this.props.patrimony.id === undefined}>
           <StepButton onClick={() => this.setStep(index)}>
             {obj.text}
           </StepButton>

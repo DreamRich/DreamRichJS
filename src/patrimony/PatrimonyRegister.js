@@ -39,7 +39,7 @@ export default class PatrimonyRegister extends Component {
       return (
         <AssetSubStepper
           id={this.state.patrimony.id}
-          stepsNumber={4}
+          stepsNumber={5}
           realestates={this.state.realestates}
           equipments={this.state.equipments}
           companyparticipations={this.state.companyparticipations}
@@ -47,6 +47,7 @@ export default class PatrimonyRegister extends Component {
           actives={this.state.actives}
           canSubmit={this.state.canSubmit}
           types={this.state.types}
+          arrearanges={this.state.arrearanges}
         />
       );
     }
