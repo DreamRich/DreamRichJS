@@ -6,6 +6,8 @@ import FormsyDate from '../../utils/formsyComponents/FormsyDate';
 import PropTypes from 'prop-types';
 import makeFormysTextList from '../../utils/MakeFormysTextList';
 import CardForm from '../../components/CardForm';
+import MediaQuery from 'react-responsive';
+
 // import Checkbox from 'material-ui/Checkbox';
 import ActionType from '../../actions/ActionType';
 
@@ -60,25 +62,43 @@ export default class ClientForm extends Component {
     data: {},
   }
 
+  getFormsyDate(){
+    return (
+      <FormsyDate
+        name="birthday"
+        floatingLabelText="Data de Nascimento"
+        value={this.props.data.birthday}
+        isFormDisabled={this.props.isDisable}
+      />
+    );
+  }
+
   getContentCard(){
     const formsyList = makeFormysTextList(
       personFields, 'clientform', this.props.data, this.props.isDisable
     );
 
     return (
-      <Row around="xs">
-        {formsyList}
-        <Col xs={6}>
-          <FormsyDate
-            name="birthday"
-            floatingLabelText="Data de Nascimento"
-            value={this.props.data.birthday}
-            isFormDisabled={this.props.isDisable}
-          />
-        </Col>
-        <Col xs={2}>
-        </Col>
-      </Row>
+      <div>
+        <MediaQuery key="desktopClientForm" query="(min-width: 1030px)">
+          <Row around="xs">
+            <Col key="firstColumnClientForm" xs>
+              {formsyList.slice(0,3)}
+            </Col>
+            <Col key="secondColumnClientForm" xs>
+              {formsyList.slice(3,6)}
+            </Col>
+            <Col key="thirdColumnClientForm" xs>
+              {formsyList.slice(6,8)}
+              {this.getFormsyDate()}
+            </Col>
+          </Row>
+        </MediaQuery>
+        <MediaQuery key="mobileClientForm" query="(max-width: 1030px)">
+          {formsyList}
+          {this.getFormsyDate()}
+        </MediaQuery>
+      </div>
     );
   }
 

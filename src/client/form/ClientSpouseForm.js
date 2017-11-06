@@ -1,22 +1,15 @@
 import React, {Component} from 'react';
-// import IconButton from 'material-ui/IconButton';
 // import FileFileUpload from 'material-ui/svg-icons/file/file-upload';
 // import errorMessages from '../utils/FormsErrorMessages';
-import { Row } from 'react-flexbox-grid';
 import SubForm from '../../components/SubForm';
 import FormsyDate from '../../utils/formsyComponents/FormsyDate';
 import PropTypes from 'prop-types';
 import makeFormysTextList from '../../utils/MakeFormysTextList';
 import CardForm from '../../components/CardForm';
-// import Checkbox from 'material-ui/Checkbox';
+import { Row, Col } from 'react-flexbox-grid';
 import ActionType from '../../actions/ActionType';
 import {personFields} from './ClientForm';
-
-// var {
-//   wordsError,
-//   numericError,
-//   emailError,
-// } = errorMessages;
+import MediaQuery from 'react-responsive';
 
 export default class SpouseForm extends Component {
 
@@ -29,6 +22,17 @@ export default class SpouseForm extends Component {
     isDisable: PropTypes.bool,
   }
 
+  getFormsyDate(){
+    return (
+      <FormsyDate
+        name="birthday"
+        floatingLabelText="Data de Nascimento"
+        value={this.props.data.birthday}
+        isFormDisabled={this.props.isDisable}
+      />
+    );
+  }
+
   getContentCard(){
     const spouseFields = personFields.filter( field => field.name !== 'email');
     // This form use the same field as client form
@@ -37,14 +41,25 @@ export default class SpouseForm extends Component {
     );
 
     return (
-      <Row>
-        {formsyList}
-        <FormsyDate
-          name="birthday"
-          floatingLabelText="Data de Nascimento"
-          value={this.props.data.birthday}
-        />
-      </Row>
+      <div>
+        <MediaQuery query="(min-width: 1030px)">
+          <Row around="xs">
+            <Col xs>
+              {formsyList.slice(0,3)}
+            </Col>
+            <Col xs>
+              {formsyList.slice(3,6)}
+            </Col>
+            <Col xs>
+              {this.getFormsyDate()}
+            </Col>
+          </Row>
+        </MediaQuery>
+        <MediaQuery query="(max-width: 1030px)">
+          {formsyList}
+          {this.getFormsyDate()}
+        </MediaQuery>
+      </div>
     );
   }
 
