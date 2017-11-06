@@ -25,9 +25,13 @@ class StepperClient extends React.Component {
 
     this.forms = [
       <ClientRegister key={1} />,
-      <RegularCostRegister key={2} />,
-      <PatrimonyRegister key={3} />,
-      <PatrimonyRegister key={4} main={false}/>,
+      <RegularCostRegister
+        titleCard="Custo fixo"
+        subtitleCard="Insira o(s) valor(es) do(s) custo(s) fixo(s)"
+        key={2}
+      />,
+      <div key={3} >Renda para fora de patrimonio</div>,
+      <PatrimonyRegister key={4} />,
       <div key={5} >Proteção </div>,
       <GoalRegister key={6} />];
   }

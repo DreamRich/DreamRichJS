@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import ClientDashboard from '../dashboard/ClientDashboard';
+import RegularCostDashboard from '../dashboard/RegularCostDashboard';
 import PropTypes from 'prop-types';
 import {getFinancialPlanning} from '../resources/getModels';
 import RegisterStore from '../stores/RegisterStore';
@@ -33,7 +34,8 @@ class Dashboard extends Component {
           </div>
         </Tab>
         <Tab label="Custos fixos" >
-          <div>
+          <div style={{marginTop: '20px'}}>
+            <RegularCostDashboard />
           </div>
         </Tab>
         <Tab

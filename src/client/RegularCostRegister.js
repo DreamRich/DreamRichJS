@@ -16,6 +16,7 @@ import { Row, Col } from 'react-flexbox-grid';
 import {Card, CardTitle, CardText} from 'material-ui/Card';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import PropTypes from 'prop-types';
 
 var {
   numericError,
@@ -79,6 +80,11 @@ export default class RegularCostRegister extends Component {
     );
   }
 
+  static propTypes = {
+    titleCard: PropTypes.string,
+    subtitleCard: PropTypes.string,
+  }
+
   getContentCard = (cost) => {
     const labelRemove = 'Tenho este custo fixo?';
     const costType = cost.cost_type || {};
@@ -135,8 +141,8 @@ export default class RegularCostRegister extends Component {
     return (
       <Card className='Card'>
         <CardTitle
-          title="Custo fixo"
-          subtitle="Insira o(s) valor(es) do(s) custo(s) fixo(s)"
+          title={this.props.titleCard}
+          subtitle={this.props.subtitleCard}
         />
         <CardText>
           <div>
