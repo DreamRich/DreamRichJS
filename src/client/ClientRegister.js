@@ -1,7 +1,4 @@
 import React, {Component} from 'react';
-import Divider from 'material-ui/Divider';
-// import RaisedButton from 'material-ui/RaisedButton';
-//import {getData} from '../resources/Headers.js';
 import '../stylesheet/RegisterForms.sass';
 import MenuItem from 'material-ui/MenuItem';
 import ActionType from '../actions/ActionType';
@@ -14,7 +11,6 @@ import ClientAddressForm from './form/ClientAddressForm';
 import ClientForm from './form/ClientForm';
 import ClientSpouseForm from './form/ClientSpouseForm';
 import SubStepperClient from '../client/SubStepperClient';
-// import routeMap from '../routes/RouteMap';
 
 class ClientRegister extends Component {
 
@@ -23,11 +19,6 @@ class ClientRegister extends Component {
 
     this.state = ClientStore.getState();
   }
-
-  //state = {
-  //  selectedCountry: null,
-  //  selectedState: null,  // State region
-  //}
 
   componentWillMount = () => {
     this.setState({listener: ClientStore.addListener(this.handleChange)});
@@ -58,11 +49,6 @@ class ClientRegister extends Component {
     });
 
     return listMenuItems;
-  }
-
-
-  getDivider = () => {
-    return (<Divider className='Divider' />);
   }
 
   submit = () => {
@@ -125,14 +111,10 @@ class ClientRegister extends Component {
 
     return (
       <div style={{width:'auto'}}>
-        {this.getDivider()}
-
         <SubStepperClient
           stepsNumber={listInformationSteps.length}
           listInformationSteps={listInformationSteps}
         />
-
-        {this.getDivider()}
       </div>
     );
   }

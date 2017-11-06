@@ -17,7 +17,7 @@ export default class CardForm extends Component {
   render = () => {
     // Optional backgroundColor: #FAFAFA
     return (
-      <Card className='Card' >
+      <Card className='Card'>
         <CardTitle
           title={this.props.titleCard}
           subtitle={this.props.subtitleCard}
