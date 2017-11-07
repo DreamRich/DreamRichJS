@@ -7,6 +7,7 @@ import ClientBankAccountForm from '../client/form/ClientBankAccountForm';
 import ClientAddressForm from '../client/form/ClientAddressForm';
 import ClientForm from '../client/form/ClientForm';
 import ClientSpouseForm from '../client/form/ClientSpouseForm';
+import ClientDependentForm from '../client/form/ClientDependentForm';
 import { Row, Col } from 'react-flexbox-grid';
 import _ from 'underscore';
 
@@ -73,12 +74,12 @@ class ClientDashboard extends Component {
             />
           </Col>
         </Row>
-        <Row around="xs" style={{marginTop: '30px'}}>
-          + dependente?
-          <Col xs={9}>
-            ...
-          </Col>
-        </Row>
+        <div style={{marginTop: '30px'}}>
+          <ClientDependentForm
+            id={this.state.active_client.id}
+            canSubmit={this.state.canSubmit}
+          />
+        </div>
       </div>
     );
   }

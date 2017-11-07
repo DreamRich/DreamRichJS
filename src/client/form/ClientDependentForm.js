@@ -1,21 +1,23 @@
 import React, {Component} from 'react';
-import {FormsyText} from 'formsy-material-ui/lib';
-import {FormsyDate} from '../../utils/formsyComponents/FormsyComponents';
-import errorMessages from '../../utils/FormsErrorMessages';
+//import {FormsyText} from 'formsy-material-ui/lib';
+//import {FormsyDate} from '../../utils/formsyComponents/FormsyComponents';
+//import getDivider from '../../utils/getDivider';
+//import ContentClear from 'material-ui/svg-icons/content/clear';
+//import IconButton from 'material-ui/IconButton';
+//import errorMessages from '../../utils/FormsErrorMessages';
 import SubForm from '../../components/SubForm';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-flexbox-grid';
 import ActionType from '../../actions/ActionType';
 import ClientStore from '../../stores/ClientStore';
 import AppDispatcher from '../../AppDispatcher';
-import getSelectOption from '../../utils/getSelectOption';
 import {Card, CardTitle, CardText} from 'material-ui/Card';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
-var {
-  wordsError,
-} = errorMessages;
+import EditTableForm from '../../components/EditTableForm';
+
+//var {wordsError,} = errorMessages;
 
 export default class ClientDependentForm extends Component {
   constructor(props){
@@ -52,47 +54,32 @@ export default class ClientDependentForm extends Component {
     key: key,
   })
 
-  getContentCard(dependent, index){
-    const labelRemove='O cliente possui não dependentes? '+
-      '(Desmarque o quadrado ao lado caso não haja).';
+  getRowsTable(name,surname,date){
+
+    console.log(name,surname,date);
+    return [
+      {'columns': [
+        {'value': name},
+        {'value': surname},
+        {'value': date},
+      ]},
+    ];
+  }
+
+  getContentCard(dependent){
+
+    const headers = [
+      {value: 'Nome', type: 'TextField', width: 200},
+      {value: 'Sobrenome', type: 'TextField', width: 200},
+      {value: 'Data do aniversário', type: 'DatePicker', width: 200},
+    ];
 
     return (
       <div>
-        <Row around="xs">
-          <Col xs>
-            <FormsyText
-              name="name"
-              validations="isWords"
-              validationError={wordsError}
-              hintText="Nome do dependente"
-              floatingLabelText="Nome"
-              value={dependent.name}
-            />
-          </Col>
-          <Col xs>
-            <FormsyText
-              name="surname"
-              validations="isWords"
-              validationError={wordsError}
-              hintText="Sobrenome do dependente"
-              floatingLabelText="Sobrenome"
-              value={dependent.surname}
-            />
-          </Col>
-          <Col xs>
-            <FormsyDate
-              name="birthday"
-              floatingLabelText="Data de Nascimento"
-              value={dependent.birthday}
-              isFormDisabled={false}
-            />
-          </Col>
-          <Col xs>
-            {getSelectOption(
-              this.removeDependent.bind(this, index), true, labelRemove)
-            }
-          </Col>
-        </Row>
+        <EditTableForm
+          headerTable={headers}
+          rowsTable={this.getRowsTable(dependent.name,dependent.surname,dependent.birthday)}
+        />
       </div>
     );
   }
@@ -150,3 +137,47 @@ export default class ClientDependentForm extends Component {
     );
   }
 }
+
+/*
+        <Row around="xs">
+          <Col xs>
+            <FormsyText
+              name="name"
+              validations="isWords"
+              validationError={wordsError}
+              hintText="Nome do dependente"
+              floatingLabelText="Nome"
+              value={dependent.name}
+            />
+          </Col>
+          <Col xs>
+            <FormsyText
+              name="surname"
+              validations="isWords"
+              validationError={wordsError}
+              hintText="Sobrenome do dependente"
+              floatingLabelText="Sobrenome"
+              value={dependent.surname}
+            />
+          </Col>
+          <Col xs>
+            <FormsyDate
+              name="birthday"
+              floatingLabelText="Data de Nascimento"
+              value={dependent.birthday}
+              isFormDisabled={false}
+            />
+          </Col>
+          <Col xs>
+            <IconButton
+              key={'clear1'+index}
+              tooltip="Remover dependentes"
+              tooltipPosition="top-center"
+              onClick={this.removeDependent.bind(this, index)}
+            >
+              <ContentClear style={{color: '#C01F1F'}} key={'clear'+index}/>
+            </IconButton>
+          </Col>
+        </Row>
+  {getDivider()}
+  */
