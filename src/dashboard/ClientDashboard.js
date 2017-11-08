@@ -9,7 +9,6 @@ import ClientForm from '../client/form/ClientForm';
 import ClientSpouseForm from '../client/form/ClientSpouseForm';
 import ClientDependentForm from '../client/form/ClientDependentForm';
 import { Row, Col } from 'react-flexbox-grid';
-import _ from 'underscore';
 
 class ClientDashboard extends Component {
 
@@ -31,16 +30,6 @@ class ClientDashboard extends Component {
 
   render() {
 
-    const spouse = (
-      !_.isEmpty(this.state.spouse) ?
-        <ClientSpouseForm
-          title='Cônjuge'
-          subtitleCard={'Informações do cônjuge deste cliente'}
-          data={this.state.spouse}
-          isDisable={true}
-        /> : <h1>Adicionar</h1>
-    );
-
     return (
       <div>
         <Row around="xs">
@@ -53,7 +42,12 @@ class ClientDashboard extends Component {
             />
           </Col>
           <Col xs>
-            {spouse}
+            <ClientSpouseForm
+              title='Cônjuge'
+              subtitleCard={'Informações do cônjuge deste cliente'}
+              data={this.state.spouse}
+              isDisable={true}
+            />
           </Col>
         </Row>
         <Row around="xs" style={{marginTop: '30px'}}>

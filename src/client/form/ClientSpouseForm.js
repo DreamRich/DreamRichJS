@@ -10,6 +10,8 @@ import { Row, Col } from 'react-flexbox-grid';
 import ActionType from '../../actions/ActionType';
 import {personFields} from './ClientForm';
 import MediaQuery from 'react-responsive';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
 export default class SpouseForm extends Component {
 
@@ -33,6 +35,16 @@ export default class SpouseForm extends Component {
     );
   }
 
+  getAddSponse(){
+    return (
+      <Row around="xs">
+        <FloatingActionButton key='0' onClick={this.addDependent} >
+          <ContentAdd />
+        </FloatingActionButton>
+      </Row>
+    );
+  }
+
   getContentCard(){
     const spouseFields = personFields.filter( field => field.name !== 'email');
     // This form use the same field as client form
@@ -40,27 +52,31 @@ export default class SpouseForm extends Component {
       spouseFields,'spouseform', this.props.data, this.props.isDisable
     );
 
-    return (
-      <div>
-        <MediaQuery query="(min-width: 1030px)">
-          <Row around="xs">
-            <Col xs>
-              {formsyList.slice(0,3)}
-            </Col>
-            <Col xs>
-              {formsyList.slice(3,6)}
-            </Col>
-            <Col xs>
-              {this.getFormsyDate()}
-            </Col>
-          </Row>
-        </MediaQuery>
-        <MediaQuery query="(max-width: 1030px)">
-          {formsyList}
-          {this.getFormsyDate()}
-        </MediaQuery>
-      </div>
-    );
+    if(Object.keys(this.props.data).length !== 0 && this.props.isDisable){
+      return (
+        <div>
+          <MediaQuery query="(min-width: 1030px)">
+            <Row around="xs">
+              <Col xs>
+                {formsyList.slice(0,3)}
+              </Col>
+              <Col xs>
+                {formsyList.slice(3,6)}
+              </Col>
+              <Col xs>
+                {this.getFormsyDate()}
+              </Col>
+            </Row>
+          </MediaQuery>
+          <MediaQuery query="(max-width: 1030px)">
+            {formsyList}
+            {this.getFormsyDate()}
+          </MediaQuery>
+        </div>
+      );
+    } else {
+      return this.getAddSponse();
+    }
   }
 
   render(){
