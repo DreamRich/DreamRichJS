@@ -13,6 +13,7 @@ import GoalChart from '../goal/GoalChart';
 import GoalRegister from '../client/GoalRegister';
 import ActiveRegister from '../patrimony/ActiveRegister';
 import ActiveProfit from '../patrimony/ActiveProfit';
+import ActiveChart from '../patrimony/ActiveChart';
 import Home from '../Home';
 
 export default class Routers extends Component{
@@ -29,8 +30,9 @@ export default class Routers extends Component{
         <AuthorizedRoute exact permission="see_all_basic_client_data" path="/client" component={ ClientTable } />
         <AuthorizedRoute permission="see_employee_data" path="/employee" component={ Employeer } />
         <AuthorizedRoute permission="change_own_client_data" exact path="/register/steps/:id?" component={ StepperClient } />
-        <AuthorizedRoute permission="allow_any" path="/goals" component={ GoalChart } />
-        <AuthorizedRoute permission="allow_any" path="/login/changepassword" 
+        <AuthorizedRoute permission="see_own_client_data" path="/active_chart" component={ ActiveChart } />
+        <AuthorizedRoute permission="see_own_client_data" path="/goals" component={ GoalChart } />
+        <AuthorizedRoute permission="allow_any" path="/login/changepassword"
           render={ () => <PasswordForm userid={Auth.getUserId()} username={Auth.getUserName()} /> } />
 
         <Route path="/login/resetpassword" render={ () => <ResetForm email="marcelohpf@hotmail.com" /> } />
