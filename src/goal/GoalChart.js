@@ -27,7 +27,7 @@ export default class GoalChart extends Component {
   mountChart(data_flow, fp_id) {
     addFunnel(Highcharts);
     getData(
-      routeMap.financial_planning + fp_id + '/',
+      routeMap.financial_planning + fp_id + '/total_resource_for_annual_goals/',
       (data) => {
         const total_resource_for_annual_goals = {
           type : 'spline',
@@ -39,7 +39,7 @@ export default class GoalChart extends Component {
             fillColor: 'white',
           }
         };
-        total_resource_for_annual_goals.data = data.total_resource_for_annual_goals;
+        total_resource_for_annual_goals.data = data;
         data_flow.push(total_resource_for_annual_goals);
         new Highcharts.Chart(
           'chart', {
