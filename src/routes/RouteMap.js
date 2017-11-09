@@ -8,7 +8,6 @@ const routeMap = {
   goal: '/api/goal/goal/',
   goal_manager: '/api/goal/goal_manager/',
   goal_type: '/api/goal/goal_type/',
-  financial_planning: '/api/financial_planning/financial_planning/',
   cost_type: '/api/financial_planning/cost_type/',
   regular_cost: '/api/financial_planning/regular_cost/',
   cost_manager: '/api/financial_planning/cost_manager/',
