@@ -131,7 +131,6 @@ export default class ClientDependentForm extends Component {
               );
             })}
           </div>
-          {this.addElement()}
         </CardText>
       </Card>
     );
