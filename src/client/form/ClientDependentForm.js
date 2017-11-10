@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 //import ContentClear from 'material-ui/svg-icons/content/clear';
 //import IconButton from 'material-ui/IconButton';
 //import errorMessages from '../../utils/FormsErrorMessages';
-import SubForm from '../../components/SubForm';
+// import SubForm from '../../components/SubForm';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-flexbox-grid';
 import ActionType from '../../actions/ActionType';
@@ -49,10 +49,13 @@ export default class ClientDependentForm extends Component {
     action: ActionType.CLIENT.ADDDEPENDENT
   })
 
-  removeDependent = (key) => AppDispatcher.dispatch({
-    action: ActionType.CLIENT.REMOVEDEPENDENT,
-    key: key,
-  })
+  removeDependent = (key) => {
+    console.log('oi');
+    AppDispatcher.dispatch({
+      action: ActionType.CLIENT.REMOVEDEPENDENT,
+      key: key,
+    });
+  }
 
   getRowsTable = () => this.state.dependents.map( (dependent) => {
     return {
@@ -60,29 +63,12 @@ export default class ClientDependentForm extends Component {
         {'value': dependent.name},
         {'value': dependent.surname},
         {'value': dependent.birthday},
-      ]
+      ],
+      'key': dependent.index,
     };
   })
 
-  getContentCard(dependent){
-
-    const headers = [
-      {value: 'Nome', type: 'TextField', width: 200},
-      {value: 'Sobrenome', type: 'TextField', width: 200},
-      {value: 'Data do aniversário', type: 'DatePicker', width: 200},
-    ];
-
-    return (
-      <div>
-        <EditTableForm
-          headerTable={headers}
-          rowsTable={this.getRowsTable(dependent.name,dependent.surname,dependent.birthday)}
-        />
-      </div>
-    );
-  }
-
-  addElement(){
+  addElement = () => {
     return (
       <Row around="xs">
         <Col xs>
@@ -102,6 +88,12 @@ export default class ClientDependentForm extends Component {
     const subtitleCard = 'Insira as informações correspondentes as ' +
      'informações do dependente.';
 
+    const headers = [
+      {value: 'Nome', type: 'TextField', width: 200},
+      {value: 'Sobrenome', type: 'TextField', width: 200},
+      {value: 'Data do aniversário', type: 'DatePicker', width: 200},
+    ];
+
     return (
       <Card className='Card' >
         <CardTitle
@@ -110,24 +102,12 @@ export default class ClientDependentForm extends Component {
         />
         <CardText>
           <div>
-            {this.state.dependents.map( (dependent) => {
-              const index = dependent.index;
-              return (
-                <div key={index}>
-                  <SubForm
-                    name="dependent"
-                    action={ActionType.CLIENT.POSTMULTIFORM}
-                    title="Dependente"
-                    parent_name='active_client_id'
-                    parent_id={this.props.id}
-                    index={index}
-                    canSubmit={this.props.canSubmit}
-                  >
-                    {this.getContentCard(dependent, index)}
-                  </SubForm>
-                </div>
-              );
-            })}
+            <EditTableForm
+              headers={headers}
+              rows={this.getRowsTable()}
+              onDelete={this.removeDependent}
+              onChange={()=>{}}
+            />
           </div>
         </CardText>
       </Card>

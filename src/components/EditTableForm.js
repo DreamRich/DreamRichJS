@@ -40,23 +40,19 @@ const rows = [
 ];
 */
 
-const onChange = (row) => {
-  console.log(row);
-};
-
 class EditTableForm extends Component {
   static propTypes = {
-    rowsTable: PropTypes.array,
-    headerTable: PropTypes.array,
+    rows: PropTypes.array,
+    headers: PropTypes.array,
+    onDelete: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired,
   }
 
   render () {
     return (
       <Row around="xs">
         <EditTable
-          onChange={onChange}
-          rows={this.props.rowsTable}
-          headerColumns={this.props.headerTable}
+          {...this.props}
           enableDelete={true}
         />
       </Row>
