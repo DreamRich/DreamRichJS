@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import EditTable from 'material-ui-table-edit';
+import EditTable from '../utils/EditTable';
 import { Row } from 'react-flexbox-grid';
 import PropTypes from 'prop-types';
 
@@ -39,6 +39,7 @@ const rows = [
   ]},
 ];
 */
+
 const onChange = (row) => {
   console.log(row);
 };
