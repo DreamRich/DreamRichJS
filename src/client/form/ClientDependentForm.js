@@ -54,17 +54,15 @@ export default class ClientDependentForm extends Component {
     key: key,
   })
 
-  getRowsTable(name,surname,date){
-
-    console.log(name,surname,date);
-    return [
-      {'columns': [
-        {'value': name},
-        {'value': surname},
-        {'value': date},
-      ]},
-    ];
-  }
+  getRowsTable = () => this.state.dependents.map( (dependent) => {
+    return {
+      'columns': [
+        {'value': dependent.name},
+        {'value': dependent.surname},
+        {'value': dependent.birthday},
+      ]
+    };
+  })
 
   getContentCard(dependent){
 

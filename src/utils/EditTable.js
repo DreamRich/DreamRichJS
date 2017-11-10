@@ -1,89 +1,80 @@
 /* eslint-disable */
 
-const React = require('react')
-const mui = require('material-ui')
-const ModeEdit = require('material-ui/svg-icons/editor/mode-edit').default
-const Check = require('material-ui/svg-icons/navigation/check').default
-const Delete = require('material-ui/svg-icons/action/delete').default
-const times = require('lodash.times')
-const {IconButton, Toggle, TextField, RaisedButton, DatePicker} = mui
-const injectTapEventPlugin = require('react-tap-event-plugin')
-injectTapEventPlugin()
+import React, {Component} from 'react';
+import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
+import Check from 'material-ui/svg-icons/navigation/check';
+import Delete from 'material-ui/svg-icons/action/delete';
+import {times} from 'lodash';
+import {IconButton,
+  Toggle,
+  TextField,
+  RaisedButton,
+  DatePicker} from 'material-ui';
 
 import { Row, Col } from 'react-flexbox-grid';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
-export default React.createClass({
-  getDefaultProps: () => {
-    return {
-      headerColumns: [],
-      rows: [],
-      enableDelete: true,
-      onChange: function () {},
-      onDelete: function () {}
-    }
-  },
+export default class EditTable extends Component {
 
-  getInitialState: function () {
-    return {
-      rows: this.props.rows,
-      hoverValue: false,
-      currentRow: false
-    }
-  },
+  static defaultProps = {
+    headerColumns: [],
+    rows: [],
+    enableDelete: true,
+    onChange: () => {},
+    onDelete: () => {},
+    onAdd: undefined
+  }
 
-  contextTypes: {
+  state = {
+    rows: this.props.rows,
+    hoverValue: false,
+    currentRow: false
+  }
+
+  contextTypes = {
     muiTheme: React.PropTypes.object.isRequired
-  },
+  }
 
-  update: function () {
-    const row = this.state.rows.filter((row) => {
-      return row.selected
-    })
-    this.props.onChange(row[0])
-  },
+  update = () => {
+    const row = this.state.rows.filter((row) => row.selected );
+    this.props.onChange(row[0]);
+  }
 
-  getCellValue: function (cell) {
-    const self = this
-    const id = cell && cell.id
-    const type = this.props.headerColumns.map((header) => {
-      return header.type
-    })[id]
-    const selected = cell && cell.selected
-    const value = cell && cell.value
-    const rowId = cell && cell.rowId
-    const header = cell && cell.header
-    const width = cell && cell.width
-    const textFieldId = [id, rowId, header, 'text'].join('-')
-    const datePickerId = [id, rowId, header, 'date'].join('-')
+  getCellValue = (cell) => {
+    const self = this;
+    const id = cell && cell.id;
+    const type = this.props.headerColumns.map((header) => header.type )[id];
+    const selected = cell && cell.selected;
+    const value = cell && cell.value;
+    const rowId = cell && cell.rowId;
+    const header = cell && cell.header;
+    const width = cell && cell.width;
+    const textFieldId = [id, rowId, header, 'text'].join('-');
+    const datePickerId = [id, rowId, header, 'date'].join('-');
 
-    const textFieldStyle = {
-      width: width
-    }
+    const textFieldStyle = { width: width };
 
-    const datePickerStyle = {
-      width: width
-    }
+    const datePickerStyle = { width: width };
 
     const onTextFieldChange = (e) => {
-      const target = e.target
-      const value = target.value
-      var rows = self.state.rows
-      rows[rowId].columns[id].value = value
-      self.setState({rows: rows})
+      const target = e.target;
+      const value = target.value;
+      var rows = self.state.rows;
+      rows[rowId].columns[id].value = value;
+      self.setState({rows: rows});
     }
 
     const onDatePickerChange = (e, date) => {
-      var rows = self.state.rows
-      rows[rowId].columns[id].value = date
-      self.setState({rows: rows})
+      var rows = self.state.rows;
+      rows[rowId].columns[id].value = date;
+      self.setState({rows: rows});
     }
 
     const onToggle = (e) => {
-      var rows = self.state.rows
-      rows[rowId].columns[id].value = !rows[rowId].columns[id].value
-      self.setState({rows: rows})
+      var rows = self.state.rows;
+      rows[rowId].columns[id].value = !rows[rowId].columns[id].value;
+      self.setState({rows: rows});
     }
 
     if (header || (type && type === 'ReadOnly')) {
@@ -98,7 +89,7 @@ export default React.createClass({
             onChange={onTextFieldChange}
             style={textFieldStyle}
             value={value}
-          />
+          />;
         }
         if (type === 'DatePicker') {
           return <DatePicker
@@ -107,14 +98,14 @@ export default React.createClass({
             mode='landscape'
             style={datePickerStyle}
             value={value}
-          />
+          />;
         }
         if (type === 'Toggle') {
-          return <Toggle onToggle={onToggle} toggled={value} />
+          return <Toggle onToggle={onToggle} toggled={value} />;
         }
       } else {
         if (type === 'Toggle') {
-          return <Toggle disabled onToggle={onToggle} toggled={value} />
+          return <Toggle disabled onToggle={onToggle} toggled={value} />;
         }
         if (type === 'DatePicker') {
           return <DatePicker
@@ -124,7 +115,7 @@ export default React.createClass({
             style={datePickerStyle}
             value={value}
             disabled={Boolean(true)}
-          />
+          />;
         }
       }
     }
@@ -134,22 +125,23 @@ export default React.createClass({
       style={textFieldStyle}
       disabled
       value={value}
-    />
-  },
+    />;
+  }
 
-  renderHeader: function () {
-    const headerColumns = this.props.headerColumns
+  renderHeader = () => {
+    const headerColumns = this.props.headerColumns;
     const columns = headerColumns.map((column, id) => {
       return {value: column.value}
-    })
-    const row = {columns: columns, header: true}
+    });
+    const row = {columns: columns, header: true};
 
-    return this.renderRow(row)
-  },
+    return this.renderRow(row);
+  }
 
-  renderRow: function (row) {
-    const self = this
-    const columns = row.columns
+  renderRow = (row) => {
+    const self = this;
+    const columns = row.columns;
+    console.log(row);
     const rowStyle = {
       width: '100%',
       display: 'flex',
@@ -158,14 +150,14 @@ export default React.createClass({
       border: 0,
       borderBottom: '1px solid #ccc',
       height: 50
-    }
+    };
     const checkboxStyle = {
       display: 'flex',
       flexFlow: 'row nowrap',
       width: 50,
       height: 24,
       alignItems: 'center'
-    }
+    };
 
     const deleteButtonStyle = {
       display: 'flex',
@@ -174,59 +166,59 @@ export default React.createClass({
       height: 24,
       alignItems: 'center',
       padding: '0 12 0'
-    }
+    };
 
-    const rowId = row.id
-    const rowKey = ['row', rowId].join('-')
+    const rowId = row.id;
+    const rowKey = ['row', rowId].join('-');
 
     const onRowClick = function (e) {
-      var rows = self.state.rows
+      var rows = self.state.rows;
       rows.forEach((row, i) => {
-        if (rowId !== i) row.selected = false
+        if (rowId !== i) row.selected = false;
       })
-      rows[rowId].selected = !rows[rowId].selected
-      self.setState({rows: rows})
-    }
+      rows[rowId].selected = !rows[rowId].selected;
+      self.setState({rows: rows});
+    };
 
-    const r = self.state.rows[rowId]
-    const selected = (r && r.selected) || false
+    const r = self.state.rows[rowId];
+    const selected = (r && r.selected) || false;
 
-    const button = selected ? <Check /> : <ModeEdit />
-      const tooltip = selected ? 'Done' : 'Edit'
+    const button = selected ? <Check /> : <ModeEdit />;
+    const tooltip = selected ? 'Done' : 'Edit';
 
     const onDeleteRow = function (e) {
-      var rows = self.state.rows
-      var deleteEvent = {}
+      var rows = self.state.rows;
+      var deleteEvent = {};
       rows.forEach((row, i) => {
         if (rowId === i) {
-          rows.splice(i, 1)
-          deleteEvent = {rowId, row}
+          rows.splice(i, 1);
+          deleteEvent = {rowId, row};
         }
-      })
+      });
       rows.forEach((row, i) => {
         row.id = i
-      })
-      self.setState({rows: rows})
-      if (deleteEvent !== {}) self.props.onDelete(deleteEvent)
-    }
+      });
+      self.setState({rows: rows});
+      if (deleteEvent !== {}) self.props.onDelete(deleteEvent);
+    };
 
     const onClick = function (e) {
       if (selected) {
-        self.update()
+        self.update();
       }
 
       onRowClick(e)
-    }
+    };
 
     const deleteButton = (!this.props.enableDelete || selected || row.header) ? <div style={deleteButtonStyle} />
       : <IconButton style={deleteButtonStyle} tooltip={'Delete this row'} onClick={onDeleteRow}>
         <Delete />
-      </IconButton>
+      </IconButton>;
 
       const checkbox = row.header ? <div style={checkboxStyle} />
       : <IconButton style={checkboxStyle} tooltip={tooltip} onClick={onClick}>
         {button}
-      </IconButton>
+      </IconButton>;
 
       return (
         <div key={rowKey} className='row' style={rowStyle}>
@@ -261,21 +253,24 @@ export default React.createClass({
           {deleteButton}
         </div>
       )
-  },
-  addElement(onButtonClick){
+  }
+
+  addElement = (onButtonClick) => {
+    const action = this.props.onAdd || onButtonClick;
     return (
         <Col xs={12} style={{marginTop: '30px'}}>
           <Row center="xs">
             <Col xs={6}>
-              <FloatingActionButton key='0' onClick={onButtonClick}>
+              <FloatingActionButton key='0' onClick={action}>
                 <ContentAdd />
               </FloatingActionButton>
             </Col>
           </Row>
         </Col>
     );
-  },
-  getHeader(listHeader){
+  }
+
+  getHeader = (listHeader) => {
 
     const header = listHeader.map((element, index)=> {
       return (
@@ -286,50 +281,48 @@ export default React.createClass({
     });
 
     return (<Row>{header}</Row>);
-  },
+  }
 
-  render: function () {
-    const self = this
+  render = () => {
+    const self = this;
     const style = {
       display: 'flex',
       flexFlow: 'column nowrap',
       justifyContent: 'space-between',
       alignItems: 'center',
       fontFamily: 'Roboto, sans-serif'
-    }
+    };
 
     const buttonStyle = {
       display: 'flex',
       flexFlow: 'row nowrap',
       marginTop: 10
-    }
+    };
 
-    const rows = this.state.rows
-    const columnTypes = this.props.headerColumns.map((header) => {
-      return header.type
-    })
+    const rows = this.state.rows;
+    const columnTypes = this.props.headerColumns.map((header) => header.type );
 
     const onButtonClick = (e) => {
       const newColumns = times(columnTypes.length, (index) => {
         const defaults = {
           'TextField': '',
           'Toggle': true
-        }
+        };
 
-        const value = defaults[columnTypes[index]]
+        const value = defaults[columnTypes[index]];
 
-        return {value: value}
-      })
+        return {value: value};
+      });
 
       const updatedRows = rows.map((row) => {
         if (row.selected) {
-          self.update()
-          row.selected = false
+          self.update();
+          row.selected = false;
         }
-        return row
-      })
-      updatedRows.push({columns: newColumns, selected: true})
-      self.setState({rows: updatedRows})
+        return row;
+      });
+      updatedRows.push({columns: newColumns, selected: true});
+      self.setState({rows: updatedRows});
     }
 
     return (
@@ -341,7 +334,7 @@ export default React.createClass({
         })}
         {this.addElement(onButtonClick)}
       </Row>
-    )
+    );
   }
-})
+}
 

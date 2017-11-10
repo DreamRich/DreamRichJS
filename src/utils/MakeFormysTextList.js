@@ -8,6 +8,7 @@ const makeFormysTextList = (fieldList, textKey, data, isDisable) => {
     return (
       <Col key={index+'column'} xs>
         <FormsyText
+          className={isDisable? 'disabled':''}
           name={field.name}
           validations={field.validations}
           validationError={field.validationError}
