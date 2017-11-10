@@ -7,8 +7,7 @@ import PropTypes from 'prop-types';
 import makeFormysTextList from '../../utils/MakeFormysTextList';
 import CardForm from '../../components/CardForm';
 import MediaQuery from 'react-responsive';
-
-// import Checkbox from 'material-ui/Checkbox';
+import UploadFileModal from '../../components/UploadFileModal';
 import ActionType from '../../actions/ActionType';
 
 var {
@@ -73,6 +72,14 @@ export default class ClientForm extends Component {
     );
   }
 
+  getUploadFileModal(){
+    if(!this.props.isDisable){
+      return (
+        <UploadFileModal />
+      );
+    }
+  }
+
   getContentCard(){
     const formsyList = makeFormysTextList(
       personFields, 'clientform', this.props.data, this.props.isDisable
@@ -91,6 +98,7 @@ export default class ClientForm extends Component {
             <Col key="thirdColumnClientForm" xs>
               {formsyList.slice(6,8)}
               {this.getFormsyDate()}
+              {this.getUploadFileModal()}
             </Col>
           </Row>
         </MediaQuery>
