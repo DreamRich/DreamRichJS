@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import Check from 'material-ui/svg-icons/navigation/check';
 import Delete from 'material-ui/svg-icons/action/delete';
@@ -17,12 +18,16 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 
 export default class EditTable extends Component {
 
+  static propTypes = {
+    onDelete: PropTypes.func.isRequired,
+  }
+
   static defaultProps = {
-    headerColumns: [],
+    headers: [],
     rows: [],
     enableDelete: true,
-    onChange: () => {},
-    onDelete: () => {},
+    onChange: () => {console.warn('need this props');},
+    onDelete: () => {console.warn('need this props');},
     onAdd: undefined
   }
 
@@ -37,14 +42,14 @@ export default class EditTable extends Component {
   }
 
   update = () => {
-    const row = this.state.rows.filter((row) => row.selected );
+    const row = this.props.rows.filter((row) => row.selected );
     this.props.onChange(row[0]);
   }
 
   getCellValue = (cell) => {
     const self = this;
     const id = cell && cell.id;
-    const type = this.props.headerColumns.map((header) => header.type )[id];
+    const type = this.props.headers.map((header) => header.type )[id];
     const selected = cell && cell.selected;
     const value = cell && cell.value;
     const rowId = cell && cell.rowId;
@@ -129,7 +134,7 @@ export default class EditTable extends Component {
   }
 
   renderHeader = () => {
-    const headerColumns = this.props.headerColumns;
+    const headerColumns = this.props.headers;
     const columns = headerColumns.map((column, id) => {
       return {value: column.value}
     });
@@ -141,7 +146,7 @@ export default class EditTable extends Component {
   renderRow = (row) => {
     const self = this;
     const columns = row.columns;
-    console.log(row);
+    const indexRow = row.key;
     const rowStyle = {
       width: '100%',
       display: 'flex',
@@ -186,21 +191,7 @@ export default class EditTable extends Component {
     const button = selected ? <Check /> : <ModeEdit />;
     const tooltip = selected ? 'Done' : 'Edit';
 
-    const onDeleteRow = function (e) {
-      var rows = self.state.rows;
-      var deleteEvent = {};
-      rows.forEach((row, i) => {
-        if (rowId === i) {
-          rows.splice(i, 1);
-          deleteEvent = {rowId, row};
-        }
-      });
-      rows.forEach((row, i) => {
-        row.id = i
-      });
-      self.setState({rows: rows});
-      if (deleteEvent !== {}) self.props.onDelete(deleteEvent);
-    };
+    const onDeleteRow = () => this.props.onDelete(indexRow);
 
     const onClick = function (e) {
       if (selected) {
@@ -210,7 +201,8 @@ export default class EditTable extends Component {
       onRowClick(e)
     };
 
-    const deleteButton = (!this.props.enableDelete || selected || row.header) ? <div style={deleteButtonStyle} />
+    const deleteButton = (!this.props.enableDelete || selected || row.header) ? 
+      <div style={deleteButtonStyle} />
       : <IconButton style={deleteButtonStyle} tooltip={'Delete this row'} onClick={onDeleteRow}>
         <Delete />
       </IconButton>;
@@ -224,7 +216,7 @@ export default class EditTable extends Component {
         <div key={rowKey} className='row' style={rowStyle}>
           {checkbox}
           {columns.map((column, id) => {
-            const width = this.props.headerColumns.map((header) => {
+            const width = this.props.headers.map((header) => {
               return (header && header.width) || false
             })[id]
             const cellStyle = {
@@ -299,8 +291,8 @@ export default class EditTable extends Component {
       marginTop: 10
     };
 
-    const rows = this.state.rows;
-    const columnTypes = this.props.headerColumns.map((header) => header.type );
+    const rows = this.props.rows;
+    const columnTypes = this.props.headers.map((header) => header.type );
 
     const onButtonClick = (e) => {
       const newColumns = times(columnTypes.length, (index) => {
