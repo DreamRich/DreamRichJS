@@ -14,6 +14,7 @@ import AppDispatcher from '../../AppDispatcher';
 import {Card, CardTitle, CardText} from 'material-ui/Card';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import {routeMap} from '../../routes/RouteMap';
 
 import EditTableForm from '../../components/EditTableForm';
 
@@ -44,13 +45,27 @@ export default class ClientDependentForm extends Component {
     this.setState({dependents});
   }
 
+  submitDependent = (row) => {
+    const data = {
+      'name': row.columns[0].value,
+      'surname': row.columns[1].value,
+      'birthday': row.columns[2].value,
+      'active_client_id': 16,
+    };
+    AppDispatcher.dispatch({
+      action: ActionType.CLIENT.POSTMULTIFORM,
+      index: row.key,
+      data: data,
+      route: routeMap.dependent,
+      state: 'dependents',
+    });
+  }
 
   addDependent = () => AppDispatcher.dispatch({
     action: ActionType.CLIENT.ADDDEPENDENT
   })
 
   removeDependent = (key) => {
-    console.log('oi');
     AppDispatcher.dispatch({
       action: ActionType.CLIENT.REMOVEDEPENDENT,
       key: key,
@@ -60,12 +75,21 @@ export default class ClientDependentForm extends Component {
   getRowsTable = () => this.state.dependents.map( (dependent) => {
     return {
       'columns': [
-        {'value': dependent.name},
-        {'value': dependent.surname},
-        {'value': dependent.birthday},
+        {'value': dependent.name,
+          'name': 'name'},
+        {'value': dependent.surname,
+          'name': 'surname'},
+        {'value': dependent.birthday,
+          'name': 'birthday'},
       ],
       'key': dependent.index,
+      'selected': dependent.selected
     };
+  })
+
+  selectDependent = (key) => AppDispatcher.dispatch({
+    action: ActionType.CLIENT.SELECTDEPENDENT,
+    key: key,
   })
 
   addElement = () => {
@@ -106,7 +130,9 @@ export default class ClientDependentForm extends Component {
               headers={headers}
               rows={this.getRowsTable()}
               onDelete={this.removeDependent}
-              onChange={()=>{}}
+              onChange={this.submitDependent}
+              onAdd={this.addDependent}
+              onRowSelect={(row) => this.selectDependent(row.key)}
             />
           </div>
         </CardText>
