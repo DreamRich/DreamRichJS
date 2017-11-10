@@ -5,6 +5,7 @@ import PasswordForm from '../auth/form/PasswordForm';
 import ResetForm from '../auth/ResetForm';
 import {AuthorizedRoute, NotFoundRoute} from './Router';
 import ClientTable from '../client/ClientTable';
+import ArrearageTable from '../client/ArrearageTable';
 import Employeer from '../employee/Employeer';
 import PatrimonyRegister from '../patrimony/PatrimonyRegister';
 import StepperClient from '../client/StepperClient';
@@ -27,6 +28,7 @@ export default class Routers extends Component{
         <AuthorizedRoute exact permission="change_own_client_data" path="/register/patrimony" component={ PatrimonyRegister } />
         <AuthorizedRoute exact permission="change_own_client_data" path="/patrimony/active/:id" component={ ActiveProfit } />
         <AuthorizedRoute exact permission="see_all_basic_client_data" path="/client" component={ ClientTable } />
+        <AuthorizedRoute exact permission="allow_any" path="/arrearage" component={ ArrearageTable } />
         <AuthorizedRoute permission="see_employee_data" path="/employee" component={ Employeer } />
         <AuthorizedRoute permission="change_own_client_data" exact path="/register/steps/:id?" component={ StepperClient } />
         <AuthorizedRoute permission="allow_any" path="/goals" component={ GoalChart } />
