@@ -20,30 +20,31 @@ export default class EditTable extends Component {
 
   static propTypes = {
     onDelete: PropTypes.func.isRequired,
+    onAdd: PropTypes.func.isRequired,
+    onRowSelect: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
     headers: [],
     rows: [],
     enableDelete: true,
-    onChange: () => {console.warn('need this props');},
-    onDelete: () => {console.warn('need this props');},
-    onAdd: undefined
+    onChange: () => {console.warn('onChange not implemented');},
+    onDelete: () => {console.warn('need this onDelete function');},
+    onAdd: () => {console.warn('need this onAdd function');},
+    onRowSelect: (key) => {console.warn('need this onRowSelect' + key);}
   }
 
   state = {
-    rows: this.props.rows,
-    hoverValue: false,
-    currentRow: false
+    editRow: {}
   }
 
   contextTypes = {
     muiTheme: React.PropTypes.object.isRequired
   }
 
-  update = () => {
-    const row = this.props.rows.filter((row) => row.selected );
-    this.props.onChange(row[0]);
+  update = (row) => {
+    // console.log('update data row');
+    this.props.onChange(row);
   }
 
   getCellValue = (cell) => {
@@ -51,6 +52,10 @@ export default class EditTable extends Component {
     const id = cell && cell.id;
     const type = this.props.headers.map((header) => header.type )[id];
     const selected = cell && cell.selected;
+    const name = cell && cell.name;
+    if (selected && cell && this.state.editRow[name]) {
+      cell.value = this.state.editRow[name];
+    }
     const value = cell && cell.value;
     const rowId = cell && cell.rowId;
     const header = cell && cell.header;
@@ -65,9 +70,7 @@ export default class EditTable extends Component {
     const onTextFieldChange = (e) => {
       const target = e.target;
       const value = target.value;
-      var rows = self.state.rows;
-      rows[rowId].columns[id].value = value;
-      self.setState({rows: rows});
+      self.setState({editRow: {[target.name]: value}});
     }
 
     const onDatePickerChange = (e, date) => {
@@ -90,6 +93,7 @@ export default class EditTable extends Component {
       if (selected) {
         if (type === 'TextField') {
           return <TextField
+            name={name}
             id={textFieldId}
             onChange={onTextFieldChange}
             style={textFieldStyle}
@@ -98,6 +102,7 @@ export default class EditTable extends Component {
         }
         if (type === 'DatePicker') {
           return <DatePicker
+            name={name}
             id={datePickerId}
             onChange={onDatePickerChange}
             mode='landscape'
@@ -143,10 +148,21 @@ export default class EditTable extends Component {
     return this.renderRow(row);
   }
 
+  rowWillAdd = () => {
+    this.props.rows.forEach( row => {
+      if (row.selected) {
+        this.update(row);
+      }
+    });
+  }
+
+  onRowUnselect = (row) => {
+    this.update(row);
+  }
+
   renderRow = (row) => {
     const self = this;
     const columns = row.columns;
-    const indexRow = row.key;
     const rowStyle = {
       width: '100%',
       display: 'flex',
@@ -173,32 +189,30 @@ export default class EditTable extends Component {
       padding: '0 12 0'
     };
 
-    const rowId = row.id;
+    const rowId = row.key;
     const rowKey = ['row', rowId].join('-');
 
-    const onRowClick = function (e) {
-      var rows = self.state.rows;
-      rows.forEach((row, i) => {
-        if (rowId !== i) row.selected = false;
-      })
-      rows[rowId].selected = !rows[rowId].selected;
-      self.setState({rows: rows});
+    const onRowClick = (e) => {
+
     };
 
-    const r = self.state.rows[rowId];
-    const selected = (r && r.selected) || false;
+    const selected = row.selected || false;
 
     const button = selected ? <Check /> : <ModeEdit />;
     const tooltip = selected ? 'Done' : 'Edit';
 
-    const onDeleteRow = () => this.props.onDelete(indexRow);
+    const onDeleteRow = () => this.props.onDelete(rowId);
+    const onRowSelect = () => {
+      this.setState({editRow: row});
+      this.props.onRowSelect(row);
+    }
 
-    const onClick = function (e) {
+    const onClick = (e) => {
       if (selected) {
-        self.update();
+        this.onRowUnselect(row);
+      } else {
+        onRowSelect(row);
       }
-
-      onRowClick(e)
     };
 
     const deleteButton = (!this.props.enableDelete || selected || row.header) ? 
@@ -247,13 +261,16 @@ export default class EditTable extends Component {
       )
   }
 
-  addElement = (onButtonClick) => {
-    const action = this.props.onAdd || onButtonClick;
+  addElement = () => {
+    const onAdd = () => {
+      this.rowWillAdd();
+      this.props.onAdd();
+    }
     return (
         <Col xs={12} style={{marginTop: '30px'}}>
           <Row center="xs">
             <Col xs={6}>
-              <FloatingActionButton key='0' onClick={action}>
+              <FloatingActionButton key='0' onClick={onAdd}>
                 <ContentAdd />
               </FloatingActionButton>
             </Col>
@@ -294,37 +311,13 @@ export default class EditTable extends Component {
     const rows = this.props.rows;
     const columnTypes = this.props.headers.map((header) => header.type );
 
-    const onButtonClick = (e) => {
-      const newColumns = times(columnTypes.length, (index) => {
-        const defaults = {
-          'TextField': '',
-          'Toggle': true
-        };
-
-        const value = defaults[columnTypes[index]];
-
-        return {value: value};
-      });
-
-      const updatedRows = rows.map((row) => {
-        if (row.selected) {
-          self.update();
-          row.selected = false;
-        }
-        return row;
-      });
-      updatedRows.push({columns: newColumns, selected: true});
-      self.setState({rows: updatedRows});
-    }
-
     return (
       <Row>
         {this.renderHeader()}
-        {rows.map((row, id) => {
-          row.id = id
+        {rows.map( row => {
           return this.renderRow(row)
         })}
-        {this.addElement(onButtonClick)}
+        {this.addElement()}
       </Row>
     );
   }
