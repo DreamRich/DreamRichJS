@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import Divider from 'material-ui/Divider';
-import TextField from 'material-ui/TextField';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-flexbox-grid';
 import ActionType from '../actions/ActionType';
@@ -9,10 +8,17 @@ import AppDispatcher from '../AppDispatcher';
 import {Card, CardTitle, CardText} from 'material-ui/Card';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import ContentClear from 'material-ui/svg-icons/content/clear';
 
+/* Add formsy text */
+import {FormsyText} from 'formsy-material-ui/lib';
+import IconButton from 'material-ui/IconButton';
+import errorMessages from '../utils/FormsErrorMessages';
+import SubForm from '../components/SubForm';
+var {wordsError,} = errorMessages;
 
+export default class EditTableTeste extends Component {
 
-export default class ClientDependentForm extends Component {
   constructor(props){
     super(props);
     const {dependents} = ClientStore.getState();
@@ -37,7 +43,6 @@ export default class ClientDependentForm extends Component {
     this.setState({dependents});
   }
 
-
   addDependent = () => AppDispatcher.dispatch({
     action: ActionType.CLIENT.ADDDEPENDENT
   })
@@ -47,21 +52,52 @@ export default class ClientDependentForm extends Component {
     key: key,
   })
 
-  getRowsTable(name,surname,date){
+  getContentCard(dependent, index){
 
-    console.log(name,surname,date);
-    return [
-      {'columns': [
-        {'value': name},
-        {'value': surname},
-        {'value': date},
-      ]},
-    ];
-  }
-
-  getContentCard(){
-
-    return (0);
+    return (
+      <Row around="xs">
+        <Col xs>
+          <ContentAdd />
+        </Col>
+        <Col xs>
+          <FormsyText
+            name="name"
+            validations="isWords"
+            validationError={wordsError}
+            hintText="Nome do dependente"
+            value={dependent.name}
+          />
+        </Col>
+        <Col xs>
+          <FormsyText
+            name="surname"
+            validations="isWords"
+            validationError={wordsError}
+            hintText="Sobrenome do dependente"
+            value={dependent.surname}
+          />
+        </Col>
+        <Col xs>
+          <FormsyText
+            name="surname"
+            validations="isWords"
+            validationError={wordsError}
+            hintText="Sobrenome do dependente"
+            value={dependent.surname}
+          />
+        </Col>
+        <Col xs>
+          <IconButton
+            key={'clear1'+index}
+            tooltip="Remover dependentes"
+            tooltipPosition="top-center"
+            onClick={this.removeDependent.bind(this, index)}
+          >
+            <ContentClear style={{color: '#C01F1F'}} key={'clear'+index}/>
+          </IconButton>
+        </Col>
+      </Row>
+    );
   }
 
   addElement(){
@@ -96,31 +132,31 @@ export default class ClientDependentForm extends Component {
   getBody(){
 
     return (
-      <Row around="xs">
-        <Col xs>
-          <TextField
-            id={'1'}
-            value={'value'}
-          />
-        </Col>
-        <Col xs>
-          <TextField
-            id={'1'}
-            value={'value'}
-          />
-        </Col>
-        <Col xs>
-          <TextField
-            id={'1'}
-            value={'value'}
-          />
-        </Col>
-      </Row>
+      <div>
+        {this.state.dependents.map( (dependent) => {
+          const index = dependent.index;
+          return (
+            <div key={index}>
+              <SubForm
+                name="dependent"
+                action={ActionType.CLIENT.POSTMULTIFORM}
+                title="Dependente"
+                parent_name='active_client_id'
+                parent_id={this.props.id}
+                index={index}
+                canSubmit={this.props.canSubmit}
+              >
+                {this.getContentCard(dependent, index)}
+              </SubForm>
+            </div>
+          );
+        })}
+      </div>
     );
   }
 
   render = () => {
-    var listHeader = ['Nome', 'Sobrenome', 'Data de aniversário'];
+    var listHeader = ['Salvar', 'Nome', 'Sobrenome', 'Data de aniversário', 'Remover'];
     return (
       <Card className='Card' >
         <CardTitle
@@ -132,6 +168,8 @@ export default class ClientDependentForm extends Component {
             {this.getHeader(listHeader)}
             <Divider/>
             {this.getBody()}
+            <Divider/>
+            {this.getBody()}
           </div>
         </CardText>
       </Card>
@@ -140,7 +178,8 @@ export default class ClientDependentForm extends Component {
 }
 
 /*
-  *Fazer o header = Fazer uma lista com as strings das colunas
-  *Fazer o body só fazer aparecer os icones e elementos sem fucionalidade
+ *Fazer o header = Fazer uma lista com as strings das colunas DONE
+ * Fazer com que o método getHeader() ele adicione no array no começo o salvar e no fim remover
+ * Fazer o body só fazer aparecer os icones e elementos sem fucionalidade
   *
   */
