@@ -5,6 +5,7 @@ import RegularCostDashboard from '../dashboard/RegularCostDashboard';
 import PropTypes from 'prop-types';
 import {getFinancialPlanning} from '../resources/getModels';
 import RegisterStore from '../stores/RegisterStore';
+import EditTableTeste from '../components/EditTableTeste';
 
 class Dashboard extends Component {
 
@@ -43,6 +44,7 @@ class Dashboard extends Component {
           data-route="/home"
         >
           <div>
+            <EditTableTeste />
           </div>
         </Tab>
       </Tabs>
