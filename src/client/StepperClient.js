@@ -120,7 +120,7 @@ class StepperClient extends React.Component {
             />
           }
           <RaisedButton
-            label={stepIndex === 6 ? 'Finalizar' : 'Seguir para o passo seguinte'}
+            label={stepIndex === 5 ? 'Finalizar' : 'Seguir para o passo seguinte'}
             primary={true}
             onClick={this.handleNext}
             style={{float: 'right'}}
