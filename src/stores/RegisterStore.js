@@ -61,6 +61,18 @@ class RegisterStore extends ReduceStore {
       }
       return {...state, financialPlanning};
 
+    case ActionType.PATRIMONY.POSTFORMSUCCESS:
+      financialPlanning = state.financialPlanning;
+      if (!financialPlanning.patrimony_id && action.state === 'patrimony') {
+        financialPlanning.patrimony_id = action.data.id;
+        putData(
+          `${routeMap.financial_planning}${financialPlanning.pk}/`,
+          financialPlanning,
+        );
+      }
+
+      return {...state, financialPlanning};
+
     case ActionType.REGISTER.STORE:
       return {...state, financialPlanning: action.data};
 

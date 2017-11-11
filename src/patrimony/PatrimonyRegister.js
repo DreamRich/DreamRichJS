@@ -1,66 +1,55 @@
 import React, {Component} from 'react';
-import Paper from 'material-ui/Paper';
-import PatrimonyForm from './PatrimonyForm';
-import RaisedButton from 'material-ui/RaisedButton';
-import RealeStateSubForm from './RealeStateSubForm.js';
-import IncomeSubForm from './IncomeSubForm.js';
-import ExtraSubForm from './ExtraSubForm';
+// import RaisedButton from 'material-ui/RaisedButton';
 import PatrimonyStore from '../stores/PatrimonyStore';
+import PropTypes from 'prop-types';
+import IncomeSubStepper from './IncomeSubStepper';
+import AssetSubStepper from './AssetSubStepper';
 
 export default class PatrimonyRegister extends Component {
 
-  componentWillMount = () => {
-    this.setState({
-      ...PatrimonyStore.getState(),
-      listener: PatrimonyStore.addListener(this.handleUpdate)
-    });
+  static propTypes = {
+    main: PropTypes.bool,
   }
 
-  componentWillUnmount = () => {
-    this.state.listener.remove();
+  static defaultProps = {
+    main: true,
   }
 
-  handleUpdate = () => {
-    this.setState(PatrimonyStore.getState());
-  }
+  state = PatrimonyStore.getState()
 
-  submit = () => {
-    this.form.submit();
-  }
+  componentWillMount = () => this.setState({
+    listener: PatrimonyStore.addListener(this.handleUpdate)
+  })
+
+  componentWillUnmount = () => this.state.listener.remove()
+
+  handleUpdate = () => this.setState(PatrimonyStore.getState())
 
   render() {
-    return (
-      <div>
-        <h1> Registro de Patrimonio </h1>
-
-        <Paper className="Paper">
-          <PatrimonyForm
-            ref={ref=>this.form=ref}
-          />
-          <IncomeSubForm
-            parent_id={this.state.id}
-          />
-          <RealeStateSubForm
-            parent_id={this.state.id}
-          />
-          <ExtraSubForm
-            parent_id={this.state.id}
-            name='company'
-            title="Participação em empresa"
-          />
-          <ExtraSubForm
-            parent_id={this.state.id}
-            name='equipament'
-            title="Equipamentos"
-          />
-          <RaisedButton 
-            type='submit'
-            primary 
-            label="Enviar"
-            onClick={this.submit}
-          />
-        </Paper>
-      </div>
-    );
+    if (this.props.main) {
+      return (
+        <IncomeSubStepper
+          patrimony={this.state.patrimony}
+          stepsNumber={2}
+          canSubmit={this.state.canSubmit}
+          incomes={this.state.incomes}
+        />
+      );
+    } else {
+      return (
+        <AssetSubStepper
+          id={this.state.patrimony.id}
+          stepsNumber={5}
+          realestates={this.state.realestates}
+          equipments={this.state.equipments}
+          companyparticipations={this.state.companyparticipations}
+          activemanager={this.state.activemanager}
+          actives={this.state.actives}
+          canSubmit={this.state.canSubmit}
+          types={this.state.types}
+          arrearanges={this.state.arrearanges}
+        />
+      );
+    }
   }
 }

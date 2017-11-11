@@ -21,17 +21,13 @@ class ClientRegister extends Component {
   constructor(props){
     super(props);
 
-    this.state = ClientStore.getState();
   }
 
-  //state = {
-  //  selectedCountry: null,
-  //  selectedState: null,  // State region
-  //}
+  state = ClientStore.getState()
 
-  componentWillMount = () => {
-    this.setState({listener: ClientStore.addListener(this.handleChange)});
-  }
+  componentWillMount = () => this.setState({
+    listener: ClientStore.addListener(this.handleChange)
+  })
 
   componentDidMount = () => {
     AppDispatcher.dispatchDefer({
@@ -39,13 +35,9 @@ class ClientRegister extends Component {
     });
   }
 
-  componentWillUnmount = () => {
-    this.state.listener.remove();
-  }
+  componentWillUnmount = () => this.state.listener.remove()
 
-  handleChange = () => {
-    this.setState(ClientStore.getState());
-  }
+  handleChange = () => this.setState(ClientStore.getState())
 
   // Convert ordinary Array to MenuItem Array to use in drop down list
   convertRegionToMenuItens = (list) => {
@@ -61,13 +53,7 @@ class ClientRegister extends Component {
   }
 
 
-  getDivider = () => {
-    return (<Divider className='Divider' />);
-  }
-
-  submit = () => {
-    this.form.submit();
-  }
+  getDivider = () => <Divider className='Divider' />
 
   render() {
     let subtitleCard = 'Insira as informações básicas do cliente.';

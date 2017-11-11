@@ -109,20 +109,18 @@ export default class ClientForm extends Component {
   render(){
 
     return (
-      <div>
-        <SubForm
-          title="Dados"
-          name="active_client"
-          action={ActionType.CLIENT.POSTFORM}
-          canSubmit={this.props.canSubmit}
-        >
-          <CardForm
-            titleCard={this.props.title}
-            subtitleCard={this.props.subtitleCard}
-            contentCard={this.getContentCard()}
-          />
-        </SubForm>
-      </div>
+      <SubForm
+        title="Dados"
+        name="active_client"
+        action={ActionType.CLIENT.POSTFORM}
+        canSubmit={this.props.canSubmit}
+      >
+        <CardForm
+          titleCard={this.props.title}
+          subtitleCard={this.props.subtitleCard}
+          contentCard={this.getContentCard()}
+        />
+      </SubForm>
     );
   }
 }
