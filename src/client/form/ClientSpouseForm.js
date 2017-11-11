@@ -12,8 +12,26 @@ import {personFields} from './ClientForm';
 import MediaQuery from 'react-responsive';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import RaisedButton from 'material-ui/RaisedButton';
+import IconButton from 'material-ui/IconButton';
+import Edit from 'material-ui/svg-icons/image/edit';
+import getElementCentered from '../../utils/getElementCentered';
+
+
 
 export default class SpouseForm extends Component {
+
+
+  constructor(props){
+    super(props);
+
+    this.state = {
+      isDisable: this.props.isDisable,
+    };
+
+    this.changeStateDisable = this.changeStateDisable.bind(this);
+
+  }
 
   static propTypes = {
     id: PropTypes.number,
@@ -30,7 +48,7 @@ export default class SpouseForm extends Component {
         name="birthday"
         floatingLabelText="Data de Nascimento"
         value={this.props.data.birthday}
-        isFormDisabled={this.props.isDisable}
+        isFormDisabled={this.state.isDisable}
       />
     );
   }
@@ -38,24 +56,37 @@ export default class SpouseForm extends Component {
   getAddSponse(){
     return (
       <Row around="xs">
-        <FloatingActionButton key='0' onClick={this.addDependent} >
+        <FloatingActionButton key='0' onClick={this.changeStateDisable} >
           <ContentAdd />
         </FloatingActionButton>
       </Row>
     );
   }
 
+  changeStateDisable(){
+    this.setState({isDisable: !this.state.isDisable});
+  }
+
   getContentCard(){
     const spouseFields = personFields.filter( field => field.name !== 'email');
     // This form use the same field as client form
     const formsyList = makeFormysTextList(
-      spouseFields,'spouseform', this.props.data, this.props.isDisable
+      spouseFields,'spouseform', this.props.data, this.state.isDisable
     );
 
-    if(Object.keys(this.props.data).length !== 0 && this.props.isDisable){
+    if(Object.keys(this.props.data).length == 0 && this.state.isDisable) {
+      return this.getAddSponse();
+    } else{
       return (
         <div>
           <MediaQuery query="(min-width: 1030px)">
+            {this.state.isDisable && getElementCentered(
+              <IconButton tooltip="Editar formulário" tooltipPosition="top-center">
+                <Edit
+                  onClick={this.changeStateDisable}
+                />
+              </IconButton>
+            )}
             <Row around="xs">
               <Col xs>
                 {formsyList.slice(0,3)}
@@ -67,15 +98,34 @@ export default class SpouseForm extends Component {
                 {this.getFormsyDate()}
               </Col>
             </Row>
+            {!this.state.isDisable && getElementCentered(
+              <RaisedButton
+                label="Salvar"
+                onClick={this.changeStateDisable}
+                primary={true}
+              />)
+            }
           </MediaQuery>
           <MediaQuery query="(max-width: 1030px)">
+            {this.state.isDisable && getElementCentered(
+              <IconButton tooltip="Editar formulário" tooltipPosition="top-center">
+                <Edit
+                  onClick={this.changeStateDisable}
+                />
+              </IconButton>
+            )}
             {formsyList}
             {this.getFormsyDate()}
+            {!this.state.isDisable && getElementCentered(
+              <RaisedButton
+                label="Salvar"
+                onClick={this.changeStateDisable}
+                primary={true}
+              />)
+            }
           </MediaQuery>
         </div>
       );
-    } else {
-      return this.getAddSponse();
     }
   }
 

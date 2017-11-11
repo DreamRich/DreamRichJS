@@ -9,6 +9,10 @@ import CardForm from '../../components/CardForm';
 import MediaQuery from 'react-responsive';
 import UploadFileModal from '../../components/UploadFileModal';
 import ActionType from '../../actions/ActionType';
+import RaisedButton from 'material-ui/RaisedButton';
+import getElementCentered from '../../utils/getElementCentered';
+import IconButton from 'material-ui/IconButton';
+import Edit from 'material-ui/svg-icons/image/edit';
 
 var {
   wordsError,
@@ -49,6 +53,16 @@ export const personFields = [
 
 export default class ClientForm extends Component {
 
+  constructor(props){
+    super(props);
+
+    this.state = {
+      isDisable: this.props.isDisable,
+    };
+
+    this.changeStateDisable = this.changeStateDisable.bind(this);
+  }
+
   static propTypes = {
     title: PropTypes.string,
     subtitleCard: PropTypes.string,
@@ -61,19 +75,23 @@ export default class ClientForm extends Component {
     data: {},
   }
 
+  changeStateDisable(){
+    this.setState({isDisable: !this.state.isDisable});
+  }
+
   getFormsyDate(){
     return (
       <FormsyDate
         name="birthday"
         floatingLabelText="Data de Nascimento"
         value={this.props.data.birthday}
-        isFormDisabled={this.props.isDisable}
+        isFormDisabled={this.state.isDisable}
       />
     );
   }
 
   getUploadFileModal(){
-    if(!this.props.isDisable){
+    if(!this.state.isDisable){
       return (
         <UploadFileModal />
       );
@@ -82,12 +100,19 @@ export default class ClientForm extends Component {
 
   getContentCard(){
     const formsyList = makeFormysTextList(
-      personFields, 'clientform', this.props.data, this.props.isDisable
+      personFields, 'clientform', this.props.data, this.state.isDisable
     );
 
     return (
       <div>
         <MediaQuery key="desktopClientForm" query="(min-width: 1030px)">
+          {this.state.isDisable && getElementCentered(
+            <IconButton tooltip="Editar formulário" tooltipPosition="top-center">
+              <Edit
+                onClick={this.changeStateDisable}
+              />
+            </IconButton>
+          )}
           <Row around="xs">
             <Col key="firstColumnClientForm" xs>
               {formsyList.slice(0,3)}
@@ -101,10 +126,31 @@ export default class ClientForm extends Component {
               {this.getUploadFileModal()}
             </Col>
           </Row>
+          {!this.state.isDisable && getElementCentered(
+            <RaisedButton
+              label="Salvar"
+              onClick={this.changeStateDisable}
+              primary={true}
+            />)
+          }
         </MediaQuery>
         <MediaQuery key="mobileClientForm" query="(max-width: 1030px)">
+          {this.state.isDisable && getElementCentered(
+            <IconButton tooltip="Editar formulário" tooltipPosition="top-center">
+              <Edit
+                onClick={this.changeStateDisable}
+              />
+            </IconButton>
+          )}
           {formsyList}
           {this.getFormsyDate()}
+          {!this.state.isDisable && getElementCentered(
+            <RaisedButton
+              label="Salvar"
+              onClick={this.changeStateDisable}
+              primary={true}
+            />)
+          }
         </MediaQuery>
       </div>
     );
