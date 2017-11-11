@@ -46,6 +46,8 @@ class EditTableForm extends Component {
     headers: PropTypes.array,
     onDelete: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
+    onAdd: PropTypes.func.isRequired,
+    onRowSelect: PropTypes.func.isRequired,
   }
 
   render () {

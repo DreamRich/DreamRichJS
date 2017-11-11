@@ -14,6 +14,7 @@ import AppDispatcher from '../../AppDispatcher';
 import {Card, CardTitle, CardText} from 'material-ui/Card';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import {routeMap} from '../../routes/RouteMap';
 
 import EditTableForm from '../../components/EditTableForm';
 
@@ -44,13 +45,22 @@ export default class ClientDependentForm extends Component {
     this.setState({dependents});
   }
 
+  submitDependent = (row) => {
+    row.data['active_client_id'] = this.props.id;
+    AppDispatcher.dispatch({
+      action: ActionType.CLIENT.POSTMULTIFORM,
+      index: row.key,
+      data: row.data,
+      route: routeMap.dependent,
+      state: 'dependents',
+    });
+  }
 
   addDependent = () => AppDispatcher.dispatch({
     action: ActionType.CLIENT.ADDDEPENDENT
   })
 
   removeDependent = (key) => {
-    console.log('oi');
     AppDispatcher.dispatch({
       action: ActionType.CLIENT.REMOVEDEPENDENT,
       key: key,
@@ -58,14 +68,17 @@ export default class ClientDependentForm extends Component {
   }
 
   getRowsTable = () => this.state.dependents.map( (dependent) => {
+    const {index, selected, ...rest} = dependent;
     return {
-      'columns': [
-        {'value': dependent.name},
-        {'value': dependent.surname},
-        {'value': dependent.birthday},
-      ],
-      'key': dependent.index,
+      'data': rest,
+      'key': index,
+      'selected': selected
     };
+  })
+
+  selectDependent = (key) => AppDispatcher.dispatch({
+    action: ActionType.CLIENT.SELECTDEPENDENT,
+    key: key,
   })
 
   addElement = () => {
@@ -89,9 +102,9 @@ export default class ClientDependentForm extends Component {
      'informações do dependente.';
 
     const headers = [
-      {value: 'Nome', type: 'TextField', width: 200},
-      {value: 'Sobrenome', type: 'TextField', width: 200},
-      {value: 'Data do aniversário', type: 'DatePicker', width: 200},
+      {value: 'Nome', name: 'name', type: 'TextField', width: 200},
+      {value: 'Sobrenome', name: 'surname', type: 'TextField', width: 200},
+      {value: 'Data do aniversário', name: 'birthday', type: 'DatePicker', width: 200},
     ];
 
     return (
@@ -106,7 +119,9 @@ export default class ClientDependentForm extends Component {
               headers={headers}
               rows={this.getRowsTable()}
               onDelete={this.removeDependent}
-              onChange={()=>{}}
+              onChange={this.submitDependent}
+              onAdd={this.addDependent}
+              onRowSelect={(row) => this.selectDependent(row.key)}
             />
           </div>
         </CardText>

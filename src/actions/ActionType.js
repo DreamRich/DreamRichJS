@@ -22,6 +22,7 @@ const actionTypes = {
     UNMOUNT: 'password/unmount'
   },
   CLIENT: {
+    SELECTDEPENDENT: 'client/select_dependent',
     SUBMIT: 'client/can_submit_form',
     POSTMULTIFORM: 'client/create_multiline_form',
     POSTMULTIFORMSUCCESS: 'client/create_multiline_form_success',
