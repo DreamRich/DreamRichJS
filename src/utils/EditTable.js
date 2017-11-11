@@ -35,7 +35,7 @@ export default class EditTable extends Component {
   }
 
   state = {
-    editRow: {}
+    editRow: {data: {}, key: -1}
   }
 
   contextTypes = {
@@ -43,8 +43,11 @@ export default class EditTable extends Component {
   }
 
   update = (row) => {
-    // console.log('update data row');
-    this.props.onChange(row);
+    if (this.state.editRow.key === row.key) {
+      this.props.onChange(this.state.editRow);
+    } else {
+      this.props.onChange(row);
+    }
   }
 
   getCellValue = (cell) => {
@@ -53,8 +56,8 @@ export default class EditTable extends Component {
     const type = this.props.headers.map((header) => header.type )[id];
     const selected = cell && cell.selected;
     const name = cell && cell.name;
-    if (selected && cell && this.state.editRow[name]) {
-      cell.value = this.state.editRow[name];
+    if (selected && cell && this.state.editRow.data[name]) {
+      cell.value = this.state.editRow.data[name];
     }
     const value = cell && cell.value;
     const rowId = cell && cell.rowId;
@@ -70,13 +73,19 @@ export default class EditTable extends Component {
     const onTextFieldChange = (e) => {
       const target = e.target;
       const value = target.value;
-      self.setState({editRow: {[target.name]: value}});
+      self.setState( (prevState, props) => {
+        const {editRow} = prevState;
+        editRow.data[target.name] = value;
+        return { editRow };
+      });
     }
 
     const onDatePickerChange = (e, date) => {
-      var rows = self.state.rows;
-      rows[rowId].columns[id].value = date;
-      self.setState({rows: rows});
+      self.setState( (prevState, props) => {
+        const {editRow} = prevState;
+        editRow.data[name] = date;
+        return { editRow };
+      });
     }
 
     const onToggle = (e) => {
@@ -141,9 +150,9 @@ export default class EditTable extends Component {
   renderHeader = () => {
     const headerColumns = this.props.headers;
     const columns = headerColumns.map((column, id) => {
-      return {value: column.value}
+      return {[column.name]: column.value}
     });
-    const row = {columns: columns, header: true};
+    const row = {data: columns, header: true};
 
     return this.renderRow(row);
   }
@@ -192,10 +201,6 @@ export default class EditTable extends Component {
     const rowId = row.key;
     const rowKey = ['row', rowId].join('-');
 
-    const onRowClick = (e) => {
-
-    };
-
     const selected = row.selected || false;
 
     const button = selected ? <Check /> : <ModeEdit />;
@@ -229,10 +234,8 @@ export default class EditTable extends Component {
       return (
         <div key={rowKey} className='row' style={rowStyle}>
           {checkbox}
-          {columns.map((column, id) => {
-            const width = this.props.headers.map((header) => {
-              return (header && header.width) || false
-            })[id]
+          {this.props.headers.map( (header, id) => {
+            const width = header.width;
             const cellStyle = {
               display: 'flex',
               flexFlow: 'row nowrap',
@@ -241,24 +244,42 @@ export default class EditTable extends Component {
               alignItems: 'center',
               height: 30,
               width: width || 200
+            };
+            const columnKey = ['column', id].join('-');
+            let column = null;
+            if (row.data) {
+              const columnData = {
+                'value': row.data[header.name],
+                'width': cellStyle.width,
+                'selected': selected,
+                'rowId': rowId,
+                'id': id,
+                'name': header.name,
+                'header': row.header,
+                'type': header.type,
+              };
+              column = this.getCellValue(columnData);
             }
-            const columnKey = ['column', id].join('-')
-            column.selected = selected
-            column.rowId = rowId
-            column.id = id
-            column.header = row.header
-            column.width = cellStyle.width
             return (
               <div key={columnKey} className='cell' style={cellStyle}>
                 <div>
-                  {this.getCellValue(column)}
+                  {column}
                 </div>
               </div>
-            )
+            );
           })}
           {deleteButton}
         </div>
       )
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    const selectedRow = nextProps.rows.filter( row => row.selected );
+    if (selectedRow.length && this.state.editRow.key !== selectedRow[0].key) {
+      this.setState({editRow: selectedRow[0]});
+    } else if (!selectedRow.length) {
+      this.setState({editRow: {data: {}, key: -1}});
+    }
   }
 
   addElement = () => {

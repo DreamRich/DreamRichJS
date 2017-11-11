@@ -46,16 +46,11 @@ export default class ClientDependentForm extends Component {
   }
 
   submitDependent = (row) => {
-    const data = {
-      'name': row.columns[0].value,
-      'surname': row.columns[1].value,
-      'birthday': row.columns[2].value,
-      'active_client_id': 16,
-    };
+    row.data['active_client_id'] = this.props.id;
     AppDispatcher.dispatch({
       action: ActionType.CLIENT.POSTMULTIFORM,
       index: row.key,
-      data: data,
+      data: row.data,
       route: routeMap.dependent,
       state: 'dependents',
     });
@@ -73,17 +68,11 @@ export default class ClientDependentForm extends Component {
   }
 
   getRowsTable = () => this.state.dependents.map( (dependent) => {
+    const {index, selected, ...rest} = dependent;
     return {
-      'columns': [
-        {'value': dependent.name,
-          'name': 'name'},
-        {'value': dependent.surname,
-          'name': 'surname'},
-        {'value': dependent.birthday,
-          'name': 'birthday'},
-      ],
-      'key': dependent.index,
-      'selected': dependent.selected
+      'data': rest,
+      'key': index,
+      'selected': selected
     };
   })
 
@@ -113,9 +102,9 @@ export default class ClientDependentForm extends Component {
      'informações do dependente.';
 
     const headers = [
-      {value: 'Nome', type: 'TextField', width: 200},
-      {value: 'Sobrenome', type: 'TextField', width: 200},
-      {value: 'Data do aniversário', type: 'DatePicker', width: 200},
+      {value: 'Nome', name: 'name', type: 'TextField', width: 200},
+      {value: 'Sobrenome', name: 'surname', type: 'TextField', width: 200},
+      {value: 'Data do aniversário', name: 'birthday', type: 'DatePicker', width: 200},
     ];
 
     return (
