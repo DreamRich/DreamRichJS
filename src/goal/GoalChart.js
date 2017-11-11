@@ -24,7 +24,7 @@ export default class GoalChart extends Component {
     };
   }
 
-  mountChart(data_flow, fp_id) {
+  mountChart(gm_data, fp_id) {
     addFunnel(Highcharts);
     getData(
       routeMap.financial_planning + fp_id + '/total_resource_for_annual_goals/',
@@ -40,10 +40,10 @@ export default class GoalChart extends Component {
           }
         };
         total_resource_for_annual_goals.data = data;
-        data_flow.push(total_resource_for_annual_goals);
+        gm_data.goals_flow_dic.push(total_resource_for_annual_goals);
         new Highcharts.Chart(
           'chart', {
-            series: data_flow,
+            series: gm_data.goals_flow_dic,
             title:{text: 'Goals'},
             plotOptions: {
               column: {
@@ -55,7 +55,7 @@ export default class GoalChart extends Component {
               }
             },
             xAxis: {
-              categories: data.year_init_to_year_end
+              categories: gm_data.year_init_to_year_end
             },
             yAxis: {
               min: 0,
@@ -79,7 +79,7 @@ export default class GoalChart extends Component {
       routeMap.goals_flow_dic + gm_id  + '/',
       (data) => {
         data.goals_flow_dic.forEach((obj) => {obj.type = 'column';});
-        this.mountChart(data.goals_flow_dic, fp_id);
+        this.mountChart(data, fp_id);
       });
   }
 
