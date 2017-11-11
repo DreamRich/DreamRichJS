@@ -63,88 +63,57 @@ export default class EditTable extends Component {
     const rowId = cell && cell.rowId;
     const header = cell && cell.header;
     const width = cell && cell.width;
-    const textFieldId = [id, rowId, header, 'text'].join('-');
-    const datePickerId = [id, rowId, header, 'date'].join('-');
+    const textFieldId = [id, rowId, header].join('-');
+    const datePickerId = [id, rowId, header].join('-');
 
     const textFieldStyle = { width: width };
 
     const datePickerStyle = { width: width };
 
-    const onTextFieldChange = (e) => {
-      const target = e.target;
-      const value = target.value;
+    // Set a new state to the row is being edited
+    const onChangeField = (e, value) => {
       self.setState( (prevState, props) => {
         const {editRow} = prevState;
-        editRow.data[target.name] = value;
+        editRow.data[name] = value;
         return { editRow };
       });
-    }
-
-    const onDatePickerChange = (e, date) => {
-      self.setState( (prevState, props) => {
-        const {editRow} = prevState;
-        editRow.data[name] = date;
-        return { editRow };
-      });
-    }
-
-    const onToggle = (e) => {
-      var rows = self.state.rows;
-      rows[rowId].columns[id].value = !rows[rowId].columns[id].value;
-      self.setState({rows: rows});
     }
 
     if (header || (type && type === 'ReadOnly')) {
       return <p style={{color: '#888'}}>{value}</p>
     }
 
+    // Select the field to show
     if (type) {
-      if (selected) {
-        if (type === 'TextField') {
-          return <TextField
-            name={name}
-            id={textFieldId}
-            onChange={onTextFieldChange}
-            style={textFieldStyle}
-            value={value}
-          />;
-        }
-        if (type === 'DatePicker') {
-          return <DatePicker
-            name={name}
-            id={datePickerId}
-            onChange={onDatePickerChange}
-            mode='landscape'
-            style={datePickerStyle}
-            value={value}
-          />;
-        }
-        if (type === 'Toggle') {
-          return <Toggle onToggle={onToggle} toggled={value} />;
-        }
-      } else {
-        if (type === 'Toggle') {
-          return <Toggle disabled onToggle={onToggle} toggled={value} />;
-        }
-        if (type === 'DatePicker') {
-          return <DatePicker
-            id={datePickerId}
-            onChange={onDatePickerChange}
-            mode='landscape'
-            style={datePickerStyle}
-            value={value}
-            disabled={Boolean(true)}
-          />;
-        }
+      if (type === 'TextField') {
+        return <TextField
+          name={name}
+          id={textFieldId}
+          onChange={onChangeField}
+          style={textFieldStyle}
+          value={value}
+          disabled={!selected}
+        />;
+      }
+      if (type === 'DatePicker') {
+        return <DatePicker
+          name={name}
+          id={datePickerId}
+          onChange={onChangeField}
+          mode='landscape'
+          style={datePickerStyle}
+          value={value}
+          disabled={!selected}
+        />;
+      }
+      if (type === 'Toggle') {
+        return <Toggle
+          onToggle={onChangeField}
+          toggled={value}
+          disabled={!selected}/>;
       }
     }
 
-    return <TextField
-      id={textFieldId}
-      style={textFieldStyle}
-      disabled
-      value={value}
-    />;
   }
 
   renderHeader = () => {
@@ -212,7 +181,7 @@ export default class EditTable extends Component {
       this.props.onRowSelect(row);
     }
 
-    const onClick = (e) => {
+    const onClick = () => {
       if (selected) {
         this.onRowUnselect(row);
       } else {
@@ -274,6 +243,7 @@ export default class EditTable extends Component {
   }
 
   componentWillReceiveProps = (nextProps) => {
+    // Transition to receive a new row and add it in editRow state
     const selectedRow = nextProps.rows.filter( row => row.selected );
     if (selectedRow.length && this.state.editRow.key !== selectedRow[0].key) {
       this.setState({editRow: selectedRow[0]});
@@ -283,6 +253,7 @@ export default class EditTable extends Component {
   }
 
   addElement = () => {
+    // Add a new row submiting all others activates
     const onAdd = () => {
       this.rowWillAdd();
       this.props.onAdd();
