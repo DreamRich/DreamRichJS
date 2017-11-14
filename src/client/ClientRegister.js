@@ -48,8 +48,6 @@ class ClientRegister extends Component {
     return listMenuItems;
   }
 
-  getDivider = () => <Divider className='Divider' />
-
   render() {
     const listInformationSteps = [
       {

@@ -6,7 +6,6 @@ import ResetForm from '../auth/ResetForm';
 import {AuthorizedRoute, NotFoundRoute} from './Router';
 import ClientTable from '../client/ClientTable';
 import Employeer from '../employee/Employeer';
-import PatrimonyRegister from '../patrimony/PatrimonyRegister';
 import ClientRegister from '../client/ClientRegister';
 import Dashboard from '../dashboard/Dashboard';
 import StepperClient from '../client/StepperClient';
