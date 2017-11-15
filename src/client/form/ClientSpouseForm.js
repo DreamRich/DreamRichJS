@@ -12,10 +12,6 @@ import {personFields} from './ClientForm';
 import MediaQuery from 'react-responsive';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import RaisedButton from 'material-ui/RaisedButton';
-import IconButton from 'material-ui/IconButton';
-import Edit from 'material-ui/svg-icons/image/edit';
-import getElementCentered from '../../utils/getElementCentered';
 
 
 
@@ -80,13 +76,6 @@ export default class SpouseForm extends Component {
       return (
         <div>
           <MediaQuery query="(min-width: 1030px)">
-            {this.state.isDisable && getElementCentered(
-              <IconButton tooltip="Editar formulário" tooltipPosition="top-center">
-                <Edit
-                  onClick={this.changeStateDisable}
-                />
-              </IconButton>
-            )}
             <Row around="xs">
               <Col xs>
                 {formsyList.slice(0,3)}
@@ -98,31 +87,10 @@ export default class SpouseForm extends Component {
                 {this.getFormsyDate()}
               </Col>
             </Row>
-            {!this.state.isDisable && getElementCentered(
-              <RaisedButton
-                label="Salvar"
-                onClick={this.changeStateDisable}
-                primary={true}
-              />)
-            }
           </MediaQuery>
           <MediaQuery query="(max-width: 1030px)">
-            {this.state.isDisable && getElementCentered(
-              <IconButton tooltip="Editar formulário" tooltipPosition="top-center">
-                <Edit
-                  onClick={this.changeStateDisable}
-                />
-              </IconButton>
-            )}
             {formsyList}
             {this.getFormsyDate()}
-            {!this.state.isDisable && getElementCentered(
-              <RaisedButton
-                label="Salvar"
-                onClick={this.changeStateDisable}
-                primary={true}
-              />)
-            }
           </MediaQuery>
         </div>
       );
