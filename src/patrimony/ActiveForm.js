@@ -1,71 +1,54 @@
 import React, {Component} from 'react';
-import {FormsyText, FormsySelect} from 'formsy-material-ui/lib';
-import ActionType from '../actions/ActionType';
-import AppDispatcher from '../AppDispatcher';
-import MenuItem from 'material-ui/MenuItem';
+import ActiveSubForm from './ActiveSubForm';
+// import ActionType from '../actions/ActionType';
+// import AppDispatcher from '../AppDispatcher';
+// import ActiveStore from '../stores/ActiveStore';
+// import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
-import SubForm from '../components/SubForm';
-//import RaisedButton from 'material-ui/RaisedButton';
+// import RaisedButton from 'material-ui/RaisedButton';
+import MultiForm from './MultiForm';
+import PatrimonyStore from '../stores/PatrimonyStore';
+import {getActiveTypes} from '../resources/getFormData';
+import {postActiveManager} from '../resources/saveModels';
 
+const ActiveMultiForm = MultiForm(ActiveSubForm);
 
 export default class ActiveForm extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   static propTypes = {
     parent_id: PropTypes.number,
+    manager: PropTypes.object,
+    data: PropTypes.array,
+    canSubmit: PropTypes.bool,
     types: PropTypes.array,
   }
 
   componentWillMount = () => {
-    AppDispatcher.dispatch({
-      action: ActionType.ACTIVE.TYPE
-    });
-  }
-
-  getOptions = () => {
-    return this.props.types.map( (type) =>
-      <MenuItem key={type.id} value={type.id} primaryText={type.name} />
-    );
+    const {types, activemanager: {id}} = PatrimonyStore.getState();
+    if (!types || types.length === 0) {
+      getActiveTypes();
+    }
+    console.log(id, this.props.manager);
+    if (!id) {
+      postActiveManager(this.props.parent_id);
+    }
   }
 
   render = () => {
     return (
-      <SubForm
-        title="Ativo"
-        parent_id={this.props.parent_id}
-        parent_name="active_manager_id"
-        name='active'
-        action={ActionType.ACTIVE.FORM}
-      >
-        <FormsySelect
-          name="active_type_id"
-          floatingLabelText="Tipo"
-          maxHeight={300}
-        >
-          {this.getOptions()}
-        </FormsySelect>
-        <FormsyText
-          name='name'
-          floatingLabelText='Nome'
-          hintText='Nome de referência'
-        />
-        <FormsyText
-          name='value'
-          floatingLabelText='Valor investido'
-          hintText='000.00'
-        />
-        <FormsyText
-          name='rate'
-          floatingLabelText='Taxa (%CDI)'
-          hintText='100.0'
-          onChange={this.onRateChange}
-        />
-      </SubForm>
+      <ActiveMultiForm
+        parent_id={this.props.manager.id}
+        name='actives'
+        title='Ativos'
+        labelAdd='Possui ativos? (Marque o quadrado ao lado)'
+        labelAdded='Possui outro ativo? (Marque o quadrado ao lado)'
+        labelRemove='Possuo este ativo.'
+        data={this.props.data}
+        canSubmit={this.props.canSubmit}
+        types={this.props.types}
+      />
     );
   }
-}
 
+}
 

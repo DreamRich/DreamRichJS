@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import RaisedButton from 'material-ui/RaisedButton';
+import PatrimonyForm from './PatrimonyForm';
+import IncomeForm from './IncomeForm';
 import {
   Step,
   Stepper,
@@ -9,28 +11,28 @@ import {
 } from 'material-ui/Stepper';
 import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
-import ClientStore from '../stores/ClientStore';
+import PatrimonyStore from '../stores/PatrimonyStore';
 
-export default class SubStepperClient extends React.Component {
-
-  constructor(props) {
-    super(props);
-  }
-
-  state = ClientStore.getState()
+export default class IncomeSubStepper extends React.Component {
 
   static propTypes = {
     stepsNumber: PropTypes.number,
-    listInformationSteps: PropTypes.array,
+    patrimony: PropTypes.shape({
+      id: PropTypes.number,
+    }),
+    incomes: PropTypes.array,
+    canSubmit: PropTypes.bool,
   }
 
+  state = {stepIndex: 0}
+
   componentWillMount = () => this.setState({
-    listener: ClientStore.addListener(this.handleChange)
+    listener: PatrimonyStore.addListener(this.handleChange)
   })
 
   handleChange = () => {
     // Only get some attributes from store
-    const { stepIndex, active_client: {id} } = ClientStore.getState();
+    const { stepIndex, patrimony: {id} } = PatrimonyStore.getState();
     if (stepIndex < this.props.stepsNumber || stepIndex >= 0) {
       this.setState({stepIndex, id});
     } else {
@@ -41,17 +43,17 @@ export default class SubStepperClient extends React.Component {
   componentWillUnmount = () => {
     this.state.listener.remove();
     AppDispatcher.dispatch({
-      action: ActionType.CLIENT.SETSTEP,
+      action: ActionType.PATRIMONY.SETSTEP,
       stepIndex: 0
     });
   }
 
   handleNext = () => {
     // Only go to next form if have more steps :)
-    let {stepIndex} = this.state;
+    const {stepIndex} = this.state;
     if (stepIndex < this.props.stepsNumber) {
       AppDispatcher.dispatch({
-        action: ActionType.CLIENT.SUBMIT,
+        action: ActionType.PATRIMONY.SUBMIT,
         canSubmit: true,
       });
     }
@@ -62,7 +64,7 @@ export default class SubStepperClient extends React.Component {
   };
 
   setStep = (stepIndex) => AppDispatcher.dispatch({
-    action: ActionType.CLIENT.SETSTEP,
+    action: ActionType.PATRIMONY.SETSTEP,
     stepIndex: stepIndex
   })
 
@@ -88,12 +90,32 @@ export default class SubStepperClient extends React.Component {
   }
 
   getContentSteps(){
-    let stepsList = [];
+    const listInformationSteps = [
+      {text: 'FGTS',
+        formComponent:
+          <PatrimonyForm
+            data={this.props.patrimony}
+            canSubmit={this.props.canSubmit}
+          />
+      },
+      {text: 'Receitas',
+        formComponent:
+          <IncomeForm
+            parent_id={this.props.patrimony.id}
+            data={this.props.incomes}
+            labelAdd='Possui fonte de renda? (Marque o quadrado ao lado)'
+            labelAdded='Possui outra fonte de renda? (Marque o quadrado ao lado)'
+            labelRemove='Tem essa renda? (Marque o quadrado ao lado)'
+            canSubmit={this.props.canSubmit}
+            name='incomes'
+          />
+      }
+    ];
     // Only enable click in some step if have the dependency of main form
     // this is a id in the state
-    stepsList = this.props.listInformationSteps.map((obj, index) => {
-      return(
-        <Step key={obj.text} disabled={this.state.id === undefined}>
+    const stepsList = listInformationSteps.map((obj, index) => {
+      return (
+        <Step key={obj.text} disabled={this.props.patrimony.id === undefined}>
           <StepButton onClick={() => this.setStep(index)}>
             {obj.text}
           </StepButton>
@@ -102,8 +124,8 @@ export default class SubStepperClient extends React.Component {
             {this.renderStepActions(index)}
           </StepContent>
         </Step>
-      );}
-    );
+      );
+    });
     return stepsList;
   }
 

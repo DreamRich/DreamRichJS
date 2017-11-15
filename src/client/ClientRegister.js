@@ -17,12 +17,13 @@ class ClientRegister extends Component {
   constructor(props){
     super(props);
 
-    this.state = ClientStore.getState();
   }
 
-  componentWillMount = () => {
-    this.setState({listener: ClientStore.addListener(this.handleChange)});
-  }
+  state = ClientStore.getState()
+
+  componentWillMount = () => this.setState({
+    listener: ClientStore.addListener(this.handleChange)
+  })
 
   componentDidMount = () => {
     AppDispatcher.dispatchDefer({
@@ -30,13 +31,9 @@ class ClientRegister extends Component {
     });
   }
 
-  componentWillUnmount = () => {
-    this.state.listener.remove();
-  }
+  componentWillUnmount = () => this.state.listener.remove()
 
-  handleChange = () => {
-    this.setState(ClientStore.getState());
-  }
+  handleChange = () => this.setState(ClientStore.getState())
 
   // Convert ordinary Array to MenuItem Array to use in drop down list
   convertRegionToMenuItens = (list) => {
@@ -49,10 +46,6 @@ class ClientRegister extends Component {
     });
 
     return listMenuItems;
-  }
-
-  submit = () => {
-    this.form.submit();
   }
 
   render() {
