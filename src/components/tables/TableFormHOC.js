@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import EditTable from './EditTable';
+import TableForm from './TableForm';
 import { Row } from 'react-flexbox-grid';
 import PropTypes from 'prop-types';
 import AppDispatcher from '../../AppDispatcher';
 import {Card, CardTitle, CardText} from 'material-ui/Card';
 
 const TableFormHOC = (actions, basicData, Store, getStoreState) => {
-  return class TableForm extends Component {
+  return class CardTableForm extends Component {
     constructor(props){
       super(props);
       const registers = getStoreState();
@@ -86,7 +86,7 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
           />
           <CardText>
             <Row around="xs">
-              <EditTable
+              <TableForm
                 headers={headers}
                 rows={this.getRowsTable()}
                 onDelete={this.removeRow}

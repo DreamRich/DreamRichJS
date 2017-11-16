@@ -19,7 +19,7 @@ import TableRow from './TableRow';
 
 import '../../stylesheet/TableEdit.sass';
 
-export default class EditTable extends Component {
+export default class TableForm extends Component {
 
   static propTypes = {
     onDelete: PropTypes.func.isRequired,

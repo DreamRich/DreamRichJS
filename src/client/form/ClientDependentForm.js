@@ -2,7 +2,7 @@ import ActionType from '../../actions/ActionType';
 import ClientStore from '../../stores/ClientStore';
 import {routeMap} from '../../routes/RouteMap';
 
-import TableFormHOC from '../../components/tables/EditTableForm';
+import TableFormHOC from '../../components/tables/TableFormHOC';
 
 
 export default TableFormHOC(
