@@ -43,6 +43,7 @@ class DefineFormsyDate extends Component {
     setValidations: PropTypes.func,
     showError: PropTypes.func,
     showRequired: PropTypes.func,
+    disabled: PropTypes.bool,
   };
 
   constructor(props){
@@ -120,6 +121,7 @@ class DefineFormsyDate extends Component {
       name,
       defaultDate,
       requiredError,
+      disabled,
       getErrorMessage, // eslint-disable-line no-unused-vars
       getErrorMessages, // eslint-disable-line no-unused-vars
       getValue, // eslint-disable-line no-unused-vars
@@ -144,7 +146,7 @@ class DefineFormsyDate extends Component {
         <FormsyText
           name='text'
           id={this.props.name + '_field'}
-          disabled={this.props.isFormDisabled}
+          disabled={disabled}
           errorText={this.getErrorMessage}
           style={{width:150}}
           value={this.state.dateText}
@@ -171,7 +173,7 @@ class DefineFormsyDate extends Component {
             default={defaultDate}
             fullWidth={true}
             mode='landscape'
-            disable={this.props.isFormDisabled}
+            disabled={disabled}
             autoOk
           />
           <FormsyText

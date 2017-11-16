@@ -5,6 +5,7 @@ import { Col } from 'react-flexbox-grid';
 const makeFormysTextList = (fieldList, textKey, data, isDisable) => {
   const formsyTextList = fieldList.map((field, index) => {
     const fieldValue = (data !== undefined ? data[field.name] : field.value);
+    field.isUpdate = field.isUpdate == true ? true : false;
     return (
       <Col key={index+'column'} xs>
         <FormsyText

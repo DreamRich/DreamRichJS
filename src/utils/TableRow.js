@@ -1,27 +1,27 @@
-/* eslint-disable */
-
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import Check from 'material-ui/svg-icons/navigation/check';
 import Delete from 'material-ui/svg-icons/action/delete';
-import {times} from 'lodash';
+// import {times} from 'lodash';
 import {IconButton,
   Toggle,
   TextField,
-  RaisedButton,
+  //RaisedButton,
   DatePicker
 } from 'material-ui';
 
-import { Row, Col } from 'react-flexbox-grid';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
+import { Row/*, Col */ } from 'react-flexbox-grid';
+// import FloatingActionButton from 'material-ui/FloatingActionButton';
+// import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import '../stylesheet/TableEdit.sass';
 
 export default class TableRow extends Component {
 
   static propTypes = {
+    row: PropTypes.object,
+    headers: PropTypes.array,
     onDelete: PropTypes.func,
     onRowSelect: PropTypes.func,
     onRowUnselect: PropTypes.func,
@@ -36,11 +36,11 @@ export default class TableRow extends Component {
     enableDelete: true,
     onDelete: () => {console.warn('need this onDelete function');},
     onRowSelect: (key) => {console.warn('need this onRowSelect' + key);},
-    onRowUnselect: (row) => {console.warn('need this onRowUnselect');},
+    onRowUnselect: (row) => {console.warn('need this onRowUnselect', row);},
   }
 
   static contextTypes = {
-    muiTheme: React.PropTypes.object.isRequired
+    muiTheme: PropTypes.object.isRequired
   }
 
   getCellValue = (cell) => {
@@ -65,7 +65,7 @@ export default class TableRow extends Component {
     // Set a new state to the row is being edited
 
     if (header || (type && type === 'ReadOnly')) {
-      return <p style={{color: '#888'}}>{value}</p>
+      return <p style={{color: '#888'}}>{value}</p>;
     }
 
     // Select the field to show
@@ -92,7 +92,7 @@ export default class TableRow extends Component {
           }
           mode='landscape'
           style={datePickerStyle}
-          value={value}
+          value={new Date(value || 0)}
           disabled={!selected}
         />;
       }
@@ -157,55 +157,55 @@ export default class TableRow extends Component {
         <Delete />
       </IconButton>;
 
-      const checkbox = row.header ? <div style={checkboxStyle} />
+    const checkbox = row.header ? <div style={checkboxStyle} />
       : <IconButton style={checkboxStyle} tooltip={tooltip} onClick={onClick}>
         {button}
       </IconButton>;
 
-      return (
-        <div key={rowKey} className='row' style={rowStyle}>
-          {checkbox}
-          {this.props.headers.map( (header, id) => {
-            const width = header.width;
-            const cellStyle = {
-              display: 'flex',
-              flexFlow: 'row nowrap',
-              flexGrow: 0.15,
-              flexBasis: 'content',
-              alignItems: 'center',
-              height: 30,
-              width: width || 200
+    return (
+      <div key={rowKey} className='row' style={rowStyle}>
+        {checkbox}
+        {this.props.headers.map( (header, id) => {
+          const width = header.width;
+          const cellStyle = {
+            display: 'flex',
+            flexFlow: 'row nowrap',
+            flexGrow: 0.15,
+            flexBasis: 'content',
+            alignItems: 'center',
+            height: 30,
+            width: width || 200
+          };
+          const columnKey = ['column', id].join('-');
+          let column = null;
+          if (row.data) {
+            const columnData = {
+              'value': row.data[header.name],
+              'width': cellStyle.width,
+              'selected': selected,
+              'rowId': rowId,
+              'id': id,
+              'name': header.name,
+              'header': row.header,
+              'type': header.type,
             };
-            const columnKey = ['column', id].join('-');
-            let column = null;
-            if (row.data) {
-              const columnData = {
-                'value': row.data[header.name],
-                'width': cellStyle.width,
-                'selected': selected,
-                'rowId': rowId,
-                'id': id,
-                'name': header.name,
-                'header': row.header,
-                'type': header.type,
-              };
-              column = this.getCellValue(columnData);
-            }
-            return (
-              <div key={columnKey} className='cell' style={cellStyle}>
-                <div>
-                  {column}
-                </div>
+            column = this.getCellValue(columnData);
+          }
+          return (
+            <div key={columnKey} className='cell' style={cellStyle}>
+              <div>
+                {column}
               </div>
-            );
-          })}
-          {deleteButton}
-        </div>
-      )
+            </div>
+          );
+        })}
+        {deleteButton}
+      </div>
+    );
   }
 
   // componentWillReceiveProps = (nextProps) => {
-    // Transition to receive a new row and add it in editRow state
+  // Transition to receive a new row and add it in editRow state
   // }
 
   render = () => {

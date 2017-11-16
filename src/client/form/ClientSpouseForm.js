@@ -48,7 +48,7 @@ export default class SpouseForm extends Component {
         name="birthday"
         floatingLabelText="Data de Nascimento"
         value={this.props.data.birthday}
-        isFormDisabled={this.state.isDisable}
+        disabled={this.state.isDisable}
       />
     );
   }
