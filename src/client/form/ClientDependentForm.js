@@ -81,22 +81,6 @@ export default class ClientDependentForm extends Component {
     key: key,
   })
 
-  addElement = () => {
-    return (
-      <Row around="xs">
-        <Col xs>
-        </Col>
-        <Col xs>
-          <FloatingActionButton key='0' onClick={this.addDependent} >
-            <ContentAdd />
-          </FloatingActionButton>
-        </Col>
-        <Col xs>
-        </Col>
-      </Row>
-    );
-  }
-
   render = () => {
     const subtitleCard = 'Insira as informações correspondentes as ' +
      'informações do dependente.';

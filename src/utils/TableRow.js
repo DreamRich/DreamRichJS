@@ -15,50 +15,38 @@ import {IconButton,
 import { Row, Col } from 'react-flexbox-grid';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import TableRow from './TableRow';
 
-export default class EditTable extends Component {
+export default class TableRow extends Component {
 
   static propTypes = {
-    onDelete: PropTypes.func.isRequired,
-    onAdd: PropTypes.func.isRequired,
-    onRowSelect: PropTypes.func.isRequired,
+    onDelete: PropTypes.func,
+    onRowSelect: PropTypes.func,
+    onRowUnselect: PropTypes.func,
+    onChangeField: PropTypes.func,
+    selectedRow: PropTypes.object,
   }
 
   static defaultProps = {
     headers: [],
-    rows: [],
+    row: {},
     enableDelete: true,
     onChange: () => {console.warn('onChange not implemented');},
     onDelete: () => {console.warn('need this onDelete function');},
-    onAdd: () => {console.warn('need this onAdd function');},
-    onRowSelect: (key) => {console.warn('need this onRowSelect' + key);}
+    onRowSelect: (key) => {console.warn('need this onRowSelect' + key);},
+    onRowUnselect: (row) => {console.warn('need this onRowUnselect');},
   }
 
-  static contextTypes = {
+  contextTypes = {
     muiTheme: React.PropTypes.object.isRequired
   }
 
-  state = {
-    editRow: {data: {}, key: -1}
-  }
-
-  update = (row) => {
-    if (this.state.editRow.key === row.key) {
-      this.props.onChange(this.state.editRow);
-    } else {
-      this.props.onChange(row);
-    }
-  }
-
   getCellValue = (cell) => {
-    const self = this;
     const id = cell && cell.id;
-    const type = this.props.headers.map((header) => header.type )[id];
+    const type = cell && cell.type;
     const selected = cell && cell.selected;
     const name = cell && cell.name;
-    if (selected && cell && this.state.editRow.data[name]) {
-      cell.value = this.state.editRow.data[name];
+    if (selected && cell && this.props.selectedRow.data[name]) {
+      cell.value = this.props.selectedRow.data[name];
     }
     const value = cell && cell.value;
     const rowId = cell && cell.rowId;
@@ -72,14 +60,6 @@ export default class EditTable extends Component {
     const datePickerStyle = { width: width };
 
     // Set a new state to the row is being edited
-    const onChangeField = (e, value) => {
-      console.log('oia');
-      this.setState( (prevState, props) => {
-        const {editRow} = prevState;
-        editRow.data[name] = value;
-        return { editRow };
-      });
-    }
 
     if (header || (type && type === 'ReadOnly')) {
       return <p style={{color: '#888'}}>{value}</p>
@@ -91,17 +71,22 @@ export default class EditTable extends Component {
         return <TextField
           name={name}
           id={textFieldId}
-          onChange={onChangeField}
+          onChange={this.props.onChangeField}
           style={textFieldStyle}
           value={value}
           disabled={!selected}
         />;
       }
       if (type === 'DatePicker') {
+        /* bind the onChange from date picker because the default is a null
+        * (null, date) and it break the logic of onChangeField wich uses the
+        * event.target.name to set state */
         return <DatePicker
           name={name}
           id={datePickerId}
-          onChange={onChangeField}
+          onChange={(e, date) => this.props.onChangeField(
+            {target: {name: name}}, date)
+          }
           mode='landscape'
           style={datePickerStyle}
           value={value}
@@ -110,7 +95,7 @@ export default class EditTable extends Component {
       }
       if (type === 'Toggle') {
         return <Toggle
-          onToggle={onChangeField}
+          onToggle={this.props.onChangeField}
           toggled={value}
           disabled={!selected}/>;
       }
@@ -118,30 +103,7 @@ export default class EditTable extends Component {
 
   }
 
-  renderHeader = () => {
-    const headerColumns = this.props.headers;
-    const columns = {};
-    headerColumns.forEach( column => columns[column.name] = column.value );
-    const row = {data: columns, header: true};
-
-    return <TableRow {...this.props} row={row} />;
-  }
-
-  rowWillAdd = () => {
-    this.props.rows.forEach( row => {
-      if (row.selected) {
-        this.update(row);
-      }
-    });
-  }
-
-  onRowUnselect = (row) => {
-    this.update(row);
-  }
-
   renderRow = (row) => {
-    const self = this;
-    const columns = row.columns;
     const rowStyle = {
       width: '100%',
       display: 'flex',
@@ -177,16 +139,12 @@ export default class EditTable extends Component {
     const tooltip = selected ? 'Done' : 'Edit';
 
     const onDeleteRow = () => this.props.onDelete(rowId);
-    const onRowSelect = () => {
-      this.setState({editRow: row});
-      this.props.onRowSelect(row);
-    }
 
     const onClick = () => {
       if (selected) {
-        this.onRowUnselect(row);
+        this.props.onRowUnselect(row);
       } else {
-        onRowSelect(row);
+        this.props.onRowSelect(row);
       }
     };
 
@@ -243,69 +201,17 @@ export default class EditTable extends Component {
       )
   }
 
-  componentWillReceiveProps = (nextProps) => {
+  // componentWillReceiveProps = (nextProps) => {
     // Transition to receive a new row and add it in editRow state
-    const selectedRow = nextProps.rows.filter( row => row.selected );
-    if (selectedRow.length && this.state.editRow.key !== selectedRow[0].key) {
-      this.setState({editRow: selectedRow[0]});
-    } else if (!selectedRow.length) {
-      this.setState({editRow: {data: {}, key: -1}});
-    }
-  }
-
-  addElement = () => {
-    // Add a new row submiting all others activates
-    const onAdd = () => {
-      this.rowWillAdd();
-      this.props.onAdd();
-    }
-    return (
-        <Col xs={12} style={{marginTop: '30px'}}>
-          <Row center="xs">
-            <Col xs={6}>
-              <FloatingActionButton key='0' onClick={onAdd}>
-                <ContentAdd />
-              </FloatingActionButton>
-            </Col>
-          </Row>
-        </Col>
-    );
-  }
-
-  onChangeField = (e, value) => {
-    console.log('oi');
-    const target = e.target;
-    const name = target.name;
-    this.setState( (prevState, props) => {
-      const {editRow} = prevState;
-      editRow.data[name] = value;
-      return { editRow };
-    });
-  }
-
-  onRowSelect = (row) => {
-      this.setState({editRow: row});
-      this.props.onRowSelect(row);
-  }
+  // }
 
   render = () => {
-    const rows = this.props.rows;
+
+    const row = this.props.row;
 
     return (
       <Row>
-        {this.renderHeader()}
-        {rows.map( (row, idx) => {
-          return <TableRow
-            {...this.props}
-            key={idx}
-            row={row}
-            onRowUnselect={this.onRowUnselect}
-            onRowSelect={this.onRowSelect}
-            onChangeField={this.onChangeField}
-            selectedRow={this.state.editRow}
-            />
-        })}
-        {this.addElement()}
+        {this.renderRow(row)}
       </Row>
     );
   }
