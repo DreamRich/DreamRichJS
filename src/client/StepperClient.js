@@ -65,7 +65,7 @@ class StepperClient extends React.Component {
   handleNext = () => {
     const {stepIndex} = this.state;
 
-    if (stepIndex < 6) {
+    if (stepIndex < 5) {
       this.setState({stepIndex: stepIndex + 1});
     }
   }

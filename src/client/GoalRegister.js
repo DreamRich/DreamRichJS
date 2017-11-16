@@ -9,10 +9,7 @@ import getSelectOption from '../utils/getSelectOption';
 
 export default class GoalRegister extends Component {
 
-  constructor(props){
-    super(props);
-    this.state = GoalStore.getState();
-  }
+  state = GoalStore.getState()
 
   addGoal = () => {
     AppDispatcher.dispatch({
