@@ -8,14 +8,15 @@ import {IconButton,
   Toggle,
   TextField,
   //RaisedButton,
-  DatePicker
+  DatePicker,
 } from 'material-ui';
+// import FormsyDate from './formsyComponents/FormsyDate';
+import format from 'date-fns/format';
 
 import { Row/*, Col */ } from 'react-flexbox-grid';
 // import FloatingActionButton from 'material-ui/FloatingActionButton';
 // import ContentAdd from 'material-ui/svg-icons/content/add';
-
-import '../stylesheet/TableEdit.sass';
+import TableCell from './TableCell';
 
 export default class TableRow extends Component {
 
@@ -50,6 +51,8 @@ export default class TableRow extends Component {
     const name = cell && cell.name;
     if (selected && cell && this.props.selectedRow.data[name]) {
       cell.value = this.props.selectedRow.data[name];
+    } else if (selected && cell) {
+      cell.value= '';
     }
     const value = cell && cell.value;
     const rowId = cell && cell.rowId;
@@ -84,16 +87,21 @@ export default class TableRow extends Component {
         /* bind the onChange from date picker because the default is a null
         * (null, date) and it break the logic of onChangeField wich uses the
         * event.target.name to set state */
+
+        // Conditional props
+        const dateValue = value ? {value: this.buildDate(value)} : {};
+
         return <DatePicker
           name={name}
           id={datePickerId}
           onChange={(e, date) => this.props.onChangeField(
-            {target: {name: name}}, date)
+            {target: {name: name}}, date.toISOString().slice(0,10))
           }
           mode='landscape'
           style={datePickerStyle}
-          value={new Date(value || 0)}
           disabled={!selected}
+          formatDate={(date) => format(date, 'DD/MM/YYYY')}
+          {...dateValue}
         />;
       }
       if (type === 'Toggle') {
@@ -108,30 +116,9 @@ export default class TableRow extends Component {
 
   renderRow = (row) => {
     const rowStyle = {
-      width: '100%',
-      display: 'flex',
-      flexFlow: 'row nowrap',
       padding: row.header ? 0 : 12,
-      border: 0,
-      borderBottom: '1px solid #ccc',
-      height: 50
-    };
-    const checkboxStyle = {
-      display: 'flex',
-      flexFlow: 'row nowrap',
-      width: 50,
-      height: 24,
-      alignItems: 'center'
     };
 
-    const deleteButtonStyle = {
-      display: 'flex',
-      flexFlow: 'row nowrap',
-      width: 50,
-      height: 24,
-      alignItems: 'center',
-      padding: '0 12 0'
-    };
 
     const rowId = row.key;
     const rowKey = ['row', rowId].join('-');
@@ -152,51 +139,42 @@ export default class TableRow extends Component {
     };
 
     const deleteButton = (!this.props.enableDelete || selected || row.header) ? 
-      <div style={deleteButtonStyle} />
-      : <IconButton style={deleteButtonStyle} tooltip={'Delete this row'} onClick={onDeleteRow}>
+      <div className='delete-button' />
+      : <IconButton className='delete-button' tooltip={'Delete this row'} onClick={onDeleteRow}>
         <Delete />
       </IconButton>;
 
-    const checkbox = row.header ? <div style={checkboxStyle} />
-      : <IconButton style={checkboxStyle} tooltip={tooltip} onClick={onClick}>
+    const checkbox = row.header ? <div className='check-box' />
+      : <IconButton className='check-box' tooltip={tooltip} onClick={onClick}>
         {button}
       </IconButton>;
 
     return (
-      <div key={rowKey} className='row' style={rowStyle}>
+      <div key={rowKey} className='row table-row' style={rowStyle} >
         {checkbox}
         {this.props.headers.map( (header, id) => {
           const width = header.width;
           const cellStyle = {
-            display: 'flex',
-            flexFlow: 'row nowrap',
-            flexGrow: 0.15,
-            flexBasis: 'content',
-            alignItems: 'center',
-            height: 30,
             width: width || 200
           };
           const columnKey = ['column', id].join('-');
-          let column = null;
-          if (row.data) {
-            const columnData = {
-              'value': row.data[header.name],
-              'width': cellStyle.width,
-              'selected': selected,
-              'rowId': rowId,
-              'id': id,
-              'name': header.name,
-              'header': row.header,
-              'type': header.type,
-            };
-            column = this.getCellValue(columnData);
-          }
+          const columnData = {
+            'value': row.data[header.name],
+            'width': cellStyle.width,
+            'selected': selected,
+            'rowId': rowId,
+            'id': id,
+            'name': header.name,
+          };
           return (
-            <div key={columnKey} className='cell' style={cellStyle}>
-              <div>
-                {column}
-              </div>
-            </div>
+            <TableCell
+              key={columnKey}
+              cell={columnData}
+              style={cellStyle}
+              type={header.type}
+              header={row.header}
+              onChangeField={this.props.onChangeField}
+              selectedRow={this.props.selectedRow} />
           );
         })}
         {deleteButton}
@@ -207,6 +185,15 @@ export default class TableRow extends Component {
   // componentWillReceiveProps = (nextProps) => {
   // Transition to receive a new row and add it in editRow state
   // }
+
+  buildDate = (value) => {
+    if (value){
+      let date = new Date(value);
+      date = new Date(date.getTime() + date.getTimezoneOffset()*60000);
+      return date;
+    }
+    return undefined;
+  }
 
   render = () => {
 
