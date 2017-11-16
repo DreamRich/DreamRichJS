@@ -1,7 +1,4 @@
 import React, {Component} from 'react';
-import Divider from 'material-ui/Divider';
-// import RaisedButton from 'material-ui/RaisedButton';
-//import {getData} from '../resources/Headers.js';
 import '../stylesheet/RegisterForms.sass';
 import MenuItem from 'material-ui/MenuItem';
 import ActionType from '../actions/ActionType';
@@ -14,7 +11,6 @@ import ClientAddressForm from './form/ClientAddressForm';
 import ClientForm from './form/ClientForm';
 import ClientSpouseForm from './form/ClientSpouseForm';
 import SubStepperClient from '../client/SubStepperClient';
-// import routeMap from '../routes/RouteMap';
 
 class ClientRegister extends Component {
 
@@ -52,20 +48,17 @@ class ClientRegister extends Component {
     return listMenuItems;
   }
 
-
-  getDivider = () => <Divider className='Divider' />
-
   render() {
-    let subtitleCard = 'Insira as informações básicas do cliente.';
-    let listInformationSteps = [
+    const listInformationSteps = [
       {
         text: 'Cadastrar Cliente',
         formComponent:
           <ClientForm
             title='Cliente'
-            subtitleCard={subtitleCard}
+            subtitleCard={'Insira as informações básicas do cliente.'}
             canSubmit={this.state.canSubmit}
             data={this.state.active_client}
+            isDisable={false}
           />
       },
       {
@@ -81,7 +74,10 @@ class ClientRegister extends Component {
       },
       {
         text: 'Cadastrar Endereço',
-        formComponent: <ClientAddressForm 
+        formComponent:
+        <ClientAddressForm
+          title='Endereço'
+          subtitle={'Insira as informações correspondentes ao endereço do cliente'}
           id={this.state.active_client.id}
           canSubmit={this.state.canSubmit}
           data={this.state.address}
@@ -89,7 +85,8 @@ class ClientRegister extends Component {
       },
       {
         text: 'Cadastrar Conta bancária',
-        formComponent: <ClientBankAccountForm 
+        formComponent:
+        <ClientBankAccountForm
           id={this.state.active_client.id}
           canSubmit={this.state.canSubmit}
           data={this.state.bank_account}
@@ -107,14 +104,10 @@ class ClientRegister extends Component {
 
     return (
       <div style={{width:'auto'}}>
-        {this.getDivider()}
-
-        <SubStepperClient 
+        <SubStepperClient
           stepsNumber={listInformationSteps.length}
           listInformationSteps={listInformationSteps}
         />
-
-        {this.getDivider()}
       </div>
     );
   }

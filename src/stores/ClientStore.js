@@ -75,6 +75,7 @@ class ClientStore extends ReduceStore {
       state.dependents.find( (dependent, index) => {
         if (dependent.index === action.index){
           action.data.index = index;
+          action.data.selected = false;
           state.dependents[index] = action.data;
           return true;
         }
@@ -90,8 +91,18 @@ class ClientStore extends ReduceStore {
 
     case ActionType.CLIENT.ADDDEPENDENT:
       state.dependents.push(
-        {index: getLastIndex(state.dependents) + 1}
+        {index: getLastIndex(state.dependents) + 1,
+          selected: true}
       );
+      return {...state};
+
+    case ActionType.CLIENT.SELECTDEPENDENT:
+      state.dependents.find( dependent => {
+        if (dependent.index === action.key) {
+          dependent.selected = !dependent.selected;
+          return true;
+        }
+      });
       return {...state};
 
     case ActionType.CLIENT.REMOVEDEPENDENT:
@@ -120,6 +131,7 @@ class ClientStore extends ReduceStore {
       const dependents = data.dependents.map(
         dependent => {
           dependent.index = dependent.id;
+          dependent.selected = false;
           return dependent;
         });
       delete data['addresses'];

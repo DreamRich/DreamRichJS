@@ -10,25 +10,28 @@ import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
 import {getFinancialPlanning} from '../resources/getModels';
 import RegisterStore from '../stores/RegisterStore';
-
+import ArrowForwardIcon from 'material-ui/svg-icons/navigation/arrow-forward';
 import Paper from 'material-ui/Paper';
-
+import getDivider from '../utils/getDivider';
 import {
   Step,
   Stepper,
   StepLabel,
 } from 'material-ui/Stepper';
-import ArrowForwardIcon from 'material-ui/svg-icons/navigation/arrow-forward';
 
 class StepperClient extends React.Component {
   constructor(props) {
     super(props);
- 
+
     this.forms = [
       <ClientRegister key={1} />,
-      <RegularCostRegister key={2} />,
-      <PatrimonyRegister key={3} />,
-      <PatrimonyRegister key={4} main={false}/>,
+      <RegularCostRegister
+        titleCard="Custo fixo"
+        subtitleCard="Insira o(s) valor(es) do(s) custo(s) fixo(s)"
+        key={2}
+      />,
+      <div key={3} >Renda para fora de patrimonio</div>,
+      <PatrimonyRegister key={4} />,
       <div key={5} >Proteção </div>,
       <GoalRegister key={6} />];
   }
@@ -103,7 +106,9 @@ class StepperClient extends React.Component {
           </Stepper>
         </Paper>
 
+        {getDivider()}
         {this.getStepContent(stepIndex)}
+        {getDivider()}
 
         <div style={{marginBottom: '7%'}}>
           {stepIndex > 0 &&

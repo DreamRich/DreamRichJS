@@ -6,8 +6,8 @@ import {DatePicker, IconButton} from 'material-ui';
 import ActionDateRange from 'material-ui/svg-icons/action/date-range';
 import {FormsyText} from 'formsy-material-ui/lib';
 import format from 'date-fns/format';
-import { Row, Col } from 'react-flexbox-grid';
 import '../../stylesheet/RegisterForms.sass';
+import { Col } from 'react-flexbox-grid';
 
 /*
 reference:
@@ -140,28 +140,26 @@ class DefineFormsyDate extends Component {
 
     return (
       // Name will define which field will be submitted
-      <Row>
-        <Col xs>
-          <FormsyText
-            name='text'
-            id={this.props.name + '_field'}
-            style={{width:180}}
-            disabled={this.isFormDisabled}
-            errorText={this.getErrorMessage}
-            value={this.state.dateText}
-            hintText='Ex: 01/01/1970'
-            validationError='Insira uma data válida'
-            validations={{
-              matchRegexp:/^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[012])\/\d{4}$/
-            }}
-            requiredError={requiredError}
-            {...rest}
-          />
-          <IconButton style={{opacity:'0.65', margin: '0' }}
-            onClick={() => this.datePicker.focus()}>
-            <ActionDateRange />
-          </IconButton>
-        </Col>
+      <Col xs>
+        <FormsyText
+          name='text'
+          id={this.props.name + '_field'}
+          disabled={this.props.isFormDisabled}
+          errorText={this.getErrorMessage}
+          style={{width:150}}
+          value={this.state.dateText}
+          hintText='Ex: 01/01/1970'
+          validationError='Insira uma data válida'
+          validations={{
+            matchRegexp:/^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[012])\/\d{4}$/
+          }}
+          requiredError={requiredError}
+          {...rest}
+        />
+        <IconButton style={{opacity:'0.65'}}
+          onClick={() => this.datePicker.focus()}>
+          <ActionDateRange />
+        </IconButton>
         <div>
           <DatePicker
             name='date'
@@ -171,9 +169,9 @@ class DefineFormsyDate extends Component {
             value={this.state.selectedDate}
             ref={picker => { this.datePicker = picker;}}
             default={defaultDate}
-            container='inline'
-            fullWidth
+            fullWidth={true}
             mode='landscape'
+            disable={this.props.isFormDisabled}
             autoOk
           />
           <FormsyText
@@ -182,7 +180,7 @@ class DefineFormsyDate extends Component {
             value={this.state.dateSubmit}
           />
         </div>
-      </Row>
+      </Col>
     );
   }
 }

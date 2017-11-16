@@ -19,6 +19,7 @@ export default class ClientBankAccountForm extends Component {
   static propTypes = {
     id: PropTypes.number,
     canSubmit: PropTypes.bool,
+    isDisable: PropTypes.bool,
     data: PropTypes.object,
   }
 
@@ -37,6 +38,8 @@ export default class ClientBankAccountForm extends Component {
             hintText="Agência da conta bancária "
             floatingLabelText="Agência"
             value={this.props.data.agency}
+            disabled={this.props.isDisable}
+            fullWidth={true}
           />
         </Col>
         <Col xs>
@@ -45,6 +48,8 @@ export default class ClientBankAccountForm extends Component {
             hintText="Número da conta bancária "
             floatingLabelText="Conta"
             value={this.props.data.account}
+            disabled={this.props.isDisable}
+            fullWidth={true}
           />
         </Col>
       </Row>

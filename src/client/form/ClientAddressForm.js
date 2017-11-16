@@ -12,6 +12,7 @@ import { Row, Col } from 'react-flexbox-grid';
 import CardForm from '../../components/CardForm';
 import {FormsySelect, FormsyAutoComplete} from 'formsy-material-ui/lib';
 import MenuItem from 'material-ui/MenuItem';
+import MediaQuery from 'react-responsive';
 
 
 var {
@@ -50,7 +51,10 @@ export default class ClientAddressForm extends Component {
   static propTypes = {
     id: PropTypes.number,
     canSubmit: PropTypes.bool,
+    isDisable: PropTypes.bool,
     data: PropTypes.object,
+    title: PropTypes.string,
+    subtitle: PropTypes.string,
   }
 
   static defaultProps = {
@@ -112,9 +116,50 @@ export default class ClientAddressForm extends Component {
 
   }
 
+  getFormsySelect(searchText,statesOptions,contriesOptions){
+    return (
+      <Col xs key={'FormsySelectAddressCountry'}>
+        <FormsySelect
+          name="country"
+          floatingLabelText="País"
+          maxHeight={300}
+          onChange={this.fetchStates}
+          value={this.props.data.state.country_id}
+          disabled={this.props.isDisable}
+          fullWidth={true}
+        >
+          {contriesOptions}
+        </FormsySelect>
+        <FormsySelect
+          name="state_id"
+          floatingLabelText="Estado"
+          maxHeight={300}
+          value={this.props.data.state.id}
+          disabled={this.props.isDisable}
+          fullWidth={true}
+        >
+          {statesOptions}
+        </FormsySelect>
+        <FormsyAutoComplete
+          dataSource={this.state.addressType}
+          name="type_of_address"
+          validations="isWords"
+          validationError={wordsError}
+          hintText="Casa, apartamento, etc."
+          floatingLabelText="Tipo de Endereço"
+          searchText={searchText}
+          defaultValue={searchText}
+          onChange={this.updateSearch}
+          disabled={this.props.isDisable}
+          fullWidth={true}
+        />
+      </Col>
+    );
+  }
+
   getContentCard(){
     const formysTextList = makeFormysTextList(
-      dataAddressSubForm, 'adressform', this.props.data
+      dataAddressSubForm, 'adressform', this.props.data, this.props.isDisable
     );
 
     const listColumns = formysTextList.map((form,index)=>{
@@ -133,48 +178,23 @@ export default class ClientAddressForm extends Component {
       searchText = this.state.searchText;
     }
 
-
     return (
       <div>
-        <Row>
-          <FormsySelect
-            name="country"
-            floatingLabelText="País"
-            maxHeight={300}
-            onChange={this.fetchStates}
-            value={this.props.data.state.country_id}
-          >
-            {contriesOptions}
-          </FormsySelect>
-          <FormsySelect
-            name="state_id"
-            floatingLabelText="Estado"
-            maxHeight={300}
-            value={this.props.data.state.id}
-          >
-            {statesOptions}
-          </FormsySelect>
-          {listColumns[6]}
-        </Row>
-        <Row>
-          {listColumns.slice(0,3)}
-        </Row>
-        <Row>
-          {listColumns.slice(3,6)}
-        </Row>
-        <Row>
-          <FormsyAutoComplete
-            dataSource={this.state.addressType}
-            name="type_of_address"
-            validations="isWords"
-            validationError={wordsError}
-            hintText="Casa, apartamento, etc."
-            floatingLabelText="Tipo de Endereço"
-            searchText={searchText}
-            defaultValue={searchText}
-            onChange={this.updateSearch}
-          />
-        </Row>
+        <MediaQuery key="desktopiAddressForm" query="(min-width: 1030px)">
+          <Row>
+            {this.getFormsySelect(searchText,statesOptions,contriesOptions)}
+            <Col key="ColumnAddressForm" xs>
+              {listColumns.slice(0,3)}
+            </Col>
+            <Col key="secondColumnAddressForm" xs>
+              {listColumns.slice(3,6)}
+            </Col>
+          </Row>
+        </MediaQuery>
+        <MediaQuery key="mobileAddressForm" query="(max-width: 1030px)">
+          {this.getFormsySelect()}
+          {listColumns}
+        </MediaQuery>
       </div>
     );
   }
@@ -190,12 +210,11 @@ export default class ClientAddressForm extends Component {
         action={ActionType.CLIENT.POSTFORM}
       >
         <CardForm
-          titleCard="Endereço"
-          subtitleCard="Insira as informações correspondentes ao endereço."
+          titleCard={this.props.title}
+          subtitleCard={this.props.subtitle}
           contentCard={this.getContentCard()}
         />
       </SubForm>
-
     );
   }
 }
