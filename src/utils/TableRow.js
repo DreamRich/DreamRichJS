@@ -10,11 +10,14 @@ import {IconButton,
   Toggle,
   TextField,
   RaisedButton,
-  DatePicker} from 'material-ui';
+  DatePicker
+} from 'material-ui';
 
 import { Row, Col } from 'react-flexbox-grid';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+
+import '../stylesheet/TableEdit.sass';
 
 export default class TableRow extends Component {
 
@@ -24,19 +27,19 @@ export default class TableRow extends Component {
     onRowUnselect: PropTypes.func,
     onChangeField: PropTypes.func,
     selectedRow: PropTypes.object,
+    enableDelete: PropTypes.bool,
   }
 
   static defaultProps = {
     headers: [],
     row: {},
     enableDelete: true,
-    onChange: () => {console.warn('onChange not implemented');},
     onDelete: () => {console.warn('need this onDelete function');},
     onRowSelect: (key) => {console.warn('need this onRowSelect' + key);},
     onRowUnselect: (row) => {console.warn('need this onRowUnselect');},
   }
 
-  contextTypes = {
+  static contextTypes = {
     muiTheme: React.PropTypes.object.isRequired
   }
 

@@ -7,13 +7,10 @@ import React, {Component} from 'react';
 //import errorMessages from '../../utils/FormsErrorMessages';
 // import SubForm from '../../components/SubForm';
 import PropTypes from 'prop-types';
-import { Row, Col } from 'react-flexbox-grid';
 import ActionType from '../../actions/ActionType';
 import ClientStore from '../../stores/ClientStore';
 import AppDispatcher from '../../AppDispatcher';
 import {Card, CardTitle, CardText} from 'material-ui/Card';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
 import {routeMap} from '../../routes/RouteMap';
 
 import EditTableForm from '../../components/EditTableForm';
