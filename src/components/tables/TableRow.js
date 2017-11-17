@@ -21,6 +21,7 @@ import TableCell from './TableCell';
 export default class TableRow extends Component {
 
   static propTypes = {
+    options: PropTypes.object,
     row: PropTypes.object,
     headers: PropTypes.array,
     onDelete: PropTypes.func,
@@ -154,17 +155,17 @@ export default class TableRow extends Component {
         {checkbox}
         {this.props.headers.map( (header, id) => {
           const width = header.width;
-          const cellStyle = {
-            width: width || 200
-          };
+          const cellStyle = { width: width || 200 };
           const columnKey = ['column', id].join('-');
+          const options = header.options ? this.props.options : {};
           const columnData = {
-            'value': row.data[header.name],
+            'value': row.data[header.name.replace(/_id$/, '')],
             'width': cellStyle.width,
             'selected': selected,
             'rowId': rowId,
             'id': id,
             'name': header.name,
+            'options': options[header.options],
           };
           return (
             <TableCell
@@ -174,7 +175,8 @@ export default class TableRow extends Component {
               type={header.type}
               header={row.header}
               onChangeField={this.props.onChangeField}
-              selectedRow={this.props.selectedRow} />
+              selectedRow={this.props.selectedRow}
+            />
           );
         })}
         {deleteButton}

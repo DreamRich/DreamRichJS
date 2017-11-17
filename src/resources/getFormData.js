@@ -12,4 +12,14 @@ const getActiveTypes = () => {
   );
 };
 
-export {getActiveTypes};
+const getRegularCostTypes = () => {
+  getData(
+    routeMap.cost_type,
+    (data) => AppDispatcher.dispatch({
+      action: ActionType.REGULARCOST.TYPESUCCESS,
+      types: data
+    })
+  );
+};
+
+export {getRegularCostTypes, getActiveTypes};

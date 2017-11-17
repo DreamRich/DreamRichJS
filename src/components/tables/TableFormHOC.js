@@ -95,6 +95,7 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
                 enableDelete={this.props.enableDelete}
                 enableEdit={this.props.enableEdit}
                 enableAdd={this.props.enableAdd}
+                options={this.state.options}
               />
             </Row>
           </CardText>

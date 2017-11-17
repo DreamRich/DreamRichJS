@@ -27,6 +27,6 @@ export default TableFormHOC(
   },
   ClientStore,
   () => {
-    const {dependents} = ClientStore.getState();
-    return {registers: dependents};
+    const registers = ClientStore.getState().dependents;
+    return {registers};
   });

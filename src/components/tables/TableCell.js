@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 // import {times} from 'lodash';
+//import MenuItem from 'material-ui/MenuItem';
 import {Toggle,
   TextField,
   //RaisedButton,
   DatePicker,
+  SelectField,
+  MenuItem
 } from 'material-ui';
 // import FormsyDate from './formsyComponents/FormsyDate';
 import format from 'date-fns/format';
@@ -21,6 +24,7 @@ export default class TableCell extends Component {
     type: PropTypes.string,
     style: PropTypes.object,
     selectedRow: PropTypes.object,
+    options: PropTypes.array,
   }
 
   static defaultProps = {
@@ -37,12 +41,14 @@ export default class TableCell extends Component {
     const type = this.props.type;
     const selected = this.props.cell.selected;
     const name = this.props.cell.name;
+
     let value = this.props.cell.value;
     if (selected && this.props.selectedRow.data[name]) {
       value = this.props.selectedRow.data[name];
     } else if (selected) {
       value = '';
     }
+
     const rowId = this.props.cell.rowId;
     const header = this.props.header;
     const width = this.props.cell.width;
@@ -86,11 +92,22 @@ export default class TableCell extends Component {
         ...dateValue
       };
     }
+
     if (type === 'Toggle') {
       return {
         onToggle: this.props.onChangeField,
         toggled: value,
-        disabled: !selected};
+        disabled: !selected
+      };
+    }
+
+    if (type === 'SelectField') {
+      value = value && value.id;
+      return {
+        name: name,
+        disabled: !selected,
+        value: value,
+      };
     }
   }
 
@@ -102,6 +119,13 @@ export default class TableCell extends Component {
       return date;
     }
     return undefined;
+  }
+
+  getOptions = () => {
+    const {cell: {options} } = this.props;
+    return options.map( (type) =>
+      <MenuItem key={type.id} value={type.id} primaryText={type.name} />
+    );
   }
 
   render = () => {
@@ -117,6 +141,10 @@ export default class TableCell extends Component {
       field = <DatePicker {...props} />;
     } else if (this.props.type === 'Toggle') {
       field = <Toggle {...props} />;
+    } else if (this.props.type === 'SelectField') {
+      field = (<SelectField {...props}>
+        {this.getOptions()}
+      </SelectField>);
     }
 
     return (
