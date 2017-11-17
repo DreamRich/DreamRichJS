@@ -43,15 +43,13 @@ const actionTypes = {
   },
   REFRESH_LOGIN: 'refresh_token',
   REGULARCOST: {
-    SUBMIT: 'regular_cost/can_submit_forms',
+    SUBMIT: 'regular_cost/submit_forms',
+    SUBMITSUCCESS: 'regular_cost/success_forms',
     ADD: 'regular_cost/add',
+    SELECT: 'regular_cost/select',
     REMOVE: 'regular_cost/remove',
-    MANAGER: 'regular_cost/submit_form',
     SUCCESS: 'regular_cost/form_success',
-    TYPE: 'regular_cost/types',
     TYPESUCCESS: 'regular_cost/types_success',
-    SUBFORM: 'regular_cost/create_subforms',
-    SUBFORMSUCCESS: 'regular_cost/success_subforms',
     GETFORMSUCCESS: 'regular_cost/get_regular_cost_success',
   },
   GOAL:{

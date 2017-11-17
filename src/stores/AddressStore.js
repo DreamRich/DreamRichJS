@@ -44,23 +44,6 @@ class AddressStore extends ReduceStore {
     case ActionType.CLIENT.STATESUCCESS:
       return {...state, states: action.data};
 
-    case ActionType.CLIENT.DATAFORM:
-      getData(
-        routeMap.address_type,
-        (addressType) => AppDispatcher.dispatch({
-          action: ActionType.CLIENT.ADDRESSTYPE,
-          data: addressType,
-        })
-      );
-      getData(
-        routeMap.country,
-        (countries) => AppDispatcher.dispatch({
-          action: ActionType.CLIENT.COUNTRIES,
-          data: countries,
-        })
-      );
-      return state;
-
     case ActionType.CLIENT.ADDRESSTEXT:
       return {...state, searchText: action.searchText};
 
