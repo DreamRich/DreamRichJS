@@ -9,8 +9,7 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
   return class CardTableForm extends Component {
     constructor(props){
       super(props);
-      const registers = getStoreState();
-      this.state = {registers};
+      this.state = getStoreState();
     }
 
     static propTypes = {
@@ -18,6 +17,7 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
       enableDelete: PropTypes.bool,
       enableEdit: PropTypes.bool,
       enableAdd: PropTypes.bool,
+      headers: PropTypes.array,
     }
 
     static defaultProps = {
@@ -33,8 +33,7 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
     componentWillUnmount = () => this.state.listener.remove()
 
     handleChange = () => {
-      const registers = getStoreState();
-      this.setState({registers});
+      this.setState(getStoreState());
     }
 
     submitRow = (row) => {
@@ -76,7 +75,7 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
     render = () => {
       const subtitleCard = basicData.subTitle;
 
-      const headers = basicData.headers;
+      const headers = this.props.headers || basicData.headers;
 
       return (
         <Card className='Card' >
