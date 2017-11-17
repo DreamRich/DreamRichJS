@@ -13,4 +13,16 @@ const postActiveManager = (data) => {
   );
 };
 
-export {postActiveManager};
+const postRegularCostManager = () => {
+  postData(
+    routeMap.cost_manager,
+    {},
+    (data) => AppDispatcher.dispatch({
+      action: ActionType.REGULARCOST.SUCCESS,
+      data: data,
+      state: 'manager'
+    })
+  );
+};
+
+export {postActiveManager, postRegularCostManager};

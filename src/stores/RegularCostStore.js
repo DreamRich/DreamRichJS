@@ -13,7 +13,7 @@ class RegularCostStore extends ReduceStore {
   getInitialState(){
     return {
       costs: [{index: 0}],
-      regularCostManager: {},
+      manager: {},
       types: [],
       canSubmit: false,
     };
@@ -28,7 +28,7 @@ class RegularCostStore extends ReduceStore {
         cost => { cost.index = cost.id; return cost;}
       );
       delete action.data['regular_costs'];
-      return {...state, regularCostManager: action.data, costs};
+      return {...state, manager: action.data, costs};
 
     case ActionType.REGULARCOST.ADD:
       costs = state.costs.slice();
@@ -44,14 +44,14 @@ class RegularCostStore extends ReduceStore {
       };
 
     case ActionType.REGULARCOST.MANAGER:
-      if (!state.regularCostManager.id) {
+      if (!state.manager.id) {
         postData(
           routeMap.cost_manager,
           {},
           (data) => AppDispatcher.dispatch({
             action: ActionType.REGULARCOST.SUCCESS,
             data: data,
-            state: 'regularCostManager'
+            state: 'manager'
           })
         );
       }
@@ -104,7 +104,7 @@ class RegularCostStore extends ReduceStore {
       return {...state, canSubmit: false};
 
     case ActionType.RESETFORMSTORES:
-      return {...state, costs: [{index: 0}], regularCostManager: {}};
+      return {...state, costs: [{index: 0}], manager: {}};
 
     default:
       return state;
