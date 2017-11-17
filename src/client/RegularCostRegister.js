@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-// import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
 import RegularCostStore from '../stores/RegularCostStore';
 import '../stylesheet/RegisterForms.sass';
@@ -9,18 +8,11 @@ import TableFormManagerHOC from '../components/tables/TableFormManagerHOC';
 import {getRegularCostTypes} from '../resources/getFormData';
 
 
-// AppDispatcher.dispatch({
-//   action: ActionType.REGULARCOST.TYPE
-// });
-
-// AppDispatcher.dispatch({
-//   action: ActionType.REGULARCOST.MANAGER
-// });
 const TableForm = TableFormManagerHOC({
   submit: ActionType.REGULARCOST.SUBMIT,
   add: ActionType.REGULARCOST.ADD,
   remove: ActionType.REGULARCOST.REMOVE,
-  select: ActionType.REGULARCOST.SELECTDEPENDENT,
+  select: ActionType.REGULARCOST.SELECT,
 },{
   parentId: 'cost_manager_id',
   route: routeMap.regular_cost,
@@ -45,10 +37,6 @@ export default class RegularCostRegister extends Component {
   componentWillMount = () => getRegularCostTypes()
 
   render = () => {
-    // title={this.props.title}
-    // subtitle={this.props.subtitle}
-    // parent_name='cost_manager_id'
-    //     );
     return ( <TableForm {...this.props} /> );
   }
 

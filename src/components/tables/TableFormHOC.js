@@ -40,7 +40,7 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
       row.data[basicData.parentId] = this.props.id;
       AppDispatcher.dispatch({
         action: actions.submit,
-        index: row.key,
+        key: row.key,
         data: row.data,
         route: basicData.route,
         state: basicData.state,

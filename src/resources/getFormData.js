@@ -22,4 +22,20 @@ const getRegularCostTypes = () => {
   );
 };
 
-export {getRegularCostTypes, getActiveTypes};
+const getTypesForClient = () => {
+  getData(
+    routeMap.address_type,
+    (addressType) => AppDispatcher.dispatch({
+      action: ActionType.CLIENT.ADDRESSTYPE,
+      data: addressType,
+    })
+  );
+  getData(
+    routeMap.country,
+    (countries) => AppDispatcher.dispatch({
+      action: ActionType.CLIENT.COUNTRIES,
+      data: countries,
+    })
+  );
+};
+export {getRegularCostTypes, getActiveTypes, getTypesForClient};

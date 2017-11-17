@@ -45,7 +45,7 @@ export default class TableCell extends Component {
     let value = this.props.cell.value;
     if (selected && this.props.selectedRow.data[name]) {
       value = this.props.selectedRow.data[name];
-    } else if (selected) {
+    }else if (selected) {
       value = '';
     }
 
@@ -102,11 +102,12 @@ export default class TableCell extends Component {
     }
 
     if (type === 'SelectField') {
-      value = value && value.id;
+      const options = this.props.cell.options;
       return {
         name: name,
         disabled: !selected,
         value: value,
+        onChange: (e, key) => this.props.onChangeField({target: {name: name}}, options[key].id),
       };
     }
   }

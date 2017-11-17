@@ -159,7 +159,7 @@ export default class TableRow extends Component {
           const columnKey = ['column', id].join('-');
           const options = header.options ? this.props.options : {};
           const columnData = {
-            'value': row.data[header.name.replace(/_id$/, '')],
+            'value': row.data[header.name],
             'width': cellStyle.width,
             'selected': selected,
             'rowId': rowId,

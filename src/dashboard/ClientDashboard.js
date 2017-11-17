@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import ActionType from '../actions/ActionType';
-import AppDispatcher from '../AppDispatcher';
 import ClientStore from '../stores/ClientStore';
 import '../stylesheet/RegisterForms.sass';
 import ClientBankAccountForm from '../client/form/ClientBankAccountForm';
@@ -11,6 +9,7 @@ import ClientDependentForm from '../client/form/ClientDependentForm';
 import { Row, Col } from 'react-flexbox-grid';
 import MediaQuery from 'react-responsive';
 import getDivider from '../utils/getDivider';
+import {getTypesForClient} from '../resources/getFormData';
 
 class ClientDashboard extends Component {
 
@@ -24,11 +23,7 @@ class ClientDashboard extends Component {
 
   handleChange = () => this.setState(ClientStore.getState())
 
-  componentDidMount = () => {
-    AppDispatcher.dispatch({
-      action: ActionType.CLIENT.DATAFORM
-    });
-  }
+  componentDidMount = () => getTypesForClient()
 
   getClientForm(){
     return (

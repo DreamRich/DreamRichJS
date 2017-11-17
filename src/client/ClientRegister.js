@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import '../stylesheet/RegisterForms.sass';
 import MenuItem from 'material-ui/MenuItem';
-import ActionType from '../actions/ActionType';
-import AppDispatcher from '../AppDispatcher';
 import ClientStore from '../stores/ClientStore';
 import '../stylesheet/RegisterForms.sass';
 import ClientDependentForm from './form/ClientDependentForm';
@@ -11,6 +9,7 @@ import ClientAddressForm from './form/ClientAddressForm';
 import ClientForm from './form/ClientForm';
 import ClientSpouseForm from './form/ClientSpouseForm';
 import SubStepperClient from '../client/SubStepperClient';
+import {getTypesForClient} from '../resources/getFormData';
 
 class ClientRegister extends Component {
 
@@ -25,11 +24,7 @@ class ClientRegister extends Component {
     listener: ClientStore.addListener(this.handleChange)
   })
 
-  componentDidMount = () => {
-    AppDispatcher.dispatchDefer({
-      action: ActionType.CLIENT.DATAFORM
-    });
-  }
+  componentDidMount = () => getTypesForClient()
 
   componentWillUnmount = () => this.state.listener.remove()
 
