@@ -93,8 +93,9 @@ export default class TableCell extends Component {
       };
     }
 
-    if (type === 'Toggle') {
+    if (type === 'ToggleField') {
       return {
+        name: name,
         onToggle: this.props.onChangeField,
         toggled: value,
         disabled: !selected
@@ -140,7 +141,7 @@ export default class TableCell extends Component {
       field = <TextField {...props} />;
     } else if (this.props.type === 'DatePicker') {
       field = <DatePicker {...props} />;
-    } else if (this.props.type === 'Toggle') {
+    } else if (this.props.type === 'ToggleField') {
       field = <Toggle {...props} />;
     } else if (this.props.type === 'SelectField') {
       field = (<SelectField {...props}>

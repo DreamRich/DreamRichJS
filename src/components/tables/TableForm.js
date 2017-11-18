@@ -1,16 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-// import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
-// import Check from 'material-ui/svg-icons/navigation/check';
-// import Delete from 'material-ui/svg-icons/action/delete';
-// import {times} from 'lodash';
-/* import {
-  IconButton,
-  Toggle,
-  TextField,
-  RaisedButton,
-  DatePicker} from 'material-ui';
-*/
 
 import { Row, Col } from 'react-flexbox-grid';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
@@ -28,12 +17,17 @@ export default class TableForm extends Component {
     onChange: PropTypes.func.isRequired,
     headers: PropTypes.array,
     rows: PropTypes.array,
+    enableDelete: PropTypes.bool,
+    enableEdit: PropTypes.bool,
+    enableAdd: PropTypes.bool,
   }
 
   static defaultProps = {
     headers: [],
     rows: [],
     enableDelete: true,
+    enableEdit: true,
+    enableAdd: true,
     onChange: () => {console.warn('onChange not implemented');},
     onDelete: () => {console.warn('need this onDelete function');},
     onAdd: () => {console.warn('need this onAdd function');},
@@ -97,17 +91,20 @@ export default class TableForm extends Component {
 
   addElement = () => {
     // Add a new row submiting all others activates
-    return (
-      <Col xs={12} style={{marginTop: '30px'}}>
-        <Row center="xs">
-          <Col xs={6}>
-            <FloatingActionButton key='0' onClick={this.onAdd}>
-              <ContentAdd />
-            </FloatingActionButton>
-          </Col>
-        </Row>
-      </Col>
-    );
+    if (this.props.enableAdd) {
+      return (
+        <Col xs={12} style={{marginTop: '30px'}}>
+          <Row center="xs">
+            <Col xs={6}>
+              <FloatingActionButton key='0' onClick={this.onAdd}>
+                <ContentAdd />
+              </FloatingActionButton>
+            </Col>
+          </Row>
+        </Col>
+      );
+    }
+    return null;
   }
 
   onChangeField = (e, value) => {
