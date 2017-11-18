@@ -101,7 +101,7 @@ export default class IncomeSubStepper extends React.Component {
       {text: 'Receitas',
         formComponent:
           <IncomeForm
-            parent_id={this.props.patrimony.id}
+            id={this.props.patrimony.id}
             data={this.props.incomes}
             labelAdd='Possui fonte de renda? (Marque o quadrado ao lado)'
             labelAdded='Possui outra fonte de renda? (Marque o quadrado ao lado)'

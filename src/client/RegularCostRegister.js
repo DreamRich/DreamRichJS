@@ -31,6 +31,7 @@ RegularCostStore,
 },
 postRegularCostManager
 );
+
 export default class RegularCostRegister extends Component {
 
 
