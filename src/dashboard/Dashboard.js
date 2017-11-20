@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import ClientDashboard from '../dashboard/ClientDashboard';
-import RegularCostDashboard from '../dashboard/RegularCostDashboard';
+import RegularCostRegister from '../client/RegularCostRegister';
 import PropTypes from 'prop-types';
 import {getFinancialPlanning} from '../resources/getModels';
 import RegisterStore from '../stores/RegisterStore';
@@ -59,7 +59,7 @@ class Dashboard extends Component {
       {
         label: 'Custos Fixos',
         icon: <MoneyIcon className="material-icons"/>,
-        dashboard: <RegularCostDashboard />
+        dashboard: <RegularCostRegister />
       },
       {
         label: 'Objetivos',

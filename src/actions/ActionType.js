@@ -66,6 +66,7 @@ const actionTypes = {
     GETFORMSUCCESS: 'goal/get_goal_success',
   },
   PATRIMONY: {
+    SELECT: 'patrimony/select',
     POSTFORM: 'patrimony/create_form',
     POSTFORMSUCCESS: 'patrimony/success',
     POSTMULTIFORM: 'patrimony/create_subforms',

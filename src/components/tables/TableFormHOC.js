@@ -21,9 +21,9 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
     }
 
     static defaultProps = {
-      enableDelete: true,
-      enableEdit: true,
-      enableAdd: true,
+      enableDelete: false,
+      enableEdit: false,
+      enableAdd: false,
     }
 
     componentWillMount = () => this.setState({
@@ -48,15 +48,13 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
     }
 
     addRow = () => AppDispatcher.dispatch({
-      action: actions.add,
-      state: basicData.state,
+      action: actions.add
     })
 
     removeRow = (key) => {
       AppDispatcher.dispatch({
         action: actions.remove,
         key: key,
-        state: basicData.state,
       });
     }
 
@@ -72,7 +70,6 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
     selectRow = (key) => AppDispatcher.dispatch({
       action: actions.select,
       key: key,
-      state: basicData.state,
     })
 
     render = () => {

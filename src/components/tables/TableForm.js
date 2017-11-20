@@ -108,6 +108,7 @@ export default class TableForm extends Component {
   }
 
   onChangeField = (e, value) => {
+    // all fields need have e.target.name
     const target = e.target;
     const name = target.name;
     this.setState( prevState => {

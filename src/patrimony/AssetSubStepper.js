@@ -147,13 +147,8 @@ export default class AssetSubStepper extends React.Component {
       },
       {text: 'Dívidas',
         formComponent: <ArrearageForm
-          parent_id={this.props.id}
-          name='arrearanges'
-          data={this.props.arrearanges}
-          canSubmit={this.props.canSubmit}
-          labelAdd='Possui financiamentos? (Marque o quadrado ao lado)'
-          labelAdded='Possui outro financialmento? (Marque o quadrado ao lado)'
-          labelRemove='Este financiamento está ativo.'
+          id={this.props.id}
+          rows={this.props.arrearanges}
         />
       },
     ];
