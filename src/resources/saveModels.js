@@ -25,4 +25,16 @@ const postRegularCostManager = () => {
   );
 };
 
-export {postActiveManager, postRegularCostManager};
+const postGoalManager = () => {
+  postData(
+    routeMap.goal_manager,
+    {},
+    (data) => AppDispatcher.dispatch({
+      action: ActionType.GOAL.SUCCESS,
+      data: data,
+      state: 'manager'
+    })
+  );
+};
+
+export {postGoalManager, postActiveManager, postRegularCostManager};

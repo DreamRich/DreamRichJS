@@ -22,6 +22,16 @@ const getRegularCostTypes = () => {
   );
 };
 
+const getGoalTypes = () => {
+  getData(
+    routeMap.goal_type,
+    (data) => AppDispatcher.dispatch({
+      action: ActionType.GOAL.TYPESUCCESS,
+      types: data
+    })
+  );
+};
+
 const getTypesForClient = () => {
   getData(
     routeMap.address_type,
@@ -38,4 +48,4 @@ const getTypesForClient = () => {
     })
   );
 };
-export {getRegularCostTypes, getActiveTypes, getTypesForClient};
+export {getGoalTypes, getRegularCostTypes, getActiveTypes, getTypesForClient};
