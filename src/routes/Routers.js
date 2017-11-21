@@ -5,7 +5,7 @@ import PasswordForm from '../auth/form/PasswordForm';
 import ResetForm from '../auth/ResetForm';
 import {AuthorizedRoute, NotFoundRoute} from './Router';
 import ClientTable from '../client/ClientTable';
-import ArrearageTable from '../client/ArrearageTable';
+import ArrearageTable from '../arrearage/ArrearageTable';
 import Employeer from '../employee/Employeer';
 import Dashboard from '../dashboard/Dashboard';
 import StepperClient from '../client/StepperClient';

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import ClientDashboard from '../dashboard/ClientDashboard';
+import ArrearageDashboard from '../arrearage/ArrearageDashboard';
 import RegularCostRegister from '../client/RegularCostRegister';
 import PropTypes from 'prop-types';
 import {getFinancialPlanning} from '../resources/getModels';
@@ -72,6 +73,7 @@ class Dashboard extends Component {
       {
         label: 'Patrimônio',
         icon: <BusinessIcon className="material-icons"/>,
+        dashboard: <ArrearageDashboard />
       },
       {
         label: 'Proteção',
