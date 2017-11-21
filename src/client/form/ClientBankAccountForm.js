@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {FormsyText} from 'formsy-material-ui/lib';
+import {FormsyText, FormsyToggle} from 'formsy-material-ui/lib';
 import SubForm from '../../components/SubForm';
 import errorMessages from '../../utils/FormsErrorMessages';
 import { Row, Col } from 'react-flexbox-grid';
@@ -50,6 +50,14 @@ export default class ClientBankAccountForm extends Component {
             value={this.props.data.account}
             disabled={this.props.isDisable}
             fullWidth={true}
+          />
+        </Col>
+        <Col xs>
+          <FormsyToggle
+            name="joint_account"
+            label="Conta conjunta?"
+            toggled={this.props.data.joint_account}
+            disabled={this.props.isDisable}
           />
         </Col>
       </Row>

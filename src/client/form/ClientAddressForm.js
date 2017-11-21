@@ -192,7 +192,7 @@ export default class ClientAddressForm extends Component {
           </Row>
         </MediaQuery>
         <MediaQuery key="mobileAddressForm" query="(max-width: 1030px)">
-          {this.getFormsySelect()}
+          {this.getFormsySelect(searchText,statesOptions,contriesOptions)}
           {listColumns}
         </MediaQuery>
       </div>

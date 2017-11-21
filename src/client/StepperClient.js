@@ -30,8 +30,8 @@ class StepperClient extends React.Component {
         subtitleCard="Insira o(s) valor(es) do(s) custo(s) fixo(s)"
         key={2}
       />,
-      <div key={3} >Renda para fora de patrimonio</div>,
-      <PatrimonyRegister key={4} />,
+      <PatrimonyRegister key={3} />,
+      <PatrimonyRegister key={4} main={false}/>,
       <div key={5} >Proteção </div>,
       <GoalRegister key={6} />];
   }

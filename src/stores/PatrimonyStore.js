@@ -16,14 +16,14 @@ class PatrimonyStore extends ReduceStore {
       patrimony: {},
       canSubmit: false,
       stepIndex: 0,
-      incomes: [{index: 0}],
-      realestates: [{index: 0}],
-      companyparticipations: [{index: 0}],
-      arrearanges: [{index: 0}],
-      equipments: [{index: 0}],
+      incomes: [{index: 0, selected: true}],
+      realestates: [{index: 0, selected: true}],
+      companyparticipations: [{index: 0, selected: true}],
+      arrearanges: [{index: 0, selected: true}],
+      equipments: [{index: 0, selected: true}],
       types: [],
-      actives: [{index: 0}],
-      activemanager: {},
+      actives: [{index: 0, selected: true}],
+      manager: {},
     };
   }
 
@@ -59,10 +59,10 @@ class PatrimonyStore extends ReduceStore {
         stepIndex: state.stepIndex + 1};
 
     case ActionType.PATRIMONY.MANAGERSUCCESS:
-      return {...state, activemanager: action.data};
+      return {...state, manager: action.data};
 
     case ActionType.PATRIMONY.POSTMULTIFORM:
-      item = state[action.state].find( item => item.index === action.index);
+      item = state[action.state].find( item => item.index === action.key);
       postOrPutStrategy(
         item,
         action.route,
@@ -72,7 +72,7 @@ class PatrimonyStore extends ReduceStore {
             action: ActionType.PATRIMONY.POSTMULTIFORMSUCCESS,
             data: data,
             state: action.state,
-            index: action.index
+            key: action.key
           });
         }
       );
@@ -80,8 +80,8 @@ class PatrimonyStore extends ReduceStore {
 
     case ActionType.PATRIMONY.POSTMULTIFORMSUCCESS:
       state[action.state].find( (item, index) => {
-        if (item.index === action.index){
-          action.data.index = action.index;
+        if (item.index === action.key){
+          action.data.index = action.key;
           state[action.state][index] = action.data; // same state.incomes[idx]
           return true;
         }
@@ -94,13 +94,24 @@ class PatrimonyStore extends ReduceStore {
     case ActionType.PATRIMONY.SETSTEP:
       return {...state, stepIndex: action.stepIndex};
 
+    case ActionType.PATRIMONY.SELECT:
+      state[action.state].find( item => {
+        if (item.index === action.key) {
+          item.selected = !item.selected;
+          return true;
+        }
+      });
+      return {...state};
+
     case ActionType.PATRIMONY.ADD:
       arr = state[action.state].slice();
-      arr.push({index: getLastIndex(arr) + 1});
+      arr.push({index: getLastIndex(arr) + 1,
+        selected: true
+      });
       return {...state, [action.state]: arr};
 
     case ActionType.PATRIMONY.REMOVE:
-      arr = state[action.state].filter( item => item.index !== action.index );
+      arr = state[action.state].filter( item => item.index !== action.key );
       return {...state, [action.state]: arr};
 
     case ActionType.PATRIMONY.TYPESUCCESS:
@@ -126,10 +137,10 @@ class PatrimonyStore extends ReduceStore {
       delete data[item];
     });
 
-    console.log(data);
-    newState.activemanager = data.activemanager || {actives: []};
-    newState.actives = newState.activemanager.actives.map(addIndex);
-    delete newState.activemanager['actives'];
+    // Convert from data.activemanager to manager for use TableFormManagerHOC
+    newState.manager = data.activemanager || {actives: []};
+    newState.actives = newState.manager.actives.map(addIndex);
+    delete newState.manager['actives'];
     delete data['activemanager'];
     newState.patrimony = data;
     return newState;

@@ -23,7 +23,7 @@ const getRegularCostManager = (id) => {
       AppDispatcher.dispatch({
         action: ActionType.REGULARCOST.GETFORMSUCCESS,
         data: data,
-        state: 'regularCostManager',
+        state: 'manager',
       });
     }
   );
