@@ -1,11 +1,6 @@
 import React, {Component} from 'react';
-import Divider from 'material-ui/Divider';
-// import RaisedButton from 'material-ui/RaisedButton';
-//import {getData} from '../resources/Headers.js';
 import '../stylesheet/RegisterForms.sass';
 import MenuItem from 'material-ui/MenuItem';
-import ActionType from '../actions/ActionType';
-import AppDispatcher from '../AppDispatcher';
 import ClientStore from '../stores/ClientStore';
 import '../stylesheet/RegisterForms.sass';
 import ClientDependentForm from './form/ClientDependentForm';
@@ -14,38 +9,26 @@ import ClientAddressForm from './form/ClientAddressForm';
 import ClientForm from './form/ClientForm';
 import ClientSpouseForm from './form/ClientSpouseForm';
 import SubStepperClient from '../client/SubStepperClient';
-// import routeMap from '../routes/RouteMap';
+import {getTypesForClient} from '../resources/getFormData';
 
 class ClientRegister extends Component {
 
   constructor(props){
     super(props);
 
-    this.state = ClientStore.getState();
   }
 
-  //state = {
-  //  selectedCountry: null,
-  //  selectedState: null,  // State region
-  //}
+  state = ClientStore.getState()
 
-  componentWillMount = () => {
-    this.setState({listener: ClientStore.addListener(this.handleChange)});
-  }
+  componentWillMount = () => this.setState({
+    listener: ClientStore.addListener(this.handleChange)
+  })
 
-  componentDidMount = () => {
-    AppDispatcher.dispatchDefer({
-      action: ActionType.CLIENT.DATAFORM
-    });
-  }
+  componentDidMount = () => getTypesForClient()
 
-  componentWillUnmount = () => {
-    this.state.listener.remove();
-  }
+  componentWillUnmount = () => this.state.listener.remove()
 
-  handleChange = () => {
-    this.setState(ClientStore.getState());
-  }
+  handleChange = () => this.setState(ClientStore.getState())
 
   // Convert ordinary Array to MenuItem Array to use in drop down list
   convertRegionToMenuItens = (list) => {
@@ -60,26 +43,17 @@ class ClientRegister extends Component {
     return listMenuItems;
   }
 
-
-  getDivider = () => {
-    return (<Divider className='Divider' />);
-  }
-
-  submit = () => {
-    this.form.submit();
-  }
-
   render() {
-    let subtitleCard = 'Insira as informações básicas do cliente.';
-    let listInformationSteps = [
+    const listInformationSteps = [
       {
         text: 'Cadastrar Cliente',
         formComponent:
           <ClientForm
             title='Cliente'
-            subtitleCard={subtitleCard}
+            subtitleCard={'Insira as informações básicas do cliente.'}
             canSubmit={this.state.canSubmit}
             data={this.state.active_client}
+            isDisable={false}
           />
       },
       {
@@ -95,7 +69,10 @@ class ClientRegister extends Component {
       },
       {
         text: 'Cadastrar Endereço',
-        formComponent: <ClientAddressForm 
+        formComponent:
+        <ClientAddressForm
+          title='Endereço'
+          subtitle={'Insira as informações correspondentes ao endereço do cliente'}
           id={this.state.active_client.id}
           canSubmit={this.state.canSubmit}
           data={this.state.address}
@@ -103,7 +80,8 @@ class ClientRegister extends Component {
       },
       {
         text: 'Cadastrar Conta bancária',
-        formComponent: <ClientBankAccountForm 
+        formComponent:
+        <ClientBankAccountForm
           id={this.state.active_client.id}
           canSubmit={this.state.canSubmit}
           data={this.state.bank_account}
@@ -121,14 +99,10 @@ class ClientRegister extends Component {
 
     return (
       <div style={{width:'auto'}}>
-        {this.getDivider()}
-
-        <SubStepperClient 
+        <SubStepperClient
           stepsNumber={listInformationSteps.length}
           listInformationSteps={listInformationSteps}
         />
-
-        {this.getDivider()}
       </div>
     );
   }

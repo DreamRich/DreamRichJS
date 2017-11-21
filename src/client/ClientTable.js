@@ -32,7 +32,7 @@ export default class ClientTable extends GridTable {
         <FlatButton
           primary
           label=">"
-          containerElement={ <Link to={`/client/${register.id}`} /> }
+          containerElement={ <Link to={`/dashboard/${register.id}`} /> }
         />
       );
     }

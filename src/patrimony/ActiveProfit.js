@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ActiveStore from '../stores/ActiveStore';
+// import ActiveStore from '../stores/ActiveStore';
 import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
 import PropTypes from 'prop-types';
@@ -11,10 +11,11 @@ export default class ActiveProfit extends Component {
   }
 
   componentWillMount = () => {
-    this.setState({
+    /*   this.setState({
       ...ActiveStore.getState(),
       listener: ActiveStore.addListener(this.handleUpdate)
     });
+    */
     const id = this.props.match.params.id;
     AppDispatcher.dispatch({
       action: ActionType.ACTIVE.GETMANAGER,
@@ -27,7 +28,7 @@ export default class ActiveProfit extends Component {
   }
 
   handleUpdate = () => {
-    this.setState(ActiveStore.getState());
+    // this.setState(ActiveStore.getState());
   }
 
   render() {

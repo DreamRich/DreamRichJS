@@ -6,6 +6,10 @@ import addFunnel from 'highcharts/modules/funnel';
 import PropTypes from 'prop-types';
 
 export default class GoalChart extends Component {
+  
+  static propTypes = {
+    match: {params : {id: PropTypes.number,}}
+  }
 
   constructor(props) {
     super(props);
@@ -20,14 +24,14 @@ export default class GoalChart extends Component {
     };
   }
 
-  mountChart(data_flow) {
+  mountChart(gm_data, fp_id) {
     addFunnel(Highcharts);
     getData(
-      routeMap.total_resource_for_annual_goals,
+      routeMap.financial_planning + fp_id + '/total_resource_for_annual_goals/',
       (data) => {
-        const total_resource_for_annual_goals = { 
+        const total_resource_for_annual_goals = {
           type : 'spline',
-          name : 'bla',
+          name : 'Recurso Para Objetivo',
           data : [],
           marker: {
             lineWidth: 2,
@@ -35,11 +39,11 @@ export default class GoalChart extends Component {
             fillColor: 'white',
           }
         };
-        total_resource_for_annual_goals.data = data.total_resource_for_annual_goals;
-        data_flow.push(total_resource_for_annual_goals);
+        total_resource_for_annual_goals.data = data;
+        gm_data.goals_flow_dic.push(total_resource_for_annual_goals);
         new Highcharts.Chart(
           'chart', {
-            series: data_flow,
+            series: gm_data.goals_flow_dic,
             title:{text: 'Goals'},
             plotOptions: {
               column: {
@@ -51,7 +55,7 @@ export default class GoalChart extends Component {
               }
             },
             xAxis: {
-              categories: data.year_init_to_year_end
+              categories: gm_data.year_init_to_year_end
             },
             yAxis: {
               min: 0,
@@ -68,15 +72,24 @@ export default class GoalChart extends Component {
         );
       }
     );
-  }  
+  }
+
+  getGoalsData(gm_id, fp_id) {
+    getData(
+      routeMap.goals_flow_dic + gm_id  + '/',
+      (data) => {
+        data.goals_flow_dic.forEach((obj) => {obj.type = 'column';});
+        this.mountChart(data, fp_id);
+      });
+  }
 
   componentDidMount() {
     getData(
-      routeMap.goals_flow_dic,
+      routeMap.financial_planning + this.props.match.params.id + '/respective_clients/',
       (data) => {
-        data.goals_flow_dic.forEach((obj) => {obj.type = 'column';});
-        this.mountChart(data.goals_flow_dic);
-      });
+        this.getGoalsData(data['gm'], data['fp']);
+      }
+    );
   }
 
   render() {

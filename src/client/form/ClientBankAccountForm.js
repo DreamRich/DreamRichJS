@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {FormsyText} from 'formsy-material-ui/lib';
+import {FormsyText, FormsyToggle} from 'formsy-material-ui/lib';
 import SubForm from '../../components/SubForm';
 import errorMessages from '../../utils/FormsErrorMessages';
 import { Row, Col } from 'react-flexbox-grid';
@@ -19,6 +19,7 @@ export default class ClientBankAccountForm extends Component {
   static propTypes = {
     id: PropTypes.number,
     canSubmit: PropTypes.bool,
+    isDisable: PropTypes.bool,
     data: PropTypes.object,
   }
 
@@ -37,6 +38,8 @@ export default class ClientBankAccountForm extends Component {
             hintText="Agência da conta bancária "
             floatingLabelText="Agência"
             value={this.props.data.agency}
+            disabled={this.props.isDisable}
+            fullWidth={true}
           />
         </Col>
         <Col xs>
@@ -45,6 +48,16 @@ export default class ClientBankAccountForm extends Component {
             hintText="Número da conta bancária "
             floatingLabelText="Conta"
             value={this.props.data.account}
+            disabled={this.props.isDisable}
+            fullWidth={true}
+          />
+        </Col>
+        <Col xs>
+          <FormsyToggle
+            name="joint_account"
+            label="Conta conjunta?"
+            toggled={this.props.data.joint_account}
+            disabled={this.props.isDisable}
           />
         </Col>
       </Row>

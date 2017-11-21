@@ -15,17 +15,18 @@ export default class SubStepperClient extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = ClientStore.getState();
   }
+
+  state = ClientStore.getState()
 
   static propTypes = {
     stepsNumber: PropTypes.number,
     listInformationSteps: PropTypes.array,
   }
 
-  componentWillMount = () => {
-    this.setState({listener: ClientStore.addListener(this.handleChange)});
-  }
+  componentWillMount = () => this.setState({
+    listener: ClientStore.addListener(this.handleChange)
+  })
 
   handleChange = () => {
     // Only get some attributes from store
