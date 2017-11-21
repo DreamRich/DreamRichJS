@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 // import TableForm from './TableForm';
 // import { Row } from 'react-flexbox-grid';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 // import AppDispatcher from '../../AppDispatcher';
 // import {Card, CardTitle, CardText} from 'material-ui/Card';
 import TableFormHOC from './TableFormHOC';
@@ -17,13 +17,17 @@ const TableFormManagerHOC = (actions, basicData, Store, getStoreState, managerCr
       this.state = { manager };
     }
 
+    static propTypes = {
+      id: PropTypes.number,
+    }
+
     componentWillMount = () => {
       this.setState({
         listener: Store.addListener(this.handleChange)
       });
       const {manager} = Store.getState();
       if (manager && manager.id === undefined) {
-        managerCreator();
+        managerCreator(this.props.id);
       }
     }
 
@@ -34,8 +38,8 @@ const TableFormManagerHOC = (actions, basicData, Store, getStoreState, managerCr
     render = () => {
       return (
         <Table
-          id={this.state.manager.id}
           {...this.props}
+          id={this.state.manager.id}
         />
       );
     }

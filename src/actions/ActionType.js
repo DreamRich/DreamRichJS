@@ -77,10 +77,10 @@ const actionTypes = {
     ADD: 'patrimony/add_item',
     REMOVE: 'patrimony/remove_item',
     MANAGERSUCCESS: 'patrimony/create_manager_success',
+    TYPESUCCESS: 'active/types_success',
   },
   ACTIVE: {
     TYPE: 'active/types',
-    TYPESUCCESS: 'active/types_success',
     FORM: 'active/create_form',
     SUCCESS: 'active/manager_success_form',
     MANAGER: 'active/create_manager',

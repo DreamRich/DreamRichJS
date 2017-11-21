@@ -23,7 +23,7 @@ class PatrimonyStore extends ReduceStore {
       equipments: [{index: 0, selected: true}],
       types: [],
       actives: [{index: 0, selected: true}],
-      activemanager: {},
+      manager: {},
     };
   }
 
@@ -59,7 +59,7 @@ class PatrimonyStore extends ReduceStore {
         stepIndex: state.stepIndex + 1};
 
     case ActionType.PATRIMONY.MANAGERSUCCESS:
-      return {...state, activemanager: action.data};
+      return {...state, manager: action.data};
 
     case ActionType.PATRIMONY.POSTMULTIFORM:
       item = state[action.state].find( item => item.index === action.key);
@@ -137,9 +137,10 @@ class PatrimonyStore extends ReduceStore {
       delete data[item];
     });
 
-    newState.activemanager = data.activemanager || {actives: []};
-    newState.actives = newState.activemanager.actives.map(addIndex);
-    delete newState.activemanager['actives'];
+    // Convert from data.activemanager to manager for use TableFormManagerHOC
+    newState.manager = data.activemanager || {actives: []};
+    newState.actives = newState.manager.actives.map(addIndex);
+    delete newState.manager['actives'];
     delete data['activemanager'];
     newState.patrimony = data;
     return newState;

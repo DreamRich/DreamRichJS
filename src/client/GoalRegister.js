@@ -7,6 +7,49 @@ import '../stylesheet/RegisterForms.sass';
 import GoalForm from './form/GoalForm';
 import getSelectOption from '../utils/getSelectOption';
 
+
+import ActionType from '../actions/ActionType';
+import {postGoalManager} from '../resources/saveModels';
+import {routeMap} from '../routes/RouteMap';
+import TableFormManagerHOC from '../components/tables/TableFormManagerHOC';
+import {getGoalTypes} from '../resources/getFormData';
+
+
+const TableForm = TableFormManagerHOC({
+  submit: ActionType.GOAL.SUBMIT,
+  add: ActionType.GOAL.ADD,
+  remove: ActionType.GOAL.REMOVE,
+  select: ActionType.GOAL.SELECT,
+},{
+  parentId: 'goal_manager_id',
+  route: routeMap.regular_cost,
+  state: 'goals',
+  title: 'Objetivos',
+  subtitleCard: 'Adicione as informações dos objetivos',
+  headers: [
+    {value: 'Tipo', name: 'cost_type_id', options: 'types', type: 'SelectField'},
+    {value: 'Valor', name: 'value', type: 'TextField'},
+  ],
+},
+GoalStore,
+() => {
+  const {goals, types} = RegularCostStore.getState();
+  return {registers: goals, options: {types} };
+},
+postRegularCostManager
+);
+
+export default class RegularCostRegister extends Component {
+
+
+  componentWillMount = () => getRegularCostTypes()
+
+  render = () => {
+    return ( <TableForm {...this.props} /> );
+  }
+
+}
+
 export default class GoalRegister extends Component {
 
   state = GoalStore.getState()

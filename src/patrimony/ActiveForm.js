@@ -1,54 +1,52 @@
 import React, {Component} from 'react';
-import ActiveSubForm from './ActiveSubForm';
 // import ActionType from '../actions/ActionType';
 // import AppDispatcher from '../AppDispatcher';
 // import ActiveStore from '../stores/ActiveStore';
 // import Paper from 'material-ui/Paper';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // import RaisedButton from 'material-ui/RaisedButton';
-import MultiForm from './MultiForm';
+// import MultiForm from './MultiForm';
 import PatrimonyStore from '../stores/PatrimonyStore';
 import {getActiveTypes} from '../resources/getFormData';
 import {postActiveManager} from '../resources/saveModels';
+import ActionType from '../actions/ActionType';
+import {routeMap} from '../routes/RouteMap';
+import TableFormManagerHOC from '../components/tables/TableFormManagerHOC';
 
-const ActiveMultiForm = MultiForm(ActiveSubForm);
+
+const TableForm = TableFormManagerHOC({
+  submit: ActionType.PATRIMONY.POSTMULTIFORM,
+  add: ActionType.PATRIMONY.ADD,
+  remove: ActionType.PATRIMONY.REMOVE,
+  select: ActionType.PATRIMONY.SELECT,
+},{
+  parentId: 'active_manager_id',
+  route: routeMap.actives,
+  state: 'actives',
+  title: 'Ativos financeiros',
+  subtitleCard: 'Adicione as informações do ativo',
+  headers: [
+    {value: 'Tipo', name: 'active_type_id', options: 'types', type: 'SelectField'},
+    {value: 'Nome de referência', name: 'name', type: 'TextField'},
+    {value: 'Valor investido', name: 'value', type: 'TextField'},
+    {value: 'Taxa (%CDI)', name: 'rate', type: 'TextField'},
+  ],
+},
+PatrimonyStore,
+() => {
+  const {actives, types} = PatrimonyStore.getState();
+  return {registers: actives, options: {types} };
+},
+postActiveManager
+);
+
 
 export default class ActiveForm extends Component {
 
-  static propTypes = {
-    parent_id: PropTypes.number,
-    manager: PropTypes.object,
-    data: PropTypes.array,
-    canSubmit: PropTypes.bool,
-    types: PropTypes.array,
-  }
-
-  componentWillMount = () => {
-    const {types, activemanager: {id}} = PatrimonyStore.getState();
-    if (!types || types.length === 0) {
-      getActiveTypes();
-    }
-    console.log(id, this.props.manager);
-    if (!id) {
-      postActiveManager(this.props.parent_id);
-    }
-  }
+  componentWillMount = () => getActiveTypes()
 
   render = () => {
-    return (
-      <ActiveMultiForm
-        parent_id={this.props.manager.id}
-        name='actives'
-        title='Ativos'
-        labelAdd='Possui ativos? (Marque o quadrado ao lado)'
-        labelAdded='Possui outro ativo? (Marque o quadrado ao lado)'
-        labelRemove='Possuo este ativo.'
-        data={this.props.data}
-        canSubmit={this.props.canSubmit}
-        types={this.props.types}
-      />
-    );
+    return ( <TableForm {...this.props} /> );
   }
 
 }
-

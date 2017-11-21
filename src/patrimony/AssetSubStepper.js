@@ -24,7 +24,7 @@ export default class AssetSubStepper extends React.Component {
     realestates: PropTypes.array,
     companyparticipations: PropTypes.array,
     equipments: PropTypes.array,
-    activemanager: PropTypes.object,
+    manager: PropTypes.object,
     actives: PropTypes.array,
     arrearanges: PropTypes.array,
     canSubmit: PropTypes.bool,
@@ -103,46 +103,22 @@ export default class AssetSubStepper extends React.Component {
     const listInformationSteps = [
       {text: 'Bem imóvel',
         formComponent: <RealeStateForm
-          parent_id={this.props.id}
-          labelAdd='Possui bens imóveis? (Marque o quadrado ao lado)'
-          labelAdded='Possui outro bem imóvel? (Marque o quadrado ao lado)'
-          labelRemove='Possuo este bem.'
-          data={this.props.realestates}
-          name='realestates'
-          canSubmit={this.props.canSubmit}
+          id={this.props.id}
         />
       },
       {text: 'Participação em empresa',
         formComponent: <CompanyParticipationForm
-          parent_id={this.props.id}
-          labelAdd='Possui participação em empresas? (Marque o quadrado ao lado)'
-          labelAdded='Possui mais participações? (Marque o quadrado ao lado)'
-          labelRemove='Tenho participação nesta empresa.'
-          name='companyparticipations'
-          title="Participação em empresa"
-          data={this.props.companyparticipations}
-          canSubmit={this.props.canSubmit}
+          id={this.props.id}
         />
       },
       {text: 'Equipamento',
         formComponent: <EquipmentForm
-          parent_id={this.props.id}
-          name='equipments'
-          title="Equipamentos"
-          labelAdd='Possui equipamentos? (Marque o quadrado ao lado)'
-          labelAdded='Possui outro equipamento? (Marque o quadrado ao lado)'
-          labelRemove='Possuo este equipamento.'
-          data={this.props.equipments}
-          canSubmit={this.props.canSubmit}
+          id={this.props.id}
         />
       },
       {text: 'Ativo',
         formComponent: <ActiveForm
-          parent_id={this.props.id}
-          manager={this.props.activemanager}
-          data={this.props.actives}
-          types={this.props.types}
-          canSubmit={this.props.canSubmit}
+          id={this.props.id}
         />
       },
       {text: 'Dívidas',
