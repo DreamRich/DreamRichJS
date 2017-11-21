@@ -126,7 +126,11 @@ export default class TableCell extends Component {
   getOptions = () => {
     const {cell: {options} } = this.props;
     return options.map( (type) =>
-      <MenuItem key={type.id} value={type.id} primaryText={type.name} />
+      <MenuItem
+        key={type.id}
+        value={type.id}
+        primaryText={type.name || type.id}
+      />
     );
   }
 

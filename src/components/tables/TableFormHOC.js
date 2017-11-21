@@ -21,9 +21,9 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
     }
 
     static defaultProps = {
-      enableDelete: false,
-      enableEdit: false,
-      enableAdd: false,
+      enableDelete: true,
+      enableEdit: true,
+      enableAdd: true,
     }
 
     componentWillMount = () => this.setState({
@@ -48,15 +48,23 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
     }
 
     addRow = () => AppDispatcher.dispatch({
-      action: actions.add
+      action: actions.add,
+      state: basicData.state,
     })
 
     removeRow = (key) => {
       AppDispatcher.dispatch({
         action: actions.remove,
         key: key,
+        state: basicData.state,
       });
     }
+
+    selectRow = (key) => AppDispatcher.dispatch({
+      action: actions.select,
+      key: key,
+      state: basicData.state,
+    })
 
     getRowsTable = () => this.state.registers.map( (register) => {
       const {index, selected, ...rest} = register;
@@ -65,11 +73,6 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
         'key': index,
         'selected': selected
       };
-    })
-
-    selectRow = (key) => AppDispatcher.dispatch({
-      action: actions.select,
-      key: key,
     })
 
     render = () => {

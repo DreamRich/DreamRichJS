@@ -26,6 +26,7 @@ export default TableFormHOC({
   title: 'Dívidas e financiamentos',
   subtitleCard: 'Adicione as informações de suas dívidas e financiamentos',
   headers: [
+    {value: 'Nome', name: 'name', type: 'TextField'},
     {value: 'Valor total', name: 'value', type: 'TextField'},
     {value: 'Prazo total', name: 'period', type: 'TextField'},
     {value: 'Taxa de juros', name: 'rate', type: 'TextField'},
@@ -40,7 +41,7 @@ PatrimonyStore,
     registers: arrearanges,
     options: {
       amortization_system: [
-        {value: 'SAC'}, {value: 'PRICE'}, {value: 'Comum'}
+        {id: 'SAC'}, {id: 'PRICE'}, {id: 'Comum'}
       ],
     },
   };
