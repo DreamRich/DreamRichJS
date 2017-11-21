@@ -17,10 +17,6 @@ export default class ActiveProfit extends Component {
     });
     */
     const id = this.props.match.params.id;
-    AppDispatcher.dispatch({
-      action: ActionType.ACTIVE.GETMANAGER,
-      id: id
-    });
   }
 
   componentWillUnmount = () => {
