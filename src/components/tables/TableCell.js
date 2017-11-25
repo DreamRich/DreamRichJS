@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-// import {times} from 'lodash';
-//import MenuItem from 'material-ui/MenuItem';
 import {Toggle,
   TextField,
   //RaisedButton,
@@ -9,11 +7,7 @@ import {Toggle,
   SelectField,
   MenuItem
 } from 'material-ui';
-// import FormsyDate from './formsyComponents/FormsyDate';
 import format from 'date-fns/format';
-
-// import FloatingActionButton from 'material-ui/FloatingActionButton';
-// import ContentAdd from 'material-ui/svg-icons/content/add';
 
 export default class TableCell extends Component {
 
@@ -71,6 +65,7 @@ export default class TableCell extends Component {
         style: textFieldStyle,
         value: value,
         disabled: !selected,
+        underlineDisabledStyle: {display: 'none'},
       };
     }
     if (type === 'DatePicker') {
@@ -88,6 +83,7 @@ export default class TableCell extends Component {
         mode: 'landscape',
         style: datePickerStyle,
         disabled: !selected,
+        underlineDisabledStyle: {display: 'none'},
         formatDate: (date) => format(date, 'DD/MM/YYYY'),
         ...dateValue
       };
@@ -98,7 +94,8 @@ export default class TableCell extends Component {
         name: name,
         onToggle: this.props.onChangeField,
         toggled: value,
-        disabled: !selected
+        disabled: !selected,
+        underlineDisabledStyle: {display: 'none'},
       };
     }
 
@@ -109,6 +106,7 @@ export default class TableCell extends Component {
         disabled: !selected,
         value: value,
         onChange: (e, key) => this.props.onChangeField({target: {name: name}}, options[key].id),
+        underlineDisabledStyle: {display: 'none'},
       };
     }
   }
@@ -142,13 +140,13 @@ export default class TableCell extends Component {
     if (this.props.header || this.props.type === 'ReadOnly') {
       field = <p className='table-header'>{this.props.cell.value}</p>;
     } else if (this.props.type === 'TextField') {
-      field = <TextField {...props} />;
+      field = <TextField className='disabled'  {...props} />;
     } else if (this.props.type === 'DatePicker') {
-      field = <DatePicker {...props} />;
+      field = <DatePicker className='disabled' {...props} />;
     } else if (this.props.type === 'ToggleField') {
-      field = <Toggle {...props} />;
+      field = <Toggle className='disabled' {...props} />;
     } else if (this.props.type === 'SelectField') {
-      field = (<SelectField {...props}>
+      field = (<SelectField className='disabled' {...props}>
         {this.getOptions()}
       </SelectField>);
     }
@@ -156,7 +154,8 @@ export default class TableCell extends Component {
     return (
       <div
         className='cell table-cell'
-        style={this.props.style} >
+        style={this.props.style}
+      >
         {field}
       </div>
     );
