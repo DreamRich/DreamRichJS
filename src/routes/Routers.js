@@ -32,7 +32,7 @@ export default class Routers extends Component{
         <AuthorizedRoute exact permission="see_all_basic_client_data" path="/client" component={ ClientTable } />
 
         <AuthorizedRoute exact permission="change_own_client_data" path="/register/steps/:id?" component={ StepperClient } />
-        <AuthorizedRoute exact permission="allow_any" path="/dashboard/:id?" component={ Dashboard } />
+        <AuthorizedRoute exact permission="allow_any" path="/dashboard/:id/:tab?" component={ Dashboard } />
 
 
         <AuthorizedRoute permission="see_own_client_data" path="/active_chart" component={ ActiveChart } />

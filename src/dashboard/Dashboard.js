@@ -11,6 +11,7 @@ import ObjectIcon from 'material-ui/svg-icons/device/gps-fixed';
 import SecurityIcon from 'material-ui/svg-icons/hardware/security';
 import MoneyIconSecundary from 'material-ui/svg-icons/editor/monetization-on';
 import BusinessIcon from 'material-ui/svg-icons/communication/business';
+import { withRouter } from 'react-router';
 
 class Dashboard extends Component {
 
@@ -18,18 +19,23 @@ class Dashboard extends Component {
     match: PropTypes.shape({
       params: PropTypes.shape({
         id: PropTypes.string,
+        tab: PropTypes.string,
       }),
     }),
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
   }
 
-  componentDidMount = () => {
+  componentWillMount = () => {
     const id = this.props.match.params.id;
     if (id) {
       getFinancialPlanning(id);
     }
+    const tab = this.props.match.params.tab;
+    this.setState({tab: tab});
   }
 
-  state = RegisterStore.getState()
+  state = {...RegisterStore.getState(), tab: 'basic' }
 
   getListDashboard(listDashboardsTabs){
     const dashboardTabs = listDashboardsTabs.map((dashboard,index) => {
@@ -38,6 +44,8 @@ class Dashboard extends Component {
           label={dashboard.label}
           icon={dashboard.icon}
           key={'tabsDashboards'+index}
+          data-route={dashboard.route}
+          value={dashboard.value}
         >
           <div className="marginTop">
             {dashboard.dashboard}
@@ -49,38 +57,49 @@ class Dashboard extends Component {
     return dashboardTabs;
   }
 
+  changeTab = (tab) => {
+    this.props.history.replace(tab);
+    this.setState({tab});
+  }
+
   render () {
     const listDashboardsTabs = [
       {
         label: 'Informações Básicas',
         icon: <InfoOutline className="material-icons"/>,
-        dashboard: <ClientDashboard />
+        dashboard: <ClientDashboard />,
+        value: 'basico',
       },
       {
         label: 'Custos Fixos',
         icon: <MoneyIcon className="material-icons"/>,
-        dashboard: <RegularCostRegister />
+        dashboard: <RegularCostRegister />,
+        value: 'custo',
       },
       {
         label: 'Objetivos',
         icon: <ObjectIcon className="material-icons"/>,
+        value: 'objetivo',
       },
       {
         label: 'Renda',
         icon: <MoneyIconSecundary className="material-icons"/>,
+        value: 'renda',
       },
       {
         label: 'Patrimônio',
         icon: <BusinessIcon className="material-icons"/>,
+        value: 'patrimonio',
       },
       {
         label: 'Proteção',
         icon: <SecurityIcon className="material-icons"/>,
+        value: 'protecao',
       },
     ];
 
     return (
-      <Tabs>
+      <Tabs value={this.state.tab} onChange={this.changeTab}>
         {this.getListDashboard(listDashboardsTabs)}
       </Tabs>
     );
@@ -88,4 +107,4 @@ class Dashboard extends Component {
 }
 
 
-export default Dashboard;
+export default withRouter(Dashboard);

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 // import ActiveStore from '../stores/ActiveStore';
-import AppDispatcher from '../AppDispatcher';
-import ActionType from '../actions/ActionType';
+// import AppDispatcher from '../AppDispatcher';
+// import ActionType from '../actions/ActionType';
 import PropTypes from 'prop-types';
 
 export default class ActiveProfit extends Component {
@@ -17,6 +17,7 @@ export default class ActiveProfit extends Component {
     });
     */
     const id = this.props.match.params.id;
+    console.log(id);
   }
 
   componentWillUnmount = () => {

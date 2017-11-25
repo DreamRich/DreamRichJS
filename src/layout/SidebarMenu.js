@@ -73,7 +73,7 @@ export default class SidebarMenu extends React.Component {
           }
           <AuthorizedLink
             permission='allow_any'
-            to='/dashboard/16'
+            to='/dashboard/16/'
           >
             <ListItem
               primaryText="Dashboard Client"
