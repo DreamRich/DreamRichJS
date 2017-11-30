@@ -2,7 +2,9 @@
 import React from 'react';
 import {Toolbar} from 'react-data-grid-addons';
 import GridTable from '../components/GridTable';
-import FlatButton from 'material-ui/FlatButton';
+import IconButton from 'material-ui/IconButton';
+import DeleteIcon from 'material-ui/svg-icons/action/delete';
+
 import {putData, postData, deleteData} from '../resources/Requests';
 
 export default class EmployeeTable extends GridTable {
@@ -45,11 +47,13 @@ export default class EmployeeTable extends GridTable {
   getActions(register, idx){
     if(register !== undefined && register !== null){
       return (
-        <FlatButton
-          secondary
+        <IconButton
+          tooltip="bottom-right"
+          tooltipPosition="bottom-right"
           onClick={this.handleDeletion.bind(this, register.id, idx)}
-          label="X"
-        />
+        >
+          <DeleteIcon />
+        </IconButton>
       );
     }
     return null;
