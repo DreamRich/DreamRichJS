@@ -16,8 +16,7 @@ export default class ActiveProfit extends Component {
       listener: ActiveStore.addListener(this.handleUpdate)
     });
     */
-    const id = this.props.match.params.id;
-    console.log(id);
+    // const id = this.props.match.params.id;
   }
 
   componentWillUnmount = () => {

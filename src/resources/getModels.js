@@ -79,4 +79,4 @@ const getFinancialPlanning = (id) => {
     });
 };
 
-export {getClient, getFinancialPlanning};
+export {getClient, getFinancialPlanning, getGoalManager};

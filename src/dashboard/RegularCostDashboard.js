@@ -37,6 +37,7 @@ class RegularCostDashboard extends Component {
       }
     });
   }
+
   getContentCard = (cost) => {
     const costType = cost.cost_type || {};
     return (

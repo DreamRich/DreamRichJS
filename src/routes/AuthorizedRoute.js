@@ -12,7 +12,6 @@ export default class AuthorizedRoute extends Component{
   }
 
   render() {
-    // console.log(this.props.location);
 
     if (Auth.hasPermission(this.props.permission) ) {
       return <Route {...this.props} />;

@@ -22,7 +22,6 @@ const routeMap = {
   equipments: '/api/patrimony/equipment/',
   address_type: '/api/client/address/type_of_address/',
   arrearanges: '/api/patrimony/arrearage/',
-  goals_flow_dic:  '/api/goal/goal_manager/',
   financial_planning: '/api/financial_planning/financial_planning/',
 };
 

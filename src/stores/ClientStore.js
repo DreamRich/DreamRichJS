@@ -2,7 +2,7 @@
 
 import {ReduceStore} from 'flux/utils';
 import AppDispatcher from '../AppDispatcher';
-import {postData, postOrPutStrategy} from '../resources/Requests';
+import {/*postData,*/ postOrPutStrategy} from '../resources/Requests';
 //import {Auth} from '../auth/Auth';
 import ActionType from '../actions/ActionType';
 //import {routeMap} from '../routes/RouteMap';
@@ -84,10 +84,6 @@ class ClientStore extends ReduceStore {
 
     case ActionType.CLIENT.SETSTEP:
       return {...state, stepIndex: action.stepIndex};
-
-    case ActionType.CLIENT.SUBFORM:
-      postData(action.route, action.data, (e) => console.log(e));
-      return state;
 
     case ActionType.CLIENT.ADDDEPENDENT:
       state.dependents.push(
