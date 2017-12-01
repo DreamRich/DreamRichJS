@@ -35,17 +35,19 @@ class Dashboard extends Component {
   getDesktop = () => {
     let count = 0;
     const childrenArray = React.Children.toArray(this.props.children);
+
     const rows = _.reduce(childrenArray, (result, item) => {
       if(count+item.props.size>12) {
         result.push([]);
         result[result.length-1].push(this.getItem(item));
-        count = 0;
+        count = item.props.size;
       } else {
         count += item.props.size;
         result[result.length-1].push(this.getItem(item));
       }
       return result;
     }, [[]]);
+
     const coisa = rows.map( (row, index) => <Row around='xs' className='dashboard-row' key={index}>
       {row.map( (col, idx) => React.cloneElement(col, { key: idx}))}
 

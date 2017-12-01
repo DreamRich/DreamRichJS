@@ -90,7 +90,6 @@ export default class GoalChart extends Component {
       }
     );
     this.getResourceForGoals();
-    console.log(this.highcharts);
   }
 
   getResourceForGoals = () => {
