@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import GoalStore from '../stores/GoalStore';
 import '../stylesheet/RegisterForms.sass';
-// import { Row, Col } from 'react-flexbox-grid';
-// import MediaQuery from 'react-responsive';
-// import getDivider from '../utils/getDivider';
+
+
+
 import Dashboard from '../components/Dashboard';
 import {getGoalTypes} from '../resources/getFormData';
 import GoalRegister from '../client/GoalRegister';

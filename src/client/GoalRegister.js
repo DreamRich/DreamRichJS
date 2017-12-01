@@ -1,14 +1,7 @@
 import React, {Component} from 'react';
-// import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
-// import RaisedButton from 'material-ui/RaisedButton';
 import GoalStore from '../stores/GoalStore';
 import '../stylesheet/RegisterForms.sass';
-// import GoalForm from './form/GoalForm';
-// import getSelectOption from '../utils/getSelectOption';
-
-
-// import ActionType from '../actions/ActionType';
 import {postGoalManager} from '../resources/saveModels';
 import {routeMap} from '../routes/RouteMap';
 import TableFormManagerHOC from '../components/tables/TableFormManagerHOC';

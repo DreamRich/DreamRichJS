@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-// import {times} from 'lodash';
+
 //import MenuItem from 'material-ui/MenuItem';
 import {Toggle,
   TextField,
@@ -9,11 +9,11 @@ import {Toggle,
   SelectField,
   MenuItem
 } from 'material-ui';
-// import FormsyDate from './formsyComponents/FormsyDate';
+
 import format from 'date-fns/format';
 
-// import FloatingActionButton from 'material-ui/FloatingActionButton';
-// import ContentAdd from 'material-ui/svg-icons/content/add';
+
+
 
 export default class TableCell extends Component {
 

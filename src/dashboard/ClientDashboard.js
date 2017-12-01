@@ -6,9 +6,9 @@ import ClientAddressForm from '../client/form/ClientAddressForm';
 import ClientForm from '../client/form/ClientForm';
 import ClientSpouseForm from '../client/form/ClientSpouseForm';
 import ClientDependentForm from '../client/form/ClientDependentForm';
-// import { Row, Col } from 'react-flexbox-grid';
-// import MediaQuery from 'react-responsive';
-// import getDivider from '../utils/getDivider';
+
+
+
 import {getTypesForClient} from '../resources/getFormData';
 import Dashboard from '../components/Dashboard';
 

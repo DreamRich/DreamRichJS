@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-// import ActiveStore from '../stores/ActiveStore';
-// import AppDispatcher from '../AppDispatcher';
-// import ActionType from '../actions/ActionType';
+
+
+
 import PropTypes from 'prop-types';
 
 export default class ActiveProfit extends Component {

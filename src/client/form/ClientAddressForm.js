@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import SubForm from '../../components/SubForm';
-// import {routeMap} from '../routes/RouteMap';
-// import {getData} from '../resources/Requests';
+
+
 import makeFormysTextList from '../../utils/MakeFormysTextList';
 import ActionType from '../../actions/ActionType';
 import AppDispatcher from '../../AppDispatcher';

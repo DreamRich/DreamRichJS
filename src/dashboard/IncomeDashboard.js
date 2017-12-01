@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-// import PropTypes from 'prop-types';
+
 import PatrimonyStore from '../stores/PatrimonyStore';
 import '../stylesheet/RegisterForms.sass';
-// import { Row, Col } from 'react-flexbox-grid';
-// import MediaQuery from 'react-responsive';
-// import getDivider from '../utils/getDivider';
+
+
+
 import Dashboard from '../components/Dashboard';
-// import PatrimonyForm from '../patrimony/PatrimonyForm';
-import IncomeForm from '../patrimony/IncomeForm';
+
+import IncomeForm from '../patrimony/form/IncomeForm';
 
 class IncomeDashboard extends Component {
 

@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
-// import PropTypes from 'prop-types';
+
 import PatrimonyStore from '../stores/PatrimonyStore';
 import '../stylesheet/RegisterForms.sass';
-// import { Row, Col } from 'react-flexbox-grid';
-// import MediaQuery from 'react-responsive';
-// import getDivider from '../utils/getDivider';
+
+
+
 import Dashboard from '../components/Dashboard';
-// import PatrimonyForm from '../patrimony/PatrimonyForm';
-import RealeStateForm from '../patrimony/RealeStateForm.js';
-import CompanyParticipationForm from '../patrimony/CompanyParticipationForm';
-import ArrearageForm from '../patrimony/ArrearageForm';
-import EquipmentForm from '../patrimony/EquipmentForm';
-import ActiveForm from '../patrimony/ActiveForm';
+
+import RealeStateForm from '../patrimony/form/RealeStateForm.js';
+import CompanyParticipationForm from '../patrimony/form/CompanyParticipationForm';
+import ArrearageForm from '../patrimony/form/ArrearageForm';
+import EquipmentForm from '../patrimony/form/EquipmentForm';
+import ActiveForm from '../patrimony/form/ActiveForm';
 
 class PatrimonyDashboard extends Component {
 

@@ -1,18 +1,18 @@
-// import React, {Component} from 'react';
-// import SubForm from '../components/SubForm.js';
-import ActionType from '../actions/ActionType.js';
-// import PropTypes from 'prop-types';
-// import {FormsyText, FormsySelect, /*FormsyCheckbox, FormsyDate*/} from 'formsy-material-ui/lib';
-// import FormsyToggleYesNo from '../components/FormsyToggleYesNo';
-// import CardForm from '../components/CardForm';
-// import ExtraSubForm from './ExtraSubForm';
-// import { Row, Col } from 'react-flexbox-grid';
-// import MenuItem from 'material-ui/MenuItem';
 
 
-import PatrimonyStore from '../stores/PatrimonyStore';
-import {routeMap} from '../routes/RouteMap';
-import TableFormHOC from '../components/tables/TableFormHOC';
+import ActionType from '../../actions/ActionType.js';
+
+
+
+
+
+
+
+
+
+import PatrimonyStore from '../../stores/PatrimonyStore';
+import {routeMap} from '../../routes/RouteMap';
+import TableFormHOC from '../../components/tables/TableFormHOC';
 
 export default TableFormHOC({
   submit: ActionType.PATRIMONY.POSTMULTIFORM,

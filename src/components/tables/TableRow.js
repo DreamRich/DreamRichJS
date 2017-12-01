@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import Check from 'material-ui/svg-icons/navigation/check';
 import Delete from 'material-ui/svg-icons/action/delete';
-// import {times} from 'lodash';
+
 import {IconButton} from 'material-ui';
-// import FormsyDate from './formsyComponents/FormsyDate';
+
 
 import { Row/*, Col */ } from 'react-flexbox-grid';
-// import FloatingActionButton from 'material-ui/FloatingActionButton';
-// import ContentAdd from 'material-ui/svg-icons/content/add';
+
+
 import TableCell from './TableCell';
 
 export default class TableRow extends Component {

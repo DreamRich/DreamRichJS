@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import RaisedButton from 'material-ui/RaisedButton';
-import PatrimonyForm from './PatrimonyForm';
-import IncomeForm from './IncomeForm';
+import PatrimonyForm from './form/PatrimonyForm';
+import IncomeForm from './form/IncomeForm';
 import {
   Step,
   Stepper,

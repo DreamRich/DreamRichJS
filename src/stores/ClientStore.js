@@ -7,7 +7,7 @@ import {/*postData,*/ postOrPutStrategy} from '../resources/Requests';
 import ActionType from '../actions/ActionType';
 //import {routeMap} from '../routes/RouteMap';
 import getLastIndex from '../utils/getLastIndex';
-// import {/*getUrl, */routeMap} from '../routes/RouteMap';
+
 
 class ClientStore extends ReduceStore {
 

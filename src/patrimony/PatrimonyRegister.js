@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-// import RaisedButton from 'material-ui/RaisedButton';
+
 import PatrimonyStore from '../stores/PatrimonyStore';
 import PropTypes from 'prop-types';
 import IncomeSubStepper from './IncomeSubStepper';
