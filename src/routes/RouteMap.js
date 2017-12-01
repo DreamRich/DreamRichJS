@@ -21,7 +21,7 @@ const routeMap = {
   companyparticipations: '/api/patrimony/companyparticipation/',
   equipments: '/api/patrimony/equipment/',
   address_type: '/api/client/address/type_of_address/',
-  arrearanges: '/api/patrimony/arrearage/',
+  arrearages: '/api/patrimony/arrearage/',
   financial_planning: '/api/financial_planning/financial_planning/',
 };
 

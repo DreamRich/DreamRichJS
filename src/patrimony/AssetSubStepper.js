@@ -26,7 +26,7 @@ export default class AssetSubStepper extends React.Component {
     equipments: PropTypes.array,
     manager: PropTypes.object,
     actives: PropTypes.array,
-    arrearanges: PropTypes.array,
+    arrearages: PropTypes.array,
     canSubmit: PropTypes.bool,
     id: PropTypes.number,
     types: PropTypes.array,
@@ -124,7 +124,7 @@ export default class AssetSubStepper extends React.Component {
       {text: 'Dívidas',
         formComponent: <ArrearageForm
           id={this.props.id}
-          rows={this.props.arrearanges}
+          rows={this.props.arrearages}
         />
       },
     ];

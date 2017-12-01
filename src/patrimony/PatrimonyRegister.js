@@ -47,7 +47,7 @@ export default class PatrimonyRegister extends Component {
           actives={this.state.actives}
           canSubmit={this.state.canSubmit}
           types={this.state.types}
-          arrearanges={this.state.arrearanges}
+          arrearages={this.state.arrearages}
         />
       );
     }

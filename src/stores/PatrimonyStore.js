@@ -19,7 +19,7 @@ class PatrimonyStore extends ReduceStore {
       incomes: [{index: 0, selected: true}],
       realestates: [{index: 0, selected: true}],
       companyparticipations: [{index: 0, selected: true}],
-      arrearanges: [{index: 0, selected: true}],
+      arrearages: [{index: 0, selected: true}],
       equipments: [{index: 0, selected: true}],
       types: [],
       actives: [{index: 0, selected: true}],
@@ -124,7 +124,7 @@ class PatrimonyStore extends ReduceStore {
 
   getPatrimonyData = (data) => {
     const arrays = ['incomes', 'realestates', 'equipments',
-      'companyparticipations', 'arrearanges'];
+      'companyparticipations', 'arrearages'];
 
     /* Create a new object with keys in arrays and add the index
      * in each object to render correctly in forms
