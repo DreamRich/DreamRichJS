@@ -2,11 +2,11 @@
 
 import {ReduceStore} from 'flux/utils';
 import AppDispatcher from '../AppDispatcher';
-import {/*postData,*/ postOrPutStrategy} from '../resources/Requests';
+import {postOrPutStrategy} from '../resources/Requests';
 import ActionType from '../actions/ActionType';
-//import {routeMap} from '../routes/RouteMap';
 import getLastIndex from '../utils/getLastIndex';
 import addIndex from '../utils/addIndexItem';
+import {removePatrimony} from '../resources/removeModels';
 
 class PatrimonyStore extends ReduceStore {
   constructor(){ super(AppDispatcher); }
@@ -111,7 +111,7 @@ class PatrimonyStore extends ReduceStore {
       return {...state, [action.state]: arr};
 
     case ActionType.PATRIMONY.REMOVE:
-      arr = state[action.state].filter( item => item.index !== action.key );
+      arr = removePatrimony(action.state, state[action.state], action.key);
       return {...state, [action.state]: arr};
 
     case ActionType.PATRIMONY.TYPESUCCESS:

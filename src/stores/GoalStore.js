@@ -5,6 +5,7 @@ import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
 import {postOrPutStrategy} from '../resources/Requests';
 import getLastIndex from '../utils/getLastIndex';
+import {removeGoal} from '../resources/removeModels';
 
 class GoalStore extends ReduceStore {
   constructor(){ super(AppDispatcher); }
@@ -59,10 +60,8 @@ class GoalStore extends ReduceStore {
       return {...state};
 
     case ActionType.GOAL.REMOVE:
-      goals = state.goals.slice();
-      return {...state,
-        goals: goals.filter( element => element.index !== action.index )
-      };
+      goals = removeGoal(state.goals, action.key);
+      return {...state, goals };
 
     case ActionType.GOAL.SUCCESS:
       delete action.data['goals'];
