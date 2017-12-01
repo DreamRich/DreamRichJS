@@ -6,6 +6,9 @@ import addFunnel from 'highcharts/modules/funnel';
 import PropTypes from 'prop-types';
 import GoalStore from '../stores/GoalStore';
 import {getGoalManager} from '../resources/getModels';
+import RaisedButton from 'material-ui/RaisedButton';
+import _ from 'lodash';
+
 export default class GoalChart extends Component {
 
   static propTypes = {
@@ -33,26 +36,64 @@ export default class GoalChart extends Component {
 
   updateState = () => {
     const {goals_flow_dic, year_init_to_year_end, manager} = GoalStore.getState();
-    this.setState({
-      goals_flow_dic,
-      year_init_to_year_end,
-      manager,
-    });
-    if (this.highcharts) {
+
+    const difference = _.differenceWith(goals_flow_dic, this.state.goals_flow_dic, _.isEqual).length;
+
+    this.setState({ goals_flow_dic, year_init_to_year_end, manager, });
+
+    if (this.highcharts && difference != 0) {
       this.highcharts.showLoading();
-      for(let i = 0; i<this.highcharts.series.length; i++){
-        this.highcharts.series[i].remove();
-      }
-
-      this.highcharts.addSeries(this.state.total_resource_for_annual_goals);
-      this.highcharts.addSeries(this.state.goals_flow_dic.map( e => {e.type = 'column'; return e;}));
-
-      this.highcharts.hideLoading();
+      setTimeout( () => {
+        while(this.highcharts.series.length){
+          this.highcharts.series[0].remove();
+        }
+        const series = this.state.goals_flow_dic.map( goal => {
+          goal.type = 'column';
+          return goal;
+        });
+        series.push(this.state.total_resource_for_annual_goals);
+        series.forEach( serie => this.highcharts.addSeries(serie) );
+        this.highcharts.hideLoading();
+      }, 500);
     }
   }
 
   mountChart() {
     addFunnel(Highcharts);
+    this.highcharts = new Highcharts.Chart(
+      'chart', {
+        series: [],
+        title:{text: 'Goals'},
+        plotOptions: {
+          column: {
+            stacking: 'normal',
+            dataLabels: {
+              enabled: false,
+              color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+            }
+          }
+        },
+        xAxis: {
+          categories: []
+        },
+        yAxis: {
+          min: 0,
+          title:{text: 'Values'},
+          stackLabels: {
+            enabled: true,
+            style: {
+              fontWeight: 'bold',
+              color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+            }
+          }
+        },
+      }
+    );
+    this.getResourceForGoals();
+    console.log(this.highcharts);
+  }
+
+  getResourceForGoals = () => {
     getData(
       routeMap.financial_planning + this.state.id + '/total_resource_for_annual_goals/',
       (data) => {
@@ -68,54 +109,14 @@ export default class GoalChart extends Component {
         };
         total_resource_for_annual_goals.data = data;
         this.setState({ total_resource_for_annual_goals });
-        const gm_data = this.state.goals_flow_dic.map( goal => {goal.type = 'column'; return goal;});
-        gm_data.push(total_resource_for_annual_goals);
-        this.highcharts = new Highcharts.Chart(
-          'chart', {
-            series: gm_data,
-            title:{text: 'Goals'},
-            plotOptions: {
-              column: {
-                stacking: 'normal',
-                dataLabels: {
-                  enabled: false,
-                  color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
-                }
-              }
-            },
-            xAxis: {
-              categories: this.state.year_init_to_year_end
-            },
-            yAxis: {
-              min: 0,
-              title:{text: 'Values'},
-              stackLabels: {
-                enabled: true,
-                style: {
-                  fontWeight: 'bold',
-                  color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
-                }
-              }
-            },
-          }
-        );
       }
     );
-  }
-
-  getGoalsData(gm_id, fp_id) {
-    getData(
-      routeMap.goal_manager + this.state.id  + '/',
-      (data) => {
-        data.goals_flow_dic.forEach((obj) => {obj.type = 'column';});
-        this.mountChart(data, fp_id);
-      });
   }
 
   componentWillReceiveProps = (nextProps) => {
     if (this.props.id !== nextProps.id) {
       this.setState({id: nextProps.id});
-      getGoalManager(nextProps.id);
+      getGoalManager(this.state.manager.id);
     }
   }
 
@@ -127,11 +128,24 @@ export default class GoalChart extends Component {
     });
   }
 
-  componentDidMount = () => this.mountChart()
+  componentDidMount = () => {
+    this.mountChart();
+    this.updateGoalsFlow();
+  }
 
   componentWillUnmount = () => this.state.listener.remove()
 
+  updateGoalsFlow = () => {
+    getGoalManager(this.state.manager.id);
+    this.getResourceForGoals();
+  }
+
   render() {
-    return (<div id='chart'></div>);
+    return (
+      <div>
+        <RaisedButton primary onClick={this.updateGoalsFlow} label='ATUALIZAR' />
+        <div id='chart'></div>
+      </div>
+    );
   }
 }
