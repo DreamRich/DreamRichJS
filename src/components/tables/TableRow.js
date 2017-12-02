@@ -3,13 +3,8 @@ import PropTypes from 'prop-types';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import Check from 'material-ui/svg-icons/navigation/check';
 import Delete from 'material-ui/svg-icons/action/delete';
-
 import {IconButton} from 'material-ui';
-
-
 import { Row/*, Col */ } from 'react-flexbox-grid';
-
-
 import TableCell from './TableCell';
 
 export default class TableRow extends Component {
@@ -44,7 +39,6 @@ export default class TableRow extends Component {
       padding: row.header ? 0 : 12,
     };
 
-
     const rowId = row.key;
     const rowKey = ['row', rowId].join('-');
 
@@ -63,7 +57,7 @@ export default class TableRow extends Component {
       }
     };
 
-    const deleteButton = (!this.props.enableDelete || selected || row.header) ? 
+    const deleteButton = (!this.props.enableDelete || selected || row.header) ?
       <div className='delete-button' />
       : <IconButton className='delete-button' tooltip={'Delete this row'} onClick={onDeleteRow}>
         <Delete />

@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-
-import { Row, Col } from 'react-flexbox-grid';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
 import TableRow from './TableRow';
-
+import PropTypes from 'prop-types';
 import '../../stylesheet/TableEdit.sass';
+import { Row, Col } from 'react-flexbox-grid';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
 
 export default class TableForm extends Component {
 
@@ -93,7 +91,7 @@ export default class TableForm extends Component {
     // Add a new row submiting all others activates
     if (this.props.enableAdd) {
       return (
-        <Col xs={12} style={{marginTop: '30px'}}>
+        <Col xs={12} className='add-element'>
           <Row center="xs">
             <Col xs={6}>
               <FloatingActionButton key='0' onClick={this.onAdd}>
@@ -128,7 +126,7 @@ export default class TableForm extends Component {
     const {rows, ...rest} = this.props;
 
     return (
-      <Row>
+      <Col xs className='table-column' >
         {this.renderHeader()}
         {rows.map( (row, idx) => {
           return <TableRow
@@ -142,7 +140,7 @@ export default class TableForm extends Component {
           />;
         })}
         {this.addElement()}
-      </Row>
+      </Col>
     );
   }
 }

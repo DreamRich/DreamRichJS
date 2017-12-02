@@ -1,5 +1,5 @@
 // http://www.material-ui.com/#/customization/colors
-import {blueGrey900, grey100} from 'material-ui/styles/colors';
+import {blueGrey900, grey100, grey700} from 'material-ui/styles/colors';
 
 
 // https://github.com/callemall/material-ui/blob/master/src/styles/getMuiTheme.js
@@ -35,7 +35,7 @@ const palette = {
     primary1Color: blueGrey900, //cyan500,
     //primary2Color: cyan700,
     //primary3Color: grey400,
-    accent1Color: '#FCD638',
+    accent1Color: grey700,
     //accent2Color: grey100,
     //accent3Color: grey500,
     //textColor: darkBlack,
