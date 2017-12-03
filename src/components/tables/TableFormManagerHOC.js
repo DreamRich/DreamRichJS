@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-// import TableForm from './TableForm';
-// import { Row } from 'react-flexbox-grid';
+
+
 import PropTypes from 'prop-types';
-// import AppDispatcher from '../../AppDispatcher';
-// import {Card, CardTitle, CardText} from 'material-ui/Card';
+
+
 import TableFormHOC from './TableFormHOC';
 
 const TableFormManagerHOC = (actions, basicData, Store, getStoreState, managerCreator) => {

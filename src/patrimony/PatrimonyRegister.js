@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-// import RaisedButton from 'material-ui/RaisedButton';
+
 import PatrimonyStore from '../stores/PatrimonyStore';
 import PropTypes from 'prop-types';
 import IncomeSubStepper from './IncomeSubStepper';
@@ -47,7 +47,7 @@ export default class PatrimonyRegister extends Component {
           actives={this.state.actives}
           canSubmit={this.state.canSubmit}
           types={this.state.types}
-          arrearanges={this.state.arrearanges}
+          arrearages={this.state.arrearages}
         />
       );
     }

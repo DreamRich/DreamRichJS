@@ -80,16 +80,6 @@ const actionTypes = {
     MANAGERSUCCESS: 'patrimony/create_manager_success',
     TYPESUCCESS: 'active/types_success',
   },
-  ACTIVE: {
-    TYPE: 'active/types',
-    FORM: 'active/create_form',
-    SUCCESS: 'active/manager_success_form',
-    MANAGER: 'active/create_manager',
-    GETMANAGER: 'active/obtain_manager',
-    DELETEPROFIT: 'active/remove_active',
-    ADD: 'active/add_active_list',
-    REMOVE: 'active/remove_active_list',
-  },
   REGISTER: {
     STORE: 'register/get_financial_planning',
     FINANCIALPLANNING: 'register/submit_financial_planning',

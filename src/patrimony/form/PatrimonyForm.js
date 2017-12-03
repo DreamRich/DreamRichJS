@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {FormsyText} from 'formsy-material-ui/lib';
-import ActionType from '../actions/ActionType';
+import ActionType from '../../actions/ActionType';
 import PropTypes from 'prop-types';
-import SubForm from '../components/SubForm';
-import CardForm from '../components/CardForm';
+import SubForm from '../../components/SubForm';
+import CardForm from '../../components/CardForm';
 
 export default class PatrimonyForm extends Component {
 

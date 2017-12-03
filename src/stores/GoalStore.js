@@ -5,6 +5,7 @@ import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
 import {postOrPutStrategy} from '../resources/Requests';
 import getLastIndex from '../utils/getLastIndex';
+import {removeGoal} from '../resources/removeModels';
 
 class GoalStore extends ReduceStore {
   constructor(){ super(AppDispatcher); }
@@ -14,19 +15,31 @@ class GoalStore extends ReduceStore {
       goals: [{index: 0, selected: true}],
       manager: {},
       types: [],
+      goals_flow_dic: [],
+      year_init_to_year_end: [],
     };
   }
 
   reduce = (state, action) => {
     let goals;
+    let goals_flow_dic;
+    let year_init_to_year_end;
     switch (action.action) {
 
     case ActionType.GOAL.GETFORMSUCCESS:
       goals = action.data.goals.map(
         goal => { goal.index = goal.id; return goal;}
       );
+      goals_flow_dic = action.data.goals_flow_dic;
+      year_init_to_year_end = action.data.year_init_to_year_end;
       delete action.data['goals'];
-      return {...state, manager: action.data, goals};
+      delete action.data['goals_flow_dic'];
+      delete action.data['year_init_to_year_end'];
+      return {...state,
+        manager: action.data,
+        goals, goals_flow_dic,
+        year_init_to_year_end
+      };
 
     case ActionType.GOAL.ADD:
       goals = state.goals.slice();
@@ -47,10 +60,8 @@ class GoalStore extends ReduceStore {
       return {...state};
 
     case ActionType.GOAL.REMOVE:
-      goals = state.goals.slice();
-      return {...state,
-        goals: goals.filter( element => element.index !== action.index )
-      };
+      goals = removeGoal(state.goals, action.key);
+      return {...state, goals };
 
     case ActionType.GOAL.SUCCESS:
       delete action.data['goals'];

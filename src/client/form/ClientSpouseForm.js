@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-// import FileFileUpload from 'material-ui/svg-icons/file/file-upload';
-// import errorMessages from '../utils/FormsErrorMessages';
 import SubForm from '../../components/SubForm';
 import FormsyDate from '../../utils/formsyComponents/FormsyDate';
 import PropTypes from 'prop-types';

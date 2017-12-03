@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
-// import ActionType from '../actions/ActionType';
-// import AppDispatcher from '../AppDispatcher';
-// import ActiveStore from '../stores/ActiveStore';
-// import Paper from 'material-ui/Paper';
-// import PropTypes from 'prop-types';
-// import RaisedButton from 'material-ui/RaisedButton';
-// import MultiForm from './MultiForm';
-import PatrimonyStore from '../stores/PatrimonyStore';
-import {getActiveTypes} from '../resources/getFormData';
-import {postActiveManager} from '../resources/saveModels';
-import ActionType from '../actions/ActionType';
-import {routeMap} from '../routes/RouteMap';
-import TableFormManagerHOC from '../components/tables/TableFormManagerHOC';
+
+
+
+
+
+
+
+import PatrimonyStore from '../../stores/PatrimonyStore';
+import {getActiveTypes} from '../../resources/getFormData';
+import {postActiveManager} from '../../resources/saveModels';
+import ActionType from '../../actions/ActionType';
+import {routeMap} from '../../routes/RouteMap';
+import TableFormManagerHOC from '../../components/tables/TableFormManagerHOC';
 
 
 const TableForm = TableFormManagerHOC({

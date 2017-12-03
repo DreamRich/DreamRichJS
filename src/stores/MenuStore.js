@@ -1,7 +1,7 @@
 'use strict';
 
 import {ReduceStore} from 'flux/utils';
-// import {Auth} from '../auth/Auth';
+
 import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
 

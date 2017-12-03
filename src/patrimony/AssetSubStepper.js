@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import RaisedButton from 'material-ui/RaisedButton';
-// import PatrimonyForm from './PatrimonyForm';
+
 import {
   Step,
   Stepper,
@@ -10,12 +10,12 @@ import {
 } from 'material-ui/Stepper';
 import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
-import RealeStateForm from './RealeStateForm.js';
-import CompanyParticipationForm from './CompanyParticipationForm';
-import ArrearageForm from './ArrearageForm';
-import EquipmentForm from './EquipmentForm';
+import RealeStateForm from './form/RealeStateForm.js';
+import CompanyParticipationForm from './form/CompanyParticipationForm';
+import ArrearageForm from './form/ArrearageForm';
+import EquipmentForm from './form/EquipmentForm';
 import PatrimonyStore from '../stores/PatrimonyStore';
-import ActiveForm from './ActiveForm';
+import ActiveForm from './form/ActiveForm';
 
 export default class AssetSubStepper extends React.Component {
 
@@ -26,7 +26,7 @@ export default class AssetSubStepper extends React.Component {
     equipments: PropTypes.array,
     manager: PropTypes.object,
     actives: PropTypes.array,
-    arrearanges: PropTypes.array,
+    arrearages: PropTypes.array,
     canSubmit: PropTypes.bool,
     id: PropTypes.number,
     types: PropTypes.array,
@@ -124,7 +124,7 @@ export default class AssetSubStepper extends React.Component {
       {text: 'Dívidas',
         formComponent: <ArrearageForm
           id={this.props.id}
-          rows={this.props.arrearanges}
+          rows={this.props.arrearages}
         />
       },
     ];

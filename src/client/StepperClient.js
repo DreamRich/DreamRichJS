@@ -49,7 +49,7 @@ class StepperClient extends React.Component {
     if (id) {
       getFinancialPlanning(id);
     } else {
-      AppDispatcher.dispatch({
+      AppDispatcher.dispatchDefer({
         action: ActionType.RESETFORMSTORES
       });
     }

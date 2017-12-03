@@ -4,12 +4,14 @@ import { Row } from 'react-flexbox-grid';
 import PropTypes from 'prop-types';
 import AppDispatcher from '../../AppDispatcher';
 import {Card, CardTitle, CardText} from 'material-ui/Card';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 
 const TableFormHOC = (actions, basicData, Store, getStoreState) => {
   return class CardTableForm extends Component {
     constructor(props){
       super(props);
-      this.state = getStoreState();
+      this.state = {...getStoreState(), showDialog: false};
     }
 
     static propTypes = {
@@ -18,12 +20,14 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
       enableEdit: PropTypes.bool,
       enableAdd: PropTypes.bool,
       headers: PropTypes.array,
+      modal: PropTypes.bool,
     }
 
     static defaultProps = {
       enableDelete: true,
       enableEdit: true,
       enableAdd: true,
+      modal: false,
     }
 
     componentWillMount = () => this.setState({
@@ -33,7 +37,7 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
     componentWillUnmount = () => this.state.listener.remove()
 
     handleChange = () => {
-      this.setState(getStoreState());
+      this.setState({...getStoreState()});
     }
 
     submitRow = (row) => {
@@ -52,12 +56,21 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
       state: basicData.state,
     })
 
-    removeRow = (key) => {
+    confirmRemove = () => {
       AppDispatcher.dispatch({
         action: actions.remove,
-        key: key,
+        key: this.state.key,
         state: basicData.state,
       });
+      this.closeDialog();
+    }
+
+    closeDialog = () => {
+      this.setState({showDialog: false, key: null});
+    }
+
+    removeRow = (key) => {
+      this.setState({key, showDialog: true});
     }
 
     selectRow = (key) => AppDispatcher.dispatch({
@@ -80,29 +93,47 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
 
       const headers = this.props.headers || basicData.headers;
 
+      const actions = [
+        <FlatButton key={2} label="CANCELAR" onClick={this.closeDialog} />,
+        <FlatButton key={1} label="CONFIRMAR" keyboardFocused={true}
+          onClick={this.confirmRemove}
+        />,
+      ];
+
       return (
-        <Card className='Card' >
-          <CardTitle
-            title={basicData.title}
-            subtitle={subtitleCard}
-          />
-          <CardText>
-            <Row around="xs">
-              <TableForm
-                headers={headers}
-                rows={this.getRowsTable()}
-                onDelete={this.removeRow}
-                onChange={this.submitRow}
-                onAdd={this.addRow}
-                onRowSelect={(row) => this.selectRow(row.key)}
-                enableDelete={this.props.enableDelete}
-                enableEdit={this.props.enableEdit}
-                enableAdd={this.props.enableAdd}
-                options={this.state.options}
-              />
-            </Row>
-          </CardText>
-        </Card>
+        <div>
+          <Dialog
+            title="Confirmar exclusão"
+            actions={actions}
+            modal={this.props.modal}
+            open={this.state.showDialog}
+            onRequestClose={this.closeDialog}
+          >
+            Você tem certeza que deseja excluir este registro?
+          </Dialog>
+          <Card className='Card' >
+            <CardTitle
+              title={basicData.title}
+              subtitle={subtitleCard}
+            />
+            <CardText>
+              <Row around="xs">
+                <TableForm
+                  headers={headers}
+                  rows={this.getRowsTable()}
+                  onDelete={this.removeRow}
+                  onChange={this.submitRow}
+                  onAdd={this.addRow}
+                  onRowSelect={(row) => this.selectRow(row.key)}
+                  enableDelete={this.props.enableDelete}
+                  enableEdit={this.props.enableEdit}
+                  enableAdd={this.props.enableAdd}
+                  options={this.state.options}
+                />
+              </Row>
+            </CardText>
+          </Card>
+        </div>
       );
     }
 

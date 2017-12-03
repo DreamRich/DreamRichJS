@@ -6,7 +6,7 @@ import {getData} from '../resources/Requests';
 //import {Auth} from '../auth/Auth';
 import ActionType from '../actions/ActionType';
 import {routeMap} from '../routes/RouteMap';
-// import {/*getUrl, */routeMap} from '../routes/RouteMap';
+
 
 class AddressStore extends ReduceStore {
 

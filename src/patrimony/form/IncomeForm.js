@@ -1,7 +1,7 @@
-import ActionType from '../actions/ActionType.js';
-import PatrimonyStore from '../stores/PatrimonyStore';
-import {routeMap} from '../routes/RouteMap';
-import TableFormHOC from '../components/tables/TableFormHOC';
+import ActionType from '../../actions/ActionType.js';
+import PatrimonyStore from '../../stores/PatrimonyStore';
+import {routeMap} from '../../routes/RouteMap';
+import TableFormHOC from '../../components/tables/TableFormHOC';
 
 
 export default TableFormHOC({

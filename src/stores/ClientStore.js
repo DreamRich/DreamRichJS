@@ -2,12 +2,11 @@
 
 import {ReduceStore} from 'flux/utils';
 import AppDispatcher from '../AppDispatcher';
-import {postData, postOrPutStrategy} from '../resources/Requests';
-//import {Auth} from '../auth/Auth';
+import {postOrPutStrategy} from '../resources/Requests';
+import {removeClient} from '../resources/removeModels';
 import ActionType from '../actions/ActionType';
-//import {routeMap} from '../routes/RouteMap';
 import getLastIndex from '../utils/getLastIndex';
-// import {/*getUrl, */routeMap} from '../routes/RouteMap';
+
 
 class ClientStore extends ReduceStore {
 
@@ -85,10 +84,6 @@ class ClientStore extends ReduceStore {
     case ActionType.CLIENT.SETSTEP:
       return {...state, stepIndex: action.stepIndex};
 
-    case ActionType.CLIENT.SUBFORM:
-      postData(action.route, action.data, (e) => console.log(e));
-      return state;
-
     case ActionType.CLIENT.ADDDEPENDENT:
       state.dependents.push(
         {index: getLastIndex(state.dependents) + 1,
@@ -106,9 +101,10 @@ class ClientStore extends ReduceStore {
       return {...state};
 
     case ActionType.CLIENT.REMOVEDEPENDENT:
-      return {...state, dependents: state.dependents.filter(
-        e => e.index !== action.key
-      )};
+      return {
+        ...state,
+        dependents: removeClient(state.dependents, action.key)
+      };
 
     case ActionType.RESETFORMSTORES:
       return {...state,

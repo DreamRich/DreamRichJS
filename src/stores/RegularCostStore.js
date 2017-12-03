@@ -4,6 +4,7 @@ import {ReduceStore} from 'flux/utils';
 import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
 import {postOrPutStrategy} from '../resources/Requests';
+import {removeRegularCost} from '../resources/removeModels';
 import getLastIndex from '../utils/getLastIndex';
 
 class RegularCostStore extends ReduceStore {
@@ -47,12 +48,8 @@ class RegularCostStore extends ReduceStore {
       return {...state};
 
     case ActionType.REGULARCOST.REMOVE:
-      costs = state.costs.slice();
-      return {...state,
-        costs: costs.filter(
-          element => element.index !== action.key
-        )
-      };
+      costs = removeRegularCost(state.costs, action.key);
+      return {...state, costs };
 
     case ActionType.REGULARCOST.SUCCESS:
       delete action.data['regular_costs'];

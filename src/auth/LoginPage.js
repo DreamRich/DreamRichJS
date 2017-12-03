@@ -8,7 +8,6 @@ import Subtitle from '../components/Subtitle';
 import LoginForm from './form/LoginForm';
 import LoginStore from '../stores/LoginStore';
 
-// import {AuthorizedRoute, AuthorizedLink} from './routes/Router';
 
 class LoginPage extends Component{
 

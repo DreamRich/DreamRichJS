@@ -12,6 +12,7 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import {getRegularCostTypes} from '../resources/getFormData';
 
 class RegularCostDashboard extends Component {
 
@@ -22,20 +23,12 @@ class RegularCostDashboard extends Component {
       listener: RegularCostStore.addListener(this.handleChange)
     });
 
-    AppDispatcher.dispatch({
-      action: ActionType.REGULARCOST.TYPE
-    });
+    getRegularCostTypes();
   }
 
   componentWillUnmount = () => this.state.listener.remove()
 
   handleChange = () => this.setState(RegularCostStore.getState())
-
-  componentDidMount = () => {
-    AppDispatcher.dispatch({
-      action: ActionType.REGULARCOST.MANAGER
-    });
-  }
 
   getOptions = (costID) => {
     return this.state.types.map( (type) => {
@@ -44,6 +37,7 @@ class RegularCostDashboard extends Component {
       }
     });
   }
+
   getContentCard = (cost) => {
     const costType = cost.cost_type || {};
     return (
