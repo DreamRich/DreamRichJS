@@ -12,6 +12,7 @@ import CompanyParticipationForm from '../patrimony/form/CompanyParticipationForm
 import ArrearageForm from '../patrimony/form/ArrearageForm';
 import EquipmentForm from '../patrimony/form/EquipmentForm';
 import ActiveForm from '../patrimony/form/ActiveForm';
+import ArrearageDashboard from '../arrearage/ArrearageDashboard';
 
 class PatrimonyDashboard extends Component {
 
@@ -38,6 +39,10 @@ class PatrimonyDashboard extends Component {
           id={this.state.patrimony.id}
           rows={this.state.arrearages}
           size={12}
+        />
+        <ArrearageDashboard
+          id={this.state.patrimony.id}
+          size={9}
         />
         <RealeStateForm
           id={this.state.patrimony.id}
