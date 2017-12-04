@@ -3,6 +3,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {Toolbar} from 'react-data-grid-addons';
 import FlatButton from 'material-ui/FlatButton';
+import PropTypes from 'prop-types';
 
 
 export default class ArrearageTable extends GridTable {
@@ -10,7 +11,11 @@ export default class ArrearageTable extends GridTable {
     super(props);
   }
 
-  getRoute = () => '/api/patrimony/arrearage/9/list_calculator/'
+  static propTypes = {
+    id: PropTypes.string,
+  }
+
+  getRoute = () => `/api/patrimony/arrearage/${this.props.id}/list_calculator/`
 
   // Using arrow function the table doens't work
   getColumns() {

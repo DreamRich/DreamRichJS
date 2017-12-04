@@ -45,7 +45,9 @@ class ArrearageDashboard extends Component {
           showExpandableButton={true}
         />
         <CardText expandable={true}>
-          <ArrearageTable />
+          <ArrearageTable
+            id={arrearage.id}
+          />
         </CardText>
       </Card>
     );
