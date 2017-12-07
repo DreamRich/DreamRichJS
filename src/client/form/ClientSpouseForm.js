@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import SubForm from '../../components/SubForm';
+import Form from '../../components/Form';
 import FormsyDate from '../../utils/formsyComponents/FormsyDate';
 import PropTypes from 'prop-types';
 import makeFormysTextList from '../../utils/MakeFormysTextList';
@@ -97,7 +97,7 @@ export default class SpouseForm extends Component {
 
   render(){
     return (
-      <SubForm
+      <Form
         name="spouse"
         parent_name="active_client_id"
         parent_id={this.props.id}
@@ -109,7 +109,7 @@ export default class SpouseForm extends Component {
           subtitleCard={this.props.subtitleCard}
           contentCard={this.getContentCard()}
         />
-      </SubForm>
+      </Form>
     );
   }
 }

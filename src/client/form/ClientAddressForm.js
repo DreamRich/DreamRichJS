@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import SubForm from '../../components/SubForm';
-
-
+import Form from '../../components/Form';
 import makeFormysTextList from '../../utils/MakeFormysTextList';
 import ActionType from '../../actions/ActionType';
 import AppDispatcher from '../../AppDispatcher';
@@ -13,7 +11,7 @@ import CardForm from '../../components/CardForm';
 import {FormsySelect, FormsyAutoComplete} from 'formsy-material-ui/lib';
 import MenuItem from 'material-ui/MenuItem';
 import MediaQuery from 'react-responsive';
-
+import _ from 'lodash';
 
 var {
   wordsError,
@@ -51,7 +49,7 @@ export default class ClientAddressForm extends Component {
   static propTypes = {
     id: PropTypes.number,
     canSubmit: PropTypes.bool,
-    isDisable: PropTypes.bool,
+    disabled: PropTypes.bool,
     data: PropTypes.object,
     title: PropTypes.string,
     subtitle: PropTypes.string,
@@ -70,24 +68,24 @@ export default class ClientAddressForm extends Component {
     });
   }
 
-  handleUpdate = () => {
-    this.setState(AddressStore.getState());
-  }
+  handleUpdate = () => this.setState(AddressStore.getState())
 
   componentWillMount = () => this.setState({
     listener: AddressStore.addListener(this.handleUpdate)
   })
 
-  componentWillUnmount = () => {
-    this.state.listener.remove();
+  componentWillUnmount = () => this.state.listener.remove()
+
+  componentWillReceiveProps = (nextProps) => {
+    if (!_.isEqual(nextProps.data.state, this.props.data.state)) {
+      this.getStateList(nextProps.data.state);
+    }
   }
 
-  componentDidMount = () => {
-    setTimeout(this.getStateList, 0);
-  }
+  componentDidMount = () => this.getStateList()
 
   fetchStates = (e, selectedCountry) => {
-    AppDispatcher.dispatch({
+    AppDispatcher.dispatchDefer({
       action: ActionType.CLIENT.STATES,
       country: selectedCountry
     });
@@ -104,14 +102,16 @@ export default class ClientAddressForm extends Component {
     return listMenuItems;
   }
 
-  getStateList = () => {
+  getStateList = (state) => {
 
     const hasStateList = this.state.states.find(
-      state => state.id === this.props.data.state.id
+      state => _.isEqual(state, this.props.data.state)
     );
+    state = state || this.props.data.state;
 
-    if (hasStateList === undefined && this.props.data.state.id !== undefined) {
-      this.fetchStates(null, this.props.data.state.country_id);
+    // Check the state and the existence of state object data
+    if (hasStateList === undefined && state !== undefined) {
+      this.fetchStates(null, state.country_id);
     }
 
   }
@@ -125,7 +125,6 @@ export default class ClientAddressForm extends Component {
           maxHeight={300}
           onChange={this.fetchStates}
           value={this.props.data.state.country_id}
-          disabled={this.props.isDisable}
           fullWidth={true}
         >
           {contriesOptions}
@@ -135,7 +134,6 @@ export default class ClientAddressForm extends Component {
           floatingLabelText="Estado"
           maxHeight={300}
           value={this.props.data.state.id}
-          disabled={this.props.isDisable}
           fullWidth={true}
         >
           {statesOptions}
@@ -150,7 +148,6 @@ export default class ClientAddressForm extends Component {
           searchText={searchText}
           defaultValue={searchText}
           onChange={this.updateSearch}
-          disabled={this.props.isDisable}
           fullWidth={true}
         />
       </Col>
@@ -159,7 +156,7 @@ export default class ClientAddressForm extends Component {
 
   getContentCard(){
     const formysTextList = makeFormysTextList(
-      dataAddressSubForm, 'adressform', this.props.data, this.props.isDisable
+      dataAddressSubForm, 'adressform', this.props.data, this.props.disabled
     );
 
     const listColumns = formysTextList.map((form,index)=>{
@@ -174,47 +171,52 @@ export default class ClientAddressForm extends Component {
 
     const statesOptions = this.convertRegionToOptions(this.state.states);
     let searchText = this.props.data.type_of_address;
-    if (this.state.searchText !== undefined && this.state.searchText !== null) {
+    console.log(searchText);
+    if (this.state.searchText) {
       searchText = this.state.searchText;
+      console.log('ok',searchText);
     }
 
     return (
-      <div>
-        <MediaQuery key="desktopiAddressForm" query="(min-width: 1030px)">
-          <Row>
+      <Form
+        name='address'
+        parent_name='active_client_id'
+        parent_id={this.props.id}
+        canSubmit={this.props.canSubmit}
+        action={ActionType.CLIENT.POSTFORM}
+        disabled={this.props.disabled}
+        isEditable
+      >
+        <div>
+          <MediaQuery key="desktopiAddressForm" query="(min-width: 1030px)">
+            <Row>
+              {this.getFormsySelect(searchText,statesOptions,contriesOptions)}
+              <Col key="ColumnAddressForm" xs>
+                {listColumns.slice(0,3)}
+              </Col>
+              <Col key="secondColumnAddressForm" xs>
+                {listColumns.slice(3,6)}
+              </Col>
+            </Row>
+          </MediaQuery>
+          <MediaQuery key="mobileAddressForm" query="(max-width: 1030px)">
             {this.getFormsySelect(searchText,statesOptions,contriesOptions)}
-            <Col key="ColumnAddressForm" xs>
-              {listColumns.slice(0,3)}
-            </Col>
-            <Col key="secondColumnAddressForm" xs>
-              {listColumns.slice(3,6)}
-            </Col>
-          </Row>
-        </MediaQuery>
-        <MediaQuery key="mobileAddressForm" query="(max-width: 1030px)">
-          {this.getFormsySelect(searchText,statesOptions,contriesOptions)}
-          {listColumns}
-        </MediaQuery>
-      </div>
+            {listColumns}
+          </MediaQuery>
+        </div>
+      </Form>
     );
   }
 
   render = () => {
 
     return (
-      <SubForm
-        name='address'
-        parent_name='active_client_id'
-        parent_id={this.props.id}
-        canSubmit={this.props.canSubmit}
-        action={ActionType.CLIENT.POSTFORM}
-      >
-        <CardForm
-          titleCard={this.props.title}
-          subtitleCard={this.props.subtitle}
-          contentCard={this.getContentCard()}
-        />
-      </SubForm>
+      <CardForm
+        titleCard={this.props.title}
+        subtitleCard={this.props.subtitle}
+        contentCard={this.getContentCard()}
+      />
     );
+
   }
 }

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {FormsyText, FormsyToggle} from 'formsy-material-ui/lib';
-import SubForm from '../../components/SubForm';
+import Form from '../../components/Form';
 import errorMessages from '../../utils/FormsErrorMessages';
 import { Row, Col } from 'react-flexbox-grid';
 import CardForm from '../../components/CardForm';
@@ -66,7 +66,7 @@ export default class ClientBankAccountForm extends Component {
 
   render = () => {
     return (
-      <SubForm
+      <Form
         name="bank_account"
         parent_name='active_client_id'
         parent_id={this.props.id}
@@ -78,7 +78,7 @@ export default class ClientBankAccountForm extends Component {
           subtitleCard="Insira as informações correspondentes a conta bancária."
           contentCard={this.getContentCard()}
         />
-      </SubForm>
+      </Form>
     );
   }
 }

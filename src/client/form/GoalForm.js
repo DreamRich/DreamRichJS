@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 //import Formsy from 'formsy-react';
 import {FormsySelect, FormsyText , FormsyToggle/*, FormsyDate*/} from 'formsy-material-ui/lib';
 import errorMessages from '../../utils/FormsErrorMessages';
-import SubForm from '../../components/SubForm';
+import Form from '../../components/Form';
 import MenuItem from 'material-ui/MenuItem';
 import CardForm from '../../components/CardForm';
 import { Row, Col } from 'react-flexbox-grid';
@@ -106,7 +106,7 @@ export default class GoalForm extends Component {
 
   render = () => {
     return (
-      <SubForm
+      <Form
         name="goal"
         action={ActionType.GOAL.SUBFORM}
         parent_id={this.props.id}
@@ -120,7 +120,7 @@ export default class GoalForm extends Component {
           subtitleCard="Insira as informações do objetivo"
           contentCard={this.getCardContent()}
         />
-      </SubForm>
+      </Form>
     );
   }
 }
