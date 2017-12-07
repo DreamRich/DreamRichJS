@@ -22,7 +22,6 @@ const request = (url, meta, handleData=noneFunction, handleOk=noneFunction, hand
       || data.detail === 'Invalid signature.'){
         alert('Sua sessão expirou!');
         Auth.deauthenticate();
-        window.location.replace('/login');
       } else {
         handleData(data);
       }

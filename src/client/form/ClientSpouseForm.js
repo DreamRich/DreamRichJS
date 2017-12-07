@@ -70,7 +70,7 @@ export default class SpouseForm extends Component {
       return (
         <Form
           name="spouse"
-          parent_name="active_client_id"
+          parent_name="active_spouse_id"
           parent_id={this.props.id}
           action={ActionType.CLIENT.POSTFORM}
           canSubmit={this.props.canSubmit}
