@@ -19,7 +19,7 @@ export default class ClientBankAccountForm extends Component {
   static propTypes = {
     id: PropTypes.number,
     canSubmit: PropTypes.bool,
-    isDisable: PropTypes.bool,
+    disabled: PropTypes.bool,
     data: PropTypes.object,
   }
 
@@ -29,56 +29,55 @@ export default class ClientBankAccountForm extends Component {
 
   getContentCard(){
     return (
-      <Row around="xs">
-        <Col xs>
-          <FormsyText
-            name="agency"
-            validations="isNumeric"
-            validationError={numericError}
-            hintText="Agência da conta bancária "
-            floatingLabelText="Agência"
-            value={this.props.data.agency}
-            disabled={this.props.isDisable}
-            fullWidth={true}
-          />
-        </Col>
-        <Col xs>
-          <FormsyText
-            name="account"
-            hintText="Número da conta bancária "
-            floatingLabelText="Conta"
-            value={this.props.data.account}
-            disabled={this.props.isDisable}
-            fullWidth={true}
-          />
-        </Col>
-        <Col xs>
-          <FormsyToggle
-            name="joint_account"
-            label="Conta conjunta?"
-            toggled={this.props.data.joint_account}
-            disabled={this.props.isDisable}
-          />
-        </Col>
-      </Row>
-    );
-  }
-
-  render = () => {
-    return (
       <Form
         name="bank_account"
         parent_name='active_client_id'
         parent_id={this.props.id}
         canSubmit={this.props.canSubmit}
         action={ActionType.CLIENT.POSTFORM}
+        disabled={this.props.disabled}
+        isEditable
       >
-        <CardForm
-          titleCard="Conta Bancária"
-          subtitleCard="Insira as informações correspondentes a conta bancária."
-          contentCard={this.getContentCard()}
-        />
+        <Row around="xs">
+          <Col xs>
+            <FormsyText
+              name="agency"
+              validations="isNumeric"
+              validationError={numericError}
+              hintText="Agência da conta bancária "
+              floatingLabelText="Agência"
+              value={this.props.data.agency}
+              fullWidth={true}
+            />
+          </Col>
+          <Col xs>
+            <FormsyText
+              name="account"
+              hintText="Número da conta bancária "
+              floatingLabelText="Conta"
+              value={this.props.data.account}
+              fullWidth={true}
+            />
+          </Col>
+          <Col xs>
+            <FormsyToggle
+              name="joint_account"
+              label="Conta conjunta?"
+              toggled={this.props.data.joint_account}
+            />
+          </Col>
+        </Row>
       </Form>
+    );
+  }
+
+  render = () => {
+    return (
+      <CardForm
+        titleCard="Conta Bancária"
+        subtitleCard="Insira as informações correspondentes a conta bancária."
+        contentCard={this.getContentCard()}
+      />
     );
   }
 }

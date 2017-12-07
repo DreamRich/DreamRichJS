@@ -58,14 +58,11 @@ export default class AssetSubStepper extends React.Component {
     });
   }
 
-  handleNext = () => {
+  handleNext = (step) => {
     // Only go to next form if have more steps :)
     const {stepIndex} = this.state;
     if (stepIndex < this.props.stepsNumber) {
-      AppDispatcher.dispatch({
-        action: ActionType.PATRIMONY.SUBMIT,
-        canSubmit: true,
-      });
+      this.setStep(step+1);
     }
   };
 
@@ -82,12 +79,12 @@ export default class AssetSubStepper extends React.Component {
     // To reduce the lines of code amount of getContentSteps
     return (
       <div style={{margin: '12px 0'}}>
-        <RaisedButton
-          label="Salvar e próximo"
+        {step < this.props.stepsNumber-1 && (<RaisedButton
+          label="Próximo formulário"
           primary={true}
           onClick={this.handleNext.bind(this, step)}
           style={{float: 'right'}}
-        />
+        />)}
         {step > 0 && (
           <RaisedButton
             label="Formulário anterior"

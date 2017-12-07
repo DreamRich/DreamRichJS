@@ -12,31 +12,37 @@ export default class PatrimonyForm extends Component {
     canSubmit: PropTypes.bool,
   }
 
+  static defaultProps = {
+    data: {}
+  }
+
   getContentCard = () => (
-    <FormsyText
-      name='fgts'
-      validations='isNumeric'
-      validationError='Esse campo precisa ser numérico'
-      hintText='O quanto você recebe de fgts?'
-      floatingLabelText='FGTS'
-      value={ this.props.data.fgts || '0' }
-    />
+    <Form
+      title="Patrimônio"
+      name="patrimony"
+      action={ActionType.PATRIMONY.POSTFORM}
+      canSubmit={this.props.canSubmit}
+      disabled={this.props.data.id !== undefined}
+      isEditable
+    >
+      <FormsyText
+        name='fgts'
+        validations='isNumeric'
+        validationError='Esse campo precisa ser numérico'
+        hintText='O quanto você recebe de fgts?'
+        floatingLabelText='FGTS'
+        value={ this.props.data.fgts || '0' }
+      />
+    </Form>
   )
 
   render = () => {
     return (
-      <Form
-        title="Patrimônio"
-        name="patrimony"
-        action={ActionType.PATRIMONY.POSTFORM}
-        canSubmit={this.props.canSubmit}
-      >
-        <CardForm
-          titleCard={'Fundo de Garantia do Tempo de Serviço'}
-          subtitleCard={'Insira valor do FGTS ou 0 caso não tenha'}
-          contentCard={this.getContentCard()}
-        />
-      </Form>
+      <CardForm
+        titleCard={'Fundo de Garantia do Tempo de Serviço'}
+        subtitleCard={'Insira valor do FGTS ou 0 caso não tenha'}
+        contentCard={this.getContentCard()}
+      />
     );
   }
 }

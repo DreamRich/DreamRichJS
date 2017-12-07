@@ -135,8 +135,10 @@ export default class GoalChart extends Component {
   componentWillUnmount = () => this.state.listener.remove()
 
   updateGoalsFlow = () => {
-    getGoalManager(this.state.manager.id);
-    this.getResourceForGoals();
+    if(this.state.manager.id) {
+      getGoalManager(this.state.manager.id);
+      this.getResourceForGoals();
+    }
   }
 
   render() {

@@ -177,8 +177,8 @@ export default class ClientAddressForm extends Component {
     const contriesOptions = this.convertRegionToOptions(this.state.countries);
 
     const statesOptions = this.convertRegionToOptions(this.state.states);
-    let searchText = this.props.data.type_of_address;
-    if (this.state.searchText != null && this.state.searchText != undefined) {
+    let searchText = this.props.data.type_of_address || '';
+    if (this.state.searchText && this.state.searchText !== '') {
       searchText = this.state.searchText;
     }
 
