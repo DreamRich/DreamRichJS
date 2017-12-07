@@ -114,6 +114,12 @@ class DefineFormsyDate extends Component {
     });
   }
 
+  handleDatePickerDisabled = () => {
+    if (!this.props.isFormDisabled()){
+      this.datePicker.focus();
+    }
+  }
+
   render() {
 
     // Do it to avoid warning of props
@@ -121,12 +127,12 @@ class DefineFormsyDate extends Component {
       name,
       defaultDate,
       requiredError,
-      disabled,
+      isFormDisabled,
+      disabled, // eslint-disable-line no-unused-vars
       getErrorMessage, // eslint-disable-line no-unused-vars
       getErrorMessages, // eslint-disable-line no-unused-vars
       getValue, // eslint-disable-line no-unused-vars
       hasValue, // eslint-disable-line no-unused-vars
-      isFormDisabled, // eslint-disable-line no-unused-vars
       isFormSubmitted, // eslint-disable-line no-unused-vars
       isPristine, // eslint-disable-line no-unused-vars
       isRequired, // eslint-disable-line no-unused-vars
@@ -146,7 +152,6 @@ class DefineFormsyDate extends Component {
         <FormsyText
           name='text'
           id={this.props.name + '_field'}
-          disabled={disabled}
           errorText={this.getErrorMessage}
           style={{width:150}}
           value={this.state.dateText}
@@ -159,7 +164,8 @@ class DefineFormsyDate extends Component {
           {...rest}
         />
         <IconButton style={{opacity:'0.65'}}
-          onClick={() => this.datePicker.focus()}>
+          disabled={isFormDisabled()}
+          onClick={this.handleDatePickerDisabled}>
           <ActionDateRange />
         </IconButton>
         <div>
@@ -173,7 +179,6 @@ class DefineFormsyDate extends Component {
             default={defaultDate}
             fullWidth={true}
             mode='landscape'
-            disabled={disabled}
             autoOk
           />
           <FormsyText
