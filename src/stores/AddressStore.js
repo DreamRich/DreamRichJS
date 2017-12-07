@@ -3,7 +3,6 @@
 import {ReduceStore} from 'flux/utils';
 import AppDispatcher from '../AppDispatcher';
 import {getData} from '../resources/Requests';
-//import {Auth} from '../auth/Auth';
 import ActionType from '../actions/ActionType';
 import {routeMap} from '../routes/RouteMap';
 
@@ -46,6 +45,9 @@ class AddressStore extends ReduceStore {
 
     case ActionType.CLIENT.ADDRESSTEXT:
       return {...state, searchText: action.searchText};
+
+    case ActionType.RESETFORMSTORES:
+      return {...state, searchText: undefined};
 
     default:
       return state;

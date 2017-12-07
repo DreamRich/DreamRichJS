@@ -8,6 +8,7 @@ import AddressStore from '../../stores/AddressStore';
 import errorMessages from '../../utils/FormsErrorMessages';
 import { Row, Col } from 'react-flexbox-grid';
 import CardForm from '../../components/CardForm';
+import {AutoComplete} from 'material-ui';
 import {FormsySelect, FormsyAutoComplete} from 'formsy-material-ui/lib';
 import MenuItem from 'material-ui/MenuItem';
 import MediaQuery from 'react-responsive';
@@ -70,9 +71,11 @@ export default class ClientAddressForm extends Component {
 
   handleUpdate = () => this.setState(AddressStore.getState())
 
-  componentWillMount = () => this.setState({
-    listener: AddressStore.addListener(this.handleUpdate)
-  })
+  componentWillMount = () => {
+    this.setState({
+      listener: AddressStore.addListener(this.handleUpdate)
+    });
+  }
 
   componentWillUnmount = () => this.state.listener.remove()
 
@@ -105,12 +108,13 @@ export default class ClientAddressForm extends Component {
   getStateList = (state) => {
 
     const hasStateList = this.state.states.find(
-      state => _.isEqual(state, this.props.data.state)
+      stateItem => _.isEqual(stateItem, state)
     );
+
     state = state || this.props.data.state;
 
     // Check the state and the existence of state object data
-    if (hasStateList === undefined && state !== undefined) {
+    if (hasStateList === undefined && state.country_id !== undefined) {
       this.fetchStates(null, state.country_id);
     }
 
@@ -139,15 +143,18 @@ export default class ClientAddressForm extends Component {
           {statesOptions}
         </FormsySelect>
         <FormsyAutoComplete
+          ref={(form)=> this.field=form}
           dataSource={this.state.addressType}
           name="type_of_address"
           validations="isWords"
+          maxSearchResults={3}
           validationError={wordsError}
           hintText="Casa, apartamento, etc."
           floatingLabelText="Tipo de Endereço"
           searchText={searchText}
-          defaultValue={searchText}
+          value={searchText}
           onChange={this.updateSearch}
+          filter={AutoComplete.fuzzyFilter}
           fullWidth={true}
         />
       </Col>
@@ -171,10 +178,8 @@ export default class ClientAddressForm extends Component {
 
     const statesOptions = this.convertRegionToOptions(this.state.states);
     let searchText = this.props.data.type_of_address;
-    console.log(searchText);
-    if (this.state.searchText) {
+    if (this.state.searchText != null && this.state.searchText != undefined) {
       searchText = this.state.searchText;
-      console.log('ok',searchText);
     }
 
     return (
