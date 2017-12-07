@@ -111,7 +111,7 @@ class PatrimonyStore extends ReduceStore {
       return {...state, [action.state]: arr};
 
     case ActionType.PATRIMONY.REMOVE:
-      arr = removePatrimony(action.state, state[action.state], action.key);
+      arr = removePatrimony(action.state, state[action.state], action.key, action.remove);
       return {...state, [action.state]: arr};
 
     case ActionType.PATRIMONY.TYPESUCCESS:

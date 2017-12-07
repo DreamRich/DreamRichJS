@@ -10,6 +10,7 @@ export default class TableForm extends Component {
 
   static propTypes = {
     onDelete: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
     onAdd: PropTypes.func.isRequired,
     onRowSelect: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
@@ -26,6 +27,7 @@ export default class TableForm extends Component {
     enableDelete: true,
     enableEdit: true,
     enableAdd: true,
+    onCancel: () => {console.warn('onCancel not implemented');},
     onChange: () => {console.warn('onChange not implemented');},
     onDelete: () => {console.warn('need this onDelete function');},
     onAdd: () => {console.warn('need this onAdd function');},
@@ -87,6 +89,11 @@ export default class TableForm extends Component {
     this.props.onAdd();
   }
 
+  onCancel = (key) => {
+    this.props.onCancel(key);
+    this.setState({editRow: {data: {}, key: -1}});
+  }
+
   addElement = () => {
     // Add a new row submiting all others activates
     if (this.props.enableAdd) {
@@ -122,6 +129,8 @@ export default class TableForm extends Component {
     this.props.onRowSelect(row);
   }
 
+
+
   render = () => {
     const {rows, ...rest} = this.props;
 
@@ -137,6 +146,7 @@ export default class TableForm extends Component {
             onRowSelect={this.onRowSelect}
             onChangeField={this.onChangeField}
             selectedRow={this.state.editRow}
+            onCancel={this.onCancel}
           />;
         })}
         {this.addElement()}

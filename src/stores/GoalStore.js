@@ -60,7 +60,7 @@ class GoalStore extends ReduceStore {
       return {...state};
 
     case ActionType.GOAL.REMOVE:
-      goals = removeGoal(state.goals, action.key);
+      goals = removeGoal(state.goals, action.key, action.remove);
       return {...state, goals };
 
     case ActionType.GOAL.SUCCESS:

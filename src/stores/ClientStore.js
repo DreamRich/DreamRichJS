@@ -104,7 +104,7 @@ class ClientStore extends ReduceStore {
     case ActionType.CLIENT.REMOVEDEPENDENT:
       return {
         ...state,
-        dependents: removeClient(state.dependents, action.key)
+        dependents: removeClient(state.dependents, action.key, action.remove)
       };
 
     case ActionType.RESETFORMSTORES:
