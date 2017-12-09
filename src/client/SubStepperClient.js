@@ -10,11 +10,19 @@ import {
 import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
 import ClientStore from '../stores/ClientStore';
+import SnackbarMessage from '../layout/SnackbarMessage';
+
 
 export default class SubStepperClient extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      operationMessage: '',
+      open: false
+    };
+    this.handleActionTouchTap = this.handleActionTouchTap.bind(this);
+    this.handleRequestClose = this.handleRequestClose.bind(this);
   }
 
   state = ClientStore.getState()
@@ -46,14 +54,38 @@ export default class SubStepperClient extends React.Component {
     });
   }
 
+  handleTouchTap = () => {
+    this.setState({
+      open: true,
+    });
+  }
+
+  handleActionTouchTap = () => {
+    this.setState({
+      open: false,
+    });
+  };
+
+  handleRequestClose = () => {
+    this.setState({
+      open: false,
+    });
+  };
+
   handleNext = () => {
     // Only go to next form if have more steps :)
     let {stepIndex} = this.state;
+
+    this.handleTouchTap();
+
     if (stepIndex < this.props.stepsNumber) {
       AppDispatcher.dispatch({
         action: ActionType.CLIENT.SUBMIT,
         canSubmit: true,
       });
+      this.setState({operationMessage: 'Estou salvo!!!'});
+    } else {
+      this.setState({operationMessage: 'Deu merda!!!'});
     }
   };
 
@@ -117,6 +149,13 @@ export default class SubStepperClient extends React.Component {
         orientation="vertical"
       >
         {this.getContentSteps()}
+
+        <SnackbarMessage
+          message={this.state.operationMessage}
+          open={this.state.open}
+          handleActionTouchTap={this.handleActionTouchTap}
+          handleRequestClose={this.handleRequestClose}
+        />
       </Stepper>
     );
   }
