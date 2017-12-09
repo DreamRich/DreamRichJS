@@ -30,7 +30,7 @@ export default class SidebarMenu extends React.Component {
     return (
       <Drawer open={this.props.navDrawerOpen}>
         <List className='MenuItem'>
-          {makeMenuItem('allow_any','/',<h1>DreamRich</h1>,'',
+          {makeMenuItem('allow_any','/',<h1 className='centralized-text'>DreamRich</h1>,'',
             'MenuItem')}
           {makeMenuItem('change_own_client_data','/register/steps',
             'Steps Client', <PersonAdd color={white} />, 'MenuItem')}

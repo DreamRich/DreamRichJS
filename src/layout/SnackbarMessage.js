@@ -15,7 +15,6 @@ export default class SnackbarMessage extends React.Component {
   static propTypes = {
     message: PropTypes.string,
     open: PropTypes.bool,
-    handleActionTouchTap: PropTypes.func,
     handleRequestClose: PropTypes.func,
   }
 
@@ -27,7 +26,7 @@ export default class SnackbarMessage extends React.Component {
           message={this.props.message}
           action="Ok"
           autoHideDuration={this.state.autoHideDuration}
-          onActionTouchTap={this.props.handleActionTouchTap}
+          onActionTouchTap={this.props.handleRequestClose}
           onRequestClose={this.props.handleRequestClose}
         />
       </div>

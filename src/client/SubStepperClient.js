@@ -12,7 +12,6 @@ import ActionType from '../actions/ActionType';
 import ClientStore from '../stores/ClientStore';
 import SnackbarMessage from '../layout/SnackbarMessage';
 
-
 export default class SubStepperClient extends React.Component {
 
   constructor(props) {
@@ -21,7 +20,6 @@ export default class SubStepperClient extends React.Component {
       operationMessage: '',
       open: false
     };
-    this.handleActionTouchTap = this.handleActionTouchTap.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
   }
 
@@ -60,12 +58,6 @@ export default class SubStepperClient extends React.Component {
     });
   }
 
-  handleActionTouchTap = () => {
-    this.setState({
-      open: false,
-    });
-  };
-
   handleRequestClose = () => {
     this.setState({
       open: false,
@@ -84,8 +76,6 @@ export default class SubStepperClient extends React.Component {
         canSubmit: true,
       });
       this.setState({operationMessage: 'Estou salvo!!!'});
-    } else {
-      this.setState({operationMessage: 'Deu merda!!!'});
     }
   };
 
@@ -153,7 +143,6 @@ export default class SubStepperClient extends React.Component {
         <SnackbarMessage
           message={this.state.operationMessage}
           open={this.state.open}
-          handleActionTouchTap={this.handleActionTouchTap}
           handleRequestClose={this.handleRequestClose}
         />
       </Stepper>
