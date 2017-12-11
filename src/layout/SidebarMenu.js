@@ -29,7 +29,7 @@ export default class SidebarMenu extends React.Component {
   render() {
     return (
       <Drawer open={this.props.navDrawerOpen}>
-        <List className='MenuItem'>
+        <List>
           {makeMenuItem('allow_any','/',<h1 className='centralized-text'>DreamRich</h1>,'',
             'MenuItem')}
           {makeMenuItem('change_own_client_data','/register/steps',

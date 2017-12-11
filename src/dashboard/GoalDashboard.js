@@ -2,9 +2,6 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import GoalStore from '../stores/GoalStore';
 import '../stylesheet/RegisterForms.sass';
-
-
-
 import Dashboard from '../components/Dashboard';
 import {getGoalTypes} from '../resources/getFormData';
 import GoalRegister from '../client/GoalRegister';

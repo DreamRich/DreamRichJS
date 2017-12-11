@@ -100,16 +100,18 @@ export default class ClientForm extends Component {
 
   getEditionOrSaveButton(){
     if(!this.state.isDisable){
-      return (getElementCentered(
-        <RaisedButton
-          label="Salvar"
-          labelPosition="before"
-          onClick={this.changeStateDisable}
-          primary={true}
-          icon={<Save/>}
-          className="marginTop"
-        />
-      ));
+      return (
+        getElementCentered(
+          <RaisedButton
+            label="Salvar"
+            labelPosition="before"
+            onClick={this.changeStateDisable}
+            primary={true}
+            icon={<Save/>}
+            className="marginTop"
+          />
+        )
+      );
     } else {
       return (
         <RaisedButton

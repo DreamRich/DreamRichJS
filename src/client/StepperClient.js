@@ -73,7 +73,7 @@ class StepperClient extends React.Component {
   handlePrev = () => {
     const {stepIndex} = this.state;
 
-    if (stepIndex > 0) {
+    if (stepIndex >= 0) {
       this.setState({stepIndex: stepIndex - 1});
     }
   }

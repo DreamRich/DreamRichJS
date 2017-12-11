@@ -7,6 +7,9 @@ import PropTypes from 'prop-types';
 import GoalStore from '../stores/GoalStore';
 import {getGoalManager} from '../resources/getModels';
 import RaisedButton from 'material-ui/RaisedButton';
+import Paper from 'material-ui/Paper';
+import UpdateButtonIcon from 'material-ui/svg-icons/action/autorenew';
+import getElementCentered from '../utils/getElementCentered';
 import _ from 'lodash';
 
 export default class GoalChart extends Component {
@@ -139,12 +142,26 @@ export default class GoalChart extends Component {
     this.getResourceForGoals();
   }
 
+  getUpdateButton = () => {
+    return (
+      getElementCentered(
+        <RaisedButton
+          primary
+          className='update-button'
+          onClick={this.updateGoalsFlow}
+          label='ATUALIZAR'
+          icon={<UpdateButtonIcon />}
+        />
+      )
+    );
+  }
+
   render() {
     return (
-      <div>
-        <RaisedButton primary onClick={this.updateGoalsFlow} label='ATUALIZAR' />
+      <Paper zDepth={1}>
+        {this.getUpdateButton()}
         <div id='chart'></div>
-      </div>
+      </Paper>
     );
   }
 }
