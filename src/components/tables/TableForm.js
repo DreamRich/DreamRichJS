@@ -5,6 +5,9 @@ import '../../stylesheet/TableEdit.sass';
 import { Row, Col } from 'react-flexbox-grid';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
+import _ from 'lodash';
 
 export default class TableForm extends Component {
 
@@ -14,16 +17,19 @@ export default class TableForm extends Component {
     onAdd: PropTypes.func.isRequired,
     onRowSelect: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
+    updatingRow: PropTypes.bool,
     headers: PropTypes.array,
     rows: PropTypes.array,
     enableDelete: PropTypes.bool,
     enableEdit: PropTypes.bool,
     enableAdd: PropTypes.bool,
+    defaultRow: PropTypes.object,
   }
 
   static defaultProps = {
     headers: [],
     rows: [],
+    defaultRow: {},
     enableDelete: true,
     enableEdit: true,
     enableAdd: true,
@@ -39,7 +45,9 @@ export default class TableForm extends Component {
   }
 
   state = {
-    editRow: {data: {}, key: -1}
+    editRow: {data: this.props.defaultRow, key: -1},
+    open: false,
+    wait: undefined,
   }
 
   update = (row) => {
@@ -129,28 +137,41 @@ export default class TableForm extends Component {
     this.props.onRowSelect(row);
   }
 
+  handleClose = () => this.setState({open: false})
 
 
   render = () => {
     const {rows, ...rest} = this.props;
+    const actions = [
+      <FlatButton key={1} label="OK" onClick={this.handleClose} primary />
+    ];
 
     return (
-      <Col xs className='table-column' >
-        {this.renderHeader()}
-        {rows.map( (row, idx) => {
-          return <TableRow
-            {...rest}
-            key={idx}
-            row={row}
-            onRowUnselect={this.onRowUnselect}
-            onRowSelect={this.onRowSelect}
-            onChangeField={this.onChangeField}
-            selectedRow={this.state.editRow}
-            onCancel={this.onCancel}
-          />;
-        })}
-        {this.addElement()}
-      </Col>
+      <div>
+        <Dialog
+          actions={actions}
+          onRequestClose={this.handleClose}
+          open={this.state.open}
+        >
+          Há uma outro registro sendo editado, termine ou cancele-o primeiro.
+        </Dialog>
+        <Col xs className='table-column' >
+          {this.renderHeader()}
+          {rows.map( (row, idx) => {
+            return <TableRow
+              {...rest}
+              key={idx}
+              row={row}
+              onRowUnselect={this.onRowUnselect}
+              onRowSelect={this.onRowSelect}
+              onChangeField={this.onChangeField}
+              selectedRow={this.state.editRow}
+              onCancel={this.onCancel}
+            />;
+          })}
+          {this.addElement()}
+        </Col>
+      </div>
     );
   }
 }
