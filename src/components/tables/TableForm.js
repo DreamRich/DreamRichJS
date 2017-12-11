@@ -51,10 +51,17 @@ export default class TableForm extends Component {
   }
 
   update = (row) => {
-    if (this.state.editRow.key === row.key) {
-      this.props.onChange(this.state.editRow);
+    // Only update if the row o state row is not in default configuration
+    // this prevent requests in server
+    if (!_.isEqual(row.data, this.props.defaultRow)
+      || !_.isEqual(this.state.editRow.data, this.props.defaultRow) ) {
+      if (this.state.editRow.key === row.key) {
+        this.props.onChange(this.state.editRow);
+      } else {
+        this.props.onChange(row);
+      }
     } else {
-      this.props.onChange(row);
+      console.log('row not changed to be add');
     }
   }
 
@@ -70,16 +77,23 @@ export default class TableForm extends Component {
     return <TableRow {...this.props} row={row} />;
   }
 
+  getRowToUpdate = () => {
+    const rowToUpdate = this.props.rows.filter( row => row.selected );
+    return _.first(rowToUpdate);
+  }
+
   rowWillUpdate = () => {
-    this.props.rows.forEach( row => {
-      if (row.selected) {
-        this.update(row);
-      }
-    });
+    const rowToUpdate = this.getRowToUpdate();
+    if (rowToUpdate) {
+      this.update(rowToUpdate);
+      return true;
+    }
+    return false;
   }
 
   onRowUnselect = (row) => {
     this.update(row);
+    this.removeWait();
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -88,18 +102,44 @@ export default class TableForm extends Component {
     if (selectedRow.length && this.state.editRow.key !== selectedRow[0].key) {
       this.setState({editRow: selectedRow[0]});
     } else if (!selectedRow.length) {
-      this.setState({editRow: {data: {}, key: -1}});
+      this.setState({editRow: {data: this.props.defaultRow, key: -1}});
     }
   }
 
+  removeWait = () => {
+    // Remove the timeout of waitUpdate of onAdd method
+    clearTimeout(this.state.wait);
+    this.setState({wait: undefined});
+  }
+
+  componentWillUnmount = () => this.removeWait()
+
   onAdd = () => {
-    this.rowWillUpdate();
-    this.props.onAdd();
+    // This check if the table will post some row to update
+    const willUpdate = this.rowWillUpdate();
+    if (!willUpdate) {
+      this.props.onAdd();
+    } else if (!this.state.wait) { // prevent multiples timeouts of user click like a crazy in button
+      this.waitUpdate(500);
+    }
+  }
+
+  waitUpdate = (time) => {
+    const row = this.getRowToUpdate();
+    if (!row) {
+      this.onAdd();
+      this.removeWait();
+    } else {
+      console.log('wait update', this.state.wait);
+      const waitFor = 1000; // always wait 1 second for next check
+      this.setState({wait: setTimeout(this.waitUpdate, time, waitFor)});
+    }
   }
 
   onCancel = (key) => {
     this.props.onCancel(key);
-    this.setState({editRow: {data: {}, key: -1}});
+    this.setState({editRow: {data: this.props.defaultRow, key: -1}});
+    this.removeWait();
   }
 
   addElement = () => {
@@ -132,9 +172,14 @@ export default class TableForm extends Component {
   }
 
   onRowSelect = (row) => {
-    this.rowWillUpdate();
-    this.setState({editRow: row});
-    this.props.onRowSelect(row);
+    // Allows edit only one row
+    const rowToUpdate = this.getRowToUpdate();
+    if (!rowToUpdate) {
+      this.setState({editRow: row});
+      this.props.onRowSelect(row);
+    } else {
+      this.setState({open: true});
+    }
   }
 
   handleClose = () => this.setState({open: false})
