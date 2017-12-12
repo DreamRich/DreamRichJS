@@ -24,18 +24,20 @@ export default class Form extends Component {
     onSubmit: PropTypes.func,
     disabled: PropTypes.bool,
     isEditable: PropTypes.bool,
+    onDisable: PropTypes.func,
   }
 
   static defaultProps = {
     isEditable: false,
     disabled: false,
+    onDisable: () => {}
   }
 
-  componentWillMount = () => this.setState({disabled: this.props.disabled})
+  componentWillMount = () => this.disable(this.props.disabled)
 
   componentWillReceiveProps = (nextProps) => {
     if (nextProps.disabled !== this.props.disabled) {
-      this.setState({disabled: nextProps.disabled});
+      this.disable(nextProps.disabled);
     }
   }
 
@@ -49,16 +51,16 @@ export default class Form extends Component {
   handleDisable = () => {
     // Form is saved or disabled and can be editable
     if(this.state.disabled && this.props.isEditable) {
-      this.setState({disabled: false});
+      this.disable(false);
     } else { // Form is open and need be submited
       this.form.submit();
-      this.setState({disabled: true});
+      this.disable(true);
     }
   }
 
   handleCancel = () => {
     this.form.reset();
-    this.setState({disabled: true});
+    this.disable(true);
   }
 
   submitForm = (data) => {
@@ -113,6 +115,11 @@ export default class Form extends Component {
       />);
     }
     return (null);
+  }
+
+  disable = (condition) => {
+    this.setState({disabled: condition});
+    this.props.onDisable();
   }
 
   render = () => {

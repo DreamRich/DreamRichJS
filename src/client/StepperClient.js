@@ -26,11 +26,7 @@ class StepperClient extends React.Component {
 
     this.forms = [
       <ClientRegister key={1} />,
-      <RegularCostRegister
-        titleCard="Custo fixo"
-        subtitleCard="Insira o(s) valor(es) do(s) custo(s) fixo(s)"
-        key={2}
-      />,
+      <RegularCostRegister key={2} />,
       <PatrimonyRegister key={3} />,
       <PatrimonyRegister key={4} main={false}/>,
       <div key={5} >Proteção </div>,
@@ -68,13 +64,14 @@ class StepperClient extends React.Component {
 
   handleUpdate = () => this.setState(RegisterStore.getState())
 
-  getStepContent(stepIndex) {
+  getStepContent = (stepIndex) => {
     const maxSteps = this.forms.length;
     return this.forms[stepIndex % maxSteps];
   }
 
   handleNext = () => {
     const {stepIndex, financialPlanning} = this.state;
+
     if(stepIndex === this.forms.length -1) {
       this.props.history.push(`/dashboard/${financialPlanning.pk}/`);
     }
@@ -87,7 +84,7 @@ class StepperClient extends React.Component {
   handlePrev = () => {
     const {stepIndex} = this.state;
 
-    if (stepIndex >= 0) {
+    if (stepIndex > 0) {
       this.setState({stepIndex: stepIndex - 1});
     }
   }

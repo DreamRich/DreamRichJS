@@ -20,7 +20,6 @@ export default class SubStepperClient extends React.Component {
       operationMessage: '',
       open: false
     };
-    this.handleRequestClose = this.handleRequestClose.bind(this);
   }
 
   state = ClientStore.getState()
@@ -92,12 +91,12 @@ export default class SubStepperClient extends React.Component {
     // To reduce the lines of code amount of getContentSteps
     return (
       <div style={{margin: '12px 0'}}>
-        <RaisedButton
+        {step < this.props.stepsNumber - 1 && <RaisedButton
           label="Próximo formulário"
           primary={true}
           onClick={this.handleNext.bind(this, step)}
           style={{float: 'right'}}
-        />
+        />}
         {step > 0 && (
           <RaisedButton
             label="Formulário anterior"

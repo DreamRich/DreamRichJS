@@ -52,7 +52,7 @@ class ClientRegister extends Component {
             subtitleCard={'Insira as informações básicas do cliente.'}
             canSubmit={this.state.canSubmit}
             data={this.state.active_client}
-            isDisable={false}
+            disabled={false}
           />
       },
       {
