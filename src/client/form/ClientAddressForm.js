@@ -106,7 +106,6 @@ export default class ClientAddressForm extends Component {
   }
 
   getStateList = (state) => {
-
     const hasStateList = this.state.states.find(
       stateItem => _.isEqual(stateItem, state)
     );
@@ -117,7 +116,6 @@ export default class ClientAddressForm extends Component {
     if (hasStateList === undefined && state.country_id !== undefined) {
       this.fetchStates(null, state.country_id);
     }
-
   }
 
   getFormsySelect(searchText,statesOptions,contriesOptions){

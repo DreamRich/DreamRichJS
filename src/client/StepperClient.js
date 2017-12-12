@@ -17,21 +17,37 @@ import {withRouter} from 'react-router';
 import {
   Step,
   Stepper,
-  StepLabel,
+  StepButton,
 } from 'material-ui/Stepper';
 
 class StepperClient extends React.Component {
-  constructor(props) {
-    super(props);
 
-    this.forms = [
-      <ClientRegister key={1} />,
-      <RegularCostRegister key={2} />,
-      <PatrimonyRegister key={3} />,
-      <PatrimonyRegister key={4} main={false}/>,
-      <div key={5} >Proteção </div>,
-      <GoalRegister key={6} />];
-  }
+  forms = [
+    {
+      name: 'Cadastro Básico',
+      register: <ClientRegister key={1} />,
+    },
+    {
+      name: 'Custos Fixos',
+      register: <RegularCostRegister key={2} />,
+    },
+    {
+      name: 'Renda',
+      register: <PatrimonyRegister key={3} />,
+    },
+    {
+      name: 'Patrimônio',
+      register: <PatrimonyRegister key={4} main={false}/>,
+    },
+    {
+      name: 'Proteção',
+      register: <div key={5} >Proteção </div>,
+    },
+    {
+      name: 'Objetivos',
+      register: <GoalRegister key={6} />
+    }
+  ]
 
   static propTypes = {
     match: PropTypes.shape({
@@ -42,8 +58,6 @@ class StepperClient extends React.Component {
     location: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired
   }
-
-  state = RegisterStore.getState()
 
   componentDidMount = () => {
     const id = this.props.match.params.id;
@@ -57,6 +71,8 @@ class StepperClient extends React.Component {
   }
 
   componentWillMount = () => this.setState({
+    ...RegisterStore.getState(),
+    stepIndex: 0,
     listener: RegisterStore.addListener(this.handleUpdate)
   })
 
@@ -66,7 +82,7 @@ class StepperClient extends React.Component {
 
   getStepContent = (stepIndex) => {
     const maxSteps = this.forms.length;
-    return this.forms[stepIndex % maxSteps];
+    return this.forms[stepIndex % maxSteps].register;
   }
 
   handleNext = () => {
@@ -95,25 +111,18 @@ class StepperClient extends React.Component {
     return (
       <div style={{width: '100%', maxWidth: '80%', margin: 'auto'}}>
         <Paper zDepth={1}>
-          <Stepper activeStep={stepIndex} connector={<ArrowForwardIcon />}>
-            <Step>
-              <StepLabel>Cadastro Básico</StepLabel>
+          <Stepper
+            activeStep={stepIndex}
+            connector={<ArrowForwardIcon />}
+            linear={false}
+          >
+            {this.forms.map( (item, index) => <Step
+              key={index}
+              onClick={() => this.setState({stepIndex: index})}
+            >
+              <StepButton>{item.name}</StepButton>
             </Step>
-            <Step>
-              <StepLabel>Custos Fixos</StepLabel>
-            </Step>
-            <Step>
-              <StepLabel>Renda</StepLabel>
-            </Step>
-            <Step>
-              <StepLabel>Patrimônio</StepLabel>
-            </Step>
-            <Step>
-              <StepLabel>Proteção</StepLabel>
-            </Step>
-            <Step>
-              <StepLabel>Objetivos</StepLabel>
-            </Step>
+            )}
           </Stepper>
         </Paper>
 
