@@ -192,7 +192,7 @@ export default class TableForm extends Component {
     ];
 
     return (
-      <div>
+      <Col xs className='table-column' >
         <Dialog
           actions={actions}
           onRequestClose={this.handleClose}
@@ -200,23 +200,21 @@ export default class TableForm extends Component {
         >
           Há uma outro registro sendo editado, termine ou cancele-o primeiro.
         </Dialog>
-        <Col xs className='table-column' >
-          {this.renderHeader()}
-          {rows.map( (row, idx) => {
-            return <TableRow
-              {...rest}
-              key={idx}
-              row={row}
-              onRowUnselect={this.onRowUnselect}
-              onRowSelect={this.onRowSelect}
-              onChangeField={this.onChangeField}
-              selectedRow={this.state.editRow}
-              onCancel={this.onCancel}
-            />;
-          })}
-          {this.addElement()}
-        </Col>
-      </div>
+        {this.renderHeader()}
+        {rows.map( (row, idx) => {
+          return <TableRow
+            {...rest}
+            key={idx}
+            row={row}
+            onRowUnselect={this.onRowUnselect}
+            onRowSelect={this.onRowSelect}
+            onChangeField={this.onChangeField}
+            selectedRow={this.state.editRow}
+            onCancel={this.onCancel}
+          />;
+        })}
+        {this.addElement()}
+      </Col>
     );
   }
 }
