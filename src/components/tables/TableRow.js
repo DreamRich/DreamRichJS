@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import Check from 'material-ui/svg-icons/navigation/check';
 import Delete from 'material-ui/svg-icons/action/delete';
+import Clear from 'material-ui/svg-icons/content/clear';
 import {IconButton} from 'material-ui';
 import { Row/*, Col */ } from 'react-flexbox-grid';
 import TableCell from './TableCell';
@@ -14,6 +15,7 @@ export default class TableRow extends Component {
     row: PropTypes.object,
     headers: PropTypes.array,
     onDelete: PropTypes.func,
+    onCancel: PropTypes.func,
     onRowSelect: PropTypes.func,
     onRowUnselect: PropTypes.func,
     onChangeField: PropTypes.func,
@@ -34,6 +36,32 @@ export default class TableRow extends Component {
     muiTheme: PropTypes.object.isRequired
   }
 
+  getCancelButton = (row, selected) => {
+    if (selected) {
+      return (
+        <IconButton
+          className='delete-button'
+          tooltip={'Cancel this row'}
+          onClick={() => this.props.onCancel(row.key)}
+        >
+          <Clear />
+        </IconButton>
+      );
+    } else if (this.props.enableDelete && !row.header) {
+      return (
+        <IconButton
+          className='delete-button'
+          tooltip={'Delete this row'}
+          onClick={() => this.props.onDelete(row.key)}
+        >
+          <Delete />
+        </IconButton>
+      );
+    } else {
+      return (<div className='delete-button' />);
+    }
+  }
+
   renderRow = (row) => {
     const rowStyle = {
       padding: row.header ? 0 : 12,
@@ -47,7 +75,6 @@ export default class TableRow extends Component {
     const button = selected ? <Check /> : <ModeEdit />;
     const tooltip = selected ? 'Done' : 'Edit';
 
-    const onDeleteRow = () => this.props.onDelete(rowId);
 
     const onClick = () => {
       if (selected) {
@@ -57,12 +84,7 @@ export default class TableRow extends Component {
       }
     };
 
-    const deleteButton = (!this.props.enableDelete || selected || row.header) ?
-      <div className='delete-button' />
-      : <IconButton className='delete-button' tooltip={'Delete this row'} onClick={onDeleteRow}>
-        <Delete />
-      </IconButton>;
-
+    const deleteButton = this.getCancelButton(row, selected);
     const checkbox = (!this.props.enableEdit || row.header) ? <div className='check-box' />
       : <IconButton className='check-box' tooltip={tooltip} onClick={onClick}>
         {button}

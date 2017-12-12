@@ -48,7 +48,7 @@ class RegularCostStore extends ReduceStore {
       return {...state};
 
     case ActionType.REGULARCOST.REMOVE:
-      costs = removeRegularCost(state.costs, action.key);
+      costs = removeRegularCost(state.costs, action.key, action.remove);
       return {...state, costs };
 
     case ActionType.REGULARCOST.SUCCESS:

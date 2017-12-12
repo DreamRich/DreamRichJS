@@ -38,8 +38,9 @@ class ClientDashboard extends Component {
         <ClientSpouseForm
           title='Cônjuge'
           subtitleCard={'Informações do cônjuge deste cliente'}
+          id={this.state.active_client.id}
           data={this.state.spouse}
-          disable={true}
+          disabled={true}
           size={6}
         />
         <ClientAddressForm

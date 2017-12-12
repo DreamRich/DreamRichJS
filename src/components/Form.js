@@ -5,6 +5,7 @@ import {routeMap} from '../routes/RouteMap';
 import Formsy from 'formsy-react';
 import RaisedButton from 'material-ui/RaisedButton';
 import Edit from 'material-ui/svg-icons/image/edit';
+import Cancel from 'material-ui/svg-icons/navigation/cancel';
 import Save from 'material-ui/svg-icons/content/save';
 
 export default class Form extends Component {
@@ -55,6 +56,11 @@ export default class Form extends Component {
     }
   }
 
+  handleCancel = () => {
+    this.form.reset();
+    this.setState({disabled: true});
+  }
+
   submitForm = (data) => {
     if (this.props.parent_name) {
       data[this.props.parent_name] = this.props.parent_id;
@@ -70,7 +76,7 @@ export default class Form extends Component {
   }
 
   getButton = () => {
-
+    const className = 'marginTop';
     if (this.props.isEditable){
       const label = this.state.disabled ? 'EDITAR' : 'SALVAR';
       const icon = this.state.disabled ? <Edit /> : <Save />;
@@ -78,6 +84,7 @@ export default class Form extends Component {
         <RaisedButton
           icon={icon}
           label={label}
+          className={className}
           onClick={this.handleDisable}
         />
       );
@@ -87,11 +94,25 @@ export default class Form extends Component {
           icon={<Save />}
           label='SALVAR'
           onClick={this.handleDisable}
+          className={className}
         />
       );
     } else {
       return (null);
     }
+  }
+
+  getCancelButton = () => {
+    const className='marginTop';
+    if (this.props.isEditable && !this.state.disabled) {
+      return (<RaisedButton
+        icon={<Cancel />}
+        label='CANCELAR'
+        onClick={this.handleCancel}
+        className={className}
+      />);
+    }
+    return (null);
   }
 
   render = () => {
@@ -101,6 +122,7 @@ export default class Form extends Component {
         disabled={this.state.disabled}
         onValidSubmit={this.submitForm}>
         {this.props.children}
+        {this.getCancelButton()}
         {this.getButton()}
       </Formsy.Form>
     );

@@ -61,6 +61,7 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
         action: actions.remove,
         key: this.state.key,
         state: basicData.state,
+        remove: true,
       });
       this.closeDialog();
     }
@@ -78,6 +79,13 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
       key: key,
       state: basicData.state,
     })
+
+    cancelRow = (key) => AppDispatcher.dispatch({
+      action: actions.remove,
+      key: key,
+      state: basicData.state,
+      remove: false,
+    });
 
     getRowsTable = () => this.state.registers.map( (register) => {
       const {index, selected, ...rest} = register;
@@ -122,6 +130,7 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
                   headers={headers}
                   rows={this.getRowsTable()}
                   onDelete={this.removeRow}
+                  onCancel={this.cancelRow}
                   onChange={this.submitRow}
                   onAdd={this.addRow}
                   onRowSelect={(row) => this.selectRow(row.key)}

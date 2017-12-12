@@ -26,7 +26,7 @@ const TableFormManagerHOC = (actions, basicData, Store, getStoreState, managerCr
         listener: Store.addListener(this.handleChange)
       });
       const {manager} = Store.getState();
-      if (manager && manager.id === undefined && this.props.id) {
+      if (manager && manager.id === undefined) {
         managerCreator(this.props.id);
       }
     }
