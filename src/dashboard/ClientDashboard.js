@@ -32,14 +32,14 @@ class ClientDashboard extends Component {
         <ClientForm
           title='Cliente'
           data={this.state.active_client}
-          isDisable={true}
+          disabled={true}
           size={6}
         />
         <ClientSpouseForm
           title='Cônjuge'
           subtitleCard={'Informações do cônjuge deste cliente'}
           data={this.state.spouse}
-          isDisable={true}
+          disable={true}
           size={6}
         />
         <ClientAddressForm
@@ -47,13 +47,13 @@ class ClientDashboard extends Component {
           subtitle='Informações correspondentes ao endereço.'
           id={this.state.active_client.id}
           data={this.state.address}
-          isDisable={true}
+          disabled={true}
           size={6}
         />
         <ClientBankAccountForm
           id={this.state.active_client.id}
           data={this.state.bank_account}
-          isDisable={true}
+          disabled={true}
           size={6}
         />
         <ClientDependentForm

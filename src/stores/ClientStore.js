@@ -19,8 +19,9 @@ class ClientStore extends ReduceStore {
       canSubmit: false,
       stepIndex: 0,
       active_client: {},
+      address: {state: {}},
+      bank_account: {},
       dependents: [],
-      searchText: undefined,
     };
   }
 
@@ -110,7 +111,10 @@ class ClientStore extends ReduceStore {
       return {...state,
         dependents: [{index: 0}],
         spouse: {},
-        active_client: {}};
+        active_client: {},
+        address: {state: {}},
+        bank_account: {}
+      };
 
     default:
       return state;

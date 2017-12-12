@@ -13,6 +13,7 @@ import RegisterStore from '../stores/RegisterStore';
 import ArrowForwardIcon from 'material-ui/svg-icons/navigation/arrow-forward';
 import Paper from 'material-ui/Paper';
 import getDivider from '../utils/getDivider';
+import {withRouter} from 'react-router';
 import {
   Step,
   Stepper,
@@ -42,7 +43,11 @@ class StepperClient extends React.Component {
         id: PropTypes.string,
       }),
     }),
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
   }
+
+  state = RegisterStore.getState()
 
   componentDidMount = () => {
     const id = this.props.match.params.id;
@@ -55,7 +60,13 @@ class StepperClient extends React.Component {
     }
   }
 
-  state = RegisterStore.getState()
+  componentWillMount = () => this.setState({
+    listener: RegisterStore.addListener(this.handleUpdate)
+  })
+
+  componentWillUnmount = () => this.state.listener.remove()
+
+  handleUpdate = () => this.setState(RegisterStore.getState())
 
   getStepContent(stepIndex) {
     const maxSteps = this.forms.length;
@@ -63,7 +74,10 @@ class StepperClient extends React.Component {
   }
 
   handleNext = () => {
-    const {stepIndex} = this.state;
+    const {stepIndex, financialPlanning} = this.state;
+    if(stepIndex === this.forms.length -1) {
+      this.props.history.push(`/dashboard/${financialPlanning.pk}/`);
+    }
 
     if (stepIndex < 5) {
       this.setState({stepIndex: stepIndex + 1});
@@ -131,4 +145,4 @@ class StepperClient extends React.Component {
   }
 }
 
-export default StepperClient;
+export default withRouter(StepperClient);

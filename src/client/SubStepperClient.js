@@ -71,7 +71,7 @@ export default class SubStepperClient extends React.Component {
     return (
       <div style={{margin: '12px 0'}}>
         <RaisedButton
-          label="Salvar e próximo"
+          label="Próximo formulário"
           primary={true}
           onClick={this.handleNext.bind(this, step)}
           style={{float: 'right'}}

@@ -18,7 +18,6 @@ const makeFormysTextList = (fieldList, textKey, data, isDisable) => {
           value={fieldValue}
           updateImmediately={field.isUpdate}
           key={textKey+index}
-          disabled={isDisable}
           fullWidth={true}
         />
       </Col>

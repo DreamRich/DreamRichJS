@@ -15,7 +15,6 @@ class ClientRegister extends Component {
 
   constructor(props){
     super(props);
-
   }
 
   state = ClientStore.getState()
