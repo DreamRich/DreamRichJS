@@ -1,5 +1,5 @@
 // http://www.material-ui.com/#/customization/colors
-import {blueGrey900, grey100, grey700} from 'material-ui/styles/colors';
+import {grey100} from 'material-ui/styles/colors';
 
 
 // https://github.com/callemall/material-ui/blob/master/src/styles/getMuiTheme.js
@@ -19,7 +19,7 @@ const header = {
   //    color: '#2E4155',
   //  },
   drawer: {
-    color: blueGrey900
+    color: '#394C65'
   },
 };
 
@@ -32,10 +32,10 @@ const card = {
 
 const palette = {
   palette: {
-    primary1Color: blueGrey900, //cyan500,
+    primary1Color: '#394C65', //cyan500,
     //primary2Color: cyan700,
     //primary3Color: grey400,
-    accent1Color: grey700,
+    accent1Color: '#1FA0F3',
     //accent2Color: grey100,
     //accent3Color: grey500,
     //textColor: darkBlack,

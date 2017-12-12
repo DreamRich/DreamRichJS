@@ -21,7 +21,7 @@ export default class GridTable extends Component {
   /* Need override */
   getRoute = () => {return '';}
 
-  /* Need override 
+  /* Need override
    * Using arrow function the table doens't work
    */
   getActions(register, idx) { register, idx; return null; }
@@ -40,7 +40,7 @@ export default class GridTable extends Component {
     this.setState({ rows });
   }
 
-  componentWillMount = () => { 
+  componentWillMount = () => {
     getData(this.getRoute(), (data) => this.setState({rows: data}));
   }
 
@@ -68,9 +68,9 @@ export default class GridTable extends Component {
 
   onClearFilters = () => this.setState({filters: {} })
 
-  handleSort = (sortColumn, sortDirection) => this.setState({ 
+  handleSort = (sortColumn, sortDirection) => this.setState({
     sortColumn: sortColumn,
-    sortDirection: sortDirection 
+    sortDirection: sortDirection
   })
 
   handleRequestClose = () => this.setState({ open: false })

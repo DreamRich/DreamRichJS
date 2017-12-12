@@ -9,6 +9,11 @@ import CardForm from '../../components/CardForm';
 import MediaQuery from 'react-responsive';
 import UploadFileModal from '../../components/UploadFileModal';
 import ActionType from '../../actions/ActionType';
+import RaisedButton from 'material-ui/RaisedButton';
+import getElementCentered from '../../utils/getElementCentered';
+import Edit from 'material-ui/svg-icons/image/edit';
+import Save from 'material-ui/svg-icons/content/save';
+
 
 var {
   wordsError,
@@ -79,6 +84,34 @@ export default class ClientForm extends Component {
     if(!this.props.disabled){
       return (
         <UploadFileModal />
+      );
+    }
+  }
+
+  getEditionOrSaveButton(){
+    if(!this.state.isDisable){
+      return (
+        getElementCentered(
+          <RaisedButton
+            label="Salvar"
+            labelPosition="before"
+            onClick={this.changeStateDisable}
+            primary={true}
+            icon={<Save/>}
+            className="marginTop"
+          />
+        )
+      );
+    } else {
+      return (
+        <RaisedButton
+          label="Editar"
+          labelPosition="before"
+          onClick={this.changeStateDisable}
+          primary={true}
+          icon={<Edit/>}
+          className="marginTop"
+        />
       );
     }
   }
