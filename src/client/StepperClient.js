@@ -2,8 +2,7 @@ import React from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import ClientRegister from '../client/ClientRegister';
-import RegularCostRegister from '../client/RegularCostRegister';
-import GoalRegister from '../client/GoalRegister';
+import RegularCostRegister from '../client/RegularCostRegister'; import GoalRegister from '../client/GoalRegister';
 import PatrimonyRegister from '../patrimony/PatrimonyRegister';
 import PropTypes from 'prop-types';
 import AppDispatcher from '../AppDispatcher';
@@ -26,28 +25,43 @@ class StepperClient extends React.Component {
     {
       name: 'Cadastro Básico',
       register: <ClientRegister key={1} />,
+      state: 'pk',
+    },
+    {
+      name: 'Objetivos',
+      register: <GoalRegister key={6} />,
+      state: 'goal_manager_id',
     },
     {
       name: 'Custos Fixos',
       register: <RegularCostRegister key={2} />,
+      state: 'cost_manager_id',
     },
     {
       name: 'Renda',
       register: <PatrimonyRegister key={3} />,
+      state: 'patrimony_id',
     },
     {
       name: 'Patrimônio',
       register: <PatrimonyRegister key={4} main={false}/>,
+      state: 'patrimony_id',
     },
     {
       name: 'Proteção',
       register: <div key={5} >Proteção </div>,
+      state: 'protection_id',
     },
-    {
-      name: 'Objetivos',
-      register: <GoalRegister key={6} />
-    }
   ]
+
+  states = {
+    'Cadastro Básico': 'pk',
+    'Custos Fixos': 'cost_manager_id',
+    'Renda': 'patrimony_id',
+    'Patrimônio': 'patrimony_id',
+    'Proteção': 'protection_id',
+    'Objetivos': 'goal_manager_id',
+  }
 
   static propTypes = {
     match: PropTypes.shape({
@@ -73,7 +87,8 @@ class StepperClient extends React.Component {
   componentWillMount = () => this.setState({
     ...RegisterStore.getState(),
     stepIndex: 0,
-    listener: RegisterStore.addListener(this.handleUpdate)
+    listener: RegisterStore.addListener(this.handleUpdate),
+    higher: 0,
   })
 
   componentWillUnmount = () => this.state.listener.remove()
@@ -86,14 +101,15 @@ class StepperClient extends React.Component {
   }
 
   handleNext = () => {
-    const {stepIndex, financialPlanning} = this.state;
+    const {stepIndex, financialPlanning, higher} = this.state;
+    const higherStep = (stepIndex >= higher ? stepIndex+1 : higher);
 
     if(stepIndex === this.forms.length -1) {
       this.props.history.push(`/dashboard/${financialPlanning.pk}/`);
     }
 
     if (stepIndex < 5) {
-      this.setState({stepIndex: stepIndex + 1});
+      this.setState({higher: higherStep, stepIndex: stepIndex + 1});
     }
   }
 
@@ -119,6 +135,8 @@ class StepperClient extends React.Component {
             {this.forms.map( (item, index) => <Step
               key={index}
               onClick={() => this.setState({stepIndex: index})}
+              disabled={index > this.state.higher}
+              completed={index < this.state.stepIndex}
             >
               <StepButton>{item.name}</StepButton>
             </Step>
@@ -139,12 +157,14 @@ class StepperClient extends React.Component {
               style={{float: 'left'}}
             />
           }
-          <RaisedButton
-            label={stepIndex === 5 ? 'Finalizar' : 'Seguir para o passo seguinte'}
-            primary={true}
-            onClick={this.handleNext}
-            style={{float: 'right'}}
-          />
+          {this.state.financialPlanning[this.forms[stepIndex].state] && 
+              <RaisedButton
+                label={stepIndex === 5 ? 'Finalizar' : 'Seguir para o passo seguinte'}
+                primary={true}
+                onClick={this.handleNext}
+                style={{float: 'right'}}
+              />
+          }
         </div>
       </div>
     );
