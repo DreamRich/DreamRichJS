@@ -53,7 +53,8 @@ class ClientRegister extends Component {
             canSubmit={this.state.canSubmit}
             data={this.state.active_client}
             disabled={false}
-          />
+          />,
+        nextButton: this.state.active_client.id !== undefined,
       },
       {
         text: 'Cadastrar Cônjuge (Opcional)',
@@ -64,27 +65,30 @@ class ClientRegister extends Component {
             id={this.state.active_client.id}
             canSubmit={this.state.canSubmit}
             data={this.state.spouse}
-          />
+          />,
+        nextButton: true,
       },
       {
         text: 'Cadastrar Endereço',
         formComponent:
-        <ClientAddressForm
-          title='Endereço'
-          subtitle={'Insira as informações correspondentes ao endereço do cliente'}
-          id={this.state.active_client.id}
-          canSubmit={this.state.canSubmit}
-          data={this.state.address}
-        />
+          <ClientAddressForm
+            title='Endereço'
+            subtitle={'Insira as informações correspondentes ao endereço do cliente'}
+            id={this.state.active_client.id}
+            canSubmit={this.state.canSubmit}
+            data={this.state.address}
+          />,
+        nextButton: this.state.address.id !== undefined,
       },
       {
         text: 'Cadastrar Conta bancária',
         formComponent:
-        <ClientBankAccountForm
-          id={this.state.active_client.id}
-          canSubmit={this.state.canSubmit}
-          data={this.state.bank_account}
-        />
+          <ClientBankAccountForm
+            id={this.state.active_client.id}
+            canSubmit={this.state.canSubmit}
+            data={this.state.bank_account}
+          />,
+        nextButton: this.state.bank_account.id !== undefined,
       },
       {
         text: 'Dependentes (Opcional)',
@@ -92,7 +96,8 @@ class ClientRegister extends Component {
           <ClientDependentForm
             id={this.state.active_client.id}
             canSubmit={this.state.canSubmit}
-          />
+          />,
+        nextButton: true,
       }
     ];
 

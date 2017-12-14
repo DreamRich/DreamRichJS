@@ -45,13 +45,7 @@ export default class SubStepperClient extends React.Component {
     }
   }
 
-  componentWillUnmount = () => {
-    this.state.listener.remove();
-    AppDispatcher.dispatch({
-      action: ActionType.CLIENT.SETSTEP,
-      stepIndex: 0
-    });
-  }
+  componentWillUnmount = () => this.state.listener.remove()
 
   handleTouchTap = () => {
     this.setState({
@@ -89,11 +83,11 @@ export default class SubStepperClient extends React.Component {
     stepIndex: stepIndex
   })
 
-  renderStepActions(step) {
+  renderStepActions = (step, item) => {
     // To reduce the lines of code amount of getContentSteps
     return (
       <div style={{margin: '12px 0'}}>
-        {step < this.props.stepsNumber - 1 && <RaisedButton
+        {step < this.props.stepsNumber - 1 && item.nextButton && <RaisedButton
           label="Próximo formulário"
           primary={true}
           onClick={this.handleNext.bind(this, step)}
@@ -122,7 +116,7 @@ export default class SubStepperClient extends React.Component {
           </StepButton>
           <StepContent>
             {obj.formComponent}
-            {this.renderStepActions(index)}
+            {this.renderStepActions(index, obj)}
           </StepContent>
         </Step>
       );}

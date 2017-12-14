@@ -52,7 +52,7 @@ class ClientStore extends ReduceStore {
     case ActionType.CLIENT.POSTFORMSUCCESS:
       return {...state,
         [action.state]: action.data,
-        stepIndex: state.stepIndex + 1
+        stepIndex: state.stepIndex + 1,
       };
 
     case ActionType.CLIENT.POSTMULTIFORM:
@@ -113,7 +113,8 @@ class ClientStore extends ReduceStore {
         spouse: {},
         active_client: {},
         address: {state: {}},
-        bank_account: {}
+        bank_account: {},
+        stepIndex: 0,
       };
 
     default:
