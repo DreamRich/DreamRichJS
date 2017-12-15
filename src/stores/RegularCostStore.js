@@ -31,6 +31,12 @@ class RegularCostStore extends ReduceStore {
       delete action.data['regular_costs'];
       return {...state, manager: action.data, costs};
 
+    case ActionType.REGULARCOST.CHANGES:
+      costs = action.data.map(
+        cost => { cost.index = cost.id; return cost;}
+      );
+      return {...state, costChanges: costs};
+
     case ActionType.REGULARCOST.ADD:
       costs = state[action.state].slice();
       costs.push({

@@ -43,6 +43,7 @@ const actionTypes = {
   },
   REFRESH_LOGIN: 'refresh_token',
   REGULARCOST: {
+    CHANGES: 'regular_cost/unit_changes',
     SUBMIT: 'regular_cost/submit_forms',
     SUBMITSUCCESS: 'regular_cost/success_forms',
     ADD: 'regular_cost/add',
@@ -67,6 +68,7 @@ const actionTypes = {
     SELECT: 'goal/select',
   },
   PATRIMONY: {
+    CHANGES: 'patrimony/unit_changes',
     SELECT: 'patrimony/select',
     POSTFORM: 'patrimony/create_form',
     POSTFORMSUCCESS: 'patrimony/success',

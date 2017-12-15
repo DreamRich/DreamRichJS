@@ -24,7 +24,7 @@ class PatrimonyStore extends ReduceStore {
       types: [],
       actives: [{index: 0, selected: true}],
       manager: {},
-      incomesChange: [],
+      incomeChanges: [],
     };
   }
 
@@ -117,6 +117,13 @@ class PatrimonyStore extends ReduceStore {
 
     case ActionType.PATRIMONY.TYPESUCCESS:
       return {...state, types: action.types};
+
+    case ActionType.PATRIMONY.CHANGES:
+      arr = action.data.map( item => {
+        item.index = item.id;
+        return item;
+      });
+      return {...state, [action.state]: arr};
 
     default:
       return state;

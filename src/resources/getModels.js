@@ -3,6 +3,30 @@ import {routeMap} from '../routes/RouteMap';
 import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
 
+const getCostChanges = (id) => {
+  getData(
+    `${routeMap.unit_change}?cost_manager_id=${id}`,
+    (data) => {
+      AppDispatcher.dispatch({
+        action: ActionType.REGULARCOST.CHANGES,
+        data: data,
+        state: 'costChanges',
+      });
+    });
+};
+
+const getIncomeChanges = (id) => {
+  getData(
+    `${routeMap.unit_change}?incomes_id=${id}`,
+    (data) => {
+      AppDispatcher.dispatch({
+        action: ActionType.PATRIMONY.CHANGES,
+        data: data,
+        state: 'incomeChanges',
+      });
+    });
+};
+
 const getClient = (id) => {
   getData(
     `${routeMap.active_client}${id}/`,
@@ -79,4 +103,8 @@ const getFinancialPlanning = (id) => {
     });
 };
 
-export {getClient, getFinancialPlanning, getGoalManager};
+export {getClient,
+  getFinancialPlanning,
+  getGoalManager,
+  getIncomeChanges,
+  getCostChanges,};

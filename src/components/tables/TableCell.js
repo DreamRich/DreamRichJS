@@ -57,7 +57,7 @@ export default class TableCell extends Component {
 
     // Set a new state to the row is being edited
 
-    if (header) return {};
+    if (header) return {style: textFieldStyle};
 
     // Select the field to show
     if (type === 'TextField') {
@@ -142,7 +142,9 @@ export default class TableCell extends Component {
     let field = null;
 
     if (this.props.header || this.props.type === 'ReadOnly') {
-      field = <p className='table-header'>{this.props.cell.value}</p>;
+      field = (<p className='table-header' {...props} >
+        {this.props.cell.value}
+      </p>);
     } else if (this.props.type === 'TextField') {
       field = <TextField className='disabled'  {...props} />;
     } else if (this.props.type === 'DatePicker') {
