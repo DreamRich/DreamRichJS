@@ -4,7 +4,7 @@ import ClientDashboard from '../dashboard/ClientDashboard';
 import GoalDashboard from '../dashboard/GoalDashboard';
 import IncomeDashboard from '../dashboard/IncomeDashboard';
 import PatrimonyDashboard from '../dashboard/PatrimonyDashboard';
-import RegularCostRegister from '../client/RegularCostRegister';
+import RegularCostRegister from '../cost/RegularCostRegister';
 import PropTypes from 'prop-types';
 import {getFinancialPlanning} from '../resources/getModels';
 import RegisterStore from '../stores/RegisterStore';
@@ -73,6 +73,7 @@ class Dashboard extends Component {
   }
 
   render () {
+    console.log('my id is', this.state.financialPlanning.cost_manager_id);
     const listDashboardsTabs = [
       {
         label: 'Informações Básicas',

@@ -12,60 +12,8 @@ import UpdateButtonIcon from 'material-ui/svg-icons/action/autorenew';
 import getElementCentered from '../utils/getElementCentered';
 import _ from 'lodash';
 import { Row, Col } from 'react-flexbox-grid';
-
-import TableFormHOC from '../components/tables/TableFormHOC';
-import ActionType from '../actions/ActionType';
-import RegularCostStore from '../stores/RegularCostStore';
-
-const ChangeRegularCost = TableFormHOC({
-  submit: ActionType.REGULARCOST.SUBMIT,
-  add: ActionType.REGULARCOST.ADD,
-  remove: ActionType.REGULARCOST.REMOVE,
-  select: ActionType.REGULARCOST.SELECT,
-},
-{
-  parentId: 'cost_manager_id',
-  route: routeMap.cost_unit_change,
-  state: 'costChanges',
-  title: 'Mudança no custo',
-  subtitleCard: 'Mudança no custo',
-  headers: [
-    {value: 'Valor anual', name: 'annual_value', type: 'TextField', width: 50},
-    {value: 'Ano da mudança', name: 'year', type: 'TextField', width: 50},
-  ],
-},
-RegularCostStore,
-() => {
-  const registers = RegularCostStore.getState().costChanges;
-  return {registers};
-}
-);
-
-import PatrimonyStore from '../stores/PatrimonyStore';
-
-const ChangeIncome = TableFormHOC({
-  submit: ActionType.PATRIMONY.SUBMIT,
-  add: ActionType.PATRIMONY.ADD,
-  remove: ActionType.PATRIMONY.REMOVE,
-  select: ActionType.PATRIMONY.SELECT,
-},
-{
-  parentId: 'incomes_id',
-  route: routeMap.income_change,
-  state: 'incomesChange',
-  title: 'Mudança na renda',
-  subtitleCard: 'Mudança na renda',
-  headers: [
-    {value: 'Valor anual', name: 'annual_value', type: 'TextField', width: 50},
-    {value: 'Ano da mudança', name: 'year', type: 'TextField', width: 50},
-  ],
-},
-PatrimonyStore,
-() => {
-  const registers = PatrimonyStore.getState().incomesChange;
-  return {registers};
-}
-);
+import CostChangeUnit from '../cost/CostChangeUnit';
+import IncomeChangeUnit from '../patrimony/form/IncomeChangeUnit';
 
 
 export default class GoalChart extends Component {
@@ -75,6 +23,8 @@ export default class GoalChart extends Component {
       params : PropTypes.shape({id: PropTypes.number,})
     }),
     id: PropTypes.number,
+    cost_manager_id: PropTypes.number,
+    patrimony_id: PropTypes.number,
     type: PropTypes.string,
     options: PropTypes.object
   }
@@ -225,10 +175,10 @@ export default class GoalChart extends Component {
         </Row>
         <Row>
           <Col xs={6}>
-            <ChangeRegularCost />
+            <CostChangeUnit id={this.props.cost_manager_id} />
           </Col>
           <Col xs={6}>
-            <ChangeIncome />
+            <IncomeChangeUnit id={this.props.patrimony_id}/>
           </Col>
         </Row>
       </Paper>
