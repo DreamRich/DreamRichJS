@@ -13,8 +13,7 @@ class ArrearageDashboard extends Component {
   }
 
   static propTypes = {
-    id: PropTypes.string,
-    arrearageList: PropTypes.array.isRequired,
+    id: PropTypes.number,
   }
 
   getRoute = () => {

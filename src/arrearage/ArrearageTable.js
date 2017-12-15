@@ -12,7 +12,7 @@ export default class ArrearageTable extends GridTable {
   }
 
   static propTypes = {
-    id: PropTypes.string,
+    id: PropTypes.number,
   }
 
   getRoute = () => `/api/patrimony/arrearage/${this.props.id}/list_calculator/`

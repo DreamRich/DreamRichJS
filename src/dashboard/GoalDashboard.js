@@ -10,7 +10,7 @@ import GoalChart from '../goal/GoalChart';
 class GoalDashboard extends Component {
 
   static propTypes = {
-    id: PropTypes.string,
+    id: PropTypes.number,
   }
 
   state = GoalStore.getState()
@@ -27,9 +27,10 @@ class GoalDashboard extends Component {
   handleChange = () => this.setState(GoalStore.getState())
 
   render() {
+    const {id, ...rest} = this.props;
     return (
       <Dashboard>
-        <GoalChart size={12} {...this.props} />
+        <GoalChart size={12} id={id} {...rest} />
         <GoalRegister size={12} />
       </Dashboard>
     );

@@ -130,7 +130,7 @@ export default class TableForm extends Component {
       this.onAdd();
       this.removeWait();
     } else {
-      console.log('wait update', this.state.wait);
+      console.log('wait for row update', this.state.wait, ' sec');
       const waitFor = 1000; // always wait 1 second for next check
       this.setState({wait: setTimeout(this.waitUpdate, time, waitFor)});
     }

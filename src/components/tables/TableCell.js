@@ -38,9 +38,12 @@ export default class TableCell extends Component {
     let value = this.props.cell.value;
     if (selected && this.props.selectedRow.data[name]) {
       value = this.props.selectedRow.data[name];
-    }else if (selected) {
+    } else if (selected && type !== 'ToggleField') {
       value = '';
+    } else if (selected) {
+      value = false;
     }
+
 
     const rowId = this.props.cell.rowId;
     const header = this.props.header;
@@ -54,6 +57,7 @@ export default class TableCell extends Component {
 
     // Set a new state to the row is being edited
 
+    if (header) return {};
 
     // Select the field to show
     if (type === 'TextField') {
@@ -89,12 +93,13 @@ export default class TableCell extends Component {
     }
 
     if (type === 'ToggleField') {
+
       return {
         name: name,
         onToggle: this.props.onChangeField,
         toggled: value,
         disabled: !selected,
-        underlineDisabledStyle: {display: 'none'},
+        // underlineDisabledStyle: {display: 'none'},
       };
     }
 

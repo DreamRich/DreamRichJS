@@ -73,7 +73,10 @@ class Dashboard extends Component {
   }
 
   render () {
-    console.log('my id is', this.state.financialPlanning.cost_manager_id);
+
+    let id = this.props.match.params.id;
+    id = id ? Number(id) : undefined;
+
     const listDashboardsTabs = [
       {
         label: 'Informações Básicas',
@@ -91,7 +94,7 @@ class Dashboard extends Component {
         label: 'Objetivos',
         icon: <ObjectIcon className="material-icons"/>,
         dashboard: <GoalDashboard
-          id={this.props.match.params.id}
+          id={id}
           patrimony_id={this.state.financialPlanning.patrimony_id}
           cost_manager_id={this.state.financialPlanning.cost_manager_id}
         />,

@@ -28,7 +28,6 @@ export default class ClientBankAccountForm extends Component {
   }
 
   getContentCard(){
-    console.log(this.props.data.joint_account);
     return (
       <Form
         name="bank_account"
