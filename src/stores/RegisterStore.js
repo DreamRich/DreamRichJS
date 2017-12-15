@@ -82,6 +82,18 @@ class RegisterStore extends ReduceStore {
       }
       return {...state, financialPlanning};
 
+    case ActionType.REGISTER.SUBMIT:
+      financialPlanning = {...state.financialPlanning, ...action.data};
+      putData(
+        `${routeMap.financial_planning}${financialPlanning.pk}/`,
+        financialPlanning,
+        (data) => AppDispatcher.dispatch({
+          action: ActionType.REGISTER.STORE,
+          data: data
+        })
+      );
+      return state;
+
     case ActionType.REGISTER.STORE:
       return {...state, financialPlanning: action.data};
 
