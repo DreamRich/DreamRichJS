@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import ActionType from '../actions/ActionType';
-import GoalStore from '../stores/GoalStore';
-import '../stylesheet/RegisterForms.sass';
-import {postGoalManager} from '../resources/saveModels';
-import {routeMap} from '../routes/RouteMap';
-import TableFormManagerHOC from '../components/tables/TableFormManagerHOC';
-import {getGoalTypes} from '../resources/getFormData';
+import ActionType from '../../actions/ActionType';
+import GoalStore from '../../stores/GoalStore';
+import '../../stylesheet/RegisterForms.sass';
+import {postGoalManager} from '../../resources/saveModels';
+import {routeMap} from '../../routes/RouteMap';
+import TableFormManagerHOC from '../../components/tables/TableFormManagerHOC';
+import {getGoalTypes} from '../../resources/getFormData';
 
 
 const TableForm = TableFormManagerHOC({
@@ -36,7 +36,7 @@ GoalStore,
 postGoalManager
 );
 
-export default class GoalRegister extends Component {
+export default class GoalForm extends Component {
 
 
   componentWillMount = () => getGoalTypes()

@@ -80,6 +80,11 @@ const actionTypes = {
     MANAGERSUCCESS: 'patrimony/create_manager_success',
     TYPESUCCESS: 'active/types_success',
   },
+  INDEPENDENCE: {
+    SUBMIT: 'independence/create_form',
+    SUCCESS: 'independence/form_success',
+    GETFORMSUCCESS: 'independence/get_independence_success',
+  },
   REGISTER: {
     STORE: 'register/get_financial_planning',
     FINANCIALPLANNING: 'register/submit_financial_planning',

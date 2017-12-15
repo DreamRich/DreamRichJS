@@ -2,7 +2,8 @@ import React from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import ClientRegister from '../client/ClientRegister';
-import RegularCostRegister from '../client/RegularCostRegister'; import GoalRegister from '../client/GoalRegister';
+import RegularCostRegister from '../client/RegularCostRegister';
+import GoalRegister from '../goal/GoalRegister';
 import PatrimonyRegister from '../patrimony/PatrimonyRegister';
 import PropTypes from 'prop-types';
 import AppDispatcher from '../AppDispatcher';
@@ -23,14 +24,14 @@ class StepperClient extends React.Component {
 
   forms = [
     {
-      name: 'Cadastro Básico',
-      register: <ClientRegister key={1} />,
-      state: 'pk',
-    },
-    {
       name: 'Objetivos',
       register: <GoalRegister key={6} />,
       state: 'goal_manager_id',
+    },
+    {
+      name: 'Cadastro Básico',
+      register: <ClientRegister key={1} />,
+      state: 'pk',
     },
     {
       name: 'Custos Fixos',
