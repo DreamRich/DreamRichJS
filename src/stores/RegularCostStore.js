@@ -32,15 +32,15 @@ class RegularCostStore extends ReduceStore {
       return {...state, manager: action.data, costs};
 
     case ActionType.REGULARCOST.ADD:
-      costs = state.costs.slice();
+      costs = state[action.state].slice();
       costs.push({
-        index: getLastIndex(state.costs) + 1,
+        index: getLastIndex(costs) + 1,
         selected: true
       });
-      return {...state, costs};
+      return {...state, [action.state]: costs};
 
     case ActionType.REGULARCOST.SELECT:
-      state.costs.find( cost => {
+      state[action.state].find( cost => {
         if (cost.index === action.key) {
           cost.selected = !cost.selected;
           return true;
@@ -49,8 +49,8 @@ class RegularCostStore extends ReduceStore {
       return {...state};
 
     case ActionType.REGULARCOST.REMOVE:
-      costs = removeRegularCost(state.costs, action.key, action.remove);
-      return {...state, costs };
+      costs = removeRegularCost(state[action.state], action.key, action.remove);
+      return {...state, [action.state]: costs };
 
     case ActionType.REGULARCOST.SUCCESS:
       delete action.data['regular_costs'];
@@ -61,7 +61,7 @@ class RegularCostStore extends ReduceStore {
 
     case ActionType.REGULARCOST.SUBMIT:
       postOrPutStrategy(
-        state.costs.find( cost => action.key === cost.index),
+        state[action.state].find( cost => action.key === cost.index),
         action.route,
         action.data,
         (data) => {
@@ -76,17 +76,21 @@ class RegularCostStore extends ReduceStore {
       return state;
 
     case ActionType.REGULARCOST.SUBMITSUCCESS:
-      state.costs.find( (cost, index) => {
+      state[action.state].find( (cost, index) => {
         if (cost.index === action.key){
           action.data.index = cost.id;
-          state.costs[index] = action.data;
+          state[action.state][index] = action.data;
           return true;
         }
       });
       return {...state};
 
     case ActionType.RESETFORMSTORES:
-      return {...state, costs: [{index: 0, selected: true}], manager: {}};
+      return {...state,
+        costs: [{index: 0, selected: true}],
+        manager: {},
+        costChanges: []
+      };
 
     default:
       return state;

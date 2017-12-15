@@ -29,7 +29,7 @@ class GoalDashboard extends Component {
   render() {
     return (
       <Dashboard>
-        <GoalChart size={12} id={this.props.id} />
+        <GoalChart size={12} {...this.props} />
         <GoalRegister size={12} />
       </Dashboard>
     );

@@ -35,12 +35,19 @@ class Dashboard extends Component {
       getFinancialPlanning(id);
     }
     const tab = this.props.match.params.tab;
-    this.setState({tab: tab});
+    this.setState({
+      tab: tab,
+      listener: RegisterStore.addListener(this.handleChange)
+    });
   }
+
+  componentWillUnmount = () => this.state.listener.remove()
+
+  handleChange = () => this.setState({...RegisterStore.getState()})
 
   state = {...RegisterStore.getState(), tab: 'basic' }
 
-  getListDashboard(listDashboardsTabs){
+  getListDashboard = (listDashboardsTabs) => {
     const dashboardTabs = listDashboardsTabs.map((dashboard,index) => {
       return (
         <Tab
@@ -82,7 +89,11 @@ class Dashboard extends Component {
       {
         label: 'Objetivos',
         icon: <ObjectIcon className="material-icons"/>,
-        dashboard: <GoalDashboard id={this.props.match.params.id} />,
+        dashboard: <GoalDashboard
+          id={this.props.match.params.id}
+          patrimony_id={this.state.financialPlanning.patrimony_id}
+          cost_manager_id={this.state.financialPlanning.cost_manager_id}
+        />,
         value: 'objetivo',
       },
       {
