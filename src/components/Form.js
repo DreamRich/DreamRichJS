@@ -7,6 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Edit from 'material-ui/svg-icons/image/edit';
 import Cancel from 'material-ui/svg-icons/navigation/cancel';
 import Save from 'material-ui/svg-icons/content/save';
+import { Row, Col } from 'react-flexbox-grid';
 
 export default class Form extends Component {
   constructor(props){
@@ -84,6 +85,7 @@ export default class Form extends Component {
         <RaisedButton
           icon={icon}
           label={label}
+          primary={true}
           className={className}
           onClick={this.handleDisable}
         />
@@ -105,15 +107,30 @@ export default class Form extends Component {
   getCancelButton = () => {
     const className='marginTop';
     if (this.props.isEditable && !this.state.disabled) {
-      return (<RaisedButton
-        icon={<Cancel />}
-        label='CANCELAR'
-        onClick={this.handleCancel}
-        className={className}
-      />);
+      return (
+        <RaisedButton
+          icon={<Cancel />}
+          label='CANCELAR'
+          onClick={this.handleCancel}
+          className={className}
+        />
+      );
     }
     return (null);
   }
+
+  getButtonsCard = () => {
+    return (
+      <Row around='xs'>
+        <Col xs>
+          {this.getCancelButton()}
+        </Col>
+        <Col>
+          {this.getButton()}
+        </Col>
+      </Row>
+    );
+  };
 
   render = () => {
     return (
@@ -122,8 +139,7 @@ export default class Form extends Component {
         disabled={this.state.disabled}
         onValidSubmit={this.submitForm}>
         {this.props.children}
-        {this.getCancelButton()}
-        {this.getButton()}
+        {this.getButtonsCard()}
       </Formsy.Form>
     );
   }
