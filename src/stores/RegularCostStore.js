@@ -16,6 +16,7 @@ class RegularCostStore extends ReduceStore {
       manager: {},
       types: [],
       canSubmit: false,
+      costChanges: [],
     };
   }
 

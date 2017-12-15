@@ -11,6 +11,62 @@ import Paper from 'material-ui/Paper';
 import UpdateButtonIcon from 'material-ui/svg-icons/action/autorenew';
 import getElementCentered from '../utils/getElementCentered';
 import _ from 'lodash';
+import { Row, Col } from 'react-flexbox-grid';
+
+import TableFormHOC from '../components/tables/TableFormHOC';
+import ActionType from '../actions/ActionType';
+import RegularCostStore from '../stores/RegularCostStore';
+
+const ChangeRegularCost = TableFormHOC({
+  submit: ActionType.REGULARCOST.SUBMIT,
+  add: ActionType.REGULARCOST.ADD,
+  remove: ActionType.REGULARCOST.REMOVE,
+  select: ActionType.REGULARCOST.SELECT,
+},
+{
+  parentId: 'cost_manager_id',
+  route: routeMap.cost_unit_change,
+  state: 'costChanges',
+  title: 'Mudança no custo',
+  subtitleCard: 'Mudança no custo',
+  headers: [
+    {value: 'Valor anual', name: 'annual_value', type: 'TextField', width: 50},
+    {value: 'Ano da mudança', name: 'year', type: 'TextField', width: 50},
+  ],
+},
+RegularCostStore,
+() => {
+  const registers = RegularCostStore.getState().costChanges;
+  return {registers};
+}
+);
+
+import PatrimonyStore from '../stores/PatrimonyStore';
+
+const ChangeIncome = TableFormHOC({
+  submit: ActionType.PATRIMONY.SUBMIT,
+  add: ActionType.PATRIMONY.ADD,
+  remove: ActionType.PATRIMONY.REMOVE,
+  select: ActionType.PATRIMONY.SELECT,
+},
+{
+  parentId: 'incomes_id',
+  route: routeMap.income_change,
+  state: 'incomesChange',
+  title: 'Mudança na renda',
+  subtitleCard: 'Mudança na renda',
+  headers: [
+    {value: 'Valor anual', name: 'annual_value', type: 'TextField', width: 50},
+    {value: 'Ano da mudança', name: 'year', type: 'TextField', width: 50},
+  ],
+},
+PatrimonyStore,
+() => {
+  const registers = PatrimonyStore.getState().incomesChange;
+  return {registers};
+}
+);
+
 
 export default class GoalChart extends Component {
 
@@ -161,8 +217,20 @@ export default class GoalChart extends Component {
   render() {
     return (
       <Paper zDepth={1}>
-        {this.getUpdateButton()}
-        <div id='chart'></div>
+        <Row>
+          <Col xs={12}>
+            {this.getUpdateButton()}
+            <div id='chart'></div>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={6}>
+            <ChangeRegularCost />
+          </Col>
+          <Col xs={6}>
+            <ChangeIncome />
+          </Col>
+        </Row>
       </Paper>
     );
   }
