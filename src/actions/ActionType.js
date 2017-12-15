@@ -65,6 +65,9 @@ const actionTypes = {
     SUBFORMSUCCESS: 'goal/success_subforms',
     GETFORMSUCCESS: 'goal/get_goal_success',
     SELECT: 'goal/select',
+    SETSTEP: 'goal/set_step',
+    NEXTSTEP: 'goal/next_step',
+    PREVIOUSSTEP: 'goal/previous_step',
   },
   PATRIMONY: {
     SELECT: 'patrimony/select',

@@ -35,7 +35,7 @@ class IndependenceStore extends ReduceStore {
           });
         }
       );
-      return {state};
+      return state;
 
     case ActionType.INDEPENDENCE.SUCCESS:
       return {...state, financialIndependence: action.data};

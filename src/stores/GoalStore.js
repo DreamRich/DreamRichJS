@@ -17,6 +17,7 @@ class GoalStore extends ReduceStore {
       types: [],
       goals_flow_dic: [],
       year_init_to_year_end: [],
+      stepIndex: 0,
     };
   }
 
@@ -112,7 +113,14 @@ class GoalStore extends ReduceStore {
       return {...state, canSubmit: false};
 
     case ActionType.RESETFORMSTORES:
-      return {...state, goals: [{index: 0, selected: true}], manager: {}};
+      return {...state,
+        goals: [{index: 0, selected: true}],
+        manager: {},
+        stepIndex: 0
+      };
+
+    case ActionType.GOAL.SETSTEP:
+      return {...state, stepIndex: action.stepIndex};
 
     default:
       return state;
