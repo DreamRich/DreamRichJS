@@ -69,7 +69,17 @@ class RegisterStore extends ReduceStore {
           financialPlanning,
         );
       }
+      return {...state, financialPlanning};
 
+    case ActionType.INDEPENDENCE.SUCCESS:
+      financialPlanning = state.financialPlanning;
+      if (!financialPlanning.financial_independence_id) {
+        financialPlanning.financial_independence_id = action.data.id;
+        putData(
+          `${routeMap.financial_planning}${financialPlanning.pk}/`,
+          financialPlanning,
+        );
+      }
       return {...state, financialPlanning};
 
     case ActionType.REGISTER.STORE:

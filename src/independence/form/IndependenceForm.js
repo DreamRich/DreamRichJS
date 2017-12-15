@@ -7,6 +7,7 @@ import makeFormysTextList from '../../utils/MakeFormysTextList';
 import MediaQuery from 'react-responsive';
 import { Row, Col } from 'react-flexbox-grid';
 import ActionType from '../../actions/ActionType';
+import IndependenceStore from '../../stores/IndependenceStore';
 
 var {
   numericError,
@@ -15,7 +16,6 @@ var {
 export default class IndependenceForm extends Component {
 
   static propTypes = {
-    data: PropTypes.object,
     disabled: PropTypes.bool,
   }
 
@@ -37,9 +37,19 @@ export default class IndependenceForm extends Component {
       validationError: numericError, hintText: 'Valor do patrimonio após a aposentadoria', floatingLabelText: 'Patrimônio remanescente',
     }
   ]
+
+  componentWillMount = () => this.setState({
+    ...IndependenceStore.getState(),
+    listener: IndependenceStore.addListener(this.handleChange),
+  })
+
+  componentWillUnmount = () => this.state.listener.remove()
+
+  handleChange = () => this.setState({...IndependenceStore.getState()})
+
   getContentCard = () => {
     const formsyList = makeFormysTextList(
-      this.fields, 'independenceform', this.props.data, this.props.disabled
+      this.fields, 'independenceform', this.state.financialIndependence, this.props.disabled
     );
 
     return (

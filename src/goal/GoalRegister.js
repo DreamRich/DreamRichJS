@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+//import PropTypes from 'prop-types';
 // import ActionType from '../actions/ActionType';
 // import GoalStore from '../stores/GoalStore';
 import GoalForm from './form/GoalForm';
@@ -9,7 +10,7 @@ export default class GoalRegister extends Component {
   render = () => {
     return (
       <div>
-        <IndependenceForm />
+        <IndependenceForm disabled={false} />
         <GoalForm {...this.props} />
       </div>
     );

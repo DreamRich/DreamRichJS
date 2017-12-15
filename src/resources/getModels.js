@@ -16,6 +16,19 @@ const getClient = (id) => {
   );
 };
 
+const getFinancialIndependence = (id) => {
+  getData(
+    `${routeMap.financial_independence}${id}/`,
+    (data) => {
+      AppDispatcher.dispatch({
+        action: ActionType.INDEPENDENCE.GETFORMSUCCESS,
+        data: data,
+        state: 'financial_independence',
+      });
+    }
+  );
+};
+
 const getRegularCostManager = (id) => {
   getData(
     `${routeMap.cost_manager}${id}/`,
@@ -74,6 +87,9 @@ const getFinancialPlanning = (id) => {
       }
       if (data.patrimony_id) {
         getPatrimony(data.patrimony_id);
+      }
+      if (data.financial_independence_id) {
+        getFinancialIndependence(data.financial_independence_id);
       }
       // others gets
     });

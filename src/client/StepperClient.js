@@ -55,15 +55,6 @@ class StepperClient extends React.Component {
     },
   ]
 
-  states = {
-    'Cadastro Básico': 'pk',
-    'Custos Fixos': 'cost_manager_id',
-    'Renda': 'patrimony_id',
-    'Patrimônio': 'patrimony_id',
-    'Proteção': 'protection_id',
-    'Objetivos': 'goal_manager_id',
-  }
-
   static propTypes = {
     match: PropTypes.shape({
       params: PropTypes.shape({
