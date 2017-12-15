@@ -30,39 +30,30 @@ class StepperClient extends React.Component {
     },
     {
       name: 'Objetivos',
-      register: <GoalRegister key={6} />,
+      register: <GoalRegister key={2} />,
       state: 'goal_manager_id',
     },
     {
       name: 'Custos Fixos',
-      register: <RegularCostRegister key={2} />,
+      register: <RegularCostRegister key={3} />,
       state: 'cost_manager_id',
     },
     {
       name: 'Renda',
-      register: <PatrimonyRegister key={3} />,
+      register: <PatrimonyRegister key={4} />,
       state: 'patrimony_id',
     },
     {
       name: 'Patrimônio',
-      register: <PatrimonyRegister key={4} main={false}/>,
+      register: <PatrimonyRegister key={5} main={false}/>,
       state: 'patrimony_id',
     },
     {
       name: 'Proteção',
-      register: <div key={5} >Proteção </div>,
+      register: <div key={6} >Proteção </div>,
       state: 'protection_id',
     },
   ]
-
-  states = {
-    'Cadastro Básico': 'pk',
-    'Custos Fixos': 'cost_manager_id',
-    'Renda': 'patrimony_id',
-    'Patrimônio': 'patrimony_id',
-    'Proteção': 'protection_id',
-    'Objetivos': 'goal_manager_id',
-  }
 
   static propTypes = {
     match: PropTypes.shape({

@@ -123,7 +123,6 @@ export default class ClientForm extends Component {
 
     return (
       <Form
-        title="Dados"
         name="active_client"
         action={ActionType.CLIENT.POSTFORM}
         canSubmit={this.props.canSubmit}

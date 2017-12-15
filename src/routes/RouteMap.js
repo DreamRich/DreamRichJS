@@ -24,6 +24,7 @@ const routeMap = {
   address_type: '/api/client/address/type_of_address/',
   arrearages: '/api/patrimony/arrearage/',
   financial_planning: '/api/financial_planning/financial_planning/',
+  financial_independence: '/api/financial_planning/financial_independence/',
 };
 
 const valid_formats = ['json', 'html', 'xml'];

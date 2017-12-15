@@ -66,6 +66,9 @@ const actionTypes = {
     SUBFORMSUCCESS: 'goal/success_subforms',
     GETFORMSUCCESS: 'goal/get_goal_success',
     SELECT: 'goal/select',
+    SETSTEP: 'goal/set_step',
+    NEXTSTEP: 'goal/next_step',
+    PREVIOUSSTEP: 'goal/previous_step',
   },
   PATRIMONY: {
     CHANGES: 'patrimony/unit_changes',
@@ -81,6 +84,11 @@ const actionTypes = {
     REMOVE: 'patrimony/remove_item',
     MANAGERSUCCESS: 'patrimony/create_manager_success',
     TYPESUCCESS: 'active/types_success',
+  },
+  INDEPENDENCE: {
+    SUBMIT: 'independence/create_form',
+    SUCCESS: 'independence/form_success',
+    GETFORMSUCCESS: 'independence/get_independence_success',
   },
   REGISTER: {
     STORE: 'register/get_financial_planning',

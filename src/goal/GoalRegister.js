@@ -1,48 +1,71 @@
 import React, {Component} from 'react';
-import ActionType from '../actions/ActionType';
+//import PropTypes from 'prop-types';
+// import ActionType from '../actions/ActionType';
 import GoalStore from '../stores/GoalStore';
-import '../stylesheet/RegisterForms.sass';
-import {postGoalManager} from '../resources/saveModels';
-import {routeMap} from '../routes/RouteMap';
-import TableFormManagerHOC from '../components/tables/TableFormManagerHOC';
-import {getGoalTypes} from '../resources/getFormData';
+import PlanningForm from '../independence/form/PlanningForm';
+import GoalForm from './form/GoalForm';
+import IndependenceForm from '../independence/form/IndependenceForm';
+import SubStepperGoal from './SubStepperGoal';
+import RegisterStore from '../stores/RegisterStore';
+import IndependenceStore from '../stores/IndependenceStore';
 
-
-const TableForm = TableFormManagerHOC({
-  submit: ActionType.GOAL.SUBFORM,
-  add: ActionType.GOAL.ADD,
-  remove: ActionType.GOAL.REMOVE,
-  select: ActionType.GOAL.SELECT,
-},{
-  parentId: 'goal_manager_id',
-  route: routeMap.goal,
-  state: 'goals',
-  title: 'Objetivos',
-  subtitleCard: 'Adicione as informações dos objetivos',
-  headers: [
-    {value: 'Tipo', name: 'goal_type_id', options: 'types', type: 'SelectField'},
-    {value: 'Ano de início', name: 'init_year', type: 'TextField'},
-    {value: 'Ano de término', name: 'end_year', type: 'TextField'},
-    {value: 'Periodicidade', name: 'periodicity', type: 'TextField'},
-    {value: 'Valor', name: 'value', type: 'TextField'},
-    {value: 'Tem término?', name: 'has_end_date', type: 'ToggleField'},
-  ],
-},
-GoalStore,
-() => {
-  const {goals, types} = GoalStore.getState();
-  return {registers: goals, options: {types} };
-},
-postGoalManager
-);
 
 export default class GoalRegister extends Component {
 
+  componentWillMount = () => {
+    this.setState({
+      listener: GoalStore.addListener(this.handleUpdate),
+      listenerPlanning: RegisterStore.addListener(this.handleUpdate),
+      listenerIndependence: IndependenceStore.addListener(this.handleUpdate),
+      stepIndex: 0,
+    });
+    this.handleUpdate();
+  }
 
-  componentWillMount = () => getGoalTypes()
+  handleUpdate = () => {
+    const {financialIndependence} = IndependenceStore.getState();
+    const {financialPlanning} = RegisterStore.getState();
+    const {stepIndex} = GoalStore.getState();
+    this.setState({
+      stepIndex,
+      fi: financialIndependence.id !== undefined,
+      fp: (financialPlanning.cdi != 0 && financialPlanning.ipca != 0
+        && financialPlanning.target_profitability != 0)
+    });
+  }
+
+  componentWillUnmount = () => {
+    this.state.listener.remove();
+    this.state.listenerPlanning.remove();
+    this.state.listenerIndependence.remove();
+  }
 
   render = () => {
-    return ( <TableForm {...this.props} /> );
+    const steps = [
+      {
+        text: 'Taxas do planejamento',
+        formComponent: <PlanningForm 
+          key={1}
+          disabled={this.state.fp} />,
+      },
+      {
+        text: 'Objetivo da independência',
+        formComponent: <IndependenceForm
+          key={2}
+          disabled={this.state.fi} />,
+      },
+      {
+        text: 'Objetivos',
+        formComponent: <GoalForm key={3} {...this.props} />,
+      }
+    ];
+    return (
+      <SubStepperGoal
+        stepsNumber={3}
+        steps={steps}
+        stepIndex={this.state.stepIndex}
+      />
+    );
   }
 
 }

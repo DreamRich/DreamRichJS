@@ -4,7 +4,7 @@ import GoalStore from '../stores/GoalStore';
 import '../stylesheet/RegisterForms.sass';
 import Dashboard from '../components/Dashboard';
 import {getGoalTypes} from '../resources/getFormData';
-import GoalRegister from '../goal/GoalRegister';
+import GoalForm from '../goal/form/GoalForm';
 import GoalChart from '../goal/GoalChart';
 
 class GoalDashboard extends Component {
@@ -31,7 +31,7 @@ class GoalDashboard extends Component {
     return (
       <Dashboard>
         <GoalChart size={12} id={id} {...rest} />
-        <GoalRegister size={12} />
+        <GoalForm size={12} />
       </Dashboard>
     );
   }
