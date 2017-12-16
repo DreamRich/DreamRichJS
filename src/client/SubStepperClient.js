@@ -20,19 +20,20 @@ export default class SubStepperClient extends React.Component {
       operationMessage: '',
       open: false
     };
-    this.handleRequestClose = this.handleRequestClose.bind(this);
   }
-
-  state = ClientStore.getState()
 
   static propTypes = {
     stepsNumber: PropTypes.number,
     listInformationSteps: PropTypes.array,
   }
 
-  componentWillMount = () => this.setState({
-    listener: ClientStore.addListener(this.handleChange)
-  })
+  componentWillMount = () => {
+    const state = ClientStore.getState();
+    this.setState({...state,
+      id: state.active_client.id,
+      listener: ClientStore.addListener(this.handleChange),
+    });
+  }
 
   handleChange = () => {
     // Only get some attributes from store
@@ -44,13 +45,7 @@ export default class SubStepperClient extends React.Component {
     }
   }
 
-  componentWillUnmount = () => {
-    this.state.listener.remove();
-    AppDispatcher.dispatch({
-      action: ActionType.CLIENT.SETSTEP,
-      stepIndex: 0
-    });
-  }
+  componentWillUnmount = () => this.state.listener.remove()
 
   handleTouchTap = () => {
     this.setState({
@@ -88,16 +83,16 @@ export default class SubStepperClient extends React.Component {
     stepIndex: stepIndex
   })
 
-  renderStepActions(step) {
+  renderStepActions = (step, item) => {
     // To reduce the lines of code amount of getContentSteps
     return (
       <div style={{margin: '12px 0'}}>
-        <RaisedButton
+        {step < this.props.stepsNumber - 1 && item.nextButton && <RaisedButton
           label="Próximo formulário"
           primary={true}
           onClick={this.handleNext.bind(this, step)}
           style={{float: 'right'}}
-        />
+        />}
         {step > 0 && (
           <RaisedButton
             label="Formulário anterior"
@@ -121,7 +116,7 @@ export default class SubStepperClient extends React.Component {
           </StepButton>
           <StepContent>
             {obj.formComponent}
-            {this.renderStepActions(index)}
+            {this.renderStepActions(index, obj)}
           </StepContent>
         </Step>
       );}

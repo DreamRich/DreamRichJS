@@ -17,7 +17,7 @@ class AddressStore extends ReduceStore {
       countries: [],
       states: [],
       addressType: [],
-      searchText: '',
+      searchText: undefined,
     };
   }
 
@@ -47,7 +47,7 @@ class AddressStore extends ReduceStore {
       return {...state, searchText: action.searchText};
 
     case ActionType.RESETFORMSTORES:
-      return {...state, searchText: ''};
+      return {...state, searchText: undefined};
 
     default:
       return state;

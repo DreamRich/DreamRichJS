@@ -28,6 +28,7 @@ export default class ClientBankAccountForm extends Component {
   }
 
   getContentCard(){
+    console.log(this.props.data.joint_account);
     return (
       <Form
         name="bank_account"
@@ -63,7 +64,7 @@ export default class ClientBankAccountForm extends Component {
             <FormsyToggle
               name="joint_account"
               label="Conta conjunta?"
-              toggled={this.props.data.joint_account}
+              value={this.props.data.joint_account}
             />
           </Col>
         </Row>

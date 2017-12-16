@@ -27,7 +27,8 @@ export default class IncomeSubStepper extends React.Component {
   state = {stepIndex: 0}
 
   componentWillMount = () => this.setState({
-    listener: PatrimonyStore.addListener(this.handleChange)
+    listener: PatrimonyStore.addListener(this.handleChange),
+    id: PatrimonyStore.getState().patrimony.id
   })
 
   handleChange = () => {
@@ -72,12 +73,12 @@ export default class IncomeSubStepper extends React.Component {
     // To reduce the lines of code amount of getContentSteps
     return (
       <div style={{margin: '12px 0'}}>
-        <RaisedButton
+        { step < this.props.stepsNumber - 1 && this.state.id !== undefined && <RaisedButton
           label="Próximo formulário"
           primary={true}
           onClick={this.handleNext.bind(this, step)}
           style={{float: 'right'}}
-        />
+        />}
         {step > 0 && (
           <RaisedButton
             label="Formulário anterior"

@@ -12,7 +12,6 @@ class RegisterStore extends ReduceStore {
   getInitialState(){ 
     return {
       financialPlanning: {},
-      stepIndex: 0,
     };
   }
 
@@ -77,7 +76,7 @@ class RegisterStore extends ReduceStore {
       return {...state, financialPlanning: action.data};
 
     case ActionType.RESETFORMSTORES:
-      return {stepIndex: 0, financialPlanning: {}};
+      return {financialPlanning: {}};
 
     default:
       return state;

@@ -106,7 +106,6 @@ export default class ClientAddressForm extends Component {
   }
 
   getStateList = (state) => {
-
     const hasStateList = this.state.states.find(
       stateItem => _.isEqual(stateItem, state)
     );
@@ -117,7 +116,6 @@ export default class ClientAddressForm extends Component {
     if (hasStateList === undefined && state.country_id !== undefined) {
       this.fetchStates(null, state.country_id);
     }
-
   }
 
   getFormsySelect(searchText,statesOptions,contriesOptions){
@@ -177,13 +175,15 @@ export default class ClientAddressForm extends Component {
     const contriesOptions = this.convertRegionToOptions(this.state.countries);
 
     const statesOptions = this.convertRegionToOptions(this.state.states);
+
     let searchText = this.props.data.type_of_address || '';
-    if (this.state.searchText && this.state.searchText !== '') {
+    if (this.state.searchText !== undefined) {
       searchText = this.state.searchText;
     }
 
     return (
       <Form
+        onDisable={() => this.updateSearch(null, undefined)}
         name='address'
         parent_name='active_client_id'
         parent_id={this.props.id}
