@@ -24,7 +24,7 @@ class PatrimonyStore extends ReduceStore {
       types: [],
       actives: [{index: 0, selected: true}],
       manager: {},
-      incomeChanges: [],
+      unit_change: [],
     };
   }
 

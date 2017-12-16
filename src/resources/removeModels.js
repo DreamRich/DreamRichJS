@@ -3,7 +3,7 @@ import {routeMap} from '../routes/RouteMap';
 
 const removeClient = (items, key, remove) => removeFromList(routeMap.dependent, items, key, remove);
 
-const removeRegularCost = (items, key, remove) => removeFromList(routeMap.regular_cost, items, key, remove);
+const removeRegularCost = (cost, items, key, remove) => removeFromList(routeMap[cost], items, key, remove);
 
 const removeGoal = (items, key, remove) => removeFromList(routeMap.goal, items, key, remove);
 

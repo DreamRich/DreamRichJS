@@ -16,7 +16,7 @@ class RegularCostStore extends ReduceStore {
       manager: {},
       types: [],
       canSubmit: false,
-      costChanges: [],
+      unit_change: [],
     };
   }
 
@@ -35,7 +35,7 @@ class RegularCostStore extends ReduceStore {
       costs = action.data.map(
         cost => { cost.index = cost.id; return cost;}
       );
-      return {...state, costChanges: costs};
+      return {...state, unit_change: costs};
 
     case ActionType.REGULARCOST.ADD:
       costs = state[action.state].slice();
@@ -55,7 +55,12 @@ class RegularCostStore extends ReduceStore {
       return {...state};
 
     case ActionType.REGULARCOST.REMOVE:
-      costs = removeRegularCost(state[action.state], action.key, action.remove);
+      costs = removeRegularCost(
+        action.state,
+        state[action.state],
+        action.key,
+        action.remove
+      );
       return {...state, [action.state]: costs };
 
     case ActionType.REGULARCOST.SUCCESS:
@@ -95,7 +100,7 @@ class RegularCostStore extends ReduceStore {
       return {...state,
         costs: [{index: 0, selected: true}],
         manager: {},
-        costChanges: []
+        unit_change: []
       };
 
     default:

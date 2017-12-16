@@ -15,7 +15,7 @@ const TableForm = TableFormHOC({
 {
   parentId: 'cost_manager_id',
   route: routeMap.unit_change,
-  state: 'costChanges',
+  state: 'unit_change',
   title: 'Mudança no custo',
   subtitleCard: 'Mudança no custo',
   headers: [
@@ -25,7 +25,7 @@ const TableForm = TableFormHOC({
 },
 RegularCostStore,
 () => {
-  const registers = RegularCostStore.getState().costChanges;
+  const registers = RegularCostStore.getState().unit_change;
   return {registers};
 }
 );

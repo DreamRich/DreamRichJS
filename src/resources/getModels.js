@@ -10,7 +10,7 @@ const getCostChanges = (id) => {
       AppDispatcher.dispatch({
         action: ActionType.REGULARCOST.CHANGES,
         data: data,
-        state: 'costChanges',
+        state: 'unit_change',
       });
     });
 };
@@ -22,7 +22,7 @@ const getIncomeChanges = (id) => {
       AppDispatcher.dispatch({
         action: ActionType.PATRIMONY.CHANGES,
         data: data,
-        state: 'incomeChanges',
+        state: 'unit_change',
       });
     });
 };

@@ -34,7 +34,8 @@ export default class IndependenceForm extends Component {
     },
     {
       name: 'remain_patrimony', validations: 'isNumeric',
-      validationError: numericError, hintText: 'Valor do patrimonio após a aposentadoria', floatingLabelText: 'Patrimônio remanescente',
+      validationError: numericError, floatingLabelText: 'Salário aposentadoria',
+      hintText: 'Valor recebido mensalmente da aposentadoria',
     }
   ]
 

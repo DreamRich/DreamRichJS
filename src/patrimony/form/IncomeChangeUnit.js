@@ -15,7 +15,7 @@ const TableForm = TableFormHOC({
 {
   parentId: 'incomes_id',
   route: routeMap.unit_change,
-  state: 'incomeChanges',
+  state: 'unit_change',
   title: 'Mudança na renda',
   subtitleCard: 'Mudança na renda',
   headers: [
@@ -25,7 +25,7 @@ const TableForm = TableFormHOC({
 },
 PatrimonyStore,
 () => {
-  const registers = PatrimonyStore.getState().incomeChanges;
+  const registers = PatrimonyStore.getState().unit_change;
   return {registers};
 }
 );
