@@ -31,7 +31,9 @@ export default class GoalChart extends Component {
 
   constructor(props) {
     super(props);
-    const {goals_flow_dic, year_init_to_year_end, manager} = GoalStore.getState();
+    const {goals_flow_dic,
+      year_init_to_year_end,
+      manager} = GoalStore.getState();
 
     this.state = {
       goals_flow_dic,
@@ -44,9 +46,12 @@ export default class GoalChart extends Component {
 
 
   updateState = () => {
-    const {goals_flow_dic, year_init_to_year_end, manager} = GoalStore.getState();
+    const {goals_flow_dic,
+      year_init_to_year_end,
+      manager} = GoalStore.getState();
 
-    const difference = _.differenceWith(goals_flow_dic, this.state.goals_flow_dic, _.isEqual).length;
+    const difference = _.differenceWith(goals_flow_dic,
+      this.state.goals_flow_dic, _.isEqual).length;
 
     this.setState({ goals_flow_dic, year_init_to_year_end, manager, });
 
@@ -62,6 +67,7 @@ export default class GoalChart extends Component {
         });
         series.push(this.state.total_resource_for_annual_goals);
         series.forEach( serie => this.highcharts.addSeries(serie) );
+        this.highcharts.xAxis[0].setCategories(year_init_to_year_end);
         this.highcharts.hideLoading();
       }, 500);
     }
