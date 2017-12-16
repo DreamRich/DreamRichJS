@@ -2,9 +2,10 @@ import React, {Component} from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import ClientDashboard from '../dashboard/ClientDashboard';
 import GoalDashboard from '../dashboard/GoalDashboard';
-import IncomeDashboard from '../dashboard/IncomeDashboard';
+// import IncomeDashboard from '../dashboard/IncomeDashboard';
 import PatrimonyDashboard from '../dashboard/PatrimonyDashboard';
-import RegularCostRegister from '../cost/RegularCostRegister';
+import MoneyDashboard from '../dashboard/MoneyDashboard';
+// import RegularCostRegister from '../cost/RegularCostRegister';
 import PropTypes from 'prop-types';
 import {getFinancialPlanning} from '../resources/getModels';
 import RegisterStore from '../stores/RegisterStore';
@@ -12,7 +13,7 @@ import InfoOutline from 'material-ui/svg-icons/action/info-outline';
 import MoneyIcon from 'material-ui/svg-icons/editor/attach-money';
 import ObjectIcon from 'material-ui/svg-icons/device/gps-fixed';
 import SecurityIcon from 'material-ui/svg-icons/hardware/security';
-import MoneyIconSecundary from 'material-ui/svg-icons/editor/monetization-on';
+//import MoneyIconSecundary from 'material-ui/svg-icons/editor/monetization-on';
 import BusinessIcon from 'material-ui/svg-icons/communication/business';
 import { withRouter } from 'react-router';
 
@@ -85,9 +86,9 @@ class Dashboard extends Component {
         value: 'basico',
       },
       {
-        label: 'Custos Fixos',
+        label: 'Fluxo da renda',
         icon: <MoneyIcon className="material-icons"/>,
-        dashboard: <RegularCostRegister />,
+        dashboard: <MoneyDashboard />,
         value: 'custo',
       },
       {
@@ -99,12 +100,6 @@ class Dashboard extends Component {
           cost_manager_id={this.state.financialPlanning.cost_manager_id}
         />,
         value: 'objetivo',
-      },
-      {
-        label: 'Renda',
-        icon: <MoneyIconSecundary className="material-icons"/>,
-        dashboard: <IncomeDashboard />,
-        value: 'renda',
       },
       {
         label: 'Patrimônio',
