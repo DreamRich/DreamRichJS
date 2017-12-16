@@ -44,7 +44,6 @@ export default class IncomeChangeUnit extends Component {
 
 
   render = () => {
-    console.log(this.props.id);
-    return (<TableForm {...this.props} />);
+    return (<TableForm {...this.props} expandable/>);
   }
 }

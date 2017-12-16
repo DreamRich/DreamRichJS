@@ -21,6 +21,7 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
       enableAdd: PropTypes.bool,
       headers: PropTypes.array,
       modal: PropTypes.bool,
+      expandable: PropTypes.bool,
     }
 
     static defaultProps = {
@@ -28,6 +29,7 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
       enableEdit: true,
       enableAdd: true,
       modal: false,
+      expandable: false,
     }
 
     componentWillMount = () => this.setState({
@@ -97,8 +99,6 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
     })
 
     render = () => {
-      const subtitleCard = basicData.subTitle;
-
       const headers = this.props.headers || basicData.headers;
 
       const actions = [
@@ -121,10 +121,12 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
           </Dialog>
           <Card className='Card' >
             <CardTitle
+              actAsExpander={this.props.expandable}
+              showExpandableButton={this.props.expandable}
               title={basicData.title}
-              subtitle={subtitleCard}
+              subtitle={basicData.subTitle}
             />
-            <CardText>
+            <CardText expandable={this.props.expandable} >
               <Row around="xs">
                 <TableForm
                   headers={headers}

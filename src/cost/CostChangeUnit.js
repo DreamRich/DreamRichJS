@@ -42,6 +42,6 @@ export default class CostChangeUnit extends Component {
   }
 
   render = () => {
-    return (<TableForm {...this.props} />);
+    return (<TableForm {...this.props} expandable={true} />);
   }
 }
