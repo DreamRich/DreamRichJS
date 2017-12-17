@@ -8,6 +8,7 @@ import AppDispatcher from './AppDispatcher';
 import ActionType from './actions/ActionType';
 import {Auth} from './auth/Auth';
 import LoggerStore from './stores/LoggerStore';  // eslint-disable-line no-unused-vars
+import Snackbar from 'material-ui/Snackbar';
 
 class App extends Component {
   constructor(props) {
@@ -61,6 +62,15 @@ class App extends Component {
         <SidebarMenu auth={this.state.auth} navDrawerOpen={this.state.navDrawerOpen} />
         <div style={styles.container}>
           <Routers />
+          <Snackbar
+            open={this.state.snackOpen}
+            message={this.state.snackMessage}
+            autoHideDuration={9000}
+            action='Ok'
+            onRequestClose={
+              () => AppDispatcher.dispatch({action: ActionType.USERFEEDBACK, snackOpen: false})
+            }
+          />
         </div>
       </div>
     );

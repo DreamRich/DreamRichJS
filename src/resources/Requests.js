@@ -1,5 +1,7 @@
 import {methods, getAuthenticatedHeader} from './Headers';
 import {Auth} from '../auth/Auth';
+import AppDispatch from '../AppDispatcher';
+import ActionType from '../actions/ActionType';
 
 const noneFunction = () => {}; //Design for none object
 
@@ -50,7 +52,8 @@ const getData = (url, handleData=noneFunction, handleOk=noneFunction, handleFail
 };
 
 const postData = (url, data, handleData=noneFunction, handleFail=noneFunction, handleOk=noneFunction) => {
-  request(url,
+  request(
+    url,
     {
       method: methods.POST,
       headers: getAuthenticatedHeader(),
@@ -62,15 +65,55 @@ const postData = (url, data, handleData=noneFunction, handleFail=noneFunction, h
     },
     (response) => {
       handleFail(response);
-    });
+    }
+  );
 };
 
-const putData = (url, data, handleData=noneFunction) => {
+const postFormData = (url, data, handleData=noneFunction, handleFail=noneFunction, handleOk=noneFunction) => {
+  postData(url,
+    data,
+    handleData,
+    (response) => {
+      handleFail(response);
+      AppDispatch.dispatch({action: ActionType.USERFEEDBACK, message: 'Erro ao salvar!'});
+    },
+    (response) => {
+      handleOk(response);
+      AppDispatch.dispatch({action: ActionType.USERFEEDBACK, message: 'Salvo com sucesso!'});
+    }
+  );
+};
+
+const putFormData = (url, data, handleData=noneFunction, handleFail=noneFunction, handleOk=noneFunction) => {
   request(url, {
     method: methods.PUT,
     headers: getAuthenticatedHeader(),
     body: JSON.stringify(data),
-  }, handleData);
+  },
+  handleData,
+  (response) => {
+    handleFail(response);
+    AppDispatch.dispatch({action: ActionType.USERFEEDBACK, message: 'Erro ao salvar!'});
+  },
+  (response) => {
+    handleOk(response);
+    AppDispatch.dispatch({action: ActionType.USERFEEDBACK, message: 'Salvo com sucesso!'});
+  });
+};
+
+const putData = (url, data, handleData=noneFunction,  handleFail=noneFunction, handleOk=noneFunction) => {
+  request(url, {
+    method: methods.PUT,
+    headers: getAuthenticatedHeader(),
+    body: JSON.stringify(data),
+  },
+  handleData,
+  (response) => {
+    handleFail(response);
+  },
+  (response) => {
+    handleOk(response);
+  });
 };
 
 const deleteData = (url, handleOk) => {
@@ -89,13 +132,13 @@ const postOrPutStrategy = (actualData, url, data,
     const id = actualData.id;
 
     if (!id){
-      postData(url, data, handleData, handleFail, handleOk);
+      postFormData(url, data, handleData, handleFail, handleOk);
     } else {
-      putData(`${url}${id}/`, data, handleData);
+      putFormData(`${url}${id}/`, data, handleData, handleFail, handleOk);
     }
   } else {
-    postData(url, data, handleData, handleFail, handleOk);
+    postFormData(url, data, handleData, handleFail, handleOk);
   }
 };
 
-export {postOrPutStrategy, getData, postData, putData, deleteData};
+export {postOrPutStrategy, getData, postData, putData, deleteData, postFormData};
