@@ -1,62 +1,33 @@
 import React, {Component} from 'react';
-
-
-
-import PropTypes from 'prop-types';
+import RegisterStore from '../stores/RegisterStore';
+import PatrimonyChart from './PatrimonyChart';
 
 export default class ActiveProfit extends Component {
 
-  static propTypes = {
-    match: {params: {id: PropTypes.number,}}
-  }
-
   componentWillMount = () => {
-    /*   this.setState({
-      ...ActiveStore.getState(),
-      listener: ActiveStore.addListener(this.handleUpdate)
+    const {financialPlanning} = RegisterStore.getState();
+    this.setState({
+      patrimony: financialPlanning.patrimony_id,
+      financial_planning_id: financialPlanning.pk,
+      listener: RegisterStore.addListener(this.handleUpdate)
     });
-    */
-    // const id = this.props.match.params.id;
   }
 
-  componentWillUnmount = () => {
-    this.state.listener.remove();
-  }
+  componentWillUnmount = () => this.state.listener.remove()
 
   handleUpdate = () => {
-    // this.setState(ActiveStore.getState());
+    const {financialPlanning} = RegisterStore.getState();
+    this.setState({
+      patrimony_id: financialPlanning.patrimony_id,
+      financial_planning_id: financialPlanning.pk,
+    });
   }
 
-  render() {
+  render = () => {
     return (
       <div>
         <h1> Carteira </h1>
-        {
-          this.state.actives.map( (item, idx) => {
-            const type = (item.active_type !== undefined ? item.active_type.name : '');
-            return (
-              <div key={idx}>
-                <label>{type} {item.name}: {item.value} {item.equivalent_rate}</label>
-              </div>
-            );
-          })
-        }
-        <h1> Carteira diferença </h1>
-        <label>Rentabilidade da carteira: {this.state.profit}</label>
-        <br />
-        <label>Ganho real: {this.state.profit}</label>
-        <br />
-        <label>Ganho sugerido: {this.state.sugest}</label>
-        <br />
-        <label>Diferença: {this.state.difference}</label>
-        <br />
-        <label>Total: {this.state.total}</label>
-        <br />
-        <label>Ganho atual: {this.state.total_atual}</label>
-        <br />
-        <label>Ganho sugerido: {this.state.total_sugest}</label>
-        <br />
-        <label>Diferença ganha: {this.state.total_difference}</label>
+        <PatrimonyChart id={this.state.financial_planning_id} />
       </div>
     );
   }
