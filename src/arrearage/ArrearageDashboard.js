@@ -4,6 +4,8 @@ import {Card, CardHeader, CardText, CardTitle} from 'material-ui/Card';
 import MediaQuery from 'react-responsive';
 import {getData} from '../resources/Requests';
 import PropTypes from 'prop-types';
+import ArrearageMenu from './ArrearageMenu';
+
 
 class ArrearageDashboard extends Component {
   constructor(props) {
@@ -16,6 +18,7 @@ class ArrearageDashboard extends Component {
   static propTypes = {
     id: PropTypes.number,
   }
+
 
   getRoute = () => {
     const url = `/api/patrimony/arrearage/${this.props.id}/patrimony_arrearage/`;
@@ -64,12 +67,15 @@ class ArrearageDashboard extends Component {
   }
 
   getDesktop = () => {
-
+    return (<ArrearageMenu arrearageList={this.state.arrearageList}/>);
   }
 
   render() {
     return(
       <div>
+        <MediaQuery key="desktopArrearageDashboard" query="(min-width: 1030px)">
+          {this.getDesktop()}
+        </MediaQuery>
         <MediaQuery key="mobileArrearageDashboard" query="(max-width: 1030px)">
           {this.getMobile()}
         </MediaQuery>

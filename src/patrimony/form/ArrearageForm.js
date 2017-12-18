@@ -30,7 +30,7 @@ PatrimonyStore,
     registers: arrearages,
     options: {
       amortization_system: [
-        {id: 'SAC'}, {id: 'PRICE'}, {id: 'Comum'}
+        {id: 'SAC'}, {id: 'PRICE'}, {id: 'COMUM'}
       ],
     },
   };

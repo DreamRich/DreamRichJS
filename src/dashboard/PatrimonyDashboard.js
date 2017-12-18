@@ -42,7 +42,7 @@ class PatrimonyDashboard extends Component {
         />
         <ArrearageDashboard
           id={this.state.patrimony.id}
-          size={9}
+          size={12}
         />
         <RealeStateForm
           id={this.state.patrimony.id}
