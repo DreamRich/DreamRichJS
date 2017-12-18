@@ -84,6 +84,7 @@ const actionTypes = {
     REMOVE: 'patrimony/remove_item',
     MANAGERSUCCESS: 'patrimony/create_manager_success',
     TYPESUCCESS: 'active/types_success',
+    FLOW: 'patrimony/flow_success',
   },
   INDEPENDENCE: {
     SUBMIT: 'independence/create_form',

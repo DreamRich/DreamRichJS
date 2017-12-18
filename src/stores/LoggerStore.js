@@ -8,8 +8,9 @@ class LoggerStore extends ReduceStore {
 
   getInitialState() { return {};}
 
-  reduce = (state, action) => {
-    console.info(action);
+  reduce = (state, data) => {
+    const {action, ...rest} = data;
+    console.info(`Logger (${action}): `, rest);
     return state;
   }
 }

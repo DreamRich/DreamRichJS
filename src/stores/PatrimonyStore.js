@@ -25,6 +25,7 @@ class PatrimonyStore extends ReduceStore {
       actives: [{index: 0, selected: true}],
       manager: {},
       unit_change: [],
+      flow: {},
     };
   }
 
@@ -124,6 +125,9 @@ class PatrimonyStore extends ReduceStore {
         return item;
       });
       return {...state, [action.state]: arr};
+
+    case ActionType.PATRIMONY.FLOW:
+      return {...state, flow: action.data};
 
     default:
       return state;

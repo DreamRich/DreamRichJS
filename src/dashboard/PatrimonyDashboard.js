@@ -28,7 +28,7 @@ class PatrimonyDashboard extends Component {
 
   handleChange = () => this.setState(PatrimonyStore.getState())
 
-  render() {
+  render = () => {
     return (
       <Dashboard>
         <ActiveForm
