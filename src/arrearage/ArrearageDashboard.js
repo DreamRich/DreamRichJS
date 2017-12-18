@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ArrearageTable from './ArrearageTable';
-import {Card, CardHeader, CardText} from 'material-ui/Card';
+import {Card, CardHeader, CardText, CardTitle} from 'material-ui/Card';
+import MediaQuery from 'react-responsive';
 import {getData} from '../resources/Requests';
 import PropTypes from 'prop-types';
 
@@ -34,7 +35,7 @@ class ArrearageDashboard extends Component {
     }
   }
 
-  listArrearages = () => {
+  getMobile = () => {
     const list = (this.state.arrearageList).map((arrearage, index) =>
       <Card key={index}>
         <CardHeader
@@ -50,13 +51,28 @@ class ArrearageDashboard extends Component {
         </CardText>
       </Card>
     );
-    return list;
+    return (
+      <Card>
+        <CardTitle
+          title="Lista de dívidas"
+        />
+        <CardText>
+          {list}
+        </CardText>
+      </Card>
+    );
+  }
+
+  getDesktop = () => {
+
   }
 
   render() {
     return(
       <div>
-        {this.listArrearages()}
+        <MediaQuery key="mobileArrearageDashboard" query="(max-width: 1030px)">
+          {this.getMobile()}
+        </MediaQuery>
       </div>
     );
   }
