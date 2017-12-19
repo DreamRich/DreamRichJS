@@ -6,34 +6,53 @@ import PatrimonyStore from '../stores/PatrimonyStore';
 
 export default class PatrimonyChart extends Component {
 
-  state = {datasets: [{data:[]}, {data:[]}], labels: [] }
+  state = {
+    data: {
+      datasets: [{data:[]}, {data:[]}],
+      labels: [],
+    },
+    options: {
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+        callbacks: {
+          label: (tooltipItem) => {
+            let strValue = String(tooltipItem.yLabel.toFixed(2)); // round to 2 decimal
+            strValue = strValue.replace(/\./g, ','); // replace the . with ,
+            strValue = strValue.replace(/(\d)(?=(\d{3})+,)/g, '$1.'); // match groups of 3 numbers and replace it with a point
+            return `R$: ${strValue}`;
+          },
+          title: (tooltipItens) => `Ano ${tooltipItens[0].xLabel}`
+        }
+      }
+    }
+  }
 
   componentWillMount = () => this.setState({
-    listener: PatrimonyStore.addListener(this.handleUpdate)
+    listener: PatrimonyStore.addListener(this.handleUpdate),
   })
 
   componentWillUnmount = () => this.state.listener.remove()
 
   handleUpdate = () => {
     const {flow} = PatrimonyStore.getState();
-    if (flow.actual_flow_patrimony && flow.suggested_flow_patrimony) {
+    if (flow.actual_flow_patrimony && flow.suggested_flow_patrimony
+      && flow.year_init_to_end) {
       this.setState((state) => {
         const datasets = [
           {
             data: flow.actual_flow_patrimony,
             label: 'Patrimônio atual',
             backgroundColor: '#aaaaaa',
-            pointHitRadius: 20,
           },
           {
             data: flow.suggested_flow_patrimony,
             label: 'Patrimônio sugerido',
             backgroundColor: '#a1fcff',
-            pointHitRadius: 20,
           }
         ];
-        const labels = flow.actual_flow_patrimony.map( (e,index) => index );
-        return {...state, datasets, labels};
+        const labels = flow.year_init_to_end;
+        return {...state, data: {datasets, labels, }, };
       });
     }
   }
@@ -49,10 +68,9 @@ export default class PatrimonyChart extends Component {
   }
 
   render = () => {
-    return (<div>
-      {this.props.id}
-      <Line data={this.state} />
-    </div>);
+    const {data, options} = this.state;
+
+    return (<Line data={data} options={options} />);
   }
 
 }

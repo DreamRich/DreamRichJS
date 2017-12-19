@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import RegisterStore from '../stores/RegisterStore';
 import PatrimonyChart from './PatrimonyChart';
+import {Card, CardTitle, CardText} from 'material-ui/Card';
 
 export default class ActiveProfit extends Component {
 
@@ -25,10 +26,16 @@ export default class ActiveProfit extends Component {
 
   render = () => {
     return (
-      <div>
-        <h1> Carteira </h1>
-        <PatrimonyChart id={this.state.financial_planning_id} />
-      </div>
+      <Card className='Card'>
+        <CardTitle
+          title='Diferença no patrimônio'
+          subtitle={'Veja a diferença entre ter uma boa ' +
+            'carteira de investimentos'}
+        />
+        <CardText>
+          <PatrimonyChart id={this.state.financial_planning_id} />
+        </CardText>
+      </Card>
     );
   }
 }

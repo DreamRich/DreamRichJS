@@ -2,9 +2,9 @@
 
 import {ReduceStore} from 'flux/utils';
 import AppDispatcher from '../AppDispatcher';
-import {getData} from '../resources/Requests';
+// import {getData} from '../resources/Requests';
 import ActionType from '../actions/ActionType';
-import {routeMap} from '../routes/RouteMap';
+// import {routeMap} from '../routes/RouteMap';
 
 
 class AddressStore extends ReduceStore {
@@ -23,16 +23,6 @@ class AddressStore extends ReduceStore {
 
   reduce = (state, action) => {
     switch (action.action) {
-
-    case ActionType.CLIENT.STATES:
-      getData(
-        `${routeMap.state}?country_id=${action.country}`,
-        (states) => AppDispatcher.dispatch({
-          action: ActionType.CLIENT.STATESUCCESS,
-          data: states,
-        })
-      );
-      return state;
 
     case ActionType.CLIENT.COUNTRIES:
       return {...state, countries: action.data};
