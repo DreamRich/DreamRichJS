@@ -3,9 +3,9 @@ import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import {Card, CardText, CardTitle} from 'material-ui/Card';
 import ArrearageTable from './ArrearageTable';
-import Divider from 'material-ui/Divider';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import PropTypes from 'prop-types';
+import Subtitle from '../components/Subtitle';
 
 const style = {
   display: 'inline-block',
@@ -24,9 +24,10 @@ class ArrearageMenu extends Component {
   }
 
   getMenu = () => {
-    const list = (this.props.arrearageList).map((arrearage, index) =>
+    let list = (this.props.arrearageList).map((arrearage, index) =>
       <MenuItem key={index}
         primaryText={arrearage.name}
+        secondaryText={arrearage.value}
         rightIcon={<ArrowDropRight />}
         menuItems={[
           <MenuItem
@@ -41,13 +42,23 @@ class ArrearageMenu extends Component {
         ]}
       />
     );
+    if(list.length <= 0) {
+      const styleSubtitle = {
+        'font-size': '130%',
+      };
+      list = (
+        <Subtitle
+          label="Não há dívidas cadastradas"
+          style={styleSubtitle}
+        />
+      );
+    }
     return(
       <Menu
         desktop={true}
         width={320}
         disableAutoFocus={true}
       >
-        <Divider />
         {list}
       </Menu>
     );

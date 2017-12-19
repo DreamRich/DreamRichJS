@@ -5,6 +5,7 @@ import MediaQuery from 'react-responsive';
 import {getData} from '../resources/Requests';
 import PropTypes from 'prop-types';
 import ArrearageMenu from './ArrearageMenu';
+import Subtitle from '../components/Subtitle';
 
 
 class ArrearageDashboard extends Component {
@@ -39,7 +40,7 @@ class ArrearageDashboard extends Component {
   }
 
   getMobile = () => {
-    const list = (this.state.arrearageList).map((arrearage, index) =>
+    let list = (this.state.arrearageList).map((arrearage, index) =>
       <Card key={index}>
         <CardHeader
           title={arrearage.name}
@@ -54,6 +55,17 @@ class ArrearageDashboard extends Component {
         </CardText>
       </Card>
     );
+    if(list.length <= 0) {
+      const styleSubtitle = {
+        'font-size': '130%',
+      };
+      list = (
+        <Subtitle
+          label="Não há dívidas cadastradas"
+          style={styleSubtitle}
+        />
+      );
+    }
     return (
       <Card>
         <CardTitle
