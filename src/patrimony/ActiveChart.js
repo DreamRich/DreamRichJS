@@ -37,10 +37,15 @@ export default class ActiveChart extends Component {
 
   generateRandomColors = (num) => {
     const colors = [];
+    const intColors = [];
+    const extColors = [];
     for(let i = 0;i < num;i++){
-      colors.push('#' + Math.floor(Math.random()*16777215).toString(16));
+      let randomNum = Math.floor(Math.random()*16777215);
+      intColors.push('#' + randomNum.toString(16));
+      extColors.push('#' + (randomNum + 16).toString(16));
     }
-    console.log(colors);
+    colors.push(intColors);
+    colors.push(extColors);
     return colors;
   }
 
@@ -54,15 +59,11 @@ export default class ActiveChart extends Component {
         const foo = {
           datasets: [{
             data: data.active_chart_dataset.labels,
-            backgroundColor: colors, 
+            backgroundColor: colors[0], 
             labels: data.active_chart_dataset.data,
           },{
             data: data.active_type_chart.data,
-            backgroundColor: [
-              '#36A2EB',
-              '#FF6384',
-              '#FFCE56'
-            ],
+            backgroundColor: colors[1], 
             labels: data.active_type_chart.labels, 
           },]
         };
