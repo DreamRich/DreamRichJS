@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {Line} from 'react-chartjs-2';
 import {getPatrimonyFlow} from '../resources/getModels';
 import PatrimonyStore from '../stores/PatrimonyStore';
+import formatCurrency from '../utils/currency';
 
 export default class PatrimonyChart extends Component {
 
@@ -17,9 +18,7 @@ export default class PatrimonyChart extends Component {
         intersect: false,
         callbacks: {
           label: (tooltipItem) => {
-            let strValue = String(tooltipItem.yLabel.toFixed(2)); // round to 2 decimal
-            strValue = strValue.replace(/\./g, ','); // replace the . with ,
-            strValue = strValue.replace(/(\d)(?=(\d{3})+,)/g, '$1.'); // match groups of 3 numbers and replace it with a point
+            const strValue = formatCurrency(tooltipItem.yLabel);
             return `R$: ${strValue}`;
           },
           title: (tooltipItens) => `Ano ${tooltipItens[0].xLabel}`
@@ -41,12 +40,12 @@ export default class PatrimonyChart extends Component {
       this.setState((state) => {
         const datasets = [
           {
-            data: flow.actual_flow_patrimony,
+            data: flow.actual_flow_patrimony.flow,
             label: 'Patrimônio atual',
             backgroundColor: '#aaaaaa',
           },
           {
-            data: flow.suggested_flow_patrimony,
+            data: flow.suggested_flow_patrimony.flow,
             label: 'Patrimônio sugerido',
             backgroundColor: '#a1fcff',
           }
