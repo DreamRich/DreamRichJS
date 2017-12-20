@@ -31,7 +31,7 @@ export default class ActiveChart extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      foo : {},
+      chartData : {},
     };
   }
 
@@ -56,7 +56,7 @@ export default class ActiveChart extends Component {
       routeMap.active_chart + id,
       (data) => {
         const colors = this.generateRandomColors(data.active_chart_dataset.data.length);
-        const foo = {
+        const chartData = {
           datasets: [{
             data: data.active_chart_dataset.labels,
             backgroundColor: colors[0], 
@@ -67,7 +67,7 @@ export default class ActiveChart extends Component {
             labels: data.active_type_chart.labels, 
           },]
         };
-        this.setState({foo:foo});
+        this.setState({chartData:chartData});
       }
     );
   }
