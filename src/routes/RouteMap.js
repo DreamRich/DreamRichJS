@@ -15,6 +15,7 @@ const routeMap = {
   state: '/api/client/state/',
   patrimony: '/api/patrimony/',
   actives: '/api/patrimony/active/',
+  active_chart: '/api/patrimony/active_chart/',
   activemanager: '/api/patrimony/active_manager/',
   active_type: '/api/patrimony/active_type/',
   realestates: '/api/patrimony/realestate/',

@@ -35,7 +35,7 @@ export default class Routers extends Component{
         <AuthorizedRoute exact permission="allow_any" path="/dashboard/:id/:tab?" component={ Dashboard } />
 
 
-        <AuthorizedRoute permission="see_own_client_data" path="/active_chart" component={ ActiveChart } />
+        <AuthorizedRoute exact permission="see_own_client_data" path="/active_chart/:id" component={ ActiveChart } />
         <AuthorizedRoute permission="see_own_client_data" path="/goals/:id?" component={ GoalChart } />
 
         <Route component={ NotFoundRoute } />
