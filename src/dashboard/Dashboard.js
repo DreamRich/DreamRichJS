@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
-import ClientDashboard from '../dashboard/ClientDashboard';
-import GoalDashboard from '../dashboard/GoalDashboard';
+import ClientDashboard from './ClientDashboard';
+import GoalDashboard from './GoalDashboard';
 // import IncomeDashboard from '../dashboard/IncomeDashboard';
-import PatrimonyDashboard from '../dashboard/PatrimonyDashboard';
-import MoneyDashboard from '../dashboard/MoneyDashboard';
+import PatrimonyDashboard from './PatrimonyDashboard';
+import MoneyDashboard from './MoneyDashboard';
 // import RegularCostRegister from '../cost/RegularCostRegister';
 import PropTypes from 'prop-types';
 import {getFinancialPlanning} from '../resources/getModels';
@@ -15,6 +15,8 @@ import ObjectIcon from 'material-ui/svg-icons/device/gps-fixed';
 import SecurityIcon from 'material-ui/svg-icons/hardware/security';
 //import MoneyIconSecundary from 'material-ui/svg-icons/editor/monetization-on';
 import BusinessIcon from 'material-ui/svg-icons/communication/business';
+import InfinityIcon from 'material-ui/svg-icons/places/all-inclusive';
+import IndependenceDashboard from './IndependenceDashboard';
 import { withRouter } from 'react-router';
 
 class Dashboard extends Component {
@@ -100,6 +102,12 @@ class Dashboard extends Component {
           cost_manager_id={this.state.financialPlanning.cost_manager_id}
         />,
         value: 'objetivo',
+      },
+      {
+        label: 'Independencia',
+        icon: <InfinityIcon className="material-icons"/>,
+        dashboard: <IndependenceDashboard />,
+        value: 'independencia',
       },
       {
         label: 'Patrimônio',

@@ -65,12 +65,12 @@ const postData = (url, data, handleData=noneFunction, handleFail=noneFunction, h
     });
 };
 
-const putData = (url, data, handleData=noneFunction) => {
+const putData = (url, data, handleData=noneFunction, handleOk=noneFunction, handleFail=noneFunction) => {
   request(url, {
     method: methods.PUT,
     headers: getAuthenticatedHeader(),
     body: JSON.stringify(data),
-  }, handleData);
+  }, handleData, handleOk, handleFail);
 };
 
 const deleteData = (url, handleOk) => {

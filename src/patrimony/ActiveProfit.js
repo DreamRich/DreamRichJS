@@ -1,63 +1,68 @@
 import React, {Component} from 'react';
-
-
-
-import PropTypes from 'prop-types';
+import RegisterStore from '../stores/RegisterStore';
+import PatrimonyChart from './PatrimonyChart';
+import {Card, CardTitle, CardText} from 'material-ui/Card';
+import PatrimonyStore from '../stores/PatrimonyStore';
+import _ from 'lodash';
+import PatrimonyDifference from './PatrimonyDifference';
+import Divider from 'material-ui/Divider';
 
 export default class ActiveProfit extends Component {
 
-  static propTypes = {
-    match: {params: {id: PropTypes.number,}}
-  }
-
   componentWillMount = () => {
-    /*   this.setState({
-      ...ActiveStore.getState(),
-      listener: ActiveStore.addListener(this.handleUpdate)
+    const {financialPlanning} = RegisterStore.getState();
+    this.setState({
+      patrimony: financialPlanning.patrimony_id,
+      financial_planning_id: financialPlanning.pk,
+      listener: RegisterStore.addListener(this.handleUpdate),
+      listenerPatrimony: PatrimonyStore.addListener(this.handleUpdatePatrimony)
     });
-    */
-    // const id = this.props.match.params.id;
   }
 
-  componentWillUnmount = () => {
-    this.state.listener.remove();
-  }
+  componentWillUnmount = () => this.state.listener.remove()
 
+  handleUpdatePatrimony = () => {
+    const {flow} = PatrimonyStore.getState();
+    if (flow.actual_flow_patrimony && flow.suggested_flow_patrimony) {
+      this.setState({
+        targetRate: flow.suggested_flow_patrimony.rate,
+        actualRate: flow.actual_flow_patrimony.rate,
+        endPatrimony: _.last(flow.suggested_flow_patrimony.flow),
+        actualPatrimony: _.last(flow.actual_flow_patrimony.flow),
+      });
+    }
+  }
   handleUpdate = () => {
-    // this.setState(ActiveStore.getState());
+    const {financialPlanning} = RegisterStore.getState();
+    this.setState({
+      patrimony_id: financialPlanning.patrimony_id,
+      financial_planning_id: financialPlanning.pk,
+    });
   }
 
-  render() {
+  render = () => {
+    const {targetRate, actualRate, endPatrimony, actualPatrimony} = this.state;
+    const data = {targetRate, actualRate, endPatrimony, actualPatrimony};
     return (
-      <div>
-        <h1> Carteira </h1>
-        {
-          this.state.actives.map( (item, idx) => {
-            const type = (item.active_type !== undefined ? item.active_type.name : '');
-            return (
-              <div key={idx}>
-                <label>{type} {item.name}: {item.value} {item.equivalent_rate}</label>
-              </div>
-            );
-          })
-        }
-        <h1> Carteira diferença </h1>
-        <label>Rentabilidade da carteira: {this.state.profit}</label>
-        <br />
-        <label>Ganho real: {this.state.profit}</label>
-        <br />
-        <label>Ganho sugerido: {this.state.sugest}</label>
-        <br />
-        <label>Diferença: {this.state.difference}</label>
-        <br />
-        <label>Total: {this.state.total}</label>
-        <br />
-        <label>Ganho atual: {this.state.total_atual}</label>
-        <br />
-        <label>Ganho sugerido: {this.state.total_sugest}</label>
-        <br />
-        <label>Diferença ganha: {this.state.total_difference}</label>
-      </div>
+      <Card className='Card'>
+        <CardTitle
+          title='Diferença no patrimônio'
+          showExpandableButton
+          actAsExpander
+        />
+        <CardText expandable>
+          <PatrimonyDifference data={data} />
+        </CardText>
+        <Divider />
+        <CardTitle
+          title='Gráfico'
+          subtitle={'Veja a diferença entre ter uma boa ' +
+            'carteira de investimentos'}
+        />
+        <CardText>
+          <PatrimonyChart id={this.state.financial_planning_id} />
+        </CardText>
+      </Card>
     );
   }
 }

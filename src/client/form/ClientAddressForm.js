@@ -13,6 +13,7 @@ import {FormsySelect, FormsyAutoComplete} from 'formsy-material-ui/lib';
 import MenuItem from 'material-ui/MenuItem';
 import MediaQuery from 'react-responsive';
 import _ from 'lodash';
+import {getStates} from '../../resources/getFormData';
 
 var {
   wordsError,
@@ -87,12 +88,7 @@ export default class ClientAddressForm extends Component {
 
   componentDidMount = () => this.getStateList()
 
-  fetchStates = (e, selectedCountry) => {
-    AppDispatcher.dispatchDefer({
-      action: ActionType.CLIENT.STATES,
-      country: selectedCountry
-    });
-  }
+  fetchStates = (e, selectedCountry) => getStates(selectedCountry)
 
   convertRegionToOptions = (listData) => {
     // Convert data from backend in MenuOptions

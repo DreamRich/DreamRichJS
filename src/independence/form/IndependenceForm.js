@@ -22,7 +22,7 @@ export default class IndependenceForm extends Component {
   fields = [
     {
       name: 'age', validations: 'isNumeric', validationError: numericError,
-      hintText: 'Idade da aposentadoria', floatingLabelText: 'Aposentadoria',
+      hintText: 'Idade da aposentadoria', floatingLabelText: 'Idade da aposentadoria',
     },
     {
       name: 'duration_of_usufruct', validations: 'isNumeric', validationError: numericError,
@@ -34,7 +34,7 @@ export default class IndependenceForm extends Component {
     },
     {
       name: 'remain_patrimony', validations: 'isNumeric',
-      validationError: numericError, floatingLabelText: 'Salário aposentadoria',
+      validationError: numericError, floatingLabelText: 'Salário mensal',
       hintText: 'Valor recebido mensalmente da aposentadoria',
     }
   ]

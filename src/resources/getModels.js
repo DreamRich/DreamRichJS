@@ -119,8 +119,19 @@ const getFinancialPlanning = (id) => {
     });
 };
 
+const getPatrimonyFlow = (id) => {
+  getData(`${routeMap.financial_planning}${id}/patrimony_flow/`,
+    (data) => {
+      AppDispatcher.dispatch({
+        action: ActionType.PATRIMONY.FLOW,
+        data: data
+      });
+    });
+};
+
 export {getClient,
   getFinancialPlanning,
   getGoalManager,
   getIncomeChanges,
-  getCostChanges,};
+  getCostChanges,
+  getPatrimonyFlow,};

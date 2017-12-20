@@ -48,4 +48,15 @@ const getTypesForClient = () => {
     })
   );
 };
-export {getGoalTypes, getRegularCostTypes, getActiveTypes, getTypesForClient};
+
+const getStates = (country_id) => {
+  getData(
+    `${routeMap.state}?country_id=${country_id}`,
+    (states) => AppDispatcher.dispatch({
+      action: ActionType.CLIENT.STATESUCCESS,
+      data: states,
+    })
+  );
+};
+
+export {getStates, getGoalTypes, getRegularCostTypes, getActiveTypes, getTypesForClient};
