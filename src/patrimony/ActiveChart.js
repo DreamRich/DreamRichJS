@@ -78,8 +78,7 @@ export default class ActiveChart extends Component {
     }
 
     render() {
-      console.log(this.state.foo);
-      return (<div><Doughnut data={this.state.foo} options={chartOptions} redraw/></div>); 
+      return (<div><Doughnut data={this.state.chartData} options={chartOptions} redraw/></div>); 
     }
 
 }
