@@ -26,6 +26,7 @@ const routeMap = {
   arrearages: '/api/patrimony/arrearage/',
   financial_planning: '/api/financial_planning/financial_planning/',
   financial_independence: '/api/financial_planning/financial_independence/',
+  protection_manager: '/api/protection/protection_manager/',
 };
 
 const valid_formats = ['json', 'html', 'xml'];

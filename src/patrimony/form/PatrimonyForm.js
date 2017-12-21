@@ -25,14 +25,16 @@ export default class PatrimonyForm extends Component {
       disabled={this.props.data.id !== undefined}
       isEditable
     >
-      <FormsyText
-        name='fgts'
-        validations='isNumeric'
-        validationError='Esse campo precisa ser numérico'
-        hintText='O quanto você recebe de fgts?'
-        floatingLabelText='FGTS'
-        value={ this.props.data.fgts || '0' }
-      />
+      <div>
+        <FormsyText
+          name='fgts'
+          validations='isNumeric'
+          validationError='Esse campo precisa ser numérico'
+          hintText='O quanto você recebe de fgts?'
+          floatingLabelText='FGTS'
+          value={ this.props.data.fgts || '0' }
+        />
+      </div>
     </Form>
   )
 
