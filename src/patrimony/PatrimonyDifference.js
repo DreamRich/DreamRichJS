@@ -18,7 +18,9 @@ export default class PatrimonyDifference extends Component {
       value = this.props.data.endPatrimony - this.props.data.actualPatrimony;
       differ = this.props.data.endPatrimony / this.props.data.actualPatrimony;
     }
-    return formatCurrency(value) + ' (' + this.toPorcent(differ) + ')';
+    const absoluteDifference = Math.abs(differ-1);
+    const porcentValue = this.toPorcent(absoluteDifference);
+    return formatCurrency(value) + ' (' + porcentValue + ')';
   }
 
   calcDifferRate = () => {

@@ -16,7 +16,7 @@ import ArrearageDashboard from '../arrearage/ArrearageDashboard';
 
 class PatrimonyDashboard extends Component {
 
-  state = PatrimonyStore.getState()
+  state = {...PatrimonyStore.getState(), size: 3}
 
   componentWillMount = () => {
     this.setState({
@@ -26,7 +26,11 @@ class PatrimonyDashboard extends Component {
 
   componentWillUnmount = () => this.state.listener.remove()
 
-  handleChange = () => this.setState(PatrimonyStore.getState())
+  handleChange = () => this.setState({...PatrimonyStore.getState()})
+
+  arrearageTable = (size) => {
+    this.setState({size});
+  }
 
   render = () => {
     return (
@@ -42,7 +46,8 @@ class PatrimonyDashboard extends Component {
         />
         <ArrearageDashboard
           id={this.state.patrimony.id}
-          size={9}
+          size={this.state.size}
+          sizeDashboard={this.arrearageTable}
         />
         <RealeStateForm
           id={this.state.patrimony.id}

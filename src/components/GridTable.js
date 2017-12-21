@@ -1,12 +1,18 @@
 'use strict';
 import '../stylesheet/Table.sass';
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import ReactDataGrid from 'react-data-grid';
 import Snackbar from 'material-ui/Snackbar';
 import {getData} from '../resources/Requests';
 import {Data} from 'react-data-grid-addons';
 
 export default class GridTable extends Component {
+
+  static propTypes = {
+    id: PropTypes.number,
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -42,6 +48,12 @@ export default class GridTable extends Component {
 
   componentWillMount = () => {
     getData(this.getRoute(), (data) => this.setState({rows: data}));
+  }
+
+  componentDidUpdate = (prevProps) => {
+    if (this.props.id !== prevProps.id) {
+      getData(this.getRoute(), (data) => this.setState({rows: data}));
+    }
   }
 
   getRows = () => Data.Selectors.getRows(this.state)
