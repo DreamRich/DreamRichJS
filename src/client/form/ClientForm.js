@@ -20,6 +20,7 @@ var {
   emailError,
   maxLengthError,
   telephoneError,
+  cpfError,
 } = errorMessages;
 
 export const personFields = [
@@ -51,16 +52,18 @@ export const personFields = [
   },
   {
     name: 'cpf',
-    validations: {
-      isNumeric: 'true',
-      maxLength: '14',
-    },
-    validationErrors: {
-      isNumeric: numericError,
-      maxLength: maxLengthError,
-    },
     hintText: 'Apenas números',
     floatingLabelText: 'CPF',
+    validations: {
+      isValidCPF: 'true',
+      maxLength: '11',
+      isNumeric: 'true'
+    },
+    validationErrors: {
+      isValidCPF: cpfError,
+      maxLength: maxLengthError,
+      isNumeric: numericError
+    },
     isUpdate: 'true'
   },
   {
