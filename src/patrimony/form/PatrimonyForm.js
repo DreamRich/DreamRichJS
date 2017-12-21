@@ -28,7 +28,7 @@ export default class PatrimonyForm extends Component {
       <FormsyText
         name='fgts'
         validations='isNumeric'
-        validationError='Esse campo precisa ser numérico'
+        validationError='Esse campo precisa ser numérico. Utilize "." ao invés de ","'
         hintText='O quanto você recebe de fgts?'
         floatingLabelText='FGTS'
         value={ this.props.data.fgts || '0' }

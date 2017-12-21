@@ -11,7 +11,7 @@ var {
   numericError,
   agencyError,
   maxLengthError,
-  accountError,
+  bankAccountError,
 } = errorMessages;
 
 export default class ClientBankAccountForm extends Component {
@@ -59,7 +59,7 @@ export default class ClientBankAccountForm extends Component {
               name="account"
               hintText="Número da conta bancária "
               validations={{matchRegexp: /\d{5}-?\d{1}/, isLength: 7}}
-              validationErrors={{matchRegexp: accountError, isLength: maxLengthError}}
+              validationErrors={{matchRegexp: bankAccountError, isLength: maxLengthError}}
               floatingLabelText="Conta"
               value={this.props.data.account}
               fullWidth={true}
