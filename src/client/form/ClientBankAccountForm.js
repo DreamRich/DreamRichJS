@@ -30,7 +30,7 @@ export default class ClientBankAccountForm extends Component {
     data: {},
   }
 
-  getContentCard(){
+  getContentCard = () => {
     return (
       <Form
         name="bank_account"

@@ -5,6 +5,7 @@ import ProtectionStore from '../stores/ProtectionStore';
 import '../stylesheet/RegisterForms.sass';
 import SubStepperProtection from './SubStepperProtection';
 import {postProtectionManager} from '../resources/saveModels';
+import SuccessionForm from './form/SuccessionForm';
 
 export default class ProtectionRegister extends Component {
 
@@ -18,8 +19,8 @@ export default class ProtectionRegister extends Component {
     this.setState({
       listener: ProtectionStore.addListener(this.handleChange)
     });
-    const {manager} = ProtectionStore.getState();
-    if (manager && manager.id === undefined) {
+    const {protection_manager} = ProtectionStore.getState();
+    if (protection_manager && protection_manager.id === undefined) {
       postProtectionManager(this.props.id);
     }
   }
@@ -30,6 +31,10 @@ export default class ProtectionRegister extends Component {
   handleChange = () => this.setState(ProtectionStore.getState())
 
   render() {
+    const {
+      actual_patrimony_succession,
+      future_patrimony_succession
+    } = this.state;
     const listInformationSteps = [
       {
         text: 'Reserva de emergência',
@@ -37,9 +42,15 @@ export default class ProtectionRegister extends Component {
           <div key={1} disabled={true}> oi </div>,
         nextButton: true,
       },{
-        text: 'Reserva de emergência 1',
+        text: 'Custos de sucessão',
         formComponent:
-          <div key={2+'oi'} disabled={true}> oi </div>,
+          <SuccessionForm
+            id={this.state.protection_manager.id}
+            actual={actual_patrimony_succession}
+            future={future_patrimony_succession}
+            disabled={actual_patrimony_succession !== undefined &&
+              future_patrimony_succession !== undefined}
+          />,
         nextButton: true,
       },{
         text: 'Reserva de emergência 2',
