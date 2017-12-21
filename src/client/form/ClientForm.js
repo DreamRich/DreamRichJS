@@ -7,48 +7,93 @@ import PropTypes from 'prop-types';
 import makeFormysTextList from '../../utils/MakeFormysTextList';
 import CardForm from '../../components/CardForm';
 import MediaQuery from 'react-responsive';
-import UploadFileModal from '../../components/UploadFileModal';
+//import UploadFileModal from '../../components/UploadFileModal';
 import ActionType from '../../actions/ActionType';
 import RaisedButton from 'material-ui/RaisedButton';
 import getElementCentered from '../../utils/getElementCentered';
 import Edit from 'material-ui/svg-icons/image/edit';
 import Save from 'material-ui/svg-icons/content/save';
 
-
 var {
   wordsError,
   numericError,
   emailError,
+  maxLengthError,
 } = errorMessages;
 
 export const personFields = [
   {
-    name: 'name',validations: 'isWords', validationError: wordsError,
-    hintText: 'Nome do cliente', floatingLabelText: 'Nome',
+    name: 'name',
+    validations: {
+      isWords: true,
+      maxLength: 30
+    },
+    validationErrors: {
+      isWords: wordsError,
+      maxLength: maxLengthError
+    },
+    hintText: 'Nome do cliente',
+    floatingLabelText: 'Nome',
   },
   {
-    name: 'surname',validations: 'isWords', validationError: wordsError,
-    hintText: 'Sobrenome do cliente', floatingLabelText: 'Sobrenome',
+    name: 'surname',
+    validations: {
+      isWords: true,
+      maxLength: 50
+    },
+    validationErrors: {
+      isWords: wordsError,
+      maxLength: maxLengthError
+    },
+    hintText: 'Sobrenome do cliente',
+    floatingLabelText: 'Sobrenome',
   },
   {
-    name: 'cpf',validations: 'isNumeric', validationError: numericError,
+    name: 'cpf',validations: 'isLength:8', validationError: numericError,
     hintText: 'Apenas números', floatingLabelText: 'CPF', isUpdate: 'true'
   },
   {
-    name: 'profession',validations: 'isWords', validationError: wordsError,
-    hintText: 'Profissão do cliente', floatingLabelText: 'Profissão',
+    name: 'profession',
+    validations: {
+      isWords: true,
+      maxLength: 200
+    },
+    validationErrors: {
+      isWords: wordsError,
+      maxLength: maxLengthError
+    },
+    hintText: 'Profissão do cliente',
+    floatingLabelText: 'Profissão',
   },
   {
-    name: 'telephone', hintText: 'Telefone do cliente',
-    floatingLabelText: 'Telefone', isUpdate: 'true'
+    name: 'telephone',
+    hintText: 'Telefone do cliente',
+    floatingLabelText: 'Telefone',
+    isUpdate: 'true'
   },
   {
-    name: 'email',validations: 'isEmail', validationError: emailError,
-    hintText: 'E-mail do cliente', floatingLabelText: 'E-mail',
+    name: 'email',
+    validations: {
+      isEmail: true,
+    },
+    validationErrors: {
+      isEmail: emailError,
+    },
+    hintText: 'E-mail do cliente',
+    floatingLabelText: 'E-mail',
   },
   {
-    name: 'hometown',validations: 'isWords', validationError: wordsError,
-    hintText: 'Onde o cliente nasceu?', floatingLabelText: 'Cidade natal',
+    name: 'hometown',
+    validations: {
+      isWords: true,
+      maxLength: 50
+    },
+    validationErrors: {
+      isWords: wordsError,
+      maxLength: maxLengthError
+    },
+    hintText: 'Onde o cliente nasceu?',
+    floatingLabelText: 'Cidade natal',
   },
 ];
 
@@ -79,7 +124,8 @@ export default class ClientForm extends Component {
       />
     );
   }
-
+  // TODO backend for upload files
+  /*
   getUploadFileModal(){
     if(!this.props.disabled){
       return (
@@ -87,7 +133,7 @@ export default class ClientForm extends Component {
       );
     }
   }
-
+  */
   getEditionOrSaveButton(){
     if(!this.state.isDisable){
       return (
@@ -141,14 +187,12 @@ export default class ClientForm extends Component {
               <Col key="thirdColumnClientForm" xs>
                 {formsyList.slice(6,8)}
                 {this.getFormsyDate()}
-                {this.getUploadFileModal()}
               </Col>
             </Row>
           </MediaQuery>
           <MediaQuery key="mobileClientForm" query="(max-width: 1030px)">
             {formsyList}
             {this.getFormsyDate()}
-            {this.getUploadFileModal()}
           </MediaQuery>
         </div>
       </Form>

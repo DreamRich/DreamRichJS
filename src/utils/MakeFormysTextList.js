@@ -12,7 +12,7 @@ const makeFormysTextList = (fieldList, textKey, data, isDisable) => {
           className={isDisable? 'disabled':''}
           name={field.name}
           validations={field.validations}
-          validationError={field.validationError}
+          validationErrors={field.validationErrors}
           hintText={field.hintText}
           floatingLabelText={field.floatingLabelText}
           value={fieldValue}
