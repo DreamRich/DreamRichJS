@@ -44,7 +44,7 @@ export default class GoalRegister extends Component {
     const steps = [
       {
         text: 'Taxas do planejamento',
-        formComponent: <PlanningForm 
+        formComponent: <PlanningForm
           key={1}
           disabled={this.state.fp} />,
       },

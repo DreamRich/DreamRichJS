@@ -19,14 +19,15 @@ var {
   numericError,
   emailError,
   maxLengthError,
+  telephoneError,
 } = errorMessages;
 
 export const personFields = [
   {
     name: 'name',
     validations: {
-      isWords: true,
-      maxLength: 30
+      isWords: 'true',
+      maxLength: '30'
     },
     validationErrors: {
       isWords: wordsError,
@@ -38,8 +39,8 @@ export const personFields = [
   {
     name: 'surname',
     validations: {
-      isWords: true,
-      maxLength: 50
+      isWords: 'true',
+      maxLength: '50'
     },
     validationErrors: {
       isWords: wordsError,
@@ -49,14 +50,24 @@ export const personFields = [
     floatingLabelText: 'Sobrenome',
   },
   {
-    name: 'cpf',validations: 'isLength:8', validationError: numericError,
-    hintText: 'Apenas números', floatingLabelText: 'CPF', isUpdate: 'true'
+    name: 'cpf',
+    validations: {
+      isNumeric: 'true',
+      maxLength: '14',
+    },
+    validationErrors: {
+      isNumeric: numericError,
+      maxLength: maxLengthError,
+    },
+    hintText: 'Apenas números',
+    floatingLabelText: 'CPF',
+    isUpdate: 'true'
   },
   {
     name: 'profession',
     validations: {
-      isWords: true,
-      maxLength: 200
+      isWords: 'true',
+      maxLength: '200'
     },
     validationErrors: {
       isWords: wordsError,
@@ -68,6 +79,14 @@ export const personFields = [
   {
     name: 'telephone',
     hintText: 'Telefone do cliente',
+    validations: {
+      matchRegexp: /^\([1-9]{2}\) [2-9][0-9]{3,4}-[0-9]{4}$/,
+      maxLength: '19'
+    },
+    validationErrors: {
+      matchRegexp: telephoneError,
+      maxLength: maxLengthError
+    },
     floatingLabelText: 'Telefone',
     isUpdate: 'true'
   },
