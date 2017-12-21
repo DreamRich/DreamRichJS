@@ -18,6 +18,7 @@ import BusinessIcon from 'material-ui/svg-icons/communication/business';
 import InfinityIcon from 'material-ui/svg-icons/places/all-inclusive';
 import IndependenceDashboard from './IndependenceDashboard';
 import { withRouter } from 'react-router';
+import CircularProgress from 'material-ui/CircularProgress';
 
 class Dashboard extends Component {
 
@@ -39,6 +40,7 @@ class Dashboard extends Component {
     }
     const tab = this.props.match.params.tab;
     this.setState({
+      loading: 0,
       tab: tab,
       listener: RegisterStore.addListener(this.handleChange)
     });
@@ -60,9 +62,21 @@ class Dashboard extends Component {
           data-route={dashboard.route}
           value={dashboard.value}
         >
-          <div className="marginTop">
-            {dashboard.dashboard}
-          </div>
+          {this.state.loading < 6 &&
+            <div style={ {textAlign: 'center'} }>
+              <CircularProgress
+                size={250}
+                mode='determinate'
+                value={this.state.loading}
+                min={0}
+                max={6}
+              />
+            </div>}
+          {this.state.loading >= 6 &&
+            <div className="marginTop">
+              {dashboard.dashboard}
+            </div>
+          }
         </Tab>
       );
     });
