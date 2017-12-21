@@ -64,10 +64,11 @@ export default class ClientAddressForm extends Component {
   state = AddressStore.getState()
 
   updateSearch = (e, searchText) => {
-    AppDispatcher.dispatch({
+    AppDispatcher.dispatchDefer({
       action: ActionType.CLIENT.ADDRESSTEXT,
       searchText: searchText
     });
+    //e; searchText;
   }
 
   handleUpdate = () => this.setState(AddressStore.getState())

@@ -6,12 +6,15 @@ import ActionType from '../actions/ActionType';
 import {postData, putData} from '../resources/Requests';
 import {routeMap} from '../routes/RouteMap';
 
+const AMOUNT = 1;
+
 class RegisterStore extends ReduceStore {
   constructor(){ super(AppDispatcher); }
 
   getInitialState(){ 
     return {
       financialPlanning: {},
+      state: 0,
     };
   }
 
@@ -95,8 +98,18 @@ class RegisterStore extends ReduceStore {
       return state;
 
     case ActionType.REGISTER.STORE:
-      return {...state, financialPlanning: action.data};
+      return {...state, financialPlanning: action.data, loading: AMOUNT};
 
+    case ActionType.REGULARCOST.GETFORMSUCCESS:
+      return {...state, loading: state.loading+AMOUNT};
+    case ActionType.GOAL.GETFORMSUCCESS:
+      return {...state, loading: state.loading+AMOUNT};
+    case ActionType.CLIENT.GETFORMSUCCESS:
+      return {...state, loading: state.loading+AMOUNT};
+    case ActionType.INDEPENDENCE.GETFORMSUCCESS:
+      return {...state, loading: state.loading+AMOUNT};
+    case ActionType.PATRIMONY.GETFORMSUCCESS:
+      return {...state, loading: state.loading+AMOUNT};
     case ActionType.RESETFORMSTORES:
       return {financialPlanning: {}};
 
