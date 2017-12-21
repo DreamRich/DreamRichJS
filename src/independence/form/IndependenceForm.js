@@ -21,20 +21,47 @@ export default class IndependenceForm extends Component {
 
   fields = [
     {
-      name: 'age', validations: 'isNumeric', validationError: numericError,
-      hintText: 'Idade da aposentadoria', floatingLabelText: 'Idade da aposentadoria',
+      name: 'age',
+      validations: {
+        isNumeric: 'true',
+      },
+      validationErrors: {
+        isNumeric: numericError,
+      },
+      hintText: 'Idade da aposentadoria',
+      floatingLabelText: 'Idade da aposentadoria',
     },
     {
-      name: 'duration_of_usufruct', validations: 'isNumeric', validationError: numericError,
-      hintText: 'Duração de usufruto da aposentadoria', floatingLabelText: 'Tempo de usufruto',
+      name: 'duration_of_usufruct',
+      validations: {
+        isNumeric: 'true',
+      },
+      validationErrors: {
+        isNumeric: numericError,
+      },
+      hintText: 'Duração de usufruto da aposentadoria',
+      floatingLabelText: 'Tempo de usufruto',
     },
     {
-      name: 'rate', validations: 'isNumeric', validationError: numericError,
-      hintText: 'Taxa', floatingLabelText: 'Taxa',
+      name: 'rate',
+      validations: {
+        isNumeric: 'true',
+      },
+      validationErrors: {
+        isNumeric: numericError,
+      },
+      hintText: 'Taxa',
+      floatingLabelText: 'Taxa',
     },
     {
-      name: 'remain_patrimony', validations: 'isNumeric',
-      validationError: numericError, floatingLabelText: 'Salário mensal',
+      name: 'remain_patrimony',
+      validations: {
+        isNumeric: 'true',
+      },
+      validationErrors: {
+        isNumeric: numericError,
+      },
+      floatingLabelText: 'Salário mensal',
       hintText: 'Valor recebido mensalmente da aposentadoria',
     }
   ]
