@@ -104,7 +104,7 @@ const putFormData = (url, data, handleData=noneFunction, handleFail=noneFunction
   );
 };
 
-const putData = (url, data, handleData=noneFunction, handleOk=noneFunction, handleFail=noneFunction) => {
+const putData = (url, data, handleData=noneFunction,  handleFail=noneFunction, handleOk=noneFunction) => {
   request(url, {
     method: methods.PUT,
     headers: getAuthenticatedHeader(),

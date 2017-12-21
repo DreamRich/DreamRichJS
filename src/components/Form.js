@@ -68,14 +68,13 @@ export default class Form extends Component {
     if (this.props.parent_name) {
       data[this.props.parent_name] = this.props.parent_id;
     }
-    AppDispatcher.dispatch(
-      {
-        action: this.props.action,
-        route: routeMap[this.props.name],
-        data: data,
-        state: this.props.name,
-        index: this.props.index,
-      });
+    AppDispatcher.dispatch({
+      action: this.props.action,
+      route: routeMap[this.props.name],
+      data: data,
+      state: this.props.name,
+      index: this.props.index,
+    });
   }
 
   getButton = () => {
@@ -121,6 +120,18 @@ export default class Form extends Component {
     return (null);
   }
 
+  getButtonsCard = () => {
+    return (
+      <Row around='xs'>
+        <Col xs>
+          {this.getCancelButton()}
+        </Col>
+        <Col>
+          {this.getButton()}
+        </Col>
+      </Row>
+    );
+  };
   disable = (condition) => {
     this.setState({disabled: condition});
     this.props.onDisable();
