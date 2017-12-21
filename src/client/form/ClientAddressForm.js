@@ -18,31 +18,79 @@ import {getStates} from '../../resources/getFormData';
 var {
   wordsError,
   numericError,
+  maxLengthError,
 } = errorMessages;
 
 const dataAddressSubForm = [
   {
-    name: 'cep',validations: 'isNumeric', validationError: numericError,
-    hintText: 'Apenas números', floatingLabelText: 'CEP', isUpdate: 'true',
+    name: 'cep',
+    validations: {
+      isNumeric: 'true',
+      maxLength: '9'
+    },
+    validationErrors: {
+      isNumeric: numericError,
+      maxLength: maxLengthError
+    },
+    hintText: 'Apenas números',
+    floatingLabelText: 'CEP',
+    isUpdate: 'true',
   },
   {
-    name: 'number',validations: 'isNumeric', validationError: numericError,
-    hintText: 'Número do lote', floatingLabelText: 'Número', isUpdate: 'true',
+    name: 'number',
+    validations: {
+      isNumeric: 'true',
+    },
+    validationErrors: {
+      isNumeric: numericError,
+    },
+    hintText: 'Número do lote',
+    floatingLabelText: 'Número',
+    isUpdate: 'true',
   },
   {
-    name: 'complement', hintText: 'Complemento do endereço',
+    name: 'complement',
+    hintText: 'Complemento do endereço',
+    validations: {
+      maxLength: '20'
+    },
+    validationErrors: {
+      maxLength: maxLengthError
+    },
     floatingLabelText: 'Complemento',
   },
   {
-    name: 'neighborhood',validations: 'isWords', validationError: wordsError,
-    hintText: 'Bairro do endereço', floatingLabelText: 'Bairro',
-  },{
-    name: 'detail', validations: 'isWords', validationError: wordsError,
-    hintText: 'Detalhes do endereço', floatingLabelText: 'Detalhes'
+    name: 'neighborhood',
+    validations: {
+      maxLength: '20'
+    },
+    validationErrors: {
+      maxLength: maxLengthError
+    },
+    hintText: 'Bairro do endereço',
+    floatingLabelText: 'Bairro',
   },
   {
-    name: 'city', validations: 'isWords', validationError: wordsError,
-    hintText: 'Cidade do endereço', floatingLabelText: 'Cidade'
+    name: 'detail',
+    validations: {
+      maxLength: '50'
+    },
+    validationErrors: {
+      maxLength: maxLengthError
+    },
+    hintText: 'Detalhes do endereço',
+    floatingLabelText: 'Detalhes'
+  },
+  {
+    name: 'city',
+    validations: {
+      maxLength: '50'
+    },
+    validationErrors: {
+      maxLength: maxLengthError
+    },
+    hintText: 'Cidade do endereço',
+    floatingLabelText: 'Cidade'
   },
 ];
 

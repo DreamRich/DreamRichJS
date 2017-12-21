@@ -11,10 +11,7 @@ import MediaQuery from 'react-responsive';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
-
-
 export default class SpouseForm extends Component {
-
 
   constructor(props){
     super(props);

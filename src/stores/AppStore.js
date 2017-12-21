@@ -8,11 +8,13 @@ import LoginStore from './LoginStore';
 class AppStore extends ReduceStore {
   constructor(){ super(AppDispatcher); }
 
-  getInitialState(){ 
+  getInitialState(){
     return {
       navDrawerOpen: false,
       open: false,
       auth: false,
+      snackOpen: false,
+      snackMessage: '',
     };
   }
 
@@ -31,6 +33,13 @@ class AppStore extends ReduceStore {
     case ActionType.LOGOUT:
       AppDispatcher.waitFor([LoginStore.getDispatchToken()]);
       return {...state, auth: false};
+
+    case ActionType.USERFEEDBACK:
+      return {
+        ...state,
+        snackOpen: action.snackOpen===undefined ? true: action.snackOpen,
+        snackMessage: action.message,
+      };
 
     default:
       return state;

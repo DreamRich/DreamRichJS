@@ -9,6 +9,9 @@ import ActionType from '../../actions/ActionType';
 
 var {
   numericError,
+  agencyError,
+  maxLengthError,
+  bankAccountError,
 } = errorMessages;
 
 export default class ClientBankAccountForm extends Component {
@@ -42,8 +45,9 @@ export default class ClientBankAccountForm extends Component {
           <Col xs>
             <FormsyText
               name="agency"
-              validations="isNumeric"
               validationError={numericError}
+              validations={{matchRegexp: /\d{4}-?\d{1}/, isLength: 6}}
+              validationErrors={{matchRegexp: agencyError, isLength: maxLengthError}}
               hintText="Agência da conta bancária "
               floatingLabelText="Agência"
               value={this.props.data.agency}
@@ -54,6 +58,8 @@ export default class ClientBankAccountForm extends Component {
             <FormsyText
               name="account"
               hintText="Número da conta bancária "
+              validations={{matchRegexp: /\d{5}-?\d{1}/, isLength: 7}}
+              validationErrors={{matchRegexp: bankAccountError, isLength: maxLengthError}}
               floatingLabelText="Conta"
               value={this.props.data.account}
               fullWidth={true}
