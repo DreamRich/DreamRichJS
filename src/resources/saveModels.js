@@ -37,4 +37,19 @@ const postGoalManager = () => {
   );
 };
 
-export {postGoalManager, postActiveManager, postRegularCostManager};
+const postProtectionManager = (financial_planning_id) => {
+  postData(
+    routeMap.protection_manager,
+    {financial_planning_id: financial_planning_id},
+    (data) => AppDispatcher.dispatch({
+      action: ActionType.PROTECTION.SUCCESS,
+      data: data,
+      state: 'protection_manager'
+    })
+  );
+};
+
+export {postGoalManager,
+  postActiveManager,
+  postRegularCostManager,
+  postProtectionManager};
