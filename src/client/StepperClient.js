@@ -25,6 +25,11 @@ class StepperClient extends React.Component {
 
   getForms = () => [
     {
+      name: 'Proteção',
+      register: <ProtectionRegister key={6} id={this.props.match.params.id} />,
+      state: 'protection_id',
+    },
+    {
       name: 'Cadastro Básico',
       register: <ClientRegister key={1} />,
       state: 'pk',
@@ -49,12 +54,6 @@ class StepperClient extends React.Component {
       register: <PatrimonyRegister key={5} main={false}/>,
       state: 'patrimony_id',
     },
-    {
-      name: 'Proteção',
-      register: <ProtectionRegister key={6} id={this.props.match.params.id} />,
-      state: 'protection_id',
-    },
-
   ]
 
   static propTypes = {

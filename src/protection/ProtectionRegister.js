@@ -5,7 +5,7 @@ import ProtectionStore from '../stores/ProtectionStore';
 import '../stylesheet/RegisterForms.sass';
 import SubStepperProtection from './SubStepperProtection';
 import {postProtectionManager} from '../resources/saveModels';
-import SuccessionForm from './form/SuccessionForm';
+import {ActualPatrimonySuccessionForm, FuturePatrimonySuccessionForm} from './form/SuccessionForm';
 
 export default class ProtectionRegister extends Component {
 
@@ -42,14 +42,21 @@ export default class ProtectionRegister extends Component {
           <div key={1} disabled={true}> oi </div>,
         nextButton: true,
       },{
-        text: 'Custos de sucessão',
+        text: 'Custos de sucessão hoje',
         formComponent:
-          <SuccessionForm
+          <ActualPatrimonySuccessionForm
             id={this.state.protection_manager.id}
-            actual={actual_patrimony_succession}
-            future={future_patrimony_succession}
-            disabled={actual_patrimony_succession !== undefined &&
-              future_patrimony_succession !== undefined}
+            data={actual_patrimony_succession}
+            disabled={actual_patrimony_succession !== undefined}
+          />,
+        nextButton: true,
+      },{
+        text: 'Custos de sucessão futuro',
+        formComponent:
+          <FuturePatrimonySuccessionForm
+            id={this.state.protection_manager.id}
+            data={future_patrimony_succession}
+            disabled={future_patrimony_succession !== undefined}
           />,
         nextButton: true,
       },{

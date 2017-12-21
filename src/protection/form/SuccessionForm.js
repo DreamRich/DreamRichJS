@@ -40,7 +40,7 @@ const GenericSuccessionForm = (name, title, subTitle) => {
                 validationError={numericError}
                 hintText='Valor pago para o cartório'
                 floatingLabelText='Taxa ITCMD'
-                value={100 || this.props.data.itcmd_tax}
+                value={this.props.data.itcmd_tax}
                 fullWidth={true}
               />
             </Col>
@@ -51,7 +51,7 @@ const GenericSuccessionForm = (name, title, subTitle) => {
                 name='oab_tax'
                 hintText='Valor pago ao advogado'
                 floatingLabelText='Taxa advogado'
-                value={100 || this.props.data.oab_tax}
+                value={this.props.data.oab_tax}
                 fullWidth={true}
               />
             </Col>
@@ -62,7 +62,7 @@ const GenericSuccessionForm = (name, title, subTitle) => {
                 name='other_taxes'
                 hintText='Outros custos de sucessão'
                 floatingLabelText='Taxas extras'
-                value={100 || this.props.data.other_taxes}
+                value={this.props.data.other_taxes}
                 fullWidth={true}
               />
             </Col>
@@ -70,7 +70,7 @@ const GenericSuccessionForm = (name, title, subTitle) => {
         </Form>
       );
     }
-   
+
     render = () => {
       return (
         <CardForm
@@ -91,6 +91,8 @@ const FuturePatrimonySuccessionForm = GenericSuccessionForm(
   'future_patrimony_succession',
   'Custo de sucessão no futuro',
   'Este são os custos para sucessão no futuro');
+
+export {ActualPatrimonySuccessionForm, FuturePatrimonySuccessionForm};
 
 export default class SuccessionForm extends Component {
 

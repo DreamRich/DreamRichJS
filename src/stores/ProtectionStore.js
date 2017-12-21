@@ -13,19 +13,12 @@ class ProtectionStore extends ReduceStore {
 
   getInitialState(){
     return {
-      protection: {},
+      actual_patrimony_succession: {},
+      future_patrimony_succession: {},
       canSubmit: false,
       stepIndex: 0,
-      incomes: [{index: 0, selected: true}],
-      realestates: [{index: 0, selected: true}],
-      companyparticipations: [{index: 0, selected: true}],
-      arrearages: [{index: 0, selected: true}],
       equipments: [{index: 0, selected: true}],
-      types: [],
-      actives: [{index: 0, selected: true}],
       protection_manager: {},
-      unit_change: [],
-      flow: {},
     };
   }
 
@@ -140,6 +133,8 @@ class ProtectionStore extends ReduceStore {
   getProtectionData = (data) => {
     const protection_manager = {id: data.id};
     delete data.id;
+    data.actual_patrimony_succession = data.actual_patrimony_succession || {};
+    data.future_patrimony_succession = data.future_patrimony_succession || {};
     return {...data, protection_manager};
   }
 

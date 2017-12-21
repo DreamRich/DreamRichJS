@@ -27,6 +27,8 @@ const routeMap = {
   financial_planning: '/api/financial_planning/financial_planning/',
   financial_independence: '/api/financial_planning/financial_independence/',
   protection_manager: '/api/protection/protection_manager/',
+  future_patrimony_succession: '/api/protection/independence_patrimony/',
+  actual_patrimony_succession: '/api/protection/actual_patrimony/',
 };
 
 const valid_formats = ['json', 'html', 'xml'];
