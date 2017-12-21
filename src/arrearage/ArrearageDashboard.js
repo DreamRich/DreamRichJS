@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
 import ArrearageTable from './ArrearageTable';
-import {Card, CardHeader, CardText, CardTitle} from 'material-ui/Card';
+import {Card, CardActions, CardHeader, CardText, CardTitle} from 'material-ui/Card';
 import MediaQuery from 'react-responsive';
 import {getData} from '../resources/Requests';
 import PropTypes from 'prop-types';
 import ArrearageMenu from './ArrearageMenu';
 import Subtitle from '../components/Subtitle';
+import { Row, Col } from 'react-flexbox-grid';
+import Reply from 'material-ui/svg-icons/content/reply';
+import IconButton from 'material-ui/IconButton';
 
 
 class ArrearageDashboard extends Component {
@@ -18,6 +21,7 @@ class ArrearageDashboard extends Component {
 
   static propTypes = {
     id: PropTypes.number,
+    sizeDashboard: PropTypes.func,
   }
 
 
@@ -78,15 +82,51 @@ class ArrearageDashboard extends Component {
     );
   }
 
-  getDesktop = () => {
-    return (<ArrearageMenu arrearageList={this.state.arrearageList}/>);
+  showTable = (id) => {
+    this.props.sizeDashboard(12);
+    console.log('oi', this.state.id);
+    this.setState({id: id, open: true});
   }
 
-  render() {
+  hideTable = () => {
+    this.props.sizeDashboard(3);
+    this.setState({ open:false, });
+  }
+
+
+  getDesktop = () => {
+    return (<ArrearageMenu
+      arrearageList={this.state.arrearageList}
+      showTable={this.showTable}
+    />);
+  }
+
+  render = () => {
     return(
       <div>
         <MediaQuery key="desktopArrearageDashboard" query="(min-width: 1030px)">
-          {this.getDesktop()}
+          <Row>
+            <Col xs={this.state.open ? 3:12}>
+              {this.getDesktop()}
+            </Col>
+            {this.state.open &&
+              <Col xs={9}>
+                <Card>
+                  <CardTitle
+                    title='Detalhe de parcelas da dívida'
+                  />
+                  <CardActions>
+                    <IconButton onClick={this.hideTable} >
+                      <Reply />
+                    </IconButton>
+                  </CardActions>
+                  <CardText>
+                    <ArrearageTable id={this.state.id} />
+                  </CardText>
+                </Card>
+              </Col>
+            }
+          </Row>
         </MediaQuery>
         <MediaQuery key="mobileArrearageDashboard" query="(max-width: 1030px)">
           {this.getMobile()}
