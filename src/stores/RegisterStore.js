@@ -41,6 +41,12 @@ class RegisterStore extends ReduceStore {
       }
       return state;
 
+    case ActionType.PROTECTION.SUCCESS:
+      financialPlanning = state.financialPlanning;
+      if(!financialPlanning.protection_manager){
+        financialPlanning.protection_manager = action.data.id;
+      }
+      return {...state, financialPlanning};
     case ActionType.REGULARCOST.SUCCESS:
       financialPlanning = state.financialPlanning;
       if (!financialPlanning.cost_manager_id) {

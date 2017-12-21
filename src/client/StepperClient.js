@@ -2,6 +2,7 @@ import React from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import ClientRegister from '../client/ClientRegister';
+import ProtectionRegister from '../protection/ProtectionRegister';
 import RegularCostRegister from '../cost/RegularCostRegister';
 import GoalRegister from '../goal/GoalRegister';
 import PatrimonyRegister from '../patrimony/PatrimonyRegister';
@@ -22,7 +23,7 @@ import {
 
 class StepperClient extends React.Component {
 
-  forms = [
+  getForms = () => [
     {
       name: 'Cadastro Básico',
       register: <ClientRegister key={1} />,
@@ -50,9 +51,10 @@ class StepperClient extends React.Component {
     },
     {
       name: 'Proteção',
-      register: <div key={6} >Proteção </div>,
+      register: <ProtectionRegister key={6} id={this.props.match.params.id} />,
       state: 'protection_id',
     },
+
   ]
 
   static propTypes = {
@@ -88,15 +90,15 @@ class StepperClient extends React.Component {
   handleUpdate = () => this.setState(RegisterStore.getState())
 
   getStepContent = (stepIndex) => {
-    const maxSteps = this.forms.length;
-    return this.forms[stepIndex % maxSteps].register;
+    const maxSteps = this.getForms().length;
+    return this.getForms()[stepIndex % maxSteps].register;
   }
 
   handleNext = () => {
     const {stepIndex, financialPlanning, higher} = this.state;
     const higherStep = (stepIndex >= higher ? stepIndex+1 : higher);
 
-    if(stepIndex === this.forms.length -1) {
+    if(stepIndex === this.getForms().length -1) {
       this.props.history.push(`/dashboard/${financialPlanning.pk}/`);
     }
 
@@ -124,7 +126,7 @@ class StepperClient extends React.Component {
             connector={<ArrowForwardIcon />}
             linear={false}
           >
-            {this.forms.map( (item, index) => <Step
+            {this.getForms().map( (item, index) => <Step
               key={index}
               onClick={() => this.setState({stepIndex: index})}
               disabled={index > this.state.higher}
@@ -149,7 +151,7 @@ class StepperClient extends React.Component {
               style={{float: 'left'}}
             />
           }
-          {this.state.financialPlanning[this.forms[stepIndex].state] && 
+          {this.state.financialPlanning[this.getForms()[stepIndex].state] && 
               <RaisedButton
                 label={stepIndex === 5 ? 'Finalizar' : 'Seguir para o passo seguinte'}
                 primary={true}

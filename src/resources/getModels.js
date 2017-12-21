@@ -27,6 +27,18 @@ const getIncomeChanges = (id) => {
     });
 };
 
+const getProtection = (id) => {
+  getData(
+    `${routeMap.protection_manager}${id}`,
+    (data) => {
+      AppDispatcher.dispatch({
+        action: ActionType.PROTECTION.GETFORMSUCCESS,
+        data: data,
+        state: 'protection_manager',
+      });
+    });
+};
+
 const getClient = (id) => {
   getData(
     `${routeMap.active_client}${id}/`,
@@ -115,6 +127,9 @@ const getFinancialPlanning = (id) => {
       if (data.financial_independence_id) {
         getFinancialIndependence(data.financial_independence_id);
       }
+      if (data.protection_manager) {
+        getProtection(data.protection_manager);
+      }
       // others gets
     });
 };
@@ -134,4 +149,5 @@ export {getClient,
   getGoalManager,
   getIncomeChanges,
   getCostChanges,
-  getPatrimonyFlow,};
+  getPatrimonyFlow,
+  getProtection,};
