@@ -7,6 +7,7 @@ import SubStepperProtection from './SubStepperProtection';
 import {postProtectionManager} from '../resources/saveModels';
 import {ActualPatrimonySuccessionForm, FuturePatrimonySuccessionForm} from './form/SuccessionForm';
 import PrivatePensionForm from './form/PrivatePensionForm';
+import ReserveInLackForm from './form/ReserveInLackForm';
 
 export default class ProtectionRegister extends Component {
 
@@ -61,6 +62,15 @@ export default class ProtectionRegister extends Component {
           />,
         nextButton: true,
       },{
+        text: 'Patrimônio para família',
+        formComponent:
+          <ReserveInLackForm
+            id={this.state.protection_manager.id}
+            data={this.state.reserve_in_lack}
+            disabled={this.state.reserve_in_lack !== undefined}
+          />,
+        nextButton: true,
+      },{
         text: 'Previdência privada',
         formComponent:
           <PrivatePensionForm
@@ -68,11 +78,6 @@ export default class ProtectionRegister extends Component {
             disabled={true}
             data={this.state.private_pension}
           />,
-        nextButton: true,
-      },{
-        text: 'Reserva de emergência3 ',
-        formComponent:
-          <div key={4} disabled={true}> oi </div>,
         nextButton: true,
       },{
         text: 'Reserva de emergência 5',

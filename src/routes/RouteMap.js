@@ -30,6 +30,7 @@ const routeMap = {
   future_patrimony_succession: '/api/protection/independence_patrimony/',
   actual_patrimony_succession: '/api/protection/actual_patrimony/',
   private_pensions: '/api/protection/private_pension/',
+  reserve_in_lack: '/api/protection/reserve_lack/',
 };
 
 const valid_formats = ['json', 'html', 'xml'];
