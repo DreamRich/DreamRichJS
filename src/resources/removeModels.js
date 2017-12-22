@@ -9,6 +9,8 @@ const removeGoal = (items, key, remove) => removeFromList(routeMap.goal, items, 
 
 const removePatrimony = (patrimony, items, key, remove) => removeFromList(routeMap[patrimony], items, key, remove);
 
+const removeProtection = (protection, items, key, remove) => removeFromList(routeMap[protection], items, key, remove);
+
 // Remove or only cancel the edit in row
 const removeFromList = (route, items, key, remove) => {
   const item = items.find( item => item.index === key);
@@ -27,4 +29,5 @@ const removeFromList = (route, items, key, remove) => {
   }
 };
 
-export {removeClient, removeRegularCost, removeGoal, removePatrimony};
+export {removeClient, removeRegularCost, removeGoal, removePatrimony,
+  removeProtection};

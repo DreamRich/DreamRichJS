@@ -29,6 +29,7 @@ const routeMap = {
   protection_manager: '/api/protection/protection_manager/',
   future_patrimony_succession: '/api/protection/independence_patrimony/',
   actual_patrimony_succession: '/api/protection/actual_patrimony/',
+  private_pensions: '/api/protection/private_pension/',
 };
 
 const valid_formats = ['json', 'html', 'xml'];

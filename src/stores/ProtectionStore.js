@@ -6,7 +6,7 @@ import {postOrPutStrategy} from '../resources/Requests';
 import ActionType from '../actions/ActionType';
 import getLastIndex from '../utils/getLastIndex';
 // import addIndex from '../utils/addIndexItem';
-// import {removeProtection} from '../resources/removeModels';
+import {removeProtection} from '../resources/removeModels';
 
 class ProtectionStore extends ReduceStore {
   constructor(){ super(AppDispatcher); }
@@ -19,6 +19,7 @@ class ProtectionStore extends ReduceStore {
       stepIndex: 0,
       equipments: [{index: 0, selected: true}],
       protection_manager: {},
+      private_pensions: {},
     };
   }
 
@@ -109,7 +110,8 @@ class ProtectionStore extends ReduceStore {
       return {...state, [action.state]: arr};
 
     case ActionType.PROTECTION.REMOVE:
-      // arr = removeProtection(action.state, state[action.state], action.key, action.remove);
+      arr = removeProtection(action.state,
+        state[action.state], action.key, action.remove);
       return {...state, [action.state]: arr};
 
     case ActionType.PROTECTION.TYPESUCCESS:
@@ -135,6 +137,7 @@ class ProtectionStore extends ReduceStore {
     delete data.id;
     data.actual_patrimony_succession = data.actual_patrimony_succession || {};
     data.future_patrimony_succession = data.future_patrimony_succession || {};
+    data.private_pensions = data.private_pensions || {};
     return {...data, protection_manager};
   }
 

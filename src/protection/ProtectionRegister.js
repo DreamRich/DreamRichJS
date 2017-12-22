@@ -6,6 +6,7 @@ import '../stylesheet/RegisterForms.sass';
 import SubStepperProtection from './SubStepperProtection';
 import {postProtectionManager} from '../resources/saveModels';
 import {ActualPatrimonySuccessionForm, FuturePatrimonySuccessionForm} from './form/SuccessionForm';
+import PrivatePensionForm from './form/PrivatePensionForm';
 
 export default class ProtectionRegister extends Component {
 
@@ -60,9 +61,13 @@ export default class ProtectionRegister extends Component {
           />,
         nextButton: true,
       },{
-        text: 'Reserva de emergência 2',
+        text: 'Previdência privada',
         formComponent:
-          <div key={3} disabled={true}> oi </div>,
+          <PrivatePensionForm
+            id={this.state.protection_manager.id}
+            disabled={true}
+            data={this.state.private_pension}
+          />,
         nextButton: true,
       },{
         text: 'Reserva de emergência3 ',

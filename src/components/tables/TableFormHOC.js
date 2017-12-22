@@ -22,6 +22,7 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
       headers: PropTypes.array,
       modal: PropTypes.bool,
       expandable: PropTypes.bool,
+      beforeSubmitRow: PropTypes.func,
     }
 
     static defaultProps = {
@@ -30,6 +31,7 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
       enableAdd: true,
       modal: false,
       expandable: false,
+      beforeSubmitRow: () => {}
     }
 
     componentWillMount = () => this.setState({
@@ -43,6 +45,7 @@ const TableFormHOC = (actions, basicData, Store, getStoreState) => {
     }
 
     submitRow = (row) => {
+      this.props.beforeSubmitRow(row);
       row.data[basicData.parentId] = this.props.id;
       AppDispatcher.dispatch({
         action: actions.submit,
