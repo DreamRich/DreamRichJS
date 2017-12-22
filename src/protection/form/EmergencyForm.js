@@ -27,10 +27,12 @@ export default class EmergencyForm extends Component {
   }
 
   getContentCard = () => {
+    const disabled = this.props.data !== undefined &&
+      this.props.data.id !== undefined;
     return (
       <Form
         name='emergency_reserve'
-        disabled={this.props.data !== undefined && this.props.data.id}
+        disabled={disabled}
         action={ActionType.PROTECTION.POSTFORM}
         onSubmit={this.onSubmit}
         isEditable

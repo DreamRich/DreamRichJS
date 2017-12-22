@@ -20,6 +20,7 @@ class ProtectionStore extends ReduceStore {
       actual_patrimony_succession: {},
       future_patrimony_succession: {},
       reserve_in_lack: {},
+      emergency_reserve: {},
       life_insurances: [],
       private_pensions: [],
     };
@@ -35,6 +36,10 @@ class ProtectionStore extends ReduceStore {
 
     case ActionType.PROTECTION.GETFORMSUCCESS:
       return {...state, ...this.getProtectionData(action.data)};
+
+    case ActionType.PROTECTION.GETEMERGENCY:
+      console.log('hue');
+      return {...state, emergency_reserve: action.data};
 
     case ActionType.PROTECTION.SUBMIT:
       return {...state, canSubmit: action.canSubmit};

@@ -106,6 +106,8 @@ class RegisterStore extends ReduceStore {
     case ActionType.REGISTER.STORE:
       return {...state, financialPlanning: action.data, loading: AMOUNT};
 
+    case ActionType.PROTECTION.GETFORMSUCCESS:
+      return {...state, loading: state.loading+AMOUNT};
     case ActionType.REGULARCOST.GETFORMSUCCESS:
       return {...state, loading: state.loading+AMOUNT};
     case ActionType.GOAL.GETFORMSUCCESS:

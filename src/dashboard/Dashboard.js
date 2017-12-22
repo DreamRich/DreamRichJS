@@ -69,7 +69,7 @@ class Dashboard extends Component {
                 mode='determinate'
                 value={this.state.loading}
                 min={0}
-                max={6}
+                max={7}
               />
             </div>}
           {this.state.loading >= 6 &&

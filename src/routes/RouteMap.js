@@ -32,6 +32,7 @@ const routeMap = {
   private_pensions: '/api/protection/private_pension/',
   reserve_in_lack: '/api/protection/reserve_lack/',
   life_insurances: '/api/protection/life_insurance/',
+  emergency_reserve: '/api/protection/emergency_reserve/',
 };
 
 const valid_formats = ['json', 'html', 'xml'];

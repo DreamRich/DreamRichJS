@@ -25,11 +25,6 @@ class StepperClient extends React.Component {
 
   getForms = () => [
     {
-      name: 'Proteção',
-      register: <ProtectionRegister key={6} id={this.props.match.params.id} />,
-      state: 'protection_id',
-    },
-    {
       name: 'Cadastro Básico',
       register: <ClientRegister key={1} />,
       state: 'pk',
@@ -53,6 +48,11 @@ class StepperClient extends React.Component {
       name: 'Patrimônio',
       register: <PatrimonyRegister key={5} main={false}/>,
       state: 'patrimony_id',
+    },
+    {
+      name: 'Proteção',
+      register: <ProtectionRegister key={6} id={this.props.match.params.id} />,
+      state: 'protection_manager',
     },
   ]
 
@@ -97,7 +97,7 @@ class StepperClient extends React.Component {
     const {stepIndex, financialPlanning, higher} = this.state;
     const higherStep = (stepIndex >= higher ? stepIndex+1 : higher);
 
-    if(stepIndex === this.getForms().length -1) {
+    if(stepIndex === this.getForms().length - 1) {
       this.props.history.push(`/dashboard/${financialPlanning.pk}/`);
     }
 
@@ -150,7 +150,7 @@ class StepperClient extends React.Component {
               style={{float: 'left'}}
             />
           }
-          {this.state.financialPlanning[this.getForms()[stepIndex].state] && 
+          {this.state.financialPlanning[this.getForms()[stepIndex].state] &&
               <RaisedButton
                 label={stepIndex === 5 ? 'Finalizar' : 'Seguir para o passo seguinte'}
                 primary={true}

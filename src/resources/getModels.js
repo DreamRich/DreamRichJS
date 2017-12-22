@@ -39,6 +39,23 @@ const getProtection = (id) => {
     });
 };
 
+const getEmergencyReserve = (patrimony_id, cost_manager_id) => {
+  getData(
+    `${routeMap.emergency_reserve}?patrimony_id=${patrimony_id}` +
+    `&cost_manager_id=${cost_manager_id}`,
+    (data) => {
+      if (data.length) {
+        data = data[0];
+        AppDispatcher.dispatch({
+          action: ActionType.PROTECTION.GETEMERGENCY,
+          data: data,
+          state: 'emergency_reserve',
+        });
+      }
+    });
+
+};
+
 const getClient = (id) => {
   getData(
     `${routeMap.active_client}${id}/`,
@@ -129,6 +146,9 @@ const getFinancialPlanning = (id) => {
       }
       if (data.protection_manager) {
         getProtection(data.protection_manager);
+      }
+      if (data.patrimony_id && data.cost_manager_id) {
+        getEmergencyReserve(data.patrimony_id, data.cost_manager_id);
       }
       // others gets
     });
