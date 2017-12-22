@@ -5,7 +5,7 @@ import AppDispatcher from '../AppDispatcher';
 import {postOrPutStrategy} from '../resources/Requests';
 import ActionType from '../actions/ActionType';
 import getLastIndex from '../utils/getLastIndex';
-// import addIndex from '../utils/addIndexItem';
+import addIndex from '../utils/addIndexItem';
 import {removeProtection} from '../resources/removeModels';
 
 class ProtectionStore extends ReduceStore {
@@ -13,15 +13,15 @@ class ProtectionStore extends ReduceStore {
 
   getInitialState(){
     return {
-      actual_patrimony_succession: {},
-      future_patrimony_succession: {},
       canSubmit: false,
       stepIndex: 0,
       equipments: [{index: 0, selected: true}],
       protection_manager: {},
-      private_pensions: [],
+      actual_patrimony_succession: {},
+      future_patrimony_succession: {},
       reserve_in_lack: {},
       life_insurances: [],
+      private_pensions: [],
     };
   }
 
@@ -135,13 +135,18 @@ class ProtectionStore extends ReduceStore {
   }
 
   getProtectionData = (data) => {
+
     const protection_manager = {id: data.id};
     delete data.id;
+
     data.actual_patrimony_succession = data.actual_patrimony_succession || {};
     data.future_patrimony_succession = data.future_patrimony_succession || {};
-    data.private_pensions = data.private_pensions || [];
     data.reserve_in_lack = data.reserve_in_lack || {};
-    data.life_insurances = data.life_insurances || [];
+
+    // Add a index to be render correctly in table form
+    data.private_pensions = data.private_pensions.map(addIndex) || [];
+    data.life_insurances = data.life_insurances.map(addIndex) || [];
+
     return {...data, protection_manager};
   }
 
