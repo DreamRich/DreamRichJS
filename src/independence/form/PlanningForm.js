@@ -21,16 +21,16 @@ export default class PlanningForm extends Component {
 
   fields = [
     {
-      name: 'cdi', validations: 'isNumeric', validationError: numericError,
-      hintText: 'Taxa atual do CDI', floatingLabelText: 'Taxa CDI (%)',
+      name: 'cdi', validations: {isNumeric: 'true'}, validationErrors: {isNumeric: numericError},
+      hintText: 'Taxa atual do CDI', floatingLabelText: 'Taxa CDI (%)'
     },
     {
-      name: 'ipca', validations: 'isNumeric', validationError: numericError,
+      name: 'ipca', validations: {isNumeric: 'true'}, validationErrors: {isNumeric: numericError},
       hintText: 'Inflação média a ser considerada', floatingLabelText: 'Inflação - IPCA(%)',
     },
     {
-      name: 'target_profitability', validations: 'isNumeric',
-      validationError: numericError, hintText: 'Taxa em relação a porcentagem do CDI desejada', floatingLabelText: 'Taxa %CDI alvo',
+      name: 'target_profitability', validations: {isNumeric: 'true'}, validationErrors: {isNumeric: numericError},
+      hintText: 'Taxa em relação a porcentagem do CDI desejada', floatingLabelText: 'Taxa %CDI alvo',
     }
   ]
 

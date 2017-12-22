@@ -51,7 +51,7 @@ const getData = (url, handleData=noneFunction, handleOk=noneFunction, handleFail
     handleFail);
 };
 
-const postData = (url, data, handleData=noneFunction, handleFail=noneFunction, handleOk=noneFunction) => {
+const postData = (url, data, handleData=noneFunction, handleOk=noneFunction, handleFail=noneFunction) => {
   request(
     url,
     {
@@ -69,22 +69,22 @@ const postData = (url, data, handleData=noneFunction, handleFail=noneFunction, h
   );
 };
 
-const postFormData = (url, data, handleData=noneFunction, handleFail=noneFunction, handleOk=noneFunction) => {
+const postFormData = (url, data, handleData=noneFunction, handleOk=noneFunction, handleFail=noneFunction) => {
   postData(url,
     data,
     handleData,
     (response) => {
-      handleFail(response);
-      AppDispatch.dispatch({action: ActionType.USERFEEDBACK, message: 'Erro ao salvar as informações!'});
-    },
-    (response) => {
       handleOk(response);
       AppDispatch.dispatch({action: ActionType.USERFEEDBACK, message: 'Sucesso ao salvar as informações!'});
+    },
+    (response) => {
+      handleFail(response);
+      AppDispatch.dispatch({action: ActionType.USERFEEDBACK, message: 'Erro ao salvar as informações!'});
     }
   );
 };
 
-const putFormData = (url, data, handleData=noneFunction, handleFail=noneFunction, handleOk=noneFunction) => {
+const putFormData = (url, data, handleData=noneFunction, handleOk=noneFunction, handleFail=noneFunction) => {
   request(
     url,
     {
@@ -104,7 +104,7 @@ const putFormData = (url, data, handleData=noneFunction, handleFail=noneFunction
   );
 };
 
-const putData = (url, data, handleData=noneFunction,  handleFail=noneFunction, handleOk=noneFunction) => {
+const putData = (url, data, handleData=noneFunction, handleOk=noneFunction,  handleFail=noneFunction) => {
   request(url, {
     method: methods.PUT,
     headers: getAuthenticatedHeader(),
@@ -112,10 +112,10 @@ const putData = (url, data, handleData=noneFunction,  handleFail=noneFunction, h
   },
   handleData,
   (response) => {
-    handleFail(response);
+    handleOk(response);
   },
   (response) => {
-    handleOk(response);
+    handleFail(response);
   });
 };
 
@@ -135,12 +135,12 @@ const postOrPutStrategy = (actualData, url, data,
     const id = actualData.id;
 
     if (!id){
-      postFormData(url, data, handleData, handleFail, handleOk);
+      postFormData(url, data, handleData, handleOk, handleFail);
     } else {
-      putFormData(`${url}${id}/`, data, handleData, handleFail, handleOk);
+      putFormData(`${url}${id}/`, data, handleData, handleOk, handleFail);
     }
   } else {
-    postFormData(url, data, handleData, handleFail, handleOk);
+    postFormData(url, data, handleData, handleOk, handleFail);
   }
 };
 
