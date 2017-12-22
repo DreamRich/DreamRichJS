@@ -10,9 +10,6 @@ import Save from 'material-ui/svg-icons/content/save';
 import { Row, Col } from 'react-flexbox-grid';
 
 export default class Form extends Component {
-  constructor(props){
-    super(props);
-  }
 
   static propTypes = {
     parent_id: PropTypes.number,
@@ -31,7 +28,8 @@ export default class Form extends Component {
   static defaultProps = {
     isEditable: false,
     disabled: false,
-    onDisable: () => {}
+    onDisable: () => {},
+    onSubmit: () => {}
   }
 
   componentWillMount = () => this.disable(this.props.disabled)
@@ -68,6 +66,7 @@ export default class Form extends Component {
     if (this.props.parent_name) {
       data[this.props.parent_name] = this.props.parent_id;
     }
+    this.props.onSubmit(data);
     AppDispatcher.dispatch({
       action: this.props.action,
       route: routeMap[this.props.name],
@@ -132,10 +131,12 @@ export default class Form extends Component {
       </Row>
     );
   };
+
   disable = (condition) => {
     this.setState({disabled: condition});
     this.props.onDisable();
   }
+
   getButtonsCard = () => {
     return (
       <Row around='xs'>

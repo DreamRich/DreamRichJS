@@ -87,6 +87,7 @@ const actionTypes = {
     FLOW: 'patrimony/flow_success',
   },
   PROTECTION: {
+    GETEMERGENCY: 'protection/get_emergency_data',
     CHANGES: 'protection/unit_changes',
     SELECT: 'protection/select',
     POSTFORM: 'protection/create_form',

@@ -9,6 +9,7 @@ import {ActualPatrimonySuccessionForm, FuturePatrimonySuccessionForm} from './fo
 import PrivatePensionForm from './form/PrivatePensionForm';
 import ReserveInLackForm from './form/ReserveInLackForm';
 import LifeInsuranceForm from './form/LifeInsuranceForm';
+import EmergencyForm from './form/EmergencyForm';
 
 export default class ProtectionRegister extends Component {
 
@@ -40,9 +41,12 @@ export default class ProtectionRegister extends Component {
     } = this.state;
     const listInformationSteps = [
       {
-        text: 'Reserva de emergência',
+        text: 'Proteção falta de renda',
         formComponent:
-          <div key={1} disabled={true}> oi </div>,
+          <EmergencyForm
+            data={this.state.emergency_reserve}
+            disabled={!this.state.emergency_reserve_id}
+          />,
         nextButton: true,
       },{
         text: 'Custos de sucessão hoje',
@@ -50,7 +54,7 @@ export default class ProtectionRegister extends Component {
           <ActualPatrimonySuccessionForm
             id={this.state.protection_manager.id}
             data={actual_patrimony_succession}
-            disabled={actual_patrimony_succession !== undefined}
+            disabled={true}
           />,
         nextButton: true,
       },{
@@ -59,7 +63,7 @@ export default class ProtectionRegister extends Component {
           <FuturePatrimonySuccessionForm
             id={this.state.protection_manager.id}
             data={future_patrimony_succession}
-            disabled={future_patrimony_succession !== undefined}
+            disabled={true}
           />,
         nextButton: true,
       },{
@@ -68,7 +72,7 @@ export default class ProtectionRegister extends Component {
           <ReserveInLackForm
             id={this.state.protection_manager.id}
             data={this.state.reserve_in_lack}
-            disabled={this.state.reserve_in_lack !== undefined}
+            disabled={true}
           />,
         nextButton: true,
       },{
@@ -76,6 +80,7 @@ export default class ProtectionRegister extends Component {
         formComponent:
           <PrivatePensionForm
             id={this.state.protection_manager.id}
+            disabled={true}
           />,
         nextButton: true,
       },{
