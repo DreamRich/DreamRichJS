@@ -109,10 +109,12 @@ const actionTypes = {
     GETFORMSUCCESS: 'independence/get_independence_success',
   },
   REGISTER: {
+    SUBMIT: 'register/submit',
     STORE: 'register/get_financial_planning',
     FINANCIALPLANNING: 'register/submit_financial_planning',
   },
   RESETFORMSTORES: 'reset_stores_forms',
+  USERFEEDBACK: 'user_feedback',
 };
 
 export default actionTypes;

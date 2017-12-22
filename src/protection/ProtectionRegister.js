@@ -93,7 +93,6 @@ export default class ProtectionRegister extends Component {
       },
     ];
 
-    console.log(this.state.protection_manager.id);
     return (
       <div style={{width:'auto'}}>
         <SubStepperProtection

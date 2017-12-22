@@ -61,11 +61,7 @@ export default class GoalChart extends Component {
         while(this.highcharts.series.length){
           this.highcharts.series[0].remove();
         }
-        const series = this.state.goals_flow_dic.map( goal => {
-          goal.type = 'column';
-          return goal;
-        });
-        series.push(this.state.total_resource_for_annual_goals);
+        const series = this.getSeries();
         series.forEach( serie => this.highcharts.addSeries(serie) );
         this.highcharts.xAxis[0].setCategories(year_init_to_year_end);
         this.highcharts.hideLoading();
@@ -73,11 +69,30 @@ export default class GoalChart extends Component {
     }
   }
 
+  getSeries = () => {
+    let series = [];
+    if (this.state.goals_flow_dic) {
+      series = this.state.goals_flow_dic.map( goal => {
+        goal.type = 'column';
+        return goal;
+      });
+    }
+    if (this.state.total_resource_for_annual_goals) {
+      series.push(this.state.total_resource_for_annual_goals);
+    }
+    return series;
+  }
+
+  getCategories = () => {
+    return this.state.year_init_to_year_end || [];
+  }
+
   mountChart() {
     addFunnel(Highcharts);
+    const series = this.getSeries();
     this.highcharts = new Highcharts.Chart(
       'chart', {
-        series: [],
+        series: series,
         title:{text: 'Goals'},
         plotOptions: {
           column: {
@@ -89,7 +104,7 @@ export default class GoalChart extends Component {
           }
         },
         xAxis: {
-          categories: []
+          categories: this.getCategories(),
         },
         yAxis: {
           min: 0,

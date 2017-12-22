@@ -42,6 +42,12 @@ export default class IncomeChangeUnit extends Component {
     }
   }
 
+  componentWillMount = () => {
+    if(this.props.id) {
+      getIncomeChanges(this.props.id);
+    }
+  }
+
 
   render = () => {
     return (<TableForm {...this.props} expandable/>);

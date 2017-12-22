@@ -84,7 +84,6 @@ class ArrearageDashboard extends Component {
 
   showTable = (id) => {
     this.props.sizeDashboard(12);
-    console.log('oi', this.state.id);
     this.setState({id: id, open: true});
   }
 

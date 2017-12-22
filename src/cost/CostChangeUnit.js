@@ -41,6 +41,12 @@ export default class CostChangeUnit extends Component {
     }
   }
 
+  componentWillMount = () => {
+    if(this.props.id) {
+      getCostChanges(this.props.id);
+    }
+  }
+
   render = () => {
     return (<TableForm {...this.props} expandable={true} />);
   }

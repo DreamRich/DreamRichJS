@@ -51,7 +51,6 @@ export default class ActiveChart extends Component {
 
   getActivesValues = () => {
     const id = parseInt(this.props.match.params.id);
-    console.log(id);
     getData(
       routeMap.active_chart + id,
       (data) => {

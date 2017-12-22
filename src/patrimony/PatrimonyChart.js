@@ -27,9 +27,15 @@ export default class PatrimonyChart extends Component {
     }
   }
 
-  componentWillMount = () => this.setState({
-    listener: PatrimonyStore.addListener(this.handleUpdate),
-  })
+  componentWillMount = () => {
+    this.setState({
+      listener: PatrimonyStore.addListener(this.handleUpdate),
+    });
+
+    if (this.props.id){
+      getPatrimonyFlow(this.props.id);
+    }
+  }
 
   componentWillUnmount = () => this.state.listener.remove()
 

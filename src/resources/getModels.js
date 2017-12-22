@@ -29,7 +29,7 @@ const getIncomeChanges = (id) => {
 
 const getProtection = (id) => {
   getData(
-    `${routeMap.protection_manager}${id}`,
+    `${routeMap.protection_manager}${id}/`,
     (data) => {
       AppDispatcher.dispatch({
         action: ActionType.PROTECTION.GETFORMSUCCESS,

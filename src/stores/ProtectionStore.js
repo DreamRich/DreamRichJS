@@ -38,7 +38,6 @@ class ProtectionStore extends ReduceStore {
       return {...state, ...this.getProtectionData(action.data)};
 
     case ActionType.PROTECTION.GETEMERGENCY:
-      console.log('hue');
       return {...state, emergency_reserve: action.data};
 
     case ActionType.PROTECTION.SUBMIT:
