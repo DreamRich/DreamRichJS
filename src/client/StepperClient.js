@@ -20,6 +20,7 @@ import {
   Stepper,
   StepButton,
 } from 'material-ui/Stepper';
+import LifeInsuranceDialog from '../protection/LifeInsuranceDialog';
 
 class StepperClient extends React.Component {
 
@@ -94,14 +95,10 @@ class StepperClient extends React.Component {
   }
 
   handleNext = () => {
-    const {stepIndex, financialPlanning, higher} = this.state;
+    const {stepIndex, higher} = this.state;
     const higherStep = (stepIndex >= higher ? stepIndex+1 : higher);
 
-    if(stepIndex === this.getForms().length - 1) {
-      this.props.history.push(`/dashboard/${financialPlanning.pk}/`);
-    }
-
-    if (stepIndex < 5) {
+    if (stepIndex < 6) {
       this.setState({higher: higherStep, stepIndex: stepIndex + 1});
     }
   }
@@ -115,52 +112,64 @@ class StepperClient extends React.Component {
   }
 
   render() {
-    const {stepIndex} = this.state;
+    const {stepIndex, financialPlanning: {pk} } = this.state;
+    const max = this.getForms().length;
 
-    return (
-      <div style={{width: '100%', maxWidth: '80%', margin: 'auto'}}>
-        <Paper zDepth={1}>
-          <Stepper
-            activeStep={stepIndex}
-            connector={<ArrowForwardIcon />}
-            linear={false}
-          >
-            {this.getForms().map( (item, index) => <Step
-              key={index}
-              onClick={() => this.setState({stepIndex: index})}
-              disabled={index > this.state.higher}
-              completed={index < this.state.stepIndex}
+    if (stepIndex < max){
+      return (
+        <div style={{width: '100%', maxWidth: '80%', margin: 'auto'}}>
+          <Paper zDepth={1}>
+            <Stepper
+              activeStep={stepIndex}
+              connector={<ArrowForwardIcon />}
+              linear={false}
             >
-              <StepButton>{item.name}</StepButton>
-            </Step>
-            )}
-          </Stepper>
-        </Paper>
+              {this.getForms().map( (item, index) => <Step
+                key={index}
+                onClick={() => this.setState({stepIndex: index})}
+                disabled={index > this.state.higher}
+                completed={index < this.state.stepIndex}
+              >
+                <StepButton>{item.name}</StepButton>
+              </Step>
+              )}
+            </Stepper>
+          </Paper>
 
-        {getDivider()}
-        {this.getStepContent(stepIndex)}
-        {getDivider()}
+          {getDivider()}
+          {this.getStepContent(stepIndex)}
+          {getDivider()}
 
-        <div style={{marginBottom: '7%'}}>
-          {stepIndex > 0 &&
-            <FlatButton
-              label="Voltar para o passo anterior"
-              onClick={this.handlePrev}
-              backgroundColor='#ebebeb'
-              style={{float: 'left'}}
-            />
-          }
-          {this.state.financialPlanning[this.getForms()[stepIndex].state] &&
-              <RaisedButton
-                label={stepIndex === 5 ? 'Finalizar' : 'Seguir para o passo seguinte'}
-                primary={true}
-                onClick={this.handleNext}
-                style={{float: 'right'}}
+          <div style={{marginBottom: '7%'}}>
+            {stepIndex > 0 &&
+              <FlatButton
+                label="Voltar para o passo anterior"
+                onClick={this.handlePrev}
+                backgroundColor='#ebebeb'
+                style={{float: 'left'}}
               />
-          }
+            }
+            {this.state.financialPlanning[this.getForms()[stepIndex].state] &&
+                <RaisedButton
+                  label={stepIndex === 5 ? 'Finalizar' : 'Seguir para o passo seguinte'}
+                  primary={true}
+                  onClick={this.handleNext}
+                  style={{float: 'right'}}
+                />
+            }
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <LifeInsuranceDialog
+          step={stepIndex}
+          id={pk}
+          maxStep={max}
+          handleCancel={this.handlePrev}
+        />
+      );
+    }
   }
 }
 
