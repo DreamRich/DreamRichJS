@@ -8,7 +8,7 @@ Formsy.addValidationRule('isValidCPF', (values) => {
   var resto;
   var inputCPF = values.cpf;
 
-  if(values.cpf != undefined){
+  if(values.cpf != undefined && values.cpf!=''){
     if(inputCPF == '00000000000'){
       return false;
     }
@@ -39,6 +39,7 @@ Formsy.addValidationRule('isValidCPF', (values) => {
     }
     return true;
   }
+  return true;
 });
 
 const makeFormysTextList = (fieldList, textKey, data, isDisable) => {

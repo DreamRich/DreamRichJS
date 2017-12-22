@@ -28,11 +28,11 @@ export const personFields = [
     name: 'name',
     validations: {
       isWords: 'true',
-      maxLength: '30'
+      maxLength: '30',
     },
     validationErrors: {
       isWords: wordsError,
-      maxLength: maxLengthError
+      maxLength: maxLengthError,
     },
     hintText: 'Nome do cliente',
     floatingLabelText: 'Nome',

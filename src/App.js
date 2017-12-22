@@ -66,7 +66,6 @@ class App extends Component {
             open={this.state.snackOpen}
             message={this.state.snackMessage}
             autoHideDuration={9000}
-            action='Ok'
             onRequestClose={
               () => AppDispatcher.dispatch({action: ActionType.USERFEEDBACK, snackOpen: false})
             }
