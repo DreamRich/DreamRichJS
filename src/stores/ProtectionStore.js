@@ -21,6 +21,7 @@ class ProtectionStore extends ReduceStore {
       protection_manager: {},
       private_pensions: [],
       reserve_in_lack: {},
+      life_insurances: [],
     };
   }
 
@@ -140,6 +141,7 @@ class ProtectionStore extends ReduceStore {
     data.future_patrimony_succession = data.future_patrimony_succession || {};
     data.private_pensions = data.private_pensions || [];
     data.reserve_in_lack = data.reserve_in_lack || {};
+    data.life_insurances = data.life_insurances || [];
     return {...data, protection_manager};
   }
 

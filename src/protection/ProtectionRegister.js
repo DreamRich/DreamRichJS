@@ -8,6 +8,7 @@ import {postProtectionManager} from '../resources/saveModels';
 import {ActualPatrimonySuccessionForm, FuturePatrimonySuccessionForm} from './form/SuccessionForm';
 import PrivatePensionForm from './form/PrivatePensionForm';
 import ReserveInLackForm from './form/ReserveInLackForm';
+import LifeInsuranceForm from './form/LifeInsuranceForm';
 
 export default class ProtectionRegister extends Component {
 
@@ -75,14 +76,14 @@ export default class ProtectionRegister extends Component {
         formComponent:
           <PrivatePensionForm
             id={this.state.protection_manager.id}
-            disabled={true}
-            data={this.state.private_pension}
           />,
         nextButton: true,
       },{
-        text: 'Reserva de emergência 5',
+        text: 'Seguro de vida',
         formComponent:
-          <div key={5} disabled={true}> oi </div>,
+          <LifeInsuranceForm
+            id={this.state.protection_manager.id}
+          />,
         nextButton: true,
       },
     ];

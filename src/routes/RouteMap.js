@@ -31,6 +31,7 @@ const routeMap = {
   actual_patrimony_succession: '/api/protection/actual_patrimony/',
   private_pensions: '/api/protection/private_pension/',
   reserve_in_lack: '/api/protection/reserve_lack/',
+  life_insurances: '/api/protection/life_insurance/',
 };
 
 const valid_formats = ['json', 'html', 'xml'];
