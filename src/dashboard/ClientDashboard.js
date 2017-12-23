@@ -31,6 +31,7 @@ class ClientDashboard extends Component {
       <Dashboard>
         <ClientForm
           title='Cliente'
+          subtitleCard={'Informações básicas do cliente'}
           data={this.state.active_client}
           disabled={true}
           size={6}

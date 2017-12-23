@@ -46,21 +46,22 @@ export default class ActiveProfit extends Component {
     return (
       <Card className='Card'>
         <CardTitle
-          title='Diferença no patrimônio'
-          showExpandableButton
-          actAsExpander
-        />
-        <CardText expandable>
-          <PatrimonyDifference data={data} />
-        </CardText>
-        <Divider />
-        <CardTitle
           title='Gráfico'
           subtitle={'Veja a diferença entre ter uma boa ' +
             'carteira de investimentos'}
         />
         <CardText>
           <PatrimonyChart id={this.state.financial_planning_id} />
+        </CardText>
+        <Divider />
+        <CardTitle
+          title='Diferença no patrimônio'
+          subtitle={'Veja a diferença entre os patrimônios '}
+          showExpandableButton
+          actAsExpander
+        />
+        <CardText expandable>
+          <PatrimonyDifference data={data} />
         </CardText>
       </Card>
     );

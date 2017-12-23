@@ -15,7 +15,6 @@ import Edit from 'material-ui/svg-icons/image/edit';
 import Save from 'material-ui/svg-icons/content/save';
 
 var {
-  wordsError,
   numericError,
   emailError,
   maxLengthError,
@@ -27,11 +26,9 @@ export const personFields = [
   {
     name: 'name',
     validations: {
-      isWords: 'true',
       maxLength: '30'
     },
     validationErrors: {
-      isWords: wordsError,
       maxLength: maxLengthError
     },
     hintText: 'Nome do cliente',
@@ -40,11 +37,9 @@ export const personFields = [
   {
     name: 'surname',
     validations: {
-      isWords: 'true',
       maxLength: '50'
     },
     validationErrors: {
-      isWords: wordsError,
       maxLength: maxLengthError
     },
     hintText: 'Sobrenome do cliente',
@@ -69,11 +64,9 @@ export const personFields = [
   {
     name: 'profession',
     validations: {
-      isWords: 'true',
       maxLength: '200'
     },
     validationErrors: {
-      isWords: wordsError,
       maxLength: maxLengthError
     },
     hintText: 'Profissão do cliente',
@@ -107,11 +100,9 @@ export const personFields = [
   {
     name: 'hometown',
     validations: {
-      isWords: true,
       maxLength: 50
     },
     validationErrors: {
-      isWords: wordsError,
       maxLength: maxLengthError
     },
     hintText: 'Onde o cliente nasceu?',
