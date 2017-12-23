@@ -52,7 +52,6 @@ export default class LifeInsuranceForm extends Component {
 
 
   render = () => {
-    console.log(this.state.url, '0000');
     return (
       <div>
         <Card>

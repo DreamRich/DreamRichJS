@@ -31,7 +31,7 @@ class ArrearageMenu extends Component {
 
     if(list.length <= 0) {
       const styleSubtitle = {
-        'font-size': '130%',
+        fontSize: '130%',
       };
       list = (
         <Subtitle

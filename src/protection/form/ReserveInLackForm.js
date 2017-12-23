@@ -32,7 +32,7 @@ export default class ReserveInLackForm extends Component {
         isEditable
       >
         <Row around='xs'>
-          <Col cs>
+          <Col xs>
             <FormsyText
               name='value_0_to_24_mounth'
               validations='isNumeric'
@@ -42,7 +42,7 @@ export default class ReserveInLackForm extends Component {
               value={this.props.data.value_0_to_24_mounth}
             />
           </Col>
-          <Col cs>
+          <Col xs>
             <FormsyText
               name='value_24_to_60_mounth'
               validations='isNumeric'
@@ -52,7 +52,7 @@ export default class ReserveInLackForm extends Component {
               value={this.props.data.value_24_to_60_mounth}
             />
           </Col>
-          <Col cs>
+          <Col xs>
             <FormsyText
               name='value_60_to_120_mounth'
               validations='isNumeric'
@@ -62,7 +62,7 @@ export default class ReserveInLackForm extends Component {
               value={this.props.data.value_60_to_120_mounth}
             />
           </Col>
-          <Col cs>
+          <Col xs>
             <FormsyText
               name='value_120_to_240_mounth'
               validations='isNumeric'

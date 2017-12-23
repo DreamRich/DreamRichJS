@@ -80,7 +80,6 @@ export default class ActiveChart extends Component {
   }
 
   componentDidUpdate = (prevProps) => {
-    console.log(this.props.id, prevProps.id);
     if (this.props.id !== prevProps.id) {
       this.getActivesValues();
     }
