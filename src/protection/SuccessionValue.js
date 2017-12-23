@@ -34,10 +34,10 @@ export default class SuccessionValue extends Component {
             <Col xs={6} className='LabelPatrimony'>
               <label>{labels[index]} R$</label>
             </Col>
-            <Col xs={3}>
+            <Col xs={3} className='LabelPatrimony'>
               {formatCurrency(actual[item])}
             </Col>
-            <Col xs={3}>
+            <Col xs={3} className='LabelPatrimony'>
               {formatCurrency(future[item])}
             </Col>
           </Row>
@@ -56,7 +56,6 @@ export default class SuccessionValue extends Component {
         <CardText>
           <Row around='xs'>
             <Col xs={6}>
-              Taxas
             </Col>
             <Col xs={3}>
               Actual
