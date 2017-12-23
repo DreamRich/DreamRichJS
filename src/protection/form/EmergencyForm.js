@@ -46,7 +46,6 @@ export default class EmergencyForm extends Component {
               hintText='Meses que deseja ser protegido'
               floatingLabelText='Meses de proteção'
               value={this.props.data.mounth_of_protection}
-              fullWidth={true}
             />
           </Col>
         </Row>

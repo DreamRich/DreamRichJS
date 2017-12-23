@@ -4,6 +4,7 @@ import ClientDashboard from './ClientDashboard';
 import GoalDashboard from './GoalDashboard';
 // import IncomeDashboard from '../dashboard/IncomeDashboard';
 import PatrimonyDashboard from './PatrimonyDashboard';
+import ProtectionDashboard from './ProtectionDashboard';
 import MoneyDashboard from './MoneyDashboard';
 // import RegularCostRegister from '../cost/RegularCostRegister';
 import PropTypes from 'prop-types';
@@ -132,6 +133,7 @@ class Dashboard extends Component {
       {
         label: 'Proteção',
         icon: <SecurityIcon className="material-icons"/>,
+        dashboard: <ProtectionDashboard />,
         value: 'protecao',
       },
     ];

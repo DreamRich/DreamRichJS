@@ -31,56 +31,48 @@ export default class ReserveInLackForm extends Component {
         action={ActionType.PROTECTION.POSTFORM}
         isEditable
       >
-        <div>
-          <Row around='xs'>
-            <Col cs>
-              <FormsyText
-                name='value_0_to_24_mounth'
-                validations='isNumeric'
-                validationError={numericError}
-                hintText='Valor entre mês 0 e 24'
-                floatingLabelText='Mês 0 a 24'
-                value={this.props.data.value_0_to_24_mounth}
-                fullWidth={true}
-              />
-            </Col>
-            <Col cs>
-              <FormsyText
-                name='value_24_to_60_mounth'
-                validations='isNumeric'
-                validationError={numericError}
-                hintText='Valor entre mês 24 e 60'
-                floatingLabelText='Mês 24 a 60'
-                value={this.props.data.value_24_to_60_mounth}
-                fullWidth={true}
-              />
-            </Col>
-          </Row>
-          <Row around='xs'>
-            <Col cs>
-              <FormsyText
-                name='value_60_to_120_mounth'
-                validations='isNumeric'
-                validationError={numericError}
-                hintText='Valor entre mês 60 e 120'
-                floatingLabelText='Mês 60 a 120'
-                value={this.props.data.value_60_to_120_mounth}
-                fullWidth={true}
-              />
-            </Col>
-            <Col cs>
-              <FormsyText
-                name='value_120_to_240_mounth'
-                validations='isNumeric'
-                validationError={numericError}
-                hintText='Valor entre mês 120 e 240'
-                floatingLabelText='Mês 120 a 240'
-                value={this.props.data.value_120_to_240_mounth}
-                fullWidth={true}
-              />
-            </Col>
-          </Row>
-        </div>
+        <Row around='xs'>
+          <Col cs>
+            <FormsyText
+              name='value_0_to_24_mounth'
+              validations='isNumeric'
+              validationError={numericError}
+              hintText='Valor entre mês 0 e 24'
+              floatingLabelText='Mês 0 a 24'
+              value={this.props.data.value_0_to_24_mounth}
+            />
+          </Col>
+          <Col cs>
+            <FormsyText
+              name='value_24_to_60_mounth'
+              validations='isNumeric'
+              validationError={numericError}
+              hintText='Valor entre mês 24 e 60'
+              floatingLabelText='Mês 24 a 60'
+              value={this.props.data.value_24_to_60_mounth}
+            />
+          </Col>
+          <Col cs>
+            <FormsyText
+              name='value_60_to_120_mounth'
+              validations='isNumeric'
+              validationError={numericError}
+              hintText='Valor entre mês 60 e 120'
+              floatingLabelText='Mês 60 a 120'
+              value={this.props.data.value_60_to_120_mounth}
+            />
+          </Col>
+          <Col cs>
+            <FormsyText
+              name='value_120_to_240_mounth'
+              validations='isNumeric'
+              validationError={numericError}
+              hintText='Valor entre mês 120 e 240'
+              floatingLabelText='Mês 120 a 240'
+              value={this.props.data.value_120_to_240_mounth}
+            />
+          </Col>
+        </Row>
       </Form>
     );
   }
@@ -88,6 +80,7 @@ export default class ReserveInLackForm extends Component {
   render = () => {
     return (
       <CardForm
+        titleCard='Patrimônio para família'
         contentCard={this.getContentCard()}
       />);
   }

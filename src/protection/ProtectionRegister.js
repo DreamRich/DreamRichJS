@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import '../stylesheet/RegisterForms.sass';
 import ProtectionStore from '../stores/ProtectionStore';
-import '../stylesheet/RegisterForms.sass';
 import SubStepperProtection from './SubStepperProtection';
 import {postProtectionManager} from '../resources/saveModels';
 import {ActualPatrimonySuccessionForm, FuturePatrimonySuccessionForm} from './form/SuccessionForm';
