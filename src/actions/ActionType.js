@@ -85,6 +85,7 @@ const actionTypes = {
     MANAGERSUCCESS: 'patrimony/create_manager_success',
     TYPESUCCESS: 'active/types_success',
     FLOW: 'patrimony/flow_success',
+    ACTIVECHART: 'active/chart_datasets',
   },
   PROTECTION: {
     GETEMERGENCY: 'protection/get_emergency_data',

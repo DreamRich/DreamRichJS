@@ -26,6 +26,8 @@ class PatrimonyStore extends ReduceStore {
       manager: {},
       unit_change: [],
       flow: {},
+      active_chart_dataset: {labels: [], data: []},
+      active_type_chart: {labels: [], data: []},
     };
   }
 
@@ -118,6 +120,12 @@ class PatrimonyStore extends ReduceStore {
 
     case ActionType.PATRIMONY.TYPESUCCESS:
       return {...state, types: action.types};
+
+    case ActionType.PATRIMONY.ACTIVECHART:
+      return {...state,
+        active_chart_dataset: action.data.active_chart_dataset,
+        active_type_chart: action.data.active_type_chart
+      };
 
     case ActionType.PATRIMONY.CHANGES:
       arr = action.data.map( item => {

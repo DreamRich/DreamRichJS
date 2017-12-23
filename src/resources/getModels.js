@@ -3,6 +3,31 @@ import {routeMap} from '../routes/RouteMap';
 import AppDispatcher from '../AppDispatcher';
 import ActionType from '../actions/ActionType';
 
+const getActiveChartData = (id) => {
+  getData(
+    `${routeMap.active_chart}${id}/`,
+    (data) => {
+      AppDispatcher.dispatch({
+        action: ActionType.PATRIMONY.ACTIVECHART,
+        data: data,
+      });
+      // const colors = this.generateRandomColors(data.active_chart_dataset.data.length);
+      // const chartData = {
+      //   datasets: [{
+      //     data: data.active_chart_dataset.labels,
+      //     backgroundColor: colors[0], 
+      //     labels: data.active_chart_dataset.data,
+      //   },{
+      //     data: data.active_type_chart.data,
+      //     backgroundColor: colors[1], 
+      //     labels: data.active_type_chart.labels, 
+      //   },]
+      // };
+      // this.setState({chartData});
+    }
+  );
+};
+
 const getCostChanges = (id) => {
   getData(
     `${routeMap.unit_change}?cost_manager_id=${id}`,
@@ -170,4 +195,5 @@ export {getClient,
   getIncomeChanges,
   getCostChanges,
   getPatrimonyFlow,
-  getProtection,};
+  getProtection,
+  getActiveChartData,};

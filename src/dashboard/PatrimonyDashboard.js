@@ -1,18 +1,14 @@
 import React, {Component} from 'react';
-
 import PatrimonyStore from '../stores/PatrimonyStore';
 import '../stylesheet/RegisterForms.sass';
-
-
-
 import Dashboard from '../components/Dashboard';
-
 import RealeStateForm from '../patrimony/form/RealeStateForm.js';
 import CompanyParticipationForm from '../patrimony/form/CompanyParticipationForm';
 import ArrearageForm from '../patrimony/form/ArrearageForm';
 import EquipmentForm from '../patrimony/form/EquipmentForm';
 import ActiveForm from '../patrimony/form/ActiveForm';
 import ArrearageDashboard from '../arrearage/ArrearageDashboard';
+import ActiveChart from '../patrimony/ActiveChart';
 
 class PatrimonyDashboard extends Component {
 
@@ -35,6 +31,7 @@ class PatrimonyDashboard extends Component {
   render = () => {
     return (
       <Dashboard>
+        <ActiveChart id={this.state.patrimony.id} size={12} />
         <ActiveForm
           id={this.state.patrimony.id}
           size={12}
