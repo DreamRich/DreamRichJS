@@ -2,13 +2,14 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import '../stylesheet/RegisterForms.sass';
 import ProtectionStore from '../stores/ProtectionStore';
-import {postProtectionManager} from '../resources/saveModels';
+// import {postProtectionManager} from '../resources/saveModels';
 import {ActualPatrimonySuccessionForm, FuturePatrimonySuccessionForm} from '../protection/form/SuccessionForm';
 import PrivatePensionForm from '../protection/form/PrivatePensionForm';
 import ReserveInLackForm from '../protection/form/ReserveInLackForm';
 import LifeInsuranceForm from '../protection/form/LifeInsuranceForm';
-import EmergencyForm from '../protection/form/EmergencyForm';
+// import EmergencyForm from '../protection/form/EmergencyForm';
 import Dashboard from '../components/Dashboard';
+import EmergencyInformation from '../protection/EmergencyInformation';
 
 export default class ProtectionRegister extends Component {
 
@@ -22,10 +23,6 @@ export default class ProtectionRegister extends Component {
     this.setState({
       listener: ProtectionStore.addListener(this.handleChange)
     });
-    const {protection_manager} = ProtectionStore.getState();
-    if (protection_manager && protection_manager.id === undefined) {
-      postProtectionManager(this.props.id);
-    }
   }
 
 
@@ -53,7 +50,7 @@ export default class ProtectionRegister extends Component {
         disabled={true}
         size={6}
       />,
-      <EmergencyForm
+      <EmergencyInformation
         key='emergency_form'
         data={this.state.emergency_reserve}
         disabled={!this.state.emergency_reserve_id}

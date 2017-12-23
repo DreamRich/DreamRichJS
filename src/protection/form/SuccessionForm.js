@@ -79,11 +79,11 @@ const GenericSuccessionForm = (name, title, subTitle) => {
 const ActualPatrimonySuccessionForm = GenericSuccessionForm(
   'actual_patrimony_succession',
   'Custo de sucessão atualmente',
-  'Este são os custos para sucessão atualmente');
+  'Estes são os custos para sucessão atualmente');
 const FuturePatrimonySuccessionForm = GenericSuccessionForm(
   'future_patrimony_succession',
   'Custo de sucessão no futuro',
-  'Este são os custos para sucessão no futuro');
+  'Estes são os custos para sucessão no futuro');
 
 export {ActualPatrimonySuccessionForm, FuturePatrimonySuccessionForm};
 
