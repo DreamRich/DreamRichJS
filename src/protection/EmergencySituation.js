@@ -12,7 +12,8 @@ export default class EmergencySituation extends Component {
   }
 
   render = () => {
-    const className = this.props.risk_gap > 0 ? 'EmergencyRisk' : '';
+    const classRisk = this.props.risk_gap > 0 ?
+      'EmergencyRisk' : 'EmergencyNoRisk';
     const necessery = formatCurrency(this.props.necessery_value || 0);
     const risk_gap = formatCurrency(this.props.risk_gap || 0);
 
@@ -28,10 +29,10 @@ export default class EmergencySituation extends Component {
         </Row>
         <Row around='xs' className='Emergency'>
           <Col xs={6} className='LabelPatrimony'>
-            R$: {necessery}
+            <div className={classRisk}>R$: {necessery}</div>
           </Col>
           <Col xs={6} className='LabelPatrimony'>
-            <div className={className} >R$: {risk_gap} </div>
+            <div className={classRisk} >R$: {risk_gap} </div>
           </Col>
         </Row>
       </Paper>
