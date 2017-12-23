@@ -10,6 +10,7 @@ import LifeInsuranceForm from '../protection/form/LifeInsuranceForm';
 // import EmergencyForm from '../protection/form/EmergencyForm';
 import Dashboard from '../components/Dashboard';
 import EmergencyInformation from '../protection/EmergencyInformation';
+import SuccessionValue from '../protection/SuccessionValue';
 
 export default class ProtectionRegister extends Component {
 
@@ -36,6 +37,19 @@ export default class ProtectionRegister extends Component {
       future_patrimony_succession
     } = this.state;
     const listInformationSteps = [
+      <SuccessionValue
+        key='SuccessionValue'
+        size={4}
+        data={ {actual: actual_patrimony_succession,
+          future: future_patrimony_succession,
+        } }
+        title='Taxas'
+        labels={['Patrimônio para ITCMD',
+          'Patrimônio para OAB', 'Patrimônio outras taxas', 'Patrimônio para sucessão']}
+        itens={['patrimony_necessery_to_itcmd',
+          'patrimony_necessery_to_oab', 'patrimony_to_other_taxes',
+          'patrimony_total_to_sucession']}
+      />,
       <ActualPatrimonySuccessionForm
         key='ActualPatrimonySuccessionForm'
         id={this.state.protection_manager.id}
