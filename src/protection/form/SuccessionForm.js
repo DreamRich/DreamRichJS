@@ -41,29 +41,22 @@ const GenericSuccessionForm = (name, title, subTitle) => {
                 hintText='Valor pago para o cartório'
                 floatingLabelText='Taxa ITCMD'
                 value={this.props.data.itcmd_tax}
-                fullWidth={true}
               />
             </Col>
-          </Row>
-          <Row around='xs'>
             <Col xs>
               <FormsyText
                 name='oab_tax'
                 hintText='Valor pago ao advogado'
                 floatingLabelText='Taxa advogado'
                 value={this.props.data.oab_tax}
-                fullWidth={true}
               />
             </Col>
-          </Row>
-          <Row around='xs'>
             <Col xs>
               <FormsyText
                 name='other_taxes'
                 hintText='Outros custos de sucessão'
                 floatingLabelText='Taxas extras'
                 value={this.props.data.other_taxes}
-                fullWidth={true}
               />
             </Col>
           </Row>
@@ -85,8 +78,8 @@ const GenericSuccessionForm = (name, title, subTitle) => {
 
 const ActualPatrimonySuccessionForm = GenericSuccessionForm(
   'actual_patrimony_succession',
-  'Custo de sucessão hoje',
-  'Este são os custos para sucessão hoje');
+  'Custo de sucessão atualmente',
+  'Este são os custos para sucessão atualmente');
 const FuturePatrimonySuccessionForm = GenericSuccessionForm(
   'future_patrimony_succession',
   'Custo de sucessão no futuro',
