@@ -1,15 +1,95 @@
 const routeMap = {
-  client: '/api/client/',
-  address: '/api/client/address/',
-  state: '/api/client/state/',
-  country: '/api/client/country/',
-  bank_account: '/api/client/bank-account/',
-  dependent: '/api/client/dependents/',
   active_client: '/api/client/active/',
+  spouse: '/api/client/',
+  unit_change: '/api/financial_planning/unit_change/',
+  address: '/api/client/address/',
+  bank_account: '/api/client/bank-account/',
+  country: '/api/client/country/',
+  dependent: '/api/client/dependent/',
+  goal: '/api/goal/goal/',
+  goal_manager: '/api/goal/goal_manager/',
+  goal_type: '/api/goal/goal_type/',
+  cost_type: '/api/financial_planning/cost_type/',
+  regular_cost: '/api/financial_planning/regular_cost/',
+  cost_manager: '/api/financial_planning/cost_manager/',
+  state: '/api/client/state/',
+  patrimony: '/api/patrimony/',
+  actives: '/api/patrimony/active/',
+  active_chart: '/api/patrimony/active_chart/',
+  activemanager: '/api/patrimony/active_manager/',
+  active_type: '/api/patrimony/active_type/',
+  realestates: '/api/patrimony/realestate/',
+  incomes: '/api/patrimony/income/',
+  companyparticipations: '/api/patrimony/companyparticipation/',
+  equipments: '/api/patrimony/equipment/',
+  address_type: '/api/client/address/type_of_address/',
+  arrearages: '/api/patrimony/arrearage/',
+  financial_planning: '/api/financial_planning/financial_planning/',
+  financial_independence: '/api/financial_planning/financial_independence/',
+  protection_manager: '/api/protection/protection_manager/',
+  future_patrimony_succession: '/api/protection/independence_patrimony/',
+  actual_patrimony_succession: '/api/protection/actual_patrimony/',
+  private_pensions: '/api/protection/private_pension/',
+  reserve_in_lack: '/api/protection/reserve_lack/',
+  life_insurances: '/api/protection/life_insurance/',
+  emergency_reserve: '/api/protection/emergency_reserve/',
 };
 
-const goalRouters = {
-  goals_flow_dic:  '/api/goal/dic/1/',
-};
+const valid_formats = ['json', 'html', 'xml'];
 
-export {routeMap, goalRouters};
+// Param format refers to the data format from request. Ex: .json
+function getUrlWithFormat(route, format){
+  var url;
+
+  if(valid_formats.includes(format)){
+    let formatted_url = `${routeMap[route].slice(0, -1)}.${format}/`;
+    url = formatted_url;
+  } else {
+    let invalid_format = new Error();
+
+    invalid_format.name = 'Invalid format';
+    invalid_format.message = `The format ${format} is not a valid format.`;
+
+    throw invalid_format;
+  }
+
+  return url;
+}
+
+function checkRoute(route){
+  if(route in routeMap){
+    // OK
+  } else {
+    let invalid_route = new Error();
+
+    invalid_route.name = 'Invalid input';
+    invalid_route.message = 'There isn\'t a registered url for this route.';
+
+    throw invalid_route;
+  }
+}
+
+// Param format refers to the data format from request. Ex: .json
+function getUrl(route, format=''){
+  try {
+    checkRoute(route);
+  } catch(err){
+    console.error(`Couldn't get url for '${route}' route. ${err.message}`); 
+  }
+
+  var url = '';
+
+  if(format && format.length > 0){
+    try {
+      url = getUrlWithFormat(route, format);
+    } catch(err){
+      console.error(`Couldn't get url for '${route}' route. ${err.message}`); 
+    }
+  } else {
+    url = routeMap[route];
+  }
+  return url;
+}
+
+
+export {getUrl, routeMap};

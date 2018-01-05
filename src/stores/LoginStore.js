@@ -2,23 +2,59 @@
 
 import {ReduceStore} from 'flux/utils';
 import AppDispatcher from '../AppDispatcher';
+import {postData} from '../resources/Requests';
+import {Auth} from '../auth/Auth';
+import ActionType from '../actions/ActionType';
 
-class LoginStorage extends ReduceStore {
+class LoginStore extends ReduceStore {
   constructor(){ super(AppDispatcher); }
 
-  getInitialState(){ return {send: false, userExist: true}; }
+  getInitialState(){ return {userExist: true}; }
 
   reduce = (state, action) => {
-    switch (action.type) {
-    case 'a':
-      console.log(action, state);
+    switch (action.action) {
+    case ActionType.LOGIN.POST:
+      postData('/api/auth/',
+        action.data,
+        (data) => {
+          AppDispatcher.dispatch({action: ActionType.LOGIN.SUCCESS,
+            data: data});
+        },
+        () => {
+          AppDispatcher.dispatch({action: ActionType.LOGIN.FAIL});
+        }
+      );
       return state;
+
+    case ActionType.LOGIN.FAIL:
+      return {userExist: false, auth: false};
+
+    case ActionType.LOGOUT:
+      Auth.deauthenticate();
+      return {...state, auth: false};
+
+    case ActionType.REFRESH_LOGIN:
+      postData('/api/auth/refresh/',
+        action.data,
+        (data) => {
+          AppDispatcher.dispatch({action: ActionType.LOGIN.SUCCESS,
+            data: data});
+        },
+        () => {
+          alert('Fail when try refresh token\nLogouting');
+          AppDispatcher.dispatch({action: ActionType.LOGOUT});
+        }
+      );
+      return state;
+
+    case ActionType.LOGIN.SUCCESS:
+      Auth.authenticate(action.data);
+      return {...state, userExist: true, auth: true};
+
     default:
-      console.log(action, state);
       return state;
     }
   }
-
 }
 
-export default new LoginStorage();
+export default new LoginStore();

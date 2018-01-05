@@ -1,14 +1,15 @@
-// import {Link} from 'react-router-dom';
+
 import React from 'react';
 import {Toolbar} from 'react-data-grid-addons';
-import GridTable from '../layout/GridTable';
-import FlatButton from 'material-ui/FlatButton';
+import GridTable from '../components/GridTable';
+import IconButton from 'material-ui/IconButton';
+import DeleteIcon from 'material-ui/svg-icons/action/delete';
+
 import {putData, postData, deleteData} from '../resources/Requests';
 
 export default class EmployeeTable extends GridTable {
   constructor(props) {
     super(props);
-    this.handleAddRow = this.handleAddRow.bind(this);
   }
 
   getColumns() {
@@ -22,9 +23,9 @@ export default class EmployeeTable extends GridTable {
     ];
   }
 
-  getRoute(){ return '/api/employee/employee/'; }
+  getRoute = () => '/api/employee/employee/'
 
-  handleDeletion(id, idx){
+  handleDeletion = (id, idx) => {
     const confirmation = confirm('A deleção não poderá ser desfeita\n'+
       'Você confirma a deleção?');
     if(confirmation){
@@ -43,21 +44,23 @@ export default class EmployeeTable extends GridTable {
     }
   }
 
-  getActions(register, idx) {
+  getActions(register, idx){
     if(register !== undefined && register !== null){
       return (
-          <FlatButton 
-            secondary
-            onClick={this.handleDeletion.bind(this, register.id, idx)}
-            label="X"
-          />
+        <IconButton
+          tooltip="bottom-right"
+          tooltipPosition="bottom-right"
+          onClick={this.handleDeletion.bind(this, register.id, idx)}
+        >
+          <DeleteIcon />
+        </IconButton>
       );
     }
     return null;
   }
 
 
-  handleAddRow() {
+  handleAddRow = () => {
     const newRow = {
       first_name: '', last_name: ''/*, telephone: ''*/, email: '',
       cpf: '', actions: ''
@@ -68,7 +71,7 @@ export default class EmployeeTable extends GridTable {
   }
 
 
-  createOrUpdate(data, newField){
+  createOrUpdate = (data, newField) => {
     const changedData = Object.assign(data, newField);
     if( changedData['email'] !== ''
       && changedData['first_name'] !== ''
@@ -80,7 +83,6 @@ export default class EmployeeTable extends GridTable {
       let message = 'Salvo com sucesso!';
 
       const handleSubmitData = (data) => {
-        console.log(data);
         if(data.id){
           this.setState({ open: true, message: message });
           changedData['id'] = data.id;
@@ -108,10 +110,10 @@ export default class EmployeeTable extends GridTable {
     return changedData;
   }
 
-  getToolbar() {
-    return (<Toolbar
-      enableFilter={true}
-      onAddRow={this.handleAddRow} />);
+  getToolbar(){
+    return (
+      <Toolbar enableFilter={true} onAddRow={this.handleAddRow} />
+    );
   }
 
 }

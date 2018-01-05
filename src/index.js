@@ -4,7 +4,6 @@ import {BrowserRouter} from 'react-router-dom';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import theme from './stylesheet/theme';
 
@@ -16,4 +15,3 @@ ReactDOM.render(
   </BrowserRouter>
   , document.getElementById('root'));
 registerServiceWorker();
-injectTapEventPlugin();

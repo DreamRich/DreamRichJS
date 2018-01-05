@@ -1,61 +1,132 @@
 import React, {Component} from 'react';
-import {Auth} from '../Auth';
 import PropTypes from 'prop-types';
-import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import Formsy from 'formsy-react';
+import {FormsyText} from 'formsy-material-ui/lib';
+import PasswordStore from '../../stores/PasswordStore';
+import AppDispatcher from '../../AppDispatcher';
+import CircularProgress from 'material-ui/CircularProgress';
+import Snackbar from 'material-ui/Snackbar';
+import ActionType from '../../actions/ActionType';
+import { Row, Col } from 'react-flexbox-grid';
+import CardForm from '../../components/CardForm';
 
 export default class PasswordForm extends Component{
+
   constructor(props){
     super(props);
-    this.handleForm = this.handleForm.bind(this);
+  }
+  static propTypes = {
+    userid: PropTypes.string,
+    username: PropTypes.string
   }
 
-  handleForm(event){
-    event.preventDefault();
-    console.log(Auth.getHeader(), this.props.userid);
-    const data = JSON.stringify({
-      userid: this.props.userid,
-      password: event.target.password.value,
-      new_password: event.target.new_password.value,
-      new_password_confirmation: event.target.new_password_confirmation.value
+  componentWillMount = () => {
+    this.setState({...PasswordStore.getState(), listener: PasswordStore.addListener(this.handleUpdate)} );
+  }
+
+  componentWillUnmount = () => {
+    AppDispatcher.dispatch({
+      action: ActionType.PASSWORD.UNMOUNT
     });
-    fetch('/api/auth/password/', {
-      method: 'post',
-      headers: Auth.getHeader(),
-      body: data
-    })
-    .then(() => {console.log('ok'); this.setState({send: true}); })
-    .catch(() => {console.log('treta');});
+    this.state.listener.remove();
+  }
+
+  handleUpdate = () => {
+    this.setState(PasswordStore.getState());
+  }
+
+  handleForm = (data) => {
+    data.userid = this.props.userid;
+    AppDispatcher.dispatch({
+      action: ActionType.PASSWORD.CHANGE,
+      data: data,
+    });
+  }
+
+  getFormyText(){
+    const listForms = [
+      {
+        type: 'text', name: 'username', disable: true, value: this.props.username, floatingLabelText: 'Usuário'
+      },
+      {
+        type: 'password', name: 'password', required: true, hintText: 'Digite sua senha antiga', floatingLabelText: 'Senha Antiga'
+      },
+      {
+        type: 'password', name: 'new_password', required: true, hintText: 'Digite sua nova senha', floatingLabelText: 'Senha Nova'
+      },
+      {
+        type: 'password', name: 'new_password_confirmation', required: true, hintText: 'Confirme sua nova senha', floatingLabelText: 'Confirmação'
+      },
+    ];
+
+    let listFormsy = listForms.map((form,index) => {
+      return (
+        <FormsyText key={'formsyTextPassword'+index}
+          type={form.type}
+          name={form.name}
+          disabled={form.disable}
+          required={form.required}
+          value={form.value}
+          floatingLabelText={form.floatingLabelText}
+        />
+      );
+    });
+
+    return listFormsy;
+  }
+
+  getContentCard(){
+    const formysTextList = this.getFormyText();
+
+    let listColumns = formysTextList.map((form,index)=>{
+      return (
+        <Col xs key={'listColumnsPassword'+index}>
+          {formysTextList[index]}
+        </Col>
+      );
+    });
+
+    return (
+      <div>
+        <Row>
+          {listColumns}
+        </Row>
+        <Row>
+          <RaisedButton primary style={{marginTop: '30px'}} label="ALTERAR" type="submit"/>
+        </Row>
+      </div>
+    );
+  }
+
+  getForm = () => {
+
+    return (
+      <Formsy.Form ref={ (form) => {this.form = form;} }
+        onValidSubmit={this.handleForm}
+      >
+        <CardForm
+          titleCard="Alteração de senha"
+          subtitleCard="Preencha os campos a seguir para alterar sua senha."
+          contentCard={this.getContentCard()}
+        />
+      </Formsy.Form>
+    );
   }
 
   render(){
+    const toRender = (this.state.send? <CircularProgress /> : this.getForm());
     return (
       <section>
-        <form onSubmit={this.handleForm}>
-          <TextField floatingLabel="Usuário" disabled value={this.props.username} />
-      <br />
-          <TextField type="password"
-            floatingLabelText="Senha"
-            name="password"
-            hintText="Digite sua senha antiga" />
-      <br />
-          <TextField
-            floatingLabelText="Nova senha"
-            name="new_password"
-            hintText="Digite sua nova senha" />
-      <br />
-          <TextField
-            floatingLabelText="Confirmação"
-            name="new_password_confirmation"
-            hintText="Confirme sua nova senha" />
-      <br />
-          <RaisedButton primary label="ALTERAR" />
-        </form>
+        {toRender}
+        <Snackbar
+          open={this.state.snack}
+          message={this.state.message}
+          autoHideDuration={9000}
+          onRequestClose={() => AppDispatcher.dispatch({action: ActionType.PASSWORD.SNACKCLOSE})}
+        />
       </section>
     );
   }
 }
-PasswordForm.propTypes = {
-  userid: PropTypes.string,
-  username: PropTypes.string
-};
+
